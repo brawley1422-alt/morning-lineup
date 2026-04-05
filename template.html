@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d0f14">
+<title>The Morning Lineup — Sat, Apr 4, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,700&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+/* ————— TOKENS ————— */
+:root{
+  --ink:#0d0f14;
+  --ink-2:#141823;
+  --ink-3:#1c2230;
+  --paper:#ece4d0;
+  --paper-dim:#c9bfa6;
+  --paper-mute:#8b836d;
+  --rule:#2a3142;
+  --rule-hi:#3a4360;
+  --cubs-blue:#0E3386;
+  --cubs-blue-hi:#2a56c4;
+  --cubs-red:#CC3433;
+  --cubs-red-hi:#e8544f;
+  --gold:#c9a24a;
+  --gold-dim:#8a6f32;
+  --win:#6ea86a;
+  --loss:#c0554f;
+  --serif:"Playfair Display",Georgia,serif;
+  --body:"Lora","Source Serif Pro",Georgia,serif;
+  --cond:"Oswald","Bebas Neue",Impact,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --maxw:1180px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ink);color:var(--paper)}
+body{
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(14,51,134,.22), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgba(204,52,51,.12), transparent 55%),
+    linear-gradient(180deg,#0a0c12 0%,#0d0f14 40%,#0b0d12 100%);
+  background-attachment:fixed;
+  position:relative;
+  overflow-x:hidden;
+}
+/* newsprint grain */
+body::before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;z-index:1;
+  opacity:.06;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
+a:hover{color:var(--paper);border-bottom-color:var(--paper)}
+
+/* ————— MASTHEAD ————— */
+.masthead{
+  position:relative;z-index:2;
+  border-bottom:6px double var(--paper);
+  padding:28px 20px 18px;
+  max-width:var(--maxw);margin:0 auto;
+}
+.masthead .kicker{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;
+  font-size:11px;color:var(--paper-mute);
+  border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+}
+.masthead .kicker .vol{color:var(--gold)}
+.masthead h1{
+  font-family:var(--serif);font-weight:900;font-style:italic;
+  font-size:clamp(44px,9vw,108px);
+  line-height:.9;margin:0;letter-spacing:-.01em;
+  text-shadow:0 2px 0 rgba(0,0,0,.4);
+}
+.masthead h1 .the{
+  display:block;font-size:.28em;font-style:normal;font-weight:600;
+  letter-spacing:.4em;color:var(--gold);margin-bottom:4px;
+  text-transform:uppercase;
+}
+.masthead h1 .lineup{
+  background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.masthead .dek{
+  display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center;
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);
+  font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;
+}
+.masthead .dek .item{display:flex;gap:8px;align-items:center}
+.masthead .dek .label{color:var(--paper-mute)}
+.masthead .dek .val{color:var(--paper)}
+.masthead .dek .rec{color:var(--gold);font-weight:600}
+.masthead .dek .pill{
+  display:inline-block;padding:3px 8px;border:1px solid var(--rule-hi);
+  border-radius:2px;background:rgba(14,51,134,.25);
+}
+
+/* ————— LAYOUT ————— */
+.wrap{
+  position:relative;z-index:2;
+  max-width:var(--maxw);margin:0 auto;padding:0 20px 80px;
+  display:grid;grid-template-columns:220px 1fr;gap:36px;
+}
+@media (max-width:900px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px 60px}
+}
+
+/* TOC — desktop sticky rail */
+.toc{position:sticky;top:14px;align-self:start;padding-top:24px}
+.toc .title{
+  font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;
+  font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);
+  padding-bottom:8px;margin-bottom:10px;
+}
+.toc ol{list-style:none;padding:0;margin:0;counter-reset:toc}
+.toc li{counter-increment:toc;border-bottom:1px dashed var(--rule);padding:7px 0}
+.toc li::before{
+  content:counter(toc,decimal-leading-zero);
+  font-family:var(--mono);font-size:10px;color:var(--gold-dim);margin-right:10px;
+}
+.toc a{
+  color:var(--paper-dim);border:none;font-family:var(--cond);
+  text-transform:uppercase;letter-spacing:.08em;font-size:13px;
+}
+.toc a:hover,.toc a.active{color:var(--cubs-red-hi)}
+@media (max-width:900px){
+  .toc{position:static;padding:14px 0 8px;margin-bottom:8px;border-bottom:1px solid var(--rule)}
+  .toc ol{display:flex;flex-wrap:wrap;gap:4px 6px}
+  .toc li{border:none;padding:0}
+  .toc li::before{display:none}
+  .toc a{
+    display:inline-block;padding:6px 10px;border:1px solid var(--rule);
+    background:var(--ink-2);border-radius:2px;font-size:11px;
+  }
+}
+
+/* ————— SECTIONS ————— */
+main{min-width:0}
+section{margin:28px 0 36px;scroll-margin-top:10px}
+section > summary, section > .sechead{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:baseline;gap:14px;
+  border-top:4px solid var(--paper);
+  border-bottom:1px solid var(--rule);
+  padding:12px 0 10px;margin-bottom:18px;
+  font-family:var(--cond);text-transform:uppercase;
+}
+section > summary::-webkit-details-marker{display:none}
+section > summary .num{
+  font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.1em;
+  border:1px solid var(--gold-dim);padding:2px 6px;border-radius:2px;
+}
+section > summary .h{
+  font-size:clamp(22px,4vw,34px);font-weight:700;letter-spacing:.04em;
+  color:var(--paper);flex:1;line-height:1;
+}
+section > summary .tag{
+  font-size:11px;letter-spacing:.22em;color:var(--paper-mute);
+}
+section > summary .chev{
+  font-family:var(--mono);font-size:18px;color:var(--gold);
+  transition:transform .2s;
+}
+section[open] > summary .chev{transform:rotate(90deg)}
+section h3{
+  font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;
+  font-size:13px;color:var(--cubs-red-hi);margin:22px 0 10px;
+  border-bottom:1px dotted var(--rule-hi);padding-bottom:6px;
+}
+section h4{
+  font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;
+  font-size:12px;color:var(--gold);margin:16px 0 8px;
+}
+p{margin:0 0 12px}
+em.slang{font-style:italic;color:var(--paper-dim)}
+
+/* ————— SCOREBOARD ————— */
+.scoreboard{
+  background:linear-gradient(180deg,#0a1528 0%,#08101e 100%);
+  border:1px solid var(--cubs-blue);
+  border-radius:3px;padding:18px 18px 14px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.03), 0 10px 30px -10px rgba(14,51,134,.5);
+  position:relative;overflow:hidden;
+}
+.scoreboard::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(90deg,transparent 0 22px,rgba(255,255,255,.018) 22px 23px);
+}
+.scoreboard .meta{
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;
+  font-size:11px;color:var(--paper-mute);margin-bottom:10px;
+}
+.scoreboard .meta .fin{
+  color:var(--gold);border:1px solid var(--gold-dim);padding:2px 8px;
+  border-radius:2px;font-weight:600;
+}
+.scoreboard table{width:100%;border-collapse:collapse;font-family:var(--mono)}
+.scoreboard th,.scoreboard td{
+  padding:7px 6px;text-align:center;font-size:13px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.scoreboard th{
+  font-weight:500;color:var(--paper-mute);font-size:10px;letter-spacing:.1em;
+}
+.scoreboard td.team{
+  text-align:left;font-family:var(--cond);font-size:16px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--paper);font-weight:600;
+  padding-left:10px;width:80px;
+}
+.scoreboard td.rhe{font-weight:700;color:var(--gold);font-size:15px}
+.scoreboard tr.won td.team{color:var(--cubs-red-hi)}
+.scoreboard tr.won td.rhe{color:var(--paper)}
+.scoreboard .pitchers{
+  display:flex;flex-wrap:wrap;gap:18px;margin-top:12px;padding-top:10px;
+  border-top:1px dashed var(--rule-hi);font-size:13px;
+}
+.scoreboard .pitchers span strong{
+  font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:10px;color:var(--paper-mute);
+  margin-right:6px;
+}
+.scoreboard .pitchers .w{color:var(--win)}
+.scoreboard .pitchers .l{color:var(--loss)}
+.scoreboard .pitchers .s{color:var(--gold)}
+
+/* ————— STARS ————— */
+.stars{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0;
+}
+@media (max-width:640px){.stars{grid-template-columns:1fr}}
+.star{
+  background:var(--ink-2);border:1px solid var(--rule);
+  padding:12px 14px;border-radius:2px;position:relative;
+  border-left:3px solid var(--gold);
+}
+.star .rank{
+  font-family:var(--serif);font-style:italic;font-weight:900;font-size:42px;
+  color:var(--gold);line-height:1;position:absolute;top:8px;right:14px;opacity:.25;
+}
+.star .name{
+  font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;
+  font-size:16px;font-weight:600;color:var(--paper);
+}
+.star .line{font-family:var(--mono);font-size:12px;color:var(--paper-dim);margin-top:4px}
+.star .note{font-size:13px;color:var(--paper-dim);margin-top:6px;font-style:italic}
+
+/* ————— TABLES ————— */
+.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0 14px}
+table.data{
+  width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px;
+  min-width:480px;
+}
+table.data th{
+  text-align:left;font-weight:500;color:var(--paper-mute);
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  border-bottom:1px solid var(--rule-hi);padding:8px 10px 6px;
+  background:rgba(255,255,255,.015);position:sticky;top:0;
+}
+table.data td{
+  padding:7px 10px;border-bottom:1px solid var(--rule);color:var(--paper-dim);
+}
+table.data td.name{color:var(--paper);font-family:var(--cond);letter-spacing:.04em;font-size:14px;text-transform:uppercase}
+table.data td.num{text-align:right;color:var(--gold)}
+table.data tr:hover td{background:rgba(201,162,74,.04)}
+table.data td.w{color:var(--win)}
+table.data td.l{color:var(--loss)}
+
+/* standings */
+table.standings td.team{color:var(--paper);font-family:var(--cond);font-size:14px;text-transform:uppercase;letter-spacing:.04em}
+table.standings tr.cubs td{background:rgba(14,51,134,.18)}
+table.standings tr.cubs td.team{color:var(--cubs-red-hi)}
+table.standings td.pct{font-family:var(--mono);color:var(--gold)}
+
+/* key plays */
+ul.plays{list-style:none;padding:0;margin:8px 0}
+ul.plays li{
+  display:grid;grid-template-columns:48px 1fr;gap:12px;
+  padding:10px 0;border-bottom:1px dashed var(--rule);
+}
+ul.plays .inn{
+  font-family:var(--cond);font-weight:700;letter-spacing:.06em;
+  color:var(--gold);font-size:13px;text-transform:uppercase;
+  border-right:2px solid var(--gold-dim);padding-right:12px;text-align:right;
+}
+ul.plays .txt{font-size:14px;color:var(--paper-dim)}
+ul.plays .txt strong{color:var(--paper);font-weight:500}
+
+/* pullquote */
+blockquote.quote{
+  margin:16px 0;padding:18px 22px;border-left:4px solid var(--cubs-red);
+  background:linear-gradient(90deg,rgba(204,52,51,.08),transparent);
+  font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.4;
+  color:var(--paper);position:relative;
+}
+blockquote.quote::before{
+  content:"\201C";position:absolute;top:-8px;left:8px;
+  font-family:var(--serif);font-size:64px;color:var(--cubs-red);
+  line-height:1;font-style:normal;
+}
+blockquote.quote cite{
+  display:block;font-family:var(--cond);font-style:normal;font-size:11px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--paper-mute);
+  margin-top:10px;
+}
+
+/* two-col grid */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media (max-width:720px){.two{grid-template-columns:1fr;gap:0}}
+
+/* hot/cold */
+.tempbox{border:1px solid var(--rule);padding:12px 14px;border-radius:2px;background:var(--ink-2)}
+.tempbox.hot{border-top:3px solid var(--cubs-red)}
+.tempbox.cold{border-top:3px solid #4a7fc4}
+.tempbox h4{margin-top:0}
+.tempbox ul{list-style:none;padding:0;margin:0}
+.tempbox li{
+  display:flex;justify-content:space-between;gap:10px;
+  padding:6px 0;border-bottom:1px dotted var(--rule);font-size:13px;
+}
+.tempbox li:last-child{border-bottom:none}
+.tempbox .n{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
+.tempbox .s{font-family:var(--mono);font-size:11px;color:var(--gold)}
+
+/* next games strip */
+.upcoming{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+@media (max-width:640px){.upcoming{grid-template-columns:1fr}}
+.upcoming .g{
+  background:var(--ink-2);border:1px solid var(--rule);padding:10px 12px;border-radius:2px;
+  border-left:3px solid var(--cubs-blue-hi);
+}
+.upcoming .day{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute)}
+.upcoming .vs{font-family:var(--cond);text-transform:uppercase;font-size:15px;color:var(--paper);margin:2px 0;letter-spacing:.06em}
+.upcoming .prob{font-family:var(--mono);font-size:11px;color:var(--paper-dim)}
+.upcoming .time{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
+
+/* injury/roster list */
+dl.transac{margin:8px 0;font-size:13px}
+dl.transac dt{
+  font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;
+  font-size:11px;color:var(--cubs-red-hi);margin-top:10px;
+}
+dl.transac dd{margin:3px 0 0;color:var(--paper-dim)}
+
+/* minors results strip */
+.minors{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+@media (max-width:720px){.minors{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.minors{grid-template-columns:1fr}}
+.minors .lvl{
+  background:var(--ink-2);border:1px solid var(--rule);padding:10px 12px;border-radius:2px;
+  position:relative;
+}
+.minors .lvl::after{
+  content:attr(data-lvl);position:absolute;top:6px;right:8px;
+  font-family:var(--mono);font-size:9px;color:var(--gold-dim);letter-spacing:.1em;
+}
+.minors .aff{font-family:var(--cond);text-transform:uppercase;font-size:14px;color:var(--paper);letter-spacing:.06em}
+.minors .res{font-family:var(--mono);font-size:12px;margin-top:4px}
+.minors .res .w{color:var(--win)}
+.minors .res .l{color:var(--loss)}
+.minors .note{font-size:11.5px;color:var(--paper-dim);margin-top:6px;line-height:1.4}
+
+/* rivals cards */
+.rivals{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media (max-width:640px){.rivals{grid-template-columns:1fr}}
+.rival{
+  background:var(--ink-2);border:1px solid var(--rule);padding:12px 14px;border-radius:2px;
+  border-left:3px solid var(--gold-dim);
+}
+.rival h4{margin:0 0 4px;color:var(--paper)}
+.rival .score{font-family:var(--mono);font-size:12px;color:var(--gold)}
+.rival p{font-size:13px;margin:6px 0 0;color:var(--paper-dim)}
+
+/* news bullets */
+ul.news{list-style:none;padding:0;margin:8px 0}
+ul.news li{
+  padding:8px 0 8px 18px;border-bottom:1px dashed var(--rule);
+  position:relative;font-size:13.5px;color:var(--paper-dim);line-height:1.5;
+}
+ul.news li::before{
+  content:"\25B6";position:absolute;left:0;top:9px;color:var(--cubs-red);font-size:9px;
+}
+ul.news li strong{color:var(--paper);font-weight:500}
+
+/* fantasy tags */
+.tag-sp1,.tag-sp2,.tag-str,.tag-up,.tag-dn{
+  display:inline-block;font-family:var(--cond);text-transform:uppercase;
+  letter-spacing:.1em;font-size:9px;padding:2px 6px;border-radius:2px;
+  vertical-align:middle;margin-left:6px;font-weight:600;
+}
+.tag-sp1{background:var(--win);color:#0a1a08}
+.tag-sp2{background:var(--gold);color:#1a1305}
+.tag-str{background:var(--rule-hi);color:var(--paper)}
+.tag-up{background:rgba(110,168,106,.18);color:var(--win);border:1px solid var(--win)}
+.tag-dn{background:rgba(192,85,79,.18);color:var(--loss);border:1px solid var(--loss)}
+
+/* today's slate */
+.slate{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media (max-width:640px){.slate{grid-template-columns:1fr}}
+.slate .g{
+  background:var(--ink-2);border:1px solid var(--rule);padding:10px 12px;border-radius:2px;
+  display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;
+}
+.slate .matchup{font-family:var(--cond);text-transform:uppercase;font-size:13px;color:var(--paper);letter-spacing:.04em}
+.slate .time{font-family:var(--mono);font-size:11px;color:var(--gold);text-align:right}
+.slate .probs{font-family:var(--mono);font-size:10.5px;color:var(--paper-mute);grid-column:1/-1}
+.slate .tv{font-family:var(--cond);font-size:10px;color:var(--paper-mute);letter-spacing:.1em;text-align:right}
+
+/* ————— FOOTER ————— */
+footer.foot{
+  max-width:var(--maxw);margin:40px auto 0;padding:20px;
+  border-top:6px double var(--paper);position:relative;z-index:2;
+  font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:10px;
+  color:var(--paper-mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+footer.foot .flag{color:var(--gold)}
+
+/* print */
+@media print{
+  body{background:#fff;color:#111}
+  body::before{display:none}
+  .toc,.masthead .dek .pill{display:none}
+  .wrap{display:block}
+  a{color:#111;border:none}
+  section > summary .chev{display:none}
+  section[open] > summary,section > summary{border-top-color:#111;border-bottom-color:#555}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="kicker">
+    <span>Vol. IV &middot; <span class="vol">No. 094</span></span>
+    <span>A Daily Dispatch from the Friendly Confines &amp; Beyond</span>
+    <span>Est. 2024</span>
+  </div>
+  <h1>
+    <span class="the">The</span>
+    <span class="lineup">Morning <em style="font-style:italic">Lineup</em></span>
+  </h1>
+  <div class="dek">
+    <span class="item"><span class="label">Sat</span><span class="val">Apr 4, 2026</span></span>
+    <span class="item"><span class="label">Wrigley Wx</span><span class="val">54&deg; / NE 11mph / cirrus</span></span>
+    <span class="item"><span class="label">Cubs</span><span class="rec">6&ndash;2 &middot; 1st NL Central</span></span>
+    <span class="item pill">Day Game Tomorrow</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <nav class="toc" aria-label="Sections">
+    <div class="title">Sections</div>
+    <ol>
+      <li><a href="#cubs">The Cubs</a></li>
+      <li><a href="#minors">Down on the Farm</a></li>
+      <li><a href="#nlc">NL Central</a></li>
+      <li><a href="#league">Around the League</a></li>
+      <li><a href="#fantasy">Fantasy Desk</a></li>
+      <li><a href="#today">Today&rsquo;s Slate</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+  <!-- ═══════════════ CUBS ═══════════════ -->
+  <section id="cubs" open>
+    <summary>
+      <span class="num">01</span>
+      <span class="h">The Cubs</span>
+      <span class="tag">W 7&ndash;3 at Cincinnati</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+
+    <div class="scoreboard" aria-label="Line score">
+      <div class="meta">
+        <span>Great American Ball Park &middot; 6:40 PM ET &middot; Att 24,118</span>
+        <span class="fin">Final / 9</span>
+      </div>
+      <table>
+        <thead><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>R</th><th>H</th><th>E</th></tr></thead>
+        <tbody>
+          <tr class="won"><td class="team">CHC</td><td>0</td><td>2</td><td>0</td><td>1</td><td>0</td><td>3</td><td>0</td><td>1</td><td>0</td><td class="rhe">7</td><td class="rhe">11</td><td class="rhe">0</td></tr>
+          <tr><td class="team">CIN</td><td>1</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="rhe">3</td><td class="rhe">8</td><td class="rhe">2</td></tr>
+        </tbody>
+      </table>
+      <div class="pitchers">
+        <span><strong>W</strong><span class="w">Imanaga (2&ndash;0, 1.42)</span></span>
+        <span><strong>L</strong><span class="l">Greene (0&ndash;1, 5.87)</span></span>
+        <span><strong>S</strong><span class="s">Pressly (2)</span></span>
+      </div>
+    </div>
+
+    <h3>Three Stars</h3>
+    <div class="stars">
+      <div class="star">
+        <div class="rank">1</div>
+        <div class="name">Pete Crow&ndash;Armstrong</div>
+        <div class="line">3&ndash;5, 2B, 3B, HR, 3 RBI, SB</div>
+        <div class="note">A triple short of the cycle in the 7th, then waved it in. <em>The kid is cooking.</em></div>
+      </div>
+      <div class="star">
+        <div class="rank">2</div>
+        <div class="name">Shota Imanaga</div>
+        <div class="line">6.1 IP, 5 H, 1 ER, 1 BB, 9 K</div>
+        <div class="note">Splitter had the Reds waving at ghosts. Seven punchouts swinging.</div>
+      </div>
+      <div class="star">
+        <div class="rank">3</div>
+        <div class="name">Kyle Tucker</div>
+        <div class="line">2&ndash;4, HR, 2 RBI, BB</div>
+        <div class="note">Opposite&ndash;field shot to the left&ndash;field seats in the 6th put it out of reach.</div>
+      </div>
+    </div>
+
+    <h3>Key Plays</h3>
+    <ul class="plays">
+      <li><span class="inn">T2</span><span class="txt"><strong>Busch</strong> muscles a two&ndash;out, 0&ndash;2 slider the other way for an RBI double. 2&ndash;1 Cubs.</span></li>
+      <li><span class="inn">B5</span><span class="txt">De La Cruz turns on a fastball, 442&ft;&ndash;foot moonshot to right. Reds tie it at 3.</span></li>
+      <li><span class="inn">T6</span><span class="txt"><strong>PCA</strong> rolls a triple into the right&ndash;center gap, <strong>Hoerner</strong> and <strong>Swanson</strong> score. 5&ndash;3.</span></li>
+      <li><span class="inn">T6</span><span class="txt"><strong>Tucker</strong> follows with a no&ndash;doubter to left. Back&ndash;to&ndash;back, 6&ndash;3.</span></li>
+      <li><span class="inn">T8</span><span class="txt"><strong>Happ</strong> plates <strong>Shaw</strong> with a two&ndash;out knock off a lefty. Insurance run, 7&ndash;3.</span></li>
+    </ul>
+
+    <blockquote class="quote">
+      We&rsquo;re just playing free. Pete&rsquo;s in the driver&rsquo;s seat, Sho was unreal, and the dugout&rsquo;s loose. That&rsquo;s the brand of ball we&rsquo;re after.
+      <cite>&mdash; Craig Counsell, postgame</cite>
+    </blockquote>
+
+    <div class="two">
+      <div>
+        <h3>NL Central Standings</h3>
+        <div class="tblwrap">
+        <table class="data standings">
+          <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th><th style="text-align:right">PCT</th><th style="text-align:right">GB</th><th style="text-align:right">L10</th></tr></thead>
+          <tbody>
+            <tr class="cubs"><td class="team">Cubs</td><td class="num">6</td><td class="num">2</td><td class="num pct">.750</td><td class="num">&mdash;</td><td class="num">6&ndash;2</td></tr>
+            <tr><td class="team">Brewers</td><td class="num">5</td><td class="num">3</td><td class="num pct">.625</td><td class="num">1.0</td><td class="num">5&ndash;3</td></tr>
+            <tr><td class="team">Cardinals</td><td class="num">4</td><td class="num">4</td><td class="num pct">.500</td><td class="num">2.0</td><td class="num">4&ndash;4</td></tr>
+            <tr><td class="team">Reds</td><td class="num">3</td><td class="num">5</td><td class="num pct">.375</td><td class="num">3.0</td><td class="num">3&ndash;5</td></tr>
+            <tr><td class="team">Pirates</td><td class="num">2</td><td class="num">6</td><td class="num pct">.250</td><td class="num">4.0</td><td class="num">2&ndash;6</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div>
+        <h3>Injuries &amp; Roster</h3>
+        <dl class="transac">
+          <dt>IL &mdash; 10 Day</dt>
+          <dd>RHP <strong>Javier Assad</strong> (R oblique strain, retro 3/31)</dd>
+          <dd>IF <strong>Nico Hoerner</strong> <em>DTD</em> &mdash; jammed L wrist, X&ndash;rays negative</dd>
+          <dt>IL &mdash; 60 Day</dt>
+          <dd>RHP <strong>Caleb Kilian</strong> (R elbow, TJ recovery)</dd>
+          <dt>Moves</dt>
+          <dd>Recalled RHP <strong>Daniel Palencia</strong> from Iowa (AAA)</dd>
+          <dd>Optioned C <strong>Moises Ballesteros</strong> to Iowa after Thu</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="tempbox hot">
+        <h4>Hitters Heating Up</h4>
+        <ul>
+          <li><span class="n">Crow&ndash;Armstrong</span><span class="s">.414 / 4 HR / 1.188 OPS (L7)</span></li>
+          <li><span class="n">Busch</span><span class="s">.360 / 2 HR / .958 OPS</span></li>
+          <li><span class="n">Tucker</span><span class="s">.333 / 3 HR / 1.044 OPS</span></li>
+          <li><span class="n">Shaw</span><span class="s">.320 / 5 RBI / .887 OPS</span></li>
+        </ul>
+      </div>
+      <div class="tempbox cold">
+        <h4>In the Icebox</h4>
+        <ul>
+          <li><span class="n">Suzuki</span><span class="s">.136 / 0 HR / .402 OPS</span></li>
+          <li><span class="n">Swanson</span><span class="s">.167 / 11 K / .490 OPS</span></li>
+          <li><span class="n">Amaya</span><span class="s">.143 / 8 K / .396 OPS</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="tempbox hot">
+        <h4>Arms Dealing</h4>
+        <ul>
+          <li><span class="n">Imanaga</span><span class="s">2&ndash;0, 1.42 ERA, 0.95 WHIP</span></li>
+          <li><span class="n">Steele</span><span class="s">1&ndash;0, 2.08 ERA, 13 K</span></li>
+          <li><span class="n">Hodge</span><span class="s">4.0 IP, 0 ER, 6 K (RP)</span></li>
+        </ul>
+      </div>
+      <div class="tempbox cold">
+        <h4>Arms in the Doghouse</h4>
+        <ul>
+          <li><span class="n">Taillon</span><span class="s">0&ndash;1, 6.92 ERA, 3 HR allowed</span></li>
+          <li><span class="n">Boyd</span><span class="s">1.57 WHIP, 6 BB in 11.1 IP</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Next Three Games</h3>
+    <div class="upcoming">
+      <div class="g">
+        <div class="day">Sat, Apr 4 &middot; at CIN</div>
+        <div class="vs">Steele vs Martinez</div>
+        <div class="prob">Steele (1&ndash;0, 2.08) &middot; Martinez (0&ndash;1, 4.55)</div>
+        <div class="time">7:10 PM ET &middot; MARQ</div>
+      </div>
+      <div class="g">
+        <div class="day">Sun, Apr 5 &middot; at CIN</div>
+        <div class="vs">Boyd vs Abbott</div>
+        <div class="prob">Boyd (0&ndash;1, 4.76) &middot; Abbott (1&ndash;0, 3.12)</div>
+        <div class="time">1:40 PM ET &middot; MARQ</div>
+      </div>
+      <div class="g">
+        <div class="day">Mon, Apr 6 &middot; vs SD</div>
+        <div class="vs">Horton vs Darvish</div>
+        <div class="prob">Horton (1&ndash;0, 2.84) &middot; Darvish (0&ndash;1, 5.19)</div>
+        <div class="time">1:20 PM CT &middot; MARQ</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ MINORS ═══════════════ -->
+  <section id="minors" open>
+    <summary>
+      <span class="num">02</span>
+      <span class="h">Down on the Farm</span>
+      <span class="tag">4 Affiliates &middot; 3&ndash;1</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+
+    <div class="minors">
+      <div class="lvl" data-lvl="AAA">
+        <div class="aff">Iowa Cubs</div>
+        <div class="res"><span class="w">W 6&ndash;4</span> vs Indianapolis</div>
+        <div class="note"><strong>Caissie</strong> 2&ndash;4, HR (3), 3 RBI. <strong>Alcantara</strong> 5 IP, 2 ER, 7 K.</div>
+      </div>
+      <div class="lvl" data-lvl="AA">
+        <div class="aff">Tennessee Smokies</div>
+        <div class="res"><span class="w">W 3&ndash;1</span> at Birmingham</div>
+        <div class="note"><strong>Cam Smith</strong> 2&ndash;4, 2B. <strong>Kohl Franklin</strong> 6.0 IP, 1 ER, 8 K &mdash; filthy changeup.</div>
+      </div>
+      <div class="lvl" data-lvl="A+">
+        <div class="aff">South Bend Cubs</div>
+        <div class="res"><span class="l">L 2&ndash;5</span> at Lake County</div>
+        <div class="note"><strong>Jefferson Rojas</strong> 1&ndash;3, BB. <strong>Triantos</strong> 0&ndash;4 after four straight MB games.</div>
+      </div>
+      <div class="lvl" data-lvl="A">
+        <div class="aff">Myrtle Beach Pelicans</div>
+        <div class="res"><span class="w">W 8&ndash;2</span> vs Fayetteville</div>
+        <div class="note"><strong>Jaxon Wiggins</strong> 5 IP, 0 ER, 9 K &mdash; 97 heat, fastball/curve mix overwhelming.</div>
+      </div>
+    </div>
+
+    <h3>Prospect Watch</h3>
+    <ul class="news">
+      <li><strong>Owen Caissie (OF, AAA)</strong> &mdash; .342/.423/.658 slash through 8 games. Barrel rate off the charts. First call&ndash;up candidate if Suzuki doesn&rsquo;t snap out of it.</li>
+      <li><strong>Cam Smith (3B/OF, AA)</strong> &mdash; Raking in Tennessee. Defensive versatility growing (saw time in RF Thursday).</li>
+      <li><strong>Moises Ballesteros (C, AAA)</strong> &mdash; Optioned back down after brief cameo. Focus on game&ndash;calling reps.</li>
+      <li><strong>Jaxon Wiggins (RHP, A)</strong> &mdash; 2024 3rd&ndash;rounder looking every bit the steal. Put him on your dynasty radar.</li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════ NL CENTRAL ═══════════════ -->
+  <section id="nlc" open>
+    <summary>
+      <span class="num">03</span>
+      <span class="h">NL Central</span>
+      <span class="tag">The Rivals</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+
+    <div class="rivals">
+      <div class="rival">
+        <h4>Milwaukee Brewers <span class="score">L 2&ndash;4 vs SF</span></h4>
+        <p>Contreras homered but the bullpen coughed up a 2&ndash;run lead in the 8th. Megill still hunting his first W.</p>
+      </div>
+      <div class="rival">
+        <h4>St. Louis Cardinals <span class="score">W 5&ndash;1 at PIT</span></h4>
+        <p>Gray tossed 7 shutout, mixed curve/cutter beautifully. Arenado, Nootbaar both deep. Rested bullpen.</p>
+      </div>
+      <div class="rival">
+        <h4>Cincinnati Reds <span class="score">L 3&ndash;7 vs CHC</span></h4>
+        <p>De La Cruz bomb the only highlight. Greene scuffling early &mdash; command issues in 3&ndash;1 counts.</p>
+      </div>
+      <div class="rival">
+        <h4>Pittsburgh Pirates <span class="score">L 1&ndash;5 vs STL</span></h4>
+        <p>Skenes tomorrow. Reynolds 0&ndash;4, K twice. Pirates offense starved for thump beyond the top of the order.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ LEAGUE ═══════════════ -->
+  <section id="league" open>
+    <summary>
+      <span class="num">04</span>
+      <span class="h">Around the League</span>
+      <span class="tag">Apr 3 &middot; 15 games</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+
+    <h3>Yesterday&rsquo;s Scoreboard</h3>
+    <div class="tblwrap">
+    <table class="data">
+      <thead><tr><th>Away</th><th></th><th>Home</th><th>Final</th><th>WP</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Cubs</td><td class="num">7</td><td class="name">Reds 3</td><td class="num w">CHC</td><td>Imanaga</td></tr>
+        <tr><td class="name">Giants</td><td class="num">4</td><td class="name">Brewers 2</td><td class="num w">SF</td><td>Webb</td></tr>
+        <tr><td class="name">Cardinals</td><td class="num">5</td><td class="name">Pirates 1</td><td class="num w">STL</td><td>Gray</td></tr>
+        <tr><td class="name">Mets</td><td class="num">3</td><td class="name">Phillies 8</td><td class="num w">PHI</td><td>Wheeler</td></tr>
+        <tr><td class="name">Braves</td><td class="num">6</td><td class="name">Marlins 2</td><td class="num w">ATL</td><td>Strider</td></tr>
+        <tr><td class="name">Nationals</td><td class="num">1</td><td class="name">Dodgers 9</td><td class="num w">LAD</td><td>Yamamoto</td></tr>
+        <tr><td class="name">Rockies</td><td class="num">4</td><td class="name">D&rsquo;backs 5</td><td class="num w">ARI</td><td>Gallen</td></tr>
+        <tr><td class="name">Padres</td><td class="num">7</td><td class="name">Angels 3</td><td class="num w">SD</td><td>King</td></tr>
+        <tr><td class="name">Yankees</td><td class="num">2</td><td class="name">Red Sox 4</td><td class="num w">BOS</td><td>Crochet</td></tr>
+        <tr><td class="name">Blue Jays</td><td class="num">5</td><td class="name">Orioles 6</td><td class="num w">BAL</td><td>Bradish</td></tr>
+        <tr><td class="name">Rays</td><td class="num">3</td><td class="name">Rangers 0</td><td class="num w">TB</td><td>Springs</td></tr>
+        <tr><td class="name">Tigers</td><td class="num">8</td><td class="name">White Sox 1</td><td class="num w">DET</td><td>Skubal</td></tr>
+        <tr><td class="name">Twins</td><td class="num">2</td><td class="name">Royals 5</td><td class="num w">KC</td><td>Ragans</td></tr>
+        <tr><td class="name">Guardians</td><td class="num">6</td><td class="name">Astros 4</td><td class="num w">CLE</td><td>Bibee</td></tr>
+        <tr><td class="name">Mariners</td><td class="num">3</td><td class="name">Athletics 1</td><td class="num w">SEA</td><td>Castillo</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Standings &mdash; All Six Divisions</h3>
+    <div class="two">
+      <div>
+        <h4>AL East</h4>
+        <div class="tblwrap"><table class="data standings"><thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th><th style="text-align:right">GB</th></tr></thead><tbody>
+          <tr><td class="team">Orioles</td><td class="num">6</td><td class="num">2</td><td class="num">&mdash;</td></tr>
+          <tr><td class="team">Red Sox</td><td class="num">5</td><td class="num">3</td><td class="num">1.0</td></tr>
+          <tr><td class="team">Yankees</td><td class="num">4</td><td class="num">4</td><td class="num">2.0</td></tr>
+          <tr><td class="team">Rays</td><td class="num">4</td><td class="num">4</td><td class="num">2.0</td></tr>
+          <tr><td class="team">Blue Jays</td><td class="num">3</td><td class="num">5</td><td class="num">3.0</td></tr>
+        </tbody></table></div>
+
+        <h4>AL Central</h4>
+        <div class="tblwrap"><table class="data standings"><thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th><th style="text-align:right">GB</th></tr></thead><tbody>
+          <tr><td class="team">Tigers</td><td class="num">6</td><td class="num">2</td><td class="num">&mdash;</td></tr>
+          <tr><td class="team">Royals</td><td class="num">5</td><td class="num">3</td><td class="num">1.0</td></tr>
+          <tr><td class="team">Guardians</td><td class="num">5</td><td class="num">3</td><td class="num">1.0</td></tr>
+          <tr><td class="team">Twins</td><td class="num">3</td><td class="num">5</td><td class="num">3.0</td></tr>
+          <tr><td class="team">White Sox</td><td class="num">1</td><td class="num">7</td><td class="num">5.0</td></tr>
+        </tbody></table></div>
+
+        <h4>AL West</h4>
+        <div class="tblwrap"><table class="data standings"><thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th><th style="text-align:right">GB</th></tr></thead><tbody>
+          <tr><td class="team">Mariners</td><td class="num">6</td><td class="num">2</td><td class="num">&mdash;</td></tr>
+          <tr><td class="team">Rangers</td><td class="num">4</td><td class="num">4</td><td class="num">2.0</td></tr>
+          <tr><td class="team">Astros</td><td class="num">4</td><td class="num">4</td><td class="num">2.0</td></tr>
+          <tr><td class="team">Angels</td><td class="num">3</td><td class="num">5</td><td class="num">3.0</td></tr>
+          <tr><td class="team">Athletics</td><td class="num">3</td><td class="num">5</td><td class="num">3.0</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <h4>NL East</h4>
+        <div class="tblwrap"><table class="data standings"><thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th><th style="text-align:right">GB</th></tr></thead><tbody>
+          <tr><td class="team">Phillies</td><td class="num">6</td><td class="num">2</td><td class="num">&mdash;</td></tr>
+          <tr><td class="team">Braves</td><td class="num">5</td><td class="num">3</td><td class="num">1.0</td></tr>
+          <tr><td class="team">Mets</td><td class="num">4</td><td class="num">4</td><td class="num">2.0</td></tr>
+          <tr><td class="team">Nationals</td><td class="num">3</td><td class="num">5</td><td class="num">3.0</td></tr>
+          <tr><td class="team">Marlins</td><td class="num">2</td><td class="num">6</td><td class="num">4.0</td></tr>
+        </tbody></table></div>
+
+        <h4>NL Central</h4>
+        <div class="tblwrap"><table class="data standings"><thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th><th style="text-align:right">GB</th></tr></thead><tbody>
+          <tr class="cubs"><td class="team">Cubs</td><td class="num">6</td><td class="num">2</td><td class="num">&mdash;</td></tr>
+          <tr><td class="team">Brewers</td><td class="num">5</td><td class="num">3</td><td class="num">1.0</td></tr>
+          <tr><td class="team">Cardinals</td><td class="num">4</td><td class="num">4</td><td class="num">2.0</td></tr>
+          <tr><td class="team">Reds</td><td class="num">3</td><td class="num">5</td><td class="num">3.0</td></tr>
+          <tr><td class="team">Pirates</td><td class="num">2</td><td class="num">6</td><td class="num">4.0</td></tr>
+        </tbody></table></div>
+
+        <h4>NL West</h4>
+        <div class="tblwrap"><table class="data standings"><thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th><th style="text-align:right">GB</th></tr></thead><tbody>
+          <tr><td class="team">Dodgers</td><td class="num">7</td><td class="num">1</td><td class="num">&mdash;</td></tr>
+          <tr><td class="team">D&rsquo;backs</td><td class="num">5</td><td class="num">3</td><td class="num">2.0</td></tr>
+          <tr><td class="team">Padres</td><td class="num">5</td><td class="num">3</td><td class="num">2.0</td></tr>
+          <tr><td class="team">Giants</td><td class="num">4</td><td class="num">4</td><td class="num">3.0</td></tr>
+          <tr><td class="team">Rockies</td><td class="num">1</td><td class="num">7</td><td class="num">6.0</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+
+    <h3>News &amp; Notes</h3>
+    <ul class="news">
+      <li><strong>Dodgers</strong> roll to 7&ndash;1. Yamamoto carved the Nats: 7 IP, 1 R, 11 K &mdash; splitter back to Cy Young form.</li>
+      <li><strong>Tigers</strong> at 6&ndash;2 behind Skubal shoving again. 12 K in 7 against the Pale Hose.</li>
+      <li><strong>White Sox</strong> 1&ndash;7 &mdash; already a full season&rsquo;s worth of tire fire. Bullpen ERA 8.14.</li>
+      <li><strong>Rangers</strong> shut out by Springs; team is in a collective slumber at the dish (.198 TAv).</li>
+      <li><strong>Phillies</strong> ride Wheeler/Nola atop NL East &mdash; Wheeler 0.89 WHIP through two starts.</li>
+      <li><strong>Paul Skenes</strong> takes the bump today for Pittsburgh. Must&ndash;watch.</li>
+    </ul>
+
+    <h3>League Leaders</h3>
+    <div class="two">
+      <div>
+        <h4>Batting</h4>
+        <div class="tblwrap"><table class="data"><thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead><tbody>
+          <tr><td>AVG</td><td class="name">Judge (NYY)</td><td class="num">.458</td></tr>
+          <tr><td>HR</td><td class="name">Ohtani (LAD)</td><td class="num">5</td></tr>
+          <tr><td>RBI</td><td class="name">Harper (PHI)</td><td class="num">14</td></tr>
+          <tr><td>SB</td><td class="name">Witt Jr. (KC)</td><td class="num">6</td></tr>
+          <tr><td>OPS</td><td class="name">Ohtani (LAD)</td><td class="num">1.412</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <h4>Pitching</h4>
+        <div class="tblwrap"><table class="data"><thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead><tbody>
+          <tr><td>ERA</td><td class="name">Skubal (DET)</td><td class="num">0.64</td></tr>
+          <tr><td>K</td><td class="name">Skubal (DET)</td><td class="num">24</td></tr>
+          <tr><td>WHIP</td><td class="name">Wheeler (PHI)</td><td class="num">0.89</td></tr>
+          <tr><td>SV</td><td class="name">D&iacute;az (NYM)</td><td class="num">4</td></tr>
+          <tr><td>W</td><td class="name">Imanaga (CHC)</td><td class="num">2</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FANTASY ═══════════════ -->
+  <section id="fantasy" open>
+    <summary>
+      <span class="num">05</span>
+      <span class="h">Fantasy Desk</span>
+      <span class="tag">Streamers &amp; Pickups</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+
+    <div class="two">
+      <div>
+        <h4>Trending Up <span class="tag-up">HOT</span></h4>
+        <ul class="news">
+          <li><strong>Pete Crow&ndash;Armstrong</strong> &mdash; If you got him past pick 60, you stole. Elite speed/power/defense combo is real.</li>
+          <li><strong>Michael Busch</strong> &mdash; Breakout year forming. Everyday 1B with juice vs RHP.</li>
+          <li><strong>Tarik Skubal</strong> &mdash; Consensus SP1. 0.64 ERA, 24 K in 14.0 IP. Untouchable.</li>
+          <li><strong>Colt Keith</strong> &mdash; Multi&ndash;position bat in Detroit&rsquo;s best lineup in a decade.</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Trending Down <span class="tag-dn">COLD</span></h4>
+        <ul class="news">
+          <li><strong>Seiya Suzuki</strong> &mdash; .136 AVG. Hand placement looks off; track for 2 more weeks.</li>
+          <li><strong>Hunter Greene</strong> &mdash; Command gone, 5.87 ERA. Bench in tough matchups.</li>
+          <li><strong>Bo Bichette</strong> &mdash; Bat speed visibly down. Concerning.</li>
+          <li><strong>Will Smith</strong> &mdash; Nothing dropping. Slump&ndash;bust candidate but frustrating for now.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Today&rsquo;s Probable Starters</h3>
+    <div class="tblwrap">
+    <table class="data">
+      <thead><tr><th>Pitcher</th><th>Matchup</th><th style="text-align:right">ERA</th><th style="text-align:right">K/9</th><th>Tier</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Paul Skenes</td><td>PIT vs STL</td><td class="num">1.80</td><td class="num">12.6</td><td>Must start <span class="tag-sp1">SP1</span></td></tr>
+        <tr><td class="name">Logan Webb</td><td>SF at MIL</td><td class="num">2.45</td><td class="num">9.2</td><td>Must start <span class="tag-sp1">SP1</span></td></tr>
+        <tr><td class="name">Justin Steele</td><td>CHC at CIN</td><td class="num">2.08</td><td class="num">10.8</td><td>Must start <span class="tag-sp1">SP1</span></td></tr>
+        <tr><td class="name">Cristopher S&aacute;nchez</td><td>PHI vs NYM</td><td class="num">3.21</td><td class="num">8.4</td><td>Solid <span class="tag-sp2">SP2</span></td></tr>
+        <tr><td class="name">Reese Olson</td><td>DET vs CWS</td><td class="num">3.60</td><td class="num">9.1</td><td>Great spot <span class="tag-sp2">SP2</span></td></tr>
+        <tr><td class="name">Jameson Taillon</td><td>CHC at CIN (tmw)</td><td class="num">6.92</td><td class="num">6.8</td><td>Stream risk <span class="tag-str">STR</span></td></tr>
+        <tr><td class="name">Mitch Keller</td><td>PIT vs STL</td><td class="num">4.15</td><td class="num">7.9</td><td>Streamer <span class="tag-str">STR</span></td></tr>
+        <tr><td class="name">Kyle Bradish</td><td>BAL vs TOR</td><td class="num">3.42</td><td class="num">9.5</td><td>Streamer <span class="tag-str">STR</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Waiver Wire Adds (rostered &lt;40%)</h3>
+    <ul class="news">
+      <li><strong>Colt Keith (2B/3B, DET)</strong> &mdash; 28% &mdash; Hitting 2nd in a top&ndash;5 offense. <em class="slang">Add everywhere.</em></li>
+      <li><strong>Daniel Palencia (RP, CHC)</strong> &mdash; 12% &mdash; High&ndash;leverage arm. Handcuff if you roster Pressly.</li>
+      <li><strong>Cade Horton (SP, CHC)</strong> &mdash; 35% &mdash; 2.84 ERA, command sharp. Stash.</li>
+      <li><strong>Parker Meadows (OF, DET)</strong> &mdash; 22% &mdash; Speed/D profile with more pop than expected.</li>
+      <li><strong>MacKenzie Gore (SP, WAS)</strong> &mdash; 38% &mdash; Career&ndash;best whiff rates through two.</li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════ TODAY ═══════════════ -->
+  <section id="today" open>
+    <summary>
+      <span class="num">06</span>
+      <span class="h">Today&rsquo;s Slate</span>
+      <span class="tag">Sat Apr 4 &middot; 15 games</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+
+    <div class="slate">
+      <div class="g"><div class="matchup">Cubs @ Reds</div><div class="time">7:10 ET</div><div class="probs">Steele (L) vs Martinez (R)</div><div class="tv">MARQ / BSO</div></div>
+      <div class="g"><div class="matchup">Cardinals @ Pirates</div><div class="time">6:35 ET</div><div class="probs">Mikolas (R) vs Skenes (R)</div><div class="tv">BSM</div></div>
+      <div class="g"><div class="matchup">Giants @ Brewers</div><div class="time">7:10 ET</div><div class="probs">Webb (R) vs Peralta (R)</div><div class="tv">NBCSCA</div></div>
+      <div class="g"><div class="matchup">Mets @ Phillies</div><div class="time">6:05 ET</div><div class="probs">Manaea (L) vs S&aacute;nchez (L)</div><div class="tv">SNY</div></div>
+      <div class="g"><div class="matchup">Braves @ Marlins</div><div class="time">6:40 ET</div><div class="probs">Schwellenbach (R) vs Cabrera (R)</div><div class="tv">FDSSE</div></div>
+      <div class="g"><div class="matchup">Nationals @ Dodgers</div><div class="time">9:10 ET</div><div class="probs">Gore (L) vs Glasnow (R)</div><div class="tv">SNLA</div></div>
+      <div class="g"><div class="matchup">Rockies @ D&rsquo;backs</div><div class="time">8:10 ET</div><div class="probs">Freeland (L) vs Rodriguez (R)</div><div class="tv">DBACKS.TV</div></div>
+      <div class="g"><div class="matchup">Padres @ Angels</div><div class="time">9:07 ET</div><div class="probs">Cease (R) vs Sandoval (L)</div><div class="tv">BSW</div></div>
+      <div class="g"><div class="matchup">Yankees @ Red Sox</div><div class="time">4:10 ET</div><div class="probs">Rodon (L) vs Houck (R)</div><div class="tv">FOX</div></div>
+      <div class="g"><div class="matchup">Blue Jays @ Orioles</div><div class="time">7:05 ET</div><div class="probs">Gausman (R) vs Bradish (R)</div><div class="tv">MASN</div></div>
+      <div class="g"><div class="matchup">Rays @ Rangers</div><div class="time">7:05 ET</div><div class="probs">Pepiot (R) vs deGrom (R)</div><div class="tv">BSSW</div></div>
+      <div class="g"><div class="matchup">Tigers @ White Sox</div><div class="time">7:10 ET</div><div class="probs">Olson (R) vs Crochet (L) *</div><div class="tv">NBCSCH</div></div>
+      <div class="g"><div class="matchup">Twins @ Royals</div><div class="time">7:10 ET</div><div class="probs">Ryan (R) vs Wacha (R)</div><div class="tv">BSN</div></div>
+      <div class="g"><div class="matchup">Guardians @ Astros</div><div class="time">7:10 ET</div><div class="probs">McKenzie (R) vs Valdez (L)</div><div class="tv">SPACE</div></div>
+      <div class="g"><div class="matchup">Mariners @ Athletics</div><div class="time">10:07 ET</div><div class="probs">Gilbert (R) vs Sears (L)</div><div class="tv">ROOT</div></div>
+    </div>
+  </section>
+
+  </main>
+</div>
+
+<footer class="foot">
+  <span>The Morning Lineup &middot; <span class="flag">A Friendly Confines Broadsheet</span></span>
+  <span>Sources: MLB Stats API &middot; Baseball&ndash;Reference &middot; FanGraphs</span>
+  <span>Filed 04/04/26 06:00 CT</span>
+</footer>
+
+<script>
+(function(){
+  // TOC active-link scrollspy
+  var links = document.querySelectorAll('.toc a[href^="#"]');
+  var sections = Array.from(links).map(function(a){
+    return {link:a, el:document.querySelector(a.getAttribute('href'))};
+  });
+  function onScroll(){
+    var y = window.scrollY + 120;
+    var current = sections[0];
+    for (var i=0;i<sections.length;i++){
+      if (sections[i].el && sections[i].el.offsetTop <= y) current = sections[i];
+    }
+    links.forEach(function(l){l.classList.remove('active')});
+    if (current) current.link.classList.add('active');
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // Smooth scroll w/ offset for anchor jumps
+  links.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      var details = el.closest('details');
+      if (details && !details.open) details.open = true;
+      window.scrollTo({top: el.offsetTop - 10, behavior: 'smooth'});
+      history.replaceState(null,'','#'+id);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
