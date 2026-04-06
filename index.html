@@ -143,6 +143,30 @@ dl.transac dd{margin:3px 0 0;color:var(--paper-dim)}
 .slate .probs{font-family:var(--mono);font-size:10.5px;color:var(--paper-mute);grid-column:1/-1}
 footer.foot{max-width:var(--maxw);margin:40px auto 0;padding:20px;border-top:6px double var(--paper);position:relative;z-index:2;font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--paper-mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 footer.foot .flag{color:var(--gold)}
+#live-game{margin:0 0 28px}
+.live-widget{background:linear-gradient(180deg,#0a1528,#08101e);border:2px solid var(--cubs-blue);border-radius:3px;padding:20px 24px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.03),0 10px 30px -10px rgba(14,51,134,.5);position:relative;overflow:hidden}
+.live-widget::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,transparent 0 22px,rgba(255,255,255,.018) 22px 23px)}
+.live-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--cubs-red-hi);margin-bottom:12px}
+.live-badge .dot{width:8px;height:8px;background:var(--cubs-red);border-radius:50%;animation:pulse 1.5s ease-in-out infinite}
+.live-badge .flag{color:var(--gold);font-size:13px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.live-widget .score-row{display:flex;justify-content:center;align-items:center;gap:18px;font-family:var(--cond);font-size:clamp(28px,6vw,48px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8px 0 14px}
+.live-widget .team-abbr{min-width:2.6em;text-align:center}
+.live-widget .runs{color:var(--gold);font-family:var(--mono)}
+.live-widget .score-sep{color:var(--paper-mute);font-size:.5em}
+.live-widget .situation{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;color:var(--paper-dim);padding:10px 0;border-top:1px dashed var(--rule-hi);margin:10px 0 0}
+.live-widget .count{display:flex;gap:10px;align-items:center}
+.live-widget .count-label{color:var(--paper-mute);font-size:10px;margin-right:2px}
+.live-widget .count-val{color:var(--gold);font-weight:600}
+.live-widget .diamond{display:block}
+.live-widget .live-matchup{text-align:center;font-family:var(--body);font-size:13px;color:var(--paper-dim);margin-top:10px}
+.live-widget .live-matchup strong{color:var(--paper);font-weight:500}
+.live-widget .last-play{text-align:center;font-size:13px;color:var(--paper-mute);font-style:italic;margin-top:8px;padding-top:8px;border-top:1px dotted var(--rule)}
+.live-widget.final .live-badge{color:var(--paper-mute)}
+.live-widget.preview .live-badge{color:var(--gold)}
+.live-widget.preview .score-row{font-size:clamp(20px,4vw,32px)}
+.live-widget.idle{border-color:var(--rule);opacity:.7}
+.idle-msg{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--paper-mute);text-align:center;padding:10px 0}
 </style>
 </head>
 <body>
@@ -176,6 +200,8 @@ footer.foot .flag{color:var(--gold)}
   </nav>
 
   <main>
+
+  <div id="live-game"></div>
 
   <section id="cubs" open>
     <summary>
@@ -391,7 +417,7 @@ footer.foot .flag{color:var(--gold)}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Friendly Confines Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/06/26 17:21 CT</span>
+  <span>Filed 04/06/26 17:39 CT</span>
 </footer>
 
 <script>
@@ -420,6 +446,7 @@ footer.foot .flag{color:var(--gold)}
   });
 })();
 </script>
+<script src="live.js"></script>
 
 </body>
 </html>
