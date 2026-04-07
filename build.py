@@ -146,6 +146,13 @@ def load_all():
         hydrate=f"person(stats(type=lastXGames,limit=7,season={season},gameType=R,group=pitching))",
     )
 
+    # Cubs season stats for team leaders
+    cubs_season = fetch(
+        f"/teams/{CUBS_ID}/roster",
+        rosterType="active",
+        hydrate=f"person(stats(type=season,season={season},gameType=R))",
+    )
+
     # Leaders
     leaders_hit = fetch(
         "/stats/leaders", sportId=1, season=season, limit=1, statGroup="hitting",
@@ -194,6 +201,7 @@ def load_all():
         "boxscore": boxscore, "plays": plays,
         "injuries": injuries,
         "cubs_hitters": cubs_hitters, "cubs_pitchers": cubs_pitchers,
+        "cubs_season": cubs_season,
         "leaders_hit": leaders_hit, "leaders_pit": leaders_pit,
         "minors": minors, "history": history,
     }
@@ -776,6 +784,63 @@ def render_league_news_from_items(items):
     return f'<div class="news-wire">{"".join(blurbs)}</div>'
 
 
+def render_cubs_leaders(cubs_season_data):
+    """Render Cubs team leaders table: AVG, OBP, HR, RBI, SB."""
+    players = []
+    for p in cubs_season_data.get("roster", []):
+        if p.get("position", {}).get("abbreviation") == "P":
+            continue
+        stats_list = p["person"].get("stats", [])
+        if not stats_list or not stats_list[0].get("splits"):
+            continue
+        st = stats_list[0]["splits"][0]["stat"]
+        pa = st.get("plateAppearances", 0)
+        if pa < 10:
+            continue
+        players.append({
+            "name": p["person"]["fullName"],
+            "pos": p.get("position", {}).get("abbreviation", ""),
+            "avg": st.get("avg", ".000"),
+            "obp": st.get("obp", ".000"),
+            "hr": st.get("homeRuns", 0),
+            "rbi": st.get("rbi", 0),
+            "sb": st.get("stolenBases", 0),
+            "pa": pa,
+        })
+
+    cats = [
+        ("AVG", "avg", lambda x: float(x["avg"] or 0), True),
+        ("OBP", "obp", lambda x: float(x["obp"] or 0), True),
+        ("HR", "hr", lambda x: x["hr"], False),
+        ("RBI", "rbi", lambda x: x["rbi"], False),
+        ("SB", "sb", lambda x: x["sb"], False),
+    ]
+    rows = []
+    for label, key, sort_fn, is_pct in cats:
+        if not players:
+            continue
+        leader = max(players, key=sort_fn)
+        val = leader[key]
+        if is_pct:
+            display = val if isinstance(val, str) else f"{val:.3f}"
+        else:
+            display = str(val)
+        name = leader["name"].split()[-1]
+        pos = leader["pos"]
+        rows.append(
+            f'<tr><td>{label}</td>'
+            f'<td class="name">{escape(name)} <span style="color:var(--paper-mute);font-size:10px">{escape(pos)}</span></td>'
+            f'<td class="num">{escape(display)}</td></tr>'
+        )
+
+    if not rows:
+        return '<p class="slang"><em>Season stats not yet available.</em></p>'
+
+    return f"""<div class="tblwrap"><table class="data">
+    <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
+    <tbody>{"".join(rows)}</tbody></table></div>"""
+
+
 def render_minors(minors_data):
     """Render minor league affiliate results."""
     cards = []
@@ -1111,6 +1176,9 @@ def page(data):
     else:
         minors_html, minors_tag = minors_out, "No games"
 
+    # Cubs team leaders
+    cubs_leaders_html = render_cubs_leaders(data["cubs_season"])
+
     # History
     history_html = render_history(data["history"])
 
@@ -1187,6 +1255,8 @@ def page(data):
     </div>
     <h3>Next Games</h3>
     {next_games_html}
+    <h3>Cubs Leaders</h3>
+    {cubs_leaders_html}
     <h3>Form Guide (Last 7 Days)</h3>
     {hot_cold_html}
     {history_html}
