@@ -135,6 +135,18 @@ dl.transac dd{margin:3px 0 0;color:var(--paper-dim)}
 .rival h4{margin:0 0 4px;color:var(--paper)}
 .rival .score{font-family:var(--mono);font-size:12px;color:var(--gold)}
 .rival p{font-size:13px;margin:6px 0 0;color:var(--paper-dim)}
+.news-wire{display:flex;flex-direction:column;gap:10px;margin:12px 0 18px}
+.blurb{background:var(--ink-2);border:1px solid var(--rule);border-left:3px solid var(--cubs-red);
+  padding:10px 14px;border-radius:2px;display:flex;gap:12px;align-items:baseline;}
+.blurb-tag{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:10px;
+  color:var(--cubs-red-hi);border:1px solid var(--cubs-red);padding:2px 8px;border-radius:2px;
+  white-space:nowrap;font-weight:600;flex-shrink:0;}
+.blurb-tag.extras,.blurb-tag.streak{color:var(--gold);border-color:var(--gold-dim)}
+.blurb-tag.shutout{color:var(--paper-mute);border-color:var(--rule-hi)}
+.blurb-tag.blowout{color:var(--cubs-red-hi);border-color:var(--cubs-red)}
+.blurb-tag.high_scoring{color:var(--gold);border-color:var(--gold-dim)}
+.blurb-text{font-size:14px;color:var(--paper-dim);margin:0}
+@media (max-width:640px){.blurb{flex-direction:column;gap:6px}}
 .slate{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 @media (max-width:640px){.slate{grid-template-columns:1fr}}
 .slate .g{background:var(--ink-2);border:1px solid var(--rule);padding:10px 12px;border-radius:2px;display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;}
@@ -317,9 +329,11 @@ footer.foot .flag{color:var(--gold)}
     <summary>
       <span class="num">03</span>
       <span class="h">Around the League</span>
-      <span class="tag">Apr 6 &middot; Scoreboard</span>
+      <span class="tag">Apr 6 &middot; 5 Notes</span>
       <span class="chev">&#9656;</span>
     </summary>
+    <h3>News Wire</h3>
+    <div class="news-wire"><div class="blurb"><span class="blurb-tag shutout">Shutout</span><p class="blurb-text">Padres shut out the Pirates, 5-0. Márquez earned the win.</p></div><div class="blurb"><span class="blurb-tag shutout">Shutout</span><p class="blurb-text">Reds shut out the Marlins, 2-0. Williamson earned the win.</p></div><div class="blurb"><span class="blurb-tag blowout">Rout</span><p class="blurb-text">Dodgers routed the Blue Jays, 14-2.</p></div><div class="blurb"><span class="blurb-tag high_scoring">Slugfest</span><p class="blurb-text">A slugfest at Nationals Park: STL 6, WSH 9 (15 combined runs).</p></div><div class="blurb"><span class="blurb-tag high_scoring">Slugfest</span><p class="blurb-text">A slugfest at Coors Field: HOU 7, COL 9 (16 combined runs).</p></div></div>
     <h3>Yesterday&rsquo;s Scoreboard</h3>
     <div class="tblwrap"><table class="data">
     <thead><tr><th>Away</th><th></th><th>Home</th><th>Final</th><th>WP</th></tr></thead>
@@ -431,7 +445,7 @@ footer.foot .flag{color:var(--gold)}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Friendly Confines Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/07/26 13:14 CT</span>
+  <span>Filed 04/07/26 13:54 CT</span>
 </footer>
 
 <script>
