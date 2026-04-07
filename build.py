@@ -120,20 +120,16 @@ def load_all():
     injuries = [p for p in roster.get("roster", [])
                 if p.get("status", {}).get("code", "A") != "A"]
 
-    # Hot Cubs bats: last 7 days, min 10 PA, sort by OPS (player-level)
-    end_dt = yest
-    start_dt = end_dt - timedelta(days=6)
+    # Hot Cubs bats: last 7 games, min 10 PA, sort by OPS
     cubs_hitters = fetch(
-        "/stats",
-        stats="byDateRange", group="hitting",
-        startDate=start_dt.isoformat(), endDate=end_dt.isoformat(),
-        sportIds=1, teamId=CUBS_ID, playerPool="all", limit=60,
+        f"/teams/{CUBS_ID}/roster",
+        rosterType="active",
+        hydrate=f"person(stats(type=lastXGames,limit=7,season={season},gameType=R))",
     )
     cubs_pitchers = fetch(
-        "/stats",
-        stats="byDateRange", group="pitching",
-        startDate=start_dt.isoformat(), endDate=end_dt.isoformat(),
-        sportIds=1, teamId=CUBS_ID, playerPool="all", limit=60,
+        f"/teams/{CUBS_ID}/roster",
+        rosterType="active",
+        hydrate=f"person(stats(type=lastXGames,limit=7,season={season},gameType=R,group=pitching))",
     )
 
     # Leaders
@@ -432,12 +428,22 @@ def render_next_games(next_games, tmap):
     return f'<div class="upcoming">{"".join(cards)}</div>'
 
 def render_hot_cold(hitters_data, pitchers_data):
-    # Hitters: sort by OPS, take top 3 & bottom 3 of qualified
-    stats = hitters_data.get("stats", [])
-    if not stats:
-        return ""
-    splits = stats[0].get("splits", [])
-    qual = [s for s in splits if s.get("stat",{}).get("plateAppearances",0) >= 10]
+    # Hitters: sort by OPS, take top 4 & bottom 3 of qualified (>=10 PA)
+    def extract_hitters(roster_data):
+        out = []
+        for p in roster_data.get("roster", []):
+            if p.get("position", {}).get("abbreviation") == "P":
+                continue
+            stats_list = p["person"].get("stats", [])
+            if not stats_list or not stats_list[0].get("splits"):
+                continue
+            st = stats_list[0]["splits"][0]["stat"]
+            if st.get("plateAppearances", 0) < 10:
+                continue
+            out.append({"player": p["person"]["fullName"], "stat": st})
+        return out
+
+    qual = extract_hitters(hitters_data)
     def get_ops(s):
         try: return float(s["stat"].get("ops","0") or "0")
         except: return 0.0
@@ -446,17 +452,29 @@ def render_hot_cold(hitters_data, pitchers_data):
     cold = list(reversed(qual[-3:])) if len(qual) >= 4 else []
 
     def hitter_li(s):
-        name = s["player"]["fullName"]
+        name = s["player"]
         st = s["stat"]
         avg = st.get("avg","."); hr = st.get("homeRuns",0); ops = st.get("ops","-")
         return f'<li><span class="n">{escape(name.split()[-1])}</span><span class="s">{avg} / {hr} HR / {ops} OPS</span></li>'
     hot_html = "".join(hitter_li(s) for s in hot)
     cold_html = "".join(hitter_li(s) for s in cold)
 
-    # Pitchers: hot = best ERA w/ >=5 IP; cold = worst
-    p_stats = pitchers_data.get("stats", [])
-    p_splits = p_stats[0].get("splits", []) if p_stats else []
-    p_qual = [s for s in p_splits if float(s.get("stat",{}).get("inningsPitched","0") or 0) >= 2]
+    # Pitchers: hot = best ERA w/ >=2 IP; cold = worst
+    def extract_pitchers(roster_data):
+        out = []
+        for p in roster_data.get("roster", []):
+            if p.get("position", {}).get("abbreviation") != "P":
+                continue
+            stats_list = p["person"].get("stats", [])
+            if not stats_list or not stats_list[0].get("splits"):
+                continue
+            st = stats_list[0]["splits"][0]["stat"]
+            if float(st.get("inningsPitched", "0") or 0) < 2:
+                continue
+            out.append({"player": p["person"]["fullName"], "stat": st})
+        return out
+
+    p_qual = extract_pitchers(pitchers_data)
     def era(s):
         try: return float(s["stat"].get("era","99") or 99)
         except: return 99
@@ -464,10 +482,9 @@ def render_hot_cold(hitters_data, pitchers_data):
     p_hot = p_qual[:3]
     p_cold = list(reversed(p_qual[-2:])) if len(p_qual) >= 3 else []
     def pitcher_li(s):
-        name = s["player"]["fullName"]
+        name = s["player"]
         st = s["stat"]
         era_v = st.get("era","-"); k = st.get("strikeOuts",0); ip = st.get("inningsPitched","0")
-        whip = st.get("whip","-")
         return f'<li><span class="n">{escape(name.split()[-1])}</span><span class="s">{ip} IP &middot; {era_v} ERA &middot; {k} K</span></li>'
     phot_html = "".join(pitcher_li(s) for s in p_hot)
     pcold_html = "".join(pitcher_li(s) for s in p_cold)
