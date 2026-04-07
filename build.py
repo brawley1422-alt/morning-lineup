@@ -1243,12 +1243,18 @@ def page(data):
     <h3>Three Stars</h3>
     {three_stars}
     {key_plays}
-    <h3>Injuries &amp; Roster</h3>
-    {injuries_html}
+    <div class="two">
+      <div>
+        <h3>Cubs Leaders</h3>
+        {cubs_leaders_html}
+      </div>
+      <div>
+        <h3>Injuries &amp; Roster</h3>
+        {injuries_html}
+      </div>
+    </div>
     <h3>Next Games</h3>
     {next_games_html}
-    <h3>Cubs Leaders</h3>
-    {cubs_leaders_html}
     <h3>Form Guide (Last 7 Days)</h3>
     {hot_cold_html}
   </section>
