@@ -130,6 +130,16 @@ ul.plays .txt strong{color:var(--paper);font-weight:500}
 dl.transac{margin:8px 0;font-size:13px}
 dl.transac dt{font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--cubs-red-hi);margin-top:10px;}
 dl.transac dd{margin:3px 0 0;color:var(--paper-dim)}
+.minors{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+@media (max-width:720px){.minors{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.minors{grid-template-columns:1fr}}
+.minors .lvl{background:var(--ink-2);border:1px solid var(--rule);padding:10px 12px;border-radius:2px;position:relative;}
+.minors .lvl::after{content:attr(data-lvl);position:absolute;top:6px;right:8px;font-family:var(--mono);font-size:9px;color:var(--gold-dim);letter-spacing:.1em;}
+.minors .aff{font-family:var(--cond);text-transform:uppercase;font-size:14px;color:var(--paper);letter-spacing:.06em}
+.minors .res{font-family:var(--mono);font-size:12px;margin-top:4px}
+.minors .res .w{color:var(--win)}
+.minors .res .l{color:var(--loss)}
+.minors .note{font-size:11.5px;color:var(--paper-dim);margin-top:6px;line-height:1.4}
 .rivals{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media (max-width:640px){.rivals{grid-template-columns:1fr}}
 .rival{background:var(--ink-2);border:1px solid var(--rule);padding:12px 14px;border-radius:2px;border-left:3px solid var(--gold-dim);}
@@ -212,6 +222,7 @@ footer.foot .flag{color:var(--gold)}
     <div class="title">Sections</div>
     <ol>
       <li><a href="#cubs">The Cubs</a></li>
+      <li><a href="#farm">Down on the Farm</a></li>
       <li><a href="#nlc">NL Central</a></li>
       <li><a href="#league">Around the League</a></li>
       <li><a href="#today">Today&rsquo;s Slate</a></li>
@@ -302,11 +313,34 @@ footer.foot .flag{color:var(--gold)}
       <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n">Maton</span><span class="s">3.1 IP &middot; 10.80 ERA &middot; 4 K</span></li><li><span class="n">Harvey</span><span class="s">3.0 IP &middot; 9.00 ERA &middot; 3 K</span></li></ul></div>
     </div>
     
+    <h3>This Day in Cubs History</h3><ul class="plays"><li><span class="inn">1969</span><span class="txt">Ernie Banks hits his 497th career home run on Opening Day at Wrigley Field as the Cubs beat the Phillies.</span></li></ul>
+  </section>
+
+  <section id="farm" open>
+    <summary>
+      <span class="num">02</span>
+      <span class="h">Down on the Farm</span>
+      <span class="tag">No games</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    <div class="minors"><div class="lvl" data-lvl="AAA">
+        <div class="aff">Iowa Cubs</div>
+        <div class="res"><em>No game / not final</em></div>
+      </div><div class="lvl" data-lvl="AA">
+        <div class="aff">Knoxville Smokies</div>
+        <div class="res"><em>No game / not final</em></div>
+      </div><div class="lvl" data-lvl="A+">
+        <div class="aff">South Bend Cubs</div>
+        <div class="res"><em>No game / not final</em></div>
+      </div><div class="lvl" data-lvl="A">
+        <div class="aff">Myrtle Beach Pelicans</div>
+        <div class="res"><em>No game / not final</em></div>
+      </div></div>
   </section>
 
   <section id="nlc" open>
     <summary>
-      <span class="num">02</span>
+      <span class="num">03</span>
       <span class="h">NL Central</span>
       <span class="tag">Rivals &middot; Yesterday</span>
       <span class="chev">&#9656;</span>
@@ -328,7 +362,7 @@ footer.foot .flag{color:var(--gold)}
 
   <section id="league" open>
     <summary>
-      <span class="num">03</span>
+      <span class="num">04</span>
       <span class="h">Around the League</span>
       <span class="tag">Apr 6 &middot; 5 Notes</span>
       <span class="chev">&#9656;</span>
@@ -372,7 +406,7 @@ footer.foot .flag{color:var(--gold)}
 
   <section id="today" open>
     <summary>
-      <span class="num">04</span>
+      <span class="num">05</span>
       <span class="h">Today&rsquo;s Slate</span>
       <span class="tag">Tue Apr 7</span>
       <span class="chev">&#9656;</span>
@@ -446,7 +480,7 @@ footer.foot .flag{color:var(--gold)}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Friendly Confines Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/07/26 13:21 CT</span>
+  <span>Filed 04/07/26 13:40 CT</span>
 </footer>
 
 <script>
