@@ -17,6 +17,15 @@ CT = ZoneInfo("America/Chicago")
 CUBS_ID = 112
 API = "https://statsapi.mlb.com/api/v1"
 OUT = Path(__file__).parent / "index.html"
+HISTORY_FILE = Path(__file__).parent / "history.json"
+
+# Cubs minor league affiliates (2026)
+AFFILIATES = [
+    {"id": 451, "name": "Iowa Cubs",          "level": "AAA", "sport_id": 11},
+    {"id": 553, "name": "Knoxville Smokies",  "level": "AA",  "sport_id": 12},
+    {"id": 550, "name": "South Bend Cubs",    "level": "A+",  "sport_id": 13},
+    {"id": 521, "name": "Myrtle Beach Pelicans", "level": "A", "sport_id": 14},
+]
 
 DIV_ORDER = [
     (201, "AL East"), (202, "AL Central"), (200, "AL West"),
@@ -147,6 +156,34 @@ def load_all():
         leaderCategories="earnedRunAverage,strikeOuts,whip,saves,wins",
     )
 
+    # Minor league affiliate results (yesterday)
+    minors = []
+    for aff in AFFILIATES:
+        try:
+            ms = fetch("/schedule", sportId=aff["sport_id"], teamId=aff["id"],
+                        date=yest.isoformat(), hydrate="team,linescore,decisions")
+            mg = ms["dates"][0]["games"][0] if ms.get("dates") and ms["dates"][0].get("games") else None
+            box = None
+            if mg and mg.get("status", {}).get("abstractGameState") == "Final":
+                try:
+                    box = fetch(f"/game/{mg['gamePk']}/boxscore")
+                except Exception as e:
+                    print(f"  warning: {aff['name']} boxscore failed: {e}", flush=True)
+            minors.append({"aff": aff, "game": mg, "boxscore": box})
+        except Exception as e:
+            print(f"  warning: {aff['name']} schedule failed: {e}", flush=True)
+            minors.append({"aff": aff, "game": None, "boxscore": None})
+
+    # This Day in Cubs History
+    history = []
+    if HISTORY_FILE.exists():
+        try:
+            hdata = json.loads(HISTORY_FILE.read_text())
+            key = today.strftime("%m-%d")
+            history = hdata.get(key, [])
+        except Exception:
+            history = []
+
     return {
         "today": today, "yest": yest, "season": season,
         "tmap": tmap,
@@ -158,6 +195,7 @@ def load_all():
         "injuries": injuries,
         "cubs_hitters": cubs_hitters, "cubs_pitchers": cubs_pitchers,
         "leaders_hit": leaders_hit, "leaders_pit": leaders_pit,
+        "minors": minors, "history": history,
     }
 
 # ─── rendering helpers ───────────────────────────────────────────────────────
@@ -737,6 +775,109 @@ def render_league_news_from_items(items):
         )
     return f'<div class="news-wire">{"".join(blurbs)}</div>'
 
+
+def render_minors(minors_data):
+    """Render minor league affiliate results."""
+    cards = []
+    for m in minors_data:
+        aff = m["aff"]
+        g = m["game"]
+        box = m["boxscore"]
+        if not g or g.get("status", {}).get("abstractGameState") != "Final":
+            cards.append(f"""<div class="lvl" data-lvl="{aff['level']}">
+        <div class="aff">{escape(aff['name'])}</div>
+        <div class="res"><em>No game / not final</em></div>
+      </div>""")
+            continue
+
+        away_id = g["teams"]["away"]["team"]["id"]
+        home_id = g["teams"]["home"]["team"]["id"]
+        is_home = home_id == aff["id"]
+        away_name = g["teams"]["away"]["team"].get("teamName", "???")
+        home_name = g["teams"]["home"]["team"].get("teamName", "???")
+        away_score = g["teams"]["away"].get("score", 0)
+        home_score = g["teams"]["home"].get("score", 0)
+        won = (is_home and home_score > away_score) or (not is_home and away_score > home_score)
+        my_score = home_score if is_home else away_score
+        opp_score = away_score if is_home else home_score
+        opp_name = away_name if is_home else home_name
+        wl = "W" if won else "L"
+        wl_cls = "w" if won else "l"
+        vs_at = "vs" if is_home else "at"
+
+        # Extract top performer from boxscore
+        note = ""
+        if box:
+            our_side = "home" if is_home else "away"
+            players = box.get("teams", {}).get(our_side, {}).get("players", {})
+            best_hitter = None
+            best_score = -1
+            best_pitcher = None
+            best_p_score = -1
+            for pid, p in players.items():
+                # Hitter
+                bs = p.get("stats", {}).get("batting", {})
+                if bs and bs.get("atBats", 0) > 0:
+                    h = bs.get("hits", 0)
+                    hr = bs.get("homeRuns", 0)
+                    rbi = bs.get("rbi", 0)
+                    sc = h + 3 * hr + rbi
+                    if sc > best_score:
+                        best_score = sc
+                        best_hitter = (p["person"]["fullName"], bs)
+                # Pitcher
+                ps = p.get("stats", {}).get("pitching", {})
+                if ps and ps.get("inningsPitched") not in (None, "0.0", 0):
+                    ip = float(ps.get("inningsPitched", "0") or 0)
+                    k = ps.get("strikeOuts", 0)
+                    er = ps.get("earnedRuns", 0)
+                    psc = ip * 2 + k - er * 3
+                    if psc > best_p_score:
+                        best_p_score = psc
+                        best_pitcher = (p["person"]["fullName"], ps)
+            parts = []
+            if best_hitter:
+                name, s = best_hitter
+                line = f"{s.get('hits',0)}-{s.get('atBats',0)}"
+                extras = []
+                if s.get("homeRuns", 0): extras.append(f"{s['homeRuns']} HR")
+                if s.get("rbi", 0): extras.append(f"{s['rbi']} RBI")
+                if extras: line += ", " + ", ".join(extras)
+                parts.append(f"<strong>{escape(name.split()[-1])}</strong> {line}")
+            if best_pitcher:
+                name, s = best_pitcher
+                parts.append(f"<strong>{escape(name.split()[-1])}</strong> {s.get('inningsPitched','?')} IP, {s.get('earnedRuns',0)} ER, {s.get('strikeOuts',0)} K")
+            note = ". ".join(parts) + "." if parts else ""
+
+        cards.append(f"""<div class="lvl" data-lvl="{aff['level']}">
+        <div class="aff">{escape(aff['name'])}</div>
+        <div class="res"><span class="{wl_cls}">{wl} {my_score}&ndash;{opp_score}</span> {vs_at} {escape(opp_name)}</div>
+        {f'<div class="note">{note}</div>' if note else ''}
+      </div>""")
+
+    if not cards:
+        return '<p class="slang"><em>No affiliate games yesterday.</em></p>'
+
+    wins = sum(1 for m in minors_data if m["game"] and m["game"].get("status",{}).get("abstractGameState")=="Final"
+               and ((m["game"]["teams"]["home"]["team"]["id"]==m["aff"]["id"] and m["game"]["teams"]["home"].get("score",0)>m["game"]["teams"]["away"].get("score",0))
+               or (m["game"]["teams"]["away"]["team"]["id"]==m["aff"]["id"] and m["game"]["teams"]["away"].get("score",0)>m["game"]["teams"]["home"].get("score",0))))
+    finals = sum(1 for m in minors_data if m["game"] and m["game"].get("status",{}).get("abstractGameState")=="Final")
+    losses = finals - wins
+    tag = f"{wins}&ndash;{losses}" if finals > 0 else "No games"
+
+    return f'<div class="minors">{"".join(cards)}</div>', tag
+
+
+def render_history(history_items):
+    """Render This Day in Cubs History."""
+    if not history_items:
+        return ""
+    items = []
+    for h in history_items[:3]:
+        items.append(f'<li><span class="inn">{h["year"]}</span><span class="txt">{escape(h["text"])}</span></li>')
+    return f'<h3>This Day in Cubs History</h3><ul class="plays">{"".join(items)}</ul>'
+
+
 # ─── page assembly ──────────────────────────────────────────────────────────
 
 CSS = r"""
@@ -861,6 +1002,16 @@ ul.plays .txt strong{color:var(--paper);font-weight:500}
 dl.transac{margin:8px 0;font-size:13px}
 dl.transac dt{font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--cubs-red-hi);margin-top:10px;}
 dl.transac dd{margin:3px 0 0;color:var(--paper-dim)}
+.minors{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+@media (max-width:720px){.minors{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.minors{grid-template-columns:1fr}}
+.minors .lvl{background:var(--ink-2);border:1px solid var(--rule);padding:10px 12px;border-radius:2px;position:relative;}
+.minors .lvl::after{content:attr(data-lvl);position:absolute;top:6px;right:8px;font-family:var(--mono);font-size:9px;color:var(--gold-dim);letter-spacing:.1em;}
+.minors .aff{font-family:var(--cond);text-transform:uppercase;font-size:14px;color:var(--paper);letter-spacing:.06em}
+.minors .res{font-family:var(--mono);font-size:12px;margin-top:4px}
+.minors .res .w{color:var(--win)}
+.minors .res .l{color:var(--loss)}
+.minors .note{font-size:11.5px;color:var(--paper-dim);margin-top:6px;line-height:1.4}
 .rivals{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media (max-width:640px){.rivals{grid-template-columns:1fr}}
 .rival{background:var(--ink-2);border:1px solid var(--rule);padding:12px 14px;border-radius:2px;border-left:3px solid var(--gold-dim);}
@@ -953,6 +1104,16 @@ def page(data):
     news_count = len(news_items)
     league_news_html = render_league_news_from_items(news_items)
 
+    # Minors
+    minors_out = render_minors(data["minors"])
+    if isinstance(minors_out, tuple):
+        minors_html, minors_tag = minors_out
+    else:
+        minors_html, minors_tag = minors_out, "No games"
+
+    # History
+    history_html = render_history(data["history"])
+
     vol_no = (t - date(t.year, 1, 1)).days + 1
     filed = datetime.now(tz=CT).strftime("%m/%d/%y %H:%M CT")
 
@@ -992,6 +1153,7 @@ def page(data):
     <div class="title">Sections</div>
     <ol>
       <li><a href="#cubs">The Cubs</a></li>
+      <li><a href="#farm">Down on the Farm</a></li>
       <li><a href="#nlc">NL Central</a></li>
       <li><a href="#league">Around the League</a></li>
       <li><a href="#today">Today&rsquo;s Slate</a></li>
@@ -1027,11 +1189,22 @@ def page(data):
     {next_games_html}
     <h3>Form Guide (Last 7 Days)</h3>
     {hot_cold_html}
+    {history_html}
+  </section>
+
+  <section id="farm" open>
+    <summary>
+      <span class="num">02</span>
+      <span class="h">Down on the Farm</span>
+      <span class="tag">{minors_tag}</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    {minors_html}
   </section>
 
   <section id="nlc" open>
     <summary>
-      <span class="num">02</span>
+      <span class="num">03</span>
       <span class="h">NL Central</span>
       <span class="tag">Rivals &middot; Yesterday</span>
       <span class="chev">&#9656;</span>
@@ -1041,7 +1214,7 @@ def page(data):
 
   <section id="league" open>
     <summary>
-      <span class="num">03</span>
+      <span class="num">04</span>
       <span class="h">Around the League</span>
       <span class="tag">{y.strftime("%b ")}{y.day} &middot; {news_count} Note{"s" if news_count != 1 else ""}</span>
       <span class="chev">&#9656;</span>
@@ -1058,7 +1231,7 @@ def page(data):
 
   <section id="today" open>
     <summary>
-      <span class="num">04</span>
+      <span class="num">05</span>
       <span class="h">Today&rsquo;s Slate</span>
       <span class="tag">{t.strftime("%a %b ")}{t.day}</span>
       <span class="chev">&#9656;</span>
