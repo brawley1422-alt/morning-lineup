@@ -592,7 +592,7 @@ def render_slate_today(games_t, tmap):
         hp = g["teams"]["home"].get("probablePitcher",{}) or {}
         ap_n = ap.get("fullName","TBD").split()[-1] if ap else "TBD"
         hp_n = hp.get("fullName","TBD").split()[-1] if hp else "TBD"
-        cards.append(f"""<div class="g">
+        cards.append(f"""<div class="g" data-gpk="{g['gamePk']}">
         <div class="matchup">{aa} @ {ha}</div>
         <div class="time">{time_str}</div>
         <div class="probs">{escape(ap_n)} vs {escape(hp_n)}</div>
@@ -788,6 +788,12 @@ footer.foot .flag{color:var(--gold)}
 .live-widget.preview .score-row{font-size:clamp(20px,4vw,32px)}
 .live-widget.idle{border-color:var(--rule);opacity:.7}
 .idle-msg{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--paper-mute);text-align:center;padding:10px 0}
+.g-live{border-color:var(--cubs-blue) !important;box-shadow:0 0 8px rgba(14,51,134,.3)}
+.g-live .time{font-size:13px}
+.slate-live{color:var(--gold);font-family:var(--mono);font-weight:700}
+.slate-inn{color:var(--cubs-red-hi);font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:10px}
+.g-final .time{font-size:13px}
+.slate-final{color:var(--paper-dim);font-family:var(--mono);font-weight:600}
 """
 
 def page(data):

@@ -7,10 +7,11 @@
   var POLL_MS = 20000;
   var IDLE_MS = 300000;
   var container = document.getElementById("live-game");
-  if (!container) return;
 
   var timer = null;
+  var slateTimer = null;
   var paused = false;
+  var anyLive = false; // track if any game is live for slate poll rate
 
   /* ── helpers ──────────────────────────────────────────────────── */
 
@@ -52,9 +53,10 @@
       "</svg>";
   }
 
-  /* ── renderers ───────────────────────────────────────────────── */
+  /* ── Cubs widget renderers ───────────────────────────────────── */
 
   function renderLive(game, feed) {
+    if (!container) return;
     var ls = feed.liveData.linescore;
     var away = game.teams.away.team;
     var home = game.teams.home.team;
@@ -133,6 +135,7 @@
   }
 
   function renderFinal(game) {
+    if (!container) return;
     var away = game.teams.away;
     var home = game.teams.home;
     var ar = away.score != null ? away.score : 0;
@@ -156,6 +159,7 @@
   }
 
   function renderPreview(game) {
+    if (!container) return;
     var away = game.teams.away.team;
     var home = game.teams.home.team;
     var time = fmtTime(game.gameDate);
@@ -187,21 +191,74 @@
   }
 
   function renderIdle() {
+    if (!container) return;
     container.innerHTML =
       '<div class="live-widget idle">' +
         '<div class="idle-msg">No Cubs game in progress</div>' +
       "</div>";
   }
 
-  /* ── polling ─────────────────────────────────────────────────── */
+  /* ── slate updater ───────────────────────────────────────────── */
 
-  function schedule(ms, fn) {
+  function updateSlate(allGames) {
+    anyLive = false;
+    for (var i = 0; i < allGames.length; i++) {
+      var g = allGames[i];
+      var card = document.querySelector('.g[data-gpk="' + g.gamePk + '"]');
+      if (!card) continue;
+
+      var state = g.status.abstractGameState;
+      var timeEl = card.querySelector(".time");
+      if (!timeEl) continue;
+
+      if (state === "Live") {
+        anyLive = true;
+        var ls = g.linescore || {};
+        var ar = (ls.teams && ls.teams.away) ? (ls.teams.away.runs != null ? ls.teams.away.runs : 0) : 0;
+        var hr = (ls.teams && ls.teams.home) ? (ls.teams.home.runs != null ? ls.teams.home.runs : 0) : 0;
+        var inn = ls.currentInning || 1;
+        var half = (ls.inningHalf || "Top").substring(0, 3);
+        timeEl.innerHTML = '<span class="slate-live">' + ar + '&ndash;' + hr + '</span> ' +
+          '<span class="slate-inn">' + half + ' ' + inn + '</span>';
+        card.classList.add("g-live");
+        card.classList.remove("g-final");
+      } else if (state === "Final") {
+        var as_ = g.teams.away.score != null ? g.teams.away.score : 0;
+        var hs = g.teams.home.score != null ? g.teams.home.score : 0;
+        var extra = (g.linescore && g.linescore.currentInning > 9) ? " / F" + g.linescore.currentInning : "";
+        timeEl.innerHTML = '<span class="slate-final">' + as_ + '&ndash;' + hs + extra + '</span>';
+        card.classList.add("g-final");
+        card.classList.remove("g-live");
+      }
+    }
+  }
+
+  function pollSlate() {
+    if (paused) { slateTimer = setTimeout(pollSlate, POLL_MS); return; }
+
+    var url = API + "/schedule?sportId=1&date=" + today() + "&hydrate=linescore,team";
+    fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.dates && data.dates.length && data.dates[0].games) {
+          updateSlate(data.dates[0].games);
+        }
+        slateTimer = setTimeout(pollSlate, anyLive ? POLL_MS : IDLE_MS);
+      })
+      .catch(function () {
+        slateTimer = setTimeout(pollSlate, POLL_MS);
+      });
+  }
+
+  /* ── Cubs widget polling ─────────────────────────────────────── */
+
+  function scheduleCubs(ms, fn) {
     clearTimeout(timer);
     timer = setTimeout(fn, ms);
   }
 
   function pollFeed(gamePk, game) {
-    if (paused) { schedule(POLL_MS, function () { pollFeed(gamePk, game); }); return; }
+    if (paused) { scheduleCubs(POLL_MS, function () { pollFeed(gamePk, game); }); return; }
 
     fetch(LIVE_API + "/game/" + gamePk + "/feed/live")
       .then(function (r) { return r.json(); })
@@ -209,21 +266,22 @@
         var state = feed.gameData.status.abstractGameState;
         if (state === "Live") {
           renderLive(game, feed);
-          schedule(POLL_MS, function () { pollFeed(gamePk, game); });
+          scheduleCubs(POLL_MS, function () { pollFeed(gamePk, game); });
         } else if (state === "Final") {
           renderFinal(game);
         } else {
           renderPreview(game);
-          schedule(IDLE_MS, checkSchedule);
+          scheduleCubs(IDLE_MS, checkCubs);
         }
       })
       .catch(function () {
-        schedule(POLL_MS, function () { pollFeed(gamePk, game); });
+        scheduleCubs(POLL_MS, function () { pollFeed(gamePk, game); });
       });
   }
 
-  function checkSchedule() {
-    if (paused) { schedule(IDLE_MS, checkSchedule); return; }
+  function checkCubs() {
+    if (paused) { scheduleCubs(IDLE_MS, checkCubs); return; }
+    if (!container) return;
 
     var url = API + "/schedule?sportId=1&date=" + today() +
       "&teamId=" + CUBS_ID + "&hydrate=linescore,probablePitcher,team";
@@ -233,13 +291,11 @@
       .then(function (data) {
         if (!data.dates || data.dates.length === 0 || !data.dates[0].games.length) {
           renderIdle();
-          schedule(IDLE_MS, checkSchedule);
+          scheduleCubs(IDLE_MS, checkCubs);
           return;
         }
 
         var games = data.dates[0].games;
-
-        // prefer a live game
         var live = null, preview = null, final_ = null;
         for (var i = 0; i < games.length; i++) {
           var st = games[i].status.abstractGameState;
@@ -252,17 +308,17 @@
           pollFeed(live.gamePk, live);
         } else if (preview) {
           renderPreview(preview);
-          schedule(IDLE_MS, checkSchedule);
+          scheduleCubs(IDLE_MS, checkCubs);
         } else if (final_) {
           renderFinal(final_);
-          schedule(IDLE_MS, checkSchedule);
+          scheduleCubs(IDLE_MS, checkCubs);
         } else {
           renderIdle();
-          schedule(IDLE_MS, checkSchedule);
+          scheduleCubs(IDLE_MS, checkCubs);
         }
       })
       .catch(function () {
-        schedule(IDLE_MS, checkSchedule);
+        scheduleCubs(IDLE_MS, checkCubs);
       });
   }
 
@@ -272,13 +328,16 @@
     if (document.hidden) {
       paused = true;
       clearTimeout(timer);
+      clearTimeout(slateTimer);
     } else {
       paused = false;
-      checkSchedule();
+      checkCubs();
+      pollSlate();
     }
   });
 
   /* ── init ────────────────────────────────────────────────────── */
 
-  checkSchedule();
+  checkCubs();
+  pollSlate();
 })();
