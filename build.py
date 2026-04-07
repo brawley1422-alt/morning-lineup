@@ -1221,10 +1221,10 @@ def page(data):
     <div class="title">Sections</div>
     <ol>
       <li><a href="#cubs">The Cubs</a></li>
+      <li><a href="#today">Today&rsquo;s Slate</a></li>
       <li><a href="#farm">Down on the Farm</a></li>
       <li><a href="#nlc">NL Central</a></li>
       <li><a href="#league">Around the League</a></li>
-      <li><a href="#today">Today&rsquo;s Slate</a></li>
     </ol>
   </nav>
 
@@ -1243,28 +1243,29 @@ def page(data):
     <h3>Three Stars</h3>
     {three_stars}
     {key_plays}
-    <div class="two">
-      <div>
-        <h3>NL Central Standings</h3>
-        {nlc_stand}
-      </div>
-      <div>
-        <h3>Injuries</h3>
-        {injuries_html}
-      </div>
-    </div>
+    <h3>Injuries &amp; Roster</h3>
+    {injuries_html}
     <h3>Next Games</h3>
     {next_games_html}
     <h3>Cubs Leaders</h3>
     {cubs_leaders_html}
     <h3>Form Guide (Last 7 Days)</h3>
     {hot_cold_html}
-    {history_html}
+  </section>
+
+  <section id="today" open>
+    <summary>
+      <span class="num">02</span>
+      <span class="h">Today&rsquo;s Slate</span>
+      <span class="tag">{t.strftime("%a %b ")}{t.day}</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    {slate_html}
   </section>
 
   <section id="farm" open>
     <summary>
-      <span class="num">02</span>
+      <span class="num">03</span>
       <span class="h">Down on the Farm</span>
       <span class="tag">{minors_tag}</span>
       <span class="chev">&#9656;</span>
@@ -1274,17 +1275,20 @@ def page(data):
 
   <section id="nlc" open>
     <summary>
-      <span class="num">03</span>
+      <span class="num">04</span>
       <span class="h">NL Central</span>
       <span class="tag">Rivals &middot; Yesterday</span>
       <span class="chev">&#9656;</span>
     </summary>
+    <h3>Standings</h3>
+    {nlc_stand}
+    <h3>Rivals &middot; Yesterday</h3>
     {rivals_html}
   </section>
 
   <section id="league" open>
     <summary>
-      <span class="num">04</span>
+      <span class="num">05</span>
       <span class="h">Around the League</span>
       <span class="tag">{y.strftime("%b ")}{y.day} &middot; {news_count} Note{"s" if news_count != 1 else ""}</span>
       <span class="chev">&#9656;</span>
@@ -1299,15 +1303,7 @@ def page(data):
     {leaders_html}
   </section>
 
-  <section id="today" open>
-    <summary>
-      <span class="num">05</span>
-      <span class="h">Today&rsquo;s Slate</span>
-      <span class="tag">{t.strftime("%a %b ")}{t.day}</span>
-      <span class="chev">&#9656;</span>
-    </summary>
-    {slate_html}
-  </section>
+  {f'<section id="history" open><summary><span class="num">06</span><span class="h">This Day in Cubs History</span><span class="chev">&#9656;</span></summary>{history_html}</section>' if history_html else ''}
 
   </main>
 </div>
