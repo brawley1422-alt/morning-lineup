@@ -32,6 +32,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
 a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
 a:hover{color:var(--paper);border-bottom-color:var(--paper)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:28px 20px 18px;max-width:var(--maxw);margin:0 auto;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;}
 .masthead .kicker .vol{color:var(--gold)}
@@ -231,7 +232,7 @@ footer.foot .flag{color:var(--gold)}
     
     <div class="scoreboard" aria-label="Line score">
       <div class="meta">
-        <span>Tropicana Field &middot; 4:10 ET</span>
+        <span>Tropicana Field &middot; 3:10 CT</span>
         <span class="fin">Final</span>
       </div>
       <table>
@@ -278,17 +279,17 @@ footer.foot .flag{color:var(--gold)}
         <div class="day">Tue, Apr 7 &middot; at TB</div>
         <div class="vs">Assad vs Rasmussen</div>
         <div class="prob">Javier Assad &middot; Drew Rasmussen</div>
-        <div class="time">6:40 ET</div>
+        <div class="time">5:40 CT</div>
       </div><div class="g">
         <div class="day">Wed, Apr 8 &middot; at TB</div>
         <div class="vs">TBD vs Boyle</div>
         <div class="prob">TBD &middot; Joe Boyle</div>
-        <div class="time">6:40 ET</div>
+        <div class="time">5:40 CT</div>
       </div><div class="g">
         <div class="day">Fri, Apr 10 &middot; vs PIT</div>
         <div class="vs">TBD vs TBD</div>
         <div class="prob">TBD &middot; TBD</div>
-        <div class="time">2:20 ET</div>
+        <div class="time">1:20 CT</div>
       </div></div>
     <h3>Form Guide (Last 7 Days)</h3>
     
@@ -336,8 +337,8 @@ footer.foot .flag{color:var(--gold)}
     <div class="news-wire"><div class="blurb"><span class="blurb-tag shutout">Shutout</span><p class="blurb-text">Padres shut out the Pirates, 5-0. Márquez earned the win.</p></div><div class="blurb"><span class="blurb-tag shutout">Shutout</span><p class="blurb-text">Reds shut out the Marlins, 2-0. Williamson earned the win.</p></div><div class="blurb"><span class="blurb-tag blowout">Rout</span><p class="blurb-text">Dodgers routed the Blue Jays, 14-2.</p></div><div class="blurb"><span class="blurb-tag high_scoring">Slugfest</span><p class="blurb-text">A slugfest at Nationals Park: STL 6, WSH 9 (15 combined runs).</p></div><div class="blurb"><span class="blurb-tag high_scoring">Slugfest</span><p class="blurb-text">A slugfest at Coors Field: HOU 7, COL 9 (16 combined runs).</p></div></div>
     <h3>Yesterday&rsquo;s Scoreboard</h3>
     <div class="tblwrap"><table class="data">
-    <thead><tr><th>Away</th><th></th><th>Home</th><th>Final</th><th>WP</th></tr></thead>
-    <tbody><tr><td class="name">CHC</td><td class="num">4</td><td class="name">TB 6</td><td class="num w">TB</td><td>Kelly</td></tr><tr><td class="name">KC</td><td class="num">4</td><td class="name">CLE 2</td><td class="num w">KC</td><td>Wacha</td></tr><tr><td class="name">SD</td><td class="num">5</td><td class="name">PIT 0</td><td class="num w">SD</td><td>Márquez</td></tr><tr><td class="name">CIN</td><td class="num">2</td><td class="name">MIA 0</td><td class="num w">CIN</td><td>Williamson</td></tr><tr><td class="name">STL</td><td class="num">6</td><td class="name">WSH 9</td><td class="num w">WSH</td><td>Pérez</td></tr><tr><td class="name">MIL</td><td class="num">8</td><td class="name">BOS 6</td><td class="num w">MIL</td><td>Ashby</td></tr><tr><td class="name">LAD</td><td class="num">14</td><td class="name">TOR 2</td><td class="num w">LAD</td><td>Wrobleski</td></tr><tr><td class="name">DET</td><td class="num">3</td><td class="name">MIN 7</td><td class="num w">MIN</td><td>Ryan</td></tr><tr><td class="name">BAL</td><td class="num">2</td><td class="name">CWS 1</td><td class="num w">BAL</td><td>Young</td></tr><tr><td class="name">SEA</td><td class="num">1</td><td class="name">TEX 2</td><td class="num w">TEX</td><td>Beeks</td></tr><tr><td class="name">HOU</td><td class="num">7</td><td class="name">COL 9</td><td class="num w">COL</td><td>Feltner</td></tr><tr><td class="name">ATL</td><td class="num">2</td><td class="name">LAA 6</td><td class="num w">LAA</td><td>Soriano</td></tr><tr><td class="name">PHI</td><td class="num">6</td><td class="name">SF 4</td><td class="num w">PHI</td><td>Bowlan</td></tr></tbody></table></div>
+    <thead><tr><th>Away</th><th></th><th>Home</th><th></th><th>W</th><th>WP</th></tr></thead>
+    <tbody><tr><td class="name">CHC</td><td class="num">4</td><td class="name">TB</td><td class="num">6</td><td class="num w">TB</td><td>Kelly</td></tr><tr><td class="name">KC</td><td class="num">4</td><td class="name">CLE</td><td class="num">2</td><td class="num w">KC</td><td>Wacha</td></tr><tr><td class="name">SD</td><td class="num">5</td><td class="name">PIT</td><td class="num">0</td><td class="num w">SD</td><td>Márquez</td></tr><tr><td class="name">CIN</td><td class="num">2</td><td class="name">MIA</td><td class="num">0</td><td class="num w">CIN</td><td>Williamson</td></tr><tr><td class="name">STL</td><td class="num">6</td><td class="name">WSH</td><td class="num">9</td><td class="num w">WSH</td><td>Pérez</td></tr><tr><td class="name">MIL</td><td class="num">8</td><td class="name">BOS</td><td class="num">6</td><td class="num w">MIL</td><td>Ashby</td></tr><tr><td class="name">LAD</td><td class="num">14</td><td class="name">TOR</td><td class="num">2</td><td class="num w">LAD</td><td>Wrobleski</td></tr><tr><td class="name">DET</td><td class="num">3</td><td class="name">MIN</td><td class="num">7</td><td class="num w">MIN</td><td>Ryan</td></tr><tr><td class="name">BAL</td><td class="num">2</td><td class="name">CWS</td><td class="num">1</td><td class="num w">BAL</td><td>Young</td></tr><tr><td class="name">SEA</td><td class="num">1</td><td class="name">TEX</td><td class="num">2</td><td class="num w">TEX</td><td>Beeks</td></tr><tr><td class="name">HOU</td><td class="num">7</td><td class="name">COL</td><td class="num">9</td><td class="num w">COL</td><td>Feltner</td></tr><tr><td class="name">ATL</td><td class="num">2</td><td class="name">LAA</td><td class="num">6</td><td class="num w">LAA</td><td>Soriano</td></tr><tr><td class="name">PHI</td><td class="num">6</td><td class="name">SF</td><td class="num">4</td><td class="num w">PHI</td><td>Bowlan</td></tr></tbody></table></div>
     <h3>Standings &mdash; All Six Divisions</h3>
     <div class="two"><div><h4>AL East</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
@@ -378,63 +379,63 @@ footer.foot .flag{color:var(--gold)}
     </summary>
     <div class="slate"><div class="g" data-gpk="824457">
         <div class="matchup">KC @ CLE</div>
-        <div class="time">1:10 ET</div>
+        <div class="time">12:10 CT</div>
         <div class="probs">Cameron vs Williams</div>
       </div><div class="g" data-gpk="824618">
         <div class="matchup">BAL @ CWS</div>
-        <div class="time">3:10 ET</div>
+        <div class="time">2:10 CT</div>
         <div class="probs">Rogers vs Smith</div>
       </div><div class="g" data-gpk="823648">
         <div class="matchup">AZ @ NYM</div>
-        <div class="time">4:10 ET</div>
+        <div class="time">3:10 CT</div>
         <div class="probs">Gallen vs Peralta</div>
       </div><div class="g" data-gpk="823402">
         <div class="matchup">SD @ PIT</div>
-        <div class="time">6:40 ET</div>
+        <div class="time">5:40 CT</div>
         <div class="probs">Pivetta vs Skenes</div>
       </div><div class="g" data-gpk="822999">
         <div class="matchup">CHC @ TB</div>
-        <div class="time">6:40 ET</div>
+        <div class="time">5:40 CT</div>
         <div class="probs">Assad vs Rasmussen</div>
       </div><div class="g" data-gpk="823887">
         <div class="matchup">CIN @ MIA</div>
-        <div class="time">6:40 ET</div>
+        <div class="time">5:40 CT</div>
         <div class="probs">Abbott vs Alcantara</div>
       </div><div class="g" data-gpk="822754">
         <div class="matchup">STL @ WSH</div>
-        <div class="time">6:45 ET</div>
+        <div class="time">5:45 CT</div>
         <div class="probs">Liberatore vs Cavalli</div>
       </div><div class="g" data-gpk="824780">
         <div class="matchup">MIL @ BOS</div>
-        <div class="time">6:45 ET</div>
+        <div class="time">5:45 CT</div>
         <div class="probs">Misiorowski vs Crochet</div>
       </div><div class="g" data-gpk="823567">
         <div class="matchup">ATH @ NYY</div>
-        <div class="time">7:05 ET</div>
+        <div class="time">6:05 CT</div>
         <div class="probs">Civale vs Schlittler</div>
       </div><div class="g" data-gpk="822831">
         <div class="matchup">LAD @ TOR</div>
-        <div class="time">7:07 ET</div>
+        <div class="time">6:07 CT</div>
         <div class="probs">Yamamoto vs Gausman</div>
       </div><div class="g" data-gpk="823727">
         <div class="matchup">DET @ MIN</div>
-        <div class="time">7:40 ET</div>
+        <div class="time">6:40 CT</div>
         <div class="probs">Skubal vs Bradley</div>
       </div><div class="g" data-gpk="822916">
         <div class="matchup">SEA @ TEX</div>
-        <div class="time">8:05 ET</div>
+        <div class="time">7:05 CT</div>
         <div class="probs">Kirby vs Eovaldi</div>
       </div><div class="g" data-gpk="824375">
         <div class="matchup">HOU @ COL</div>
-        <div class="time">8:40 ET</div>
+        <div class="time">7:40 CT</div>
         <div class="probs">Burrows vs Freeland</div>
       </div><div class="g" data-gpk="824051">
         <div class="matchup">ATL @ LAA</div>
-        <div class="time">9:38 ET</div>
+        <div class="time">8:38 CT</div>
         <div class="probs">López vs Kikuchi</div>
       </div><div class="g" data-gpk="823235">
         <div class="matchup">PHI @ SF</div>
-        <div class="time">9:45 ET</div>
+        <div class="time">8:45 CT</div>
         <div class="probs">Sánchez vs Ray</div>
       </div></div>
   </section>
@@ -445,7 +446,7 @@ footer.foot .flag{color:var(--gold)}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Friendly Confines Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/07/26 13:54 CT</span>
+  <span>Filed 04/07/26 13:21 CT</span>
 </footer>
 
 <script>
