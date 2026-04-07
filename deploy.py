@@ -52,9 +52,11 @@ except urllib.error.HTTPError as e:
 
 # 3) read new local index.html, PUT with current sha
 local = Path(__file__).parent / "index.html"
+if not local.exists():
+    sys.exit(f"error: {local} not found — did build.py run?")
 html_bytes = local.read_bytes()
 if not html_bytes:
-    sys.exit(f"error: {local} empty or missing")
+    sys.exit(f"error: {local} is empty")
 new_b64 = base64.b64encode(html_bytes).decode()
 
 try:

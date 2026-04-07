@@ -12,6 +12,8 @@
   var slateTimer = null;
   var paused = false;
   var anyLive = false; // track if any game is live for slate poll rate
+  var lastWidgetHTML = ""; // diff check to prevent flicker on unchanged content
+  var lastResumeAt = 0; // debounce visibility changes
 
   /* ── helpers ──────────────────────────────────────────────────── */
 
@@ -118,9 +120,9 @@
       innLabel = "Delayed";
     }
 
-    container.innerHTML =
+    var newHTML =
       '<div class="live-widget">' +
-        '<div class="live-badge"><span class="dot"></span> LIVE &mdash; ' + innLabel + "</div>" +
+        '<div class="live-badge"><span class="dot"></span> LIVE &mdash; ' + esc(innLabel) + "</div>" +
         '<div class="score-row">' +
           '<span class="team-abbr">' + esc(teamAbbr(away)) + '</span>' +
           '<span class="runs">' + ar + '</span>' +
@@ -132,6 +134,10 @@
         matchupHTML +
         lastPlayHTML +
       "</div>";
+    if (newHTML !== lastWidgetHTML) {
+      container.innerHTML = newHTML;
+      lastWidgetHTML = newHTML;
+    }
   }
 
   function renderFinal(game) {
@@ -165,9 +171,11 @@
     var time = fmtTime(game.gameDate);
 
     var probA = "", probH = "";
-    if (game.probablePitcher) {
-      if (game.probablePitcher.away) probA = game.probablePitcher.away.fullName || "";
-      if (game.probablePitcher.home) probH = game.probablePitcher.home.fullName || "";
+    if (game.teams && game.teams.away && game.teams.away.probablePitcher) {
+      probA = game.teams.away.probablePitcher.fullName || "";
+    }
+    if (game.teams && game.teams.home && game.teams.home.probablePitcher) {
+      probH = game.teams.home.probablePitcher.fullName || "";
     }
 
     var probHTML = "";
@@ -330,6 +338,8 @@
       clearTimeout(timer);
       clearTimeout(slateTimer);
     } else {
+      if (Date.now() - lastResumeAt < 5000) return;
+      lastResumeAt = Date.now();
       paused = false;
       checkCubs();
       pollSlate();

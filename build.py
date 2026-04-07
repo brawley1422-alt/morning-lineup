@@ -7,9 +7,12 @@ Run: python3 build.py
 import json
 import urllib.request
 import urllib.parse
-from datetime import date, timedelta, datetime
+from datetime import date, timedelta, datetime, timezone
 from pathlib import Path
 from html import escape
+from zoneinfo import ZoneInfo
+
+CT = ZoneInfo("America/Chicago")
 
 CUBS_ID = 112
 API = "https://statsapi.mlb.com/api/v1"
@@ -102,7 +105,8 @@ def load_all():
         pk = cubs_game["gamePk"]
         try:
             boxscore = fetch(f"/game/{pk}/boxscore")
-        except Exception:
+        except Exception as e:
+            print(f"  warning: boxscore fetch failed: {e}", flush=True)
             boxscore = None
         try:
             # use v1.1 feed for playByPlay scoring plays
@@ -112,7 +116,8 @@ def load_all():
             with urllib.request.urlopen(req, timeout=15) as r:
                 feed = json.loads(r.read())
             plays = feed.get("liveData", {}).get("plays", {})
-        except Exception:
+        except Exception as e:
+            print(f"  warning: play-by-play fetch failed: {e}", flush=True)
             plays = None
 
     # Cubs injuries (40-man, filter D-codes)
@@ -163,12 +168,11 @@ def abbr(tmap, team_id):
 def team_name(tmap, team_id):
     return tmap.get(team_id, {}).get("teamName", "???")
 
-def fmt_time_et(iso_z):
-    # gameDate is UTC Z
-    dt = datetime.strptime(iso_z, "%Y-%m-%dT%H:%M:%SZ")
-    # ET roughly = UTC - 4 (EDT) in April
-    et = dt - timedelta(hours=4)
-    return et.strftime("%-I:%M") + " ET"
+def fmt_time_ct(iso_z):
+    """Convert UTC ISO timestamp to Central Time display string."""
+    dt = datetime.strptime(iso_z, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+    ct = dt.astimezone(CT)
+    return ct.strftime("%-I:%M") + " CT"
 
 def fmt_date(d):
     return d.strftime("%a, %b ") + str(d.day) + d.strftime(", %Y")
@@ -189,7 +193,7 @@ def render_line_score(game, tmap, game_date=None, yest=None):
     home_score = game["teams"]["home"].get("score", 0)
     cubs_won = (away_id == CUBS_ID and away_score > home_score) or \
                (home_id == CUBS_ID and home_score > away_score)
-    innings = game["linescore"].get("innings", [])
+    innings = list(game["linescore"].get("innings", []))
     max_inn = max(len(innings), 9)
     # pad to 9
     while len(innings) < 9:
@@ -197,15 +201,13 @@ def render_line_score(game, tmap, game_date=None, yest=None):
     away_tot = game["linescore"]["teams"]["away"]
     home_tot = game["linescore"]["teams"]["home"]
 
-    def row(label, tid, innings_side, totals, won):
+    def row(label, tid, innings_side, totals):
         cells = ''.join(
             f'<td>{"" if i.get(innings_side, {}).get("runs") in (None,"") else i[innings_side].get("runs",0)}</td>'
             for i in innings
         )
-        won_cls = ' class="won"' if (tid==CUBS_ID and won) or (tid!=CUBS_ID and not won and tid!=CUBS_ID) else ''
-        # actually simpler: mark winner row
-        win_cls = ' class="won"' if ((tid==away_id and away_score>home_score) or (tid==home_id and home_score>away_score)) else ''
-        return (f'<tr{win_cls}><td class="team">{label}</td>{cells}'
+        won_cls = ' class="won"' if ((tid==away_id and away_score>home_score) or (tid==home_id and home_score>away_score)) else ''
+        return (f'<tr{won_cls}><td class="team">{escape(label)}</td>{cells}'
                 f'<td class="rhe">{totals["runs"]}</td>'
                 f'<td class="rhe">{totals["hits"]}</td>'
                 f'<td class="rhe">{totals["errors"]}</td></tr>')
@@ -217,7 +219,7 @@ def render_line_score(game, tmap, game_date=None, yest=None):
     if len(innings) > 9:
         final_label = f"Final / {len(innings)}"
     try:
-        start_time = fmt_time_et(game["gameDate"])
+        start_time = fmt_time_ct(game["gameDate"])
     except Exception:
         start_time = ""
 
@@ -248,8 +250,8 @@ def render_line_score(game, tmap, game_date=None, yest=None):
       <table>
         <thead><tr><th></th>{inn_hdrs}<th>R</th><th>H</th><th>E</th></tr></thead>
         <tbody>
-          {row(away_ab, away_id, 'away', away_tot, cubs_won)}
-          {row(home_ab, home_id, 'home', home_tot, cubs_won)}
+          {row(away_ab, away_id, 'away', away_tot)}
+          {row(home_ab, home_id, 'home', home_tot)}
         </tbody>
       </table>
       <div class="pitchers">{''.join(pitcher_bits)}</div>
@@ -405,10 +407,10 @@ def render_next_games(next_games, tmap):
         opp_ab = abbr(tmap, opp_id)
         vs = f"vs {opp_ab}" if is_home else f"at {opp_ab}"
         try:
-            gd = datetime.strptime(g["gameDate"], "%Y-%m-%dT%H:%M:%SZ")
-            et = gd - timedelta(hours=4)
-            day_str = et.strftime("%a, %b ") + str(et.day)
-            time_str = et.strftime("%-I:%M") + " ET"
+            gd = datetime.strptime(g["gameDate"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+            ct = gd.astimezone(CT)
+            day_str = ct.strftime("%a, %b ") + str(ct.day)
+            time_str = ct.strftime("%-I:%M") + " CT"
         except Exception:
             day_str = g.get("officialDate","")
             time_str = ""
@@ -512,11 +514,11 @@ def render_scoreboard_yest(games_y, tmap):
         hs = g["teams"]["home"].get("score",0)
         winner_ab = aa if as_ > hs else ha
         wp = g.get("decisions",{}).get("winner",{}).get("fullName","").split()[-1] if g.get("decisions") else ""
-        rows.append(f'<tr><td class="name">{aa}</td><td class="num">{as_}</td>'
-                    f'<td class="name">{ha} {hs}</td>'
-                    f'<td class="num w">{winner_ab}</td><td>{escape(wp)}</td></tr>')
+        rows.append(f'<tr><td class="name">{escape(aa)}</td><td class="num">{as_}</td>'
+                    f'<td class="name">{escape(ha)}</td><td class="num">{hs}</td>'
+                    f'<td class="num w">{escape(winner_ab)}</td><td>{escape(wp)}</td></tr>')
     return f"""<div class="tblwrap"><table class="data">
-    <thead><tr><th>Away</th><th></th><th>Home</th><th>Final</th><th>WP</th></tr></thead>
+    <thead><tr><th>Away</th><th></th><th>Home</th><th></th><th>W</th><th>WP</th></tr></thead>
     <tbody>{"".join(rows)}</tbody></table></div>"""
 
 def render_all_divisions(standings_data, tmap):
@@ -564,7 +566,7 @@ def render_leaders(lh, lp, tmap):
             tid = L["team"]["id"]
             ab = abbr(tmap, tid)
             val = L["value"]
-            out.append(f'<tr><td>{CAT_LABELS.get(cat,cat)}</td><td class="name">{escape(name)} ({ab})</td><td class="num">{val}</td></tr>')
+            out.append(f'<tr><td>{CAT_LABELS.get(cat,cat)}</td><td class="name">{escape(name)} ({escape(ab)})</td><td class="num">{escape(str(val))}</td></tr>')
         return "".join(out)
     hit = rows(lh, ["battingAverage","homeRuns","runsBattedIn","stolenBases","onBasePlusSlugging"])
     pit = rows(lp, ["earnedRunAverage","strikeOuts","whip","saves","wins"])
@@ -583,9 +585,9 @@ def render_slate_today(games_t, tmap):
         aid = g["teams"]["away"]["team"]["id"]; hid = g["teams"]["home"]["team"]["id"]
         aa = abbr(tmap, aid); ha = abbr(tmap, hid)
         try:
-            gd = datetime.strptime(g["gameDate"], "%Y-%m-%dT%H:%M:%SZ")
-            et = gd - timedelta(hours=4)
-            time_str = et.strftime("%-I:%M") + " ET"
+            gd = datetime.strptime(g["gameDate"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+            ct = gd.astimezone(CT)
+            time_str = ct.strftime("%-I:%M") + " CT"
         except Exception:
             time_str = ""
         ap = g["teams"]["away"].get("probablePitcher",{}) or {}
@@ -627,6 +629,114 @@ def render_nlc_rivals(games_y, tmap):
         cards.append('<div class="rival"><h4>NL Central Rivals</h4><p>All off yesterday.</p></div>')
     return f'<div class="rivals">{"".join(cards)}</div>'
 
+def detect_league_news(games_y, standings_data, tmap):
+    """Scan yesterday's games and standings for notable events."""
+    items = []
+    for g in games_y:
+        if g.get("status", {}).get("abstractGameState") != "Final":
+            continue
+        if "linescore" not in g:
+            continue
+        away_id = g["teams"]["away"]["team"]["id"]
+        home_id = g["teams"]["home"]["team"]["id"]
+        away_ab = abbr(tmap, away_id)
+        home_ab = abbr(tmap, home_id)
+        away_name = team_name(tmap, away_id)
+        home_name = team_name(tmap, home_id)
+        away_score = g["teams"]["away"].get("score", 0)
+        home_score = g["teams"]["home"].get("score", 0)
+        innings = g.get("linescore", {}).get("innings", [])
+        num_inn = len(innings)
+        margin = abs(away_score - home_score)
+        total = away_score + home_score
+        decisions = g.get("decisions", {}) or {}
+        wp = decisions.get("winner", {}).get("fullName", "")
+        lp = decisions.get("loser", {}).get("fullName", "")
+        wp_last = wp.split()[-1] if wp else ""
+
+        home_won = home_score > away_score
+        winner_name = home_name if home_won else away_name
+        loser_name = away_name if home_won else home_name
+        winner_score = max(away_score, home_score)
+        loser_score = min(away_score, home_score)
+
+        is_extras = num_inn > 9
+
+        # Walk-off: home wins and scored in bottom of final inning
+        is_walkoff = False
+        if home_won and innings:
+            last = innings[-1]
+            last_home = last.get("home", {}).get("runs")
+            if last_home is not None and str(last_home) not in ("", "0"):
+                is_walkoff = True
+
+        is_shutout = (away_score == 0 or home_score == 0) and total > 0
+        is_blowout = margin >= 8
+        is_high_scoring = total >= 15
+
+        if is_walkoff:
+            extras_note = f" in {num_inn} innings" if is_extras else ""
+            body = f"{escape(home_name)} walked off the {escape(loser_name)}, {winner_score}-{loser_score}{extras_note}."
+            if wp_last:
+                body += f" {escape(wp_last)} got the win."
+            items.append({"type": "walkoff", "priority": 1, "headline": "Walk-Off", "body": body})
+        elif is_extras:
+            body = f"{escape(winner_name)} outlasted the {escape(loser_name)} in {num_inn} innings, {winner_score}-{loser_score}."
+            items.append({"type": "extras", "priority": 2, "headline": f"{num_inn} Innings", "body": body})
+        elif is_shutout and is_blowout:
+            body = f"{escape(winner_name)} blanked the {escape(loser_name)}, {winner_score}-0."
+            if wp_last:
+                body += f" {escape(wp_last)} earned the win."
+            items.append({"type": "shutout", "priority": 3, "headline": "Shutout", "body": body})
+        elif is_shutout:
+            body = f"{escape(winner_name)} shut out the {escape(loser_name)}, {winner_score}-0."
+            if wp_last:
+                body += f" {escape(wp_last)} earned the win."
+            items.append({"type": "shutout", "priority": 3, "headline": "Shutout", "body": body})
+        elif is_blowout:
+            body = f"{escape(winner_name)} routed the {escape(loser_name)}, {winner_score}-{loser_score}."
+            items.append({"type": "blowout", "priority": 4, "headline": "Rout", "body": body})
+        elif is_high_scoring:
+            venue = g.get("venue", {}).get("name", "")
+            loc = f" at {escape(venue)}" if venue else ""
+            body = f"A slugfest{loc}: {escape(away_ab)} {away_score}, {escape(home_ab)} {home_score} ({total} combined runs)."
+            items.append({"type": "high_scoring", "priority": 5, "headline": "Slugfest", "body": body})
+
+    # Streaks from standings (W7+ or L7+)
+    for rec in standings_data.get("records", []):
+        for tr in rec["teamRecords"]:
+            streak = tr.get("streak", {})
+            num = streak.get("streakNumber", 0)
+            stype = streak.get("streakType", "")
+            if num >= 7:
+                tid = tr["team"]["id"]
+                tname = team_name(tmap, tid)
+                if stype == "wins":
+                    body = f"The {escape(tname)} have won {num} straight."
+                    headline = f"W{num}"
+                else:
+                    body = f"The {escape(tname)} have dropped {num} in a row."
+                    headline = f"L{num}"
+                items.append({"type": "streak", "priority": 6, "headline": headline, "body": body})
+
+    items.sort(key=lambda x: x["priority"])
+    return items[:6]
+
+
+def render_league_news_from_items(items):
+    """Render pre-computed league news items as blurb cards."""
+    if not items:
+        return '<p><em class="slang">A quiet night around the league.</em></p>'
+    blurbs = []
+    for it in items:
+        blurbs.append(
+            f'<div class="blurb">'
+            f'<span class="blurb-tag {escape(it["type"])}">{escape(it["headline"])}</span>'
+            f'<p class="blurb-text">{it["body"]}</p>'
+            f'</div>'
+        )
+    return f'<div class="news-wire">{"".join(blurbs)}</div>'
+
 # ─── page assembly ──────────────────────────────────────────────────────────
 
 CSS = r"""
@@ -653,6 +763,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
 a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
 a:hover{color:var(--paper);border-bottom-color:var(--paper)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:28px 20px 18px;max-width:var(--maxw);margin:0 auto;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;}
 .masthead .kicker .vol{color:var(--gold)}
@@ -756,6 +867,18 @@ dl.transac dd{margin:3px 0 0;color:var(--paper-dim)}
 .rival h4{margin:0 0 4px;color:var(--paper)}
 .rival .score{font-family:var(--mono);font-size:12px;color:var(--gold)}
 .rival p{font-size:13px;margin:6px 0 0;color:var(--paper-dim)}
+.news-wire{display:flex;flex-direction:column;gap:10px;margin:12px 0 18px}
+.blurb{background:var(--ink-2);border:1px solid var(--rule);border-left:3px solid var(--cubs-red);
+  padding:10px 14px;border-radius:2px;display:flex;gap:12px;align-items:baseline;}
+.blurb-tag{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:10px;
+  color:var(--cubs-red-hi);border:1px solid var(--cubs-red);padding:2px 8px;border-radius:2px;
+  white-space:nowrap;font-weight:600;flex-shrink:0;}
+.blurb-tag.extras,.blurb-tag.streak{color:var(--gold);border-color:var(--gold-dim)}
+.blurb-tag.shutout{color:var(--paper-mute);border-color:var(--rule-hi)}
+.blurb-tag.blowout{color:var(--cubs-red-hi);border-color:var(--cubs-red)}
+.blurb-tag.high_scoring{color:var(--gold);border-color:var(--gold-dim)}
+.blurb-text{font-size:14px;color:var(--paper-dim);margin:0}
+@media (max-width:640px){.blurb{flex-direction:column;gap:6px}}
 .slate{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 @media (max-width:640px){.slate{grid-template-columns:1fr}}
 .slate .g{background:var(--ink-2);border:1px solid var(--rule);padding:10px 12px;border-radius:2px;display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;}
@@ -826,9 +949,12 @@ def page(data):
     leaders_html = render_leaders(data["leaders_hit"], data["leaders_pit"], data["tmap"])
     slate_html = render_slate_today(data["games_t"], data["tmap"])
     rivals_html = render_nlc_rivals(data["games_y"], data["tmap"])
+    news_items = detect_league_news(data["games_y"], data["standings"], data["tmap"])
+    news_count = len(news_items)
+    league_news_html = render_league_news_from_items(news_items)
 
     vol_no = (t - date(t.year, 1, 1)).days + 1
-    filed = datetime.now().strftime("%m/%d/%y %H:%M CT")
+    filed = datetime.now(tz=CT).strftime("%m/%d/%y %H:%M CT")
 
     return f"""<!doctype html>
 <html lang="en">
@@ -880,7 +1006,7 @@ def page(data):
     <summary>
       <span class="num">01</span>
       <span class="h">The Cubs</span>
-      <span class="tag">{summary_tag}</span>
+      <span class="tag">{escape(summary_tag)}</span>
       <span class="chev">&#9656;</span>
     </summary>
     {line_score_html}
@@ -917,9 +1043,11 @@ def page(data):
     <summary>
       <span class="num">03</span>
       <span class="h">Around the League</span>
-      <span class="tag">{y.strftime("%b ")}{y.day} &middot; Scoreboard</span>
+      <span class="tag">{y.strftime("%b ")}{y.day} &middot; {news_count} Note{"s" if news_count != 1 else ""}</span>
       <span class="chev">&#9656;</span>
     </summary>
+    <h3>News Wire</h3>
+    {league_news_html}
     <h3>Yesterday&rsquo;s Scoreboard</h3>
     {scoreboard_yest}
     <h3>Standings &mdash; All Six Divisions</h3>
