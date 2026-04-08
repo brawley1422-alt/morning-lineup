@@ -1,0 +1,59 @@
+{
+  "id": 136,
+  "name": "Mariners",
+  "full_name": "Seattle Mariners",
+  "abbreviation": "SEA",
+  "division_id": 200,
+  "division_name": "AL West",
+  "colors": {
+    "primary": "#0C2C56",
+    "primary_hi": "#1a4070",
+    "accent": "#005C5C",
+    "accent_hi": "#0a7878"
+  },
+  "venue": {
+    "id": 680,
+    "name": "T-Mobile Park",
+    "azimuth": 0,
+    "nickname": "The T"
+  },
+  "affiliates": [
+    {
+      "id": 529,
+      "name": "Tacoma Rainiers",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 574,
+      "name": "Arkansas Travelers",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 403,
+      "name": "Everett AquaSox",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 401,
+      "name": "Inland Empire 66ers",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The T & Beyond",
+    "footer_tag": "A T-Mobile Park Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Mariners pride",
+    "idle_msg": "No Mariners game in progress"
+  },
+  "rivals": {
+    "133": "Athletics",
+    "136": "Mariners",
+    "140": "Rangers",
+    "108": "Angels",
+    "117": "Astros"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": 158,
+  "name": "Brewers",
+  "full_name": "Milwaukee Brewers",
+  "abbreviation": "MIL",
+  "division_id": 205,
+  "division_name": "NL Central",
+  "colors": {
+    "primary": "#12284B",
+    "primary_hi": "#1d3a60",
+    "accent": "#FFC52F",
+    "accent_hi": "#ffd460"
+  },
+  "venue": {
+    "id": 32,
+    "name": "American Family Field",
+    "azimuth": 0,
+    "nickname": "The Brew House"
+  },
+  "affiliates": [
+    {
+      "id": 556,
+      "name": "Nashville Sounds",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 5015,
+      "name": "Biloxi Shuckers",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 572,
+      "name": "Wisconsin Timber Rattlers",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 249,
+      "name": "Wilson Warbirds",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Brew House & Beyond",
+    "footer_tag": "A American Family Field Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Brewers pride",
+    "idle_msg": "No Brewers game in progress"
+  },
+  "rivals": {
+    "134": "Pirates",
+    "138": "Cardinals",
+    "158": "Brewers",
+    "112": "Cubs",
+    "113": "Reds"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": 147,
+  "name": "Yankees",
+  "full_name": "New York Yankees",
+  "abbreviation": "NYY",
+  "division_id": 201,
+  "division_name": "AL East",
+  "colors": {
+    "primary": "#003087",
+    "primary_hi": "#0a45a0",
+    "accent": "#C4CED4",
+    "accent_hi": "#d4dee4"
+  },
+  "venue": {
+    "id": 3313,
+    "name": "Yankee Stadium",
+    "azimuth": 0,
+    "nickname": "The House"
+  },
+  "affiliates": [
+    {
+      "id": 531,
+      "name": "Scranton/Wilkes-Barre RailRiders",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 1956,
+      "name": "Somerset Patriots",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 537,
+      "name": "Hudson Valley Renegades",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 587,
+      "name": "Tampa Tarpons",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The House & Beyond",
+    "footer_tag": "A Yankee Stadium Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Yankees pride",
+    "idle_msg": "No Yankees game in progress"
+  },
+  "rivals": {
+    "139": "Rays",
+    "141": "Blue Jays",
+    "147": "Yankees",
+    "110": "Orioles",
+    "111": "Red Sox"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": 141,
+  "name": "Blue Jays",
+  "full_name": "Toronto Blue Jays",
+  "abbreviation": "TOR",
+  "division_id": 201,
+  "division_name": "AL East",
+  "colors": {
+    "primary": "#134A8E",
+    "primary_hi": "#1d60a8",
+    "accent": "#1D2D5C",
+    "accent_hi": "#2a4070"
+  },
+  "venue": {
+    "id": 14,
+    "name": "Rogers Centre",
+    "azimuth": 0,
+    "nickname": "The Dome"
+  },
+  "affiliates": [
+    {
+      "id": 422,
+      "name": "Buffalo Bisons",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 463,
+      "name": "New Hampshire Fisher Cats",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 435,
+      "name": "Vancouver Canadians",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 424,
+      "name": "Dunedin Blue Jays",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Dome & Beyond",
+    "footer_tag": "A Rogers Centre Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Blue Jays pride",
+    "idle_msg": "No Blue Jays game in progress"
+  },
+  "rivals": {
+    "139": "Rays",
+    "141": "Blue Jays",
+    "147": "Yankees",
+    "110": "Orioles",
+    "111": "Red Sox"
+  }
+}

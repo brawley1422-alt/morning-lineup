@@ -1,0 +1,59 @@
+{
+  "id": 110,
+  "name": "Orioles",
+  "full_name": "Baltimore Orioles",
+  "abbreviation": "BAL",
+  "division_id": 201,
+  "division_name": "AL East",
+  "colors": {
+    "primary": "#DF4601",
+    "primary_hi": "#ff6020",
+    "accent": "#000000",
+    "accent_hi": "#333333"
+  },
+  "venue": {
+    "id": 2,
+    "name": "Oriole Park at Camden Yards",
+    "azimuth": 45,
+    "nickname": "The Yard"
+  },
+  "affiliates": [
+    {
+      "id": 568,
+      "name": "Norfolk Tides",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 418,
+      "name": "Chesapeake Baysox",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 493,
+      "name": "Frederick Keys",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 548,
+      "name": "Delmarva Shorebirds",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Yard & Beyond",
+    "footer_tag": "A Oriole Park at Camden Yards Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Orioles pride",
+    "idle_msg": "No Orioles game in progress"
+  },
+  "rivals": {
+    "139": "Rays",
+    "141": "Blue Jays",
+    "147": "Yankees",
+    "110": "Orioles",
+    "111": "Red Sox"
+  }
+}

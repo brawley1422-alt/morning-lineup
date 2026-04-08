@@ -1,0 +1,59 @@
+{
+  "id": 143,
+  "name": "Phillies",
+  "full_name": "Philadelphia Phillies",
+  "abbreviation": "PHI",
+  "division_id": 204,
+  "division_name": "NL East",
+  "colors": {
+    "primary": "#E81828",
+    "primary_hi": "#ff3040",
+    "accent": "#002D72",
+    "accent_hi": "#0a4590"
+  },
+  "venue": {
+    "id": 2681,
+    "name": "Citizens Bank Park",
+    "azimuth": 0,
+    "nickname": "The Bank"
+  },
+  "affiliates": [
+    {
+      "id": 1410,
+      "name": "Lehigh Valley IronPigs",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 522,
+      "name": "Reading Fightin Phils",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 427,
+      "name": "Jersey Shore BlueClaws",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 566,
+      "name": "Clearwater Threshers",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Bank & Beyond",
+    "footer_tag": "A Citizens Bank Park Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Phillies pride",
+    "idle_msg": "No Phillies game in progress"
+  },
+  "rivals": {
+    "143": "Phillies",
+    "144": "Braves",
+    "146": "Marlins",
+    "120": "Nationals",
+    "121": "Mets"
+  }
+}

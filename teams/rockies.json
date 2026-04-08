@@ -1,0 +1,59 @@
+{
+  "id": 115,
+  "name": "Rockies",
+  "full_name": "Colorado Rockies",
+  "abbreviation": "COL",
+  "division_id": 203,
+  "division_name": "NL West",
+  "colors": {
+    "primary": "#33006F",
+    "primary_hi": "#4d1a8f",
+    "accent": "#C4CED4",
+    "accent_hi": "#d4dee4"
+  },
+  "venue": {
+    "id": 19,
+    "name": "Coors Field",
+    "azimuth": 0,
+    "nickname": "The Rockpile"
+  },
+  "affiliates": [
+    {
+      "id": 342,
+      "name": "Albuquerque Isotopes",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 538,
+      "name": "Hartford Yard Goats",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 486,
+      "name": "Spokane Indians",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 259,
+      "name": "Fresno Grizzlies",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Rockpile & Beyond",
+    "footer_tag": "A Coors Field Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Rockies pride",
+    "idle_msg": "No Rockies game in progress"
+  },
+  "rivals": {
+    "135": "Padres",
+    "137": "Giants",
+    "109": "D-backs",
+    "115": "Rockies",
+    "119": "Dodgers"
+  }
+}

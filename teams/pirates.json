@@ -1,0 +1,59 @@
+{
+  "id": 134,
+  "name": "Pirates",
+  "full_name": "Pittsburgh Pirates",
+  "abbreviation": "PIT",
+  "division_id": 205,
+  "division_name": "NL Central",
+  "colors": {
+    "primary": "#27251F",
+    "primary_hi": "#444440",
+    "accent": "#FDB827",
+    "accent_hi": "#ffc840"
+  },
+  "venue": {
+    "id": 31,
+    "name": "PNC Park",
+    "azimuth": 0,
+    "nickname": "The North Shore"
+  },
+  "affiliates": [
+    {
+      "id": 484,
+      "name": "Indianapolis Indians",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 452,
+      "name": "Altoona Curve",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 477,
+      "name": "Greensboro Grasshoppers",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 3390,
+      "name": "Bradenton Marauders",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The North Shore & Beyond",
+    "footer_tag": "A PNC Park Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Pirates pride",
+    "idle_msg": "No Pirates game in progress"
+  },
+  "rivals": {
+    "134": "Pirates",
+    "138": "Cardinals",
+    "158": "Brewers",
+    "112": "Cubs",
+    "113": "Reds"
+  }
+}

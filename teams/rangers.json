@@ -1,0 +1,59 @@
+{
+  "id": 140,
+  "name": "Rangers",
+  "full_name": "Texas Rangers",
+  "abbreviation": "TEX",
+  "division_id": 200,
+  "division_name": "AL West",
+  "colors": {
+    "primary": "#003278",
+    "primary_hi": "#0a4590",
+    "accent": "#C0111F",
+    "accent_hi": "#da2a38"
+  },
+  "venue": {
+    "id": 13,
+    "name": "Globe Life Field",
+    "azimuth": 0,
+    "nickname": "Globe Life"
+  },
+  "affiliates": [
+    {
+      "id": 102,
+      "name": "Round Rock Express",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 540,
+      "name": "Frisco RoughRiders",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 6324,
+      "name": "Hub City Spartanburgers",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 448,
+      "name": "Hickory Crawdads",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from Globe Life & Beyond",
+    "footer_tag": "A Globe Life Field Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Rangers pride",
+    "idle_msg": "No Rangers game in progress"
+  },
+  "rivals": {
+    "133": "Athletics",
+    "136": "Mariners",
+    "140": "Rangers",
+    "108": "Angels",
+    "117": "Astros"
+  }
+}

@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d0f14">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>The Morning Lineup &mdash; Wed, Apr 8, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,700&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>:root{
+  --ink:#0d0f14;--ink-2:#141823;--ink-3:#1c2230;
+  --paper:#ece4d0;--paper-dim:#c9bfa6;--paper-mute:#8b836d;
+  --rule:#2a3142;--rule-hi:#3a4360;
+  --team-primary:#002D62;--team-primary-hi:#0a4580;
+  --team-accent:#EB6E1F;--team-accent-hi:#ff8a3d;
+  --gold:#c9a24a;--gold-dim:#8a6f32;
+  --win:#6ea86a;--loss:#c0554f;
+  --serif:"Playfair Display",Georgia,serif;
+  --body:"Lora","Source Serif Pro",Georgia,serif;
+  --cond:"Oswald","Bebas Neue",Impact,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --maxw:1180px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ink);color:var(--paper)}
+body{font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  background:radial-gradient(1200px 600px at 10% -10%,rgba(14,51,134,.22),transparent 60%),radial-gradient(900px 500px at 110% 10%,rgba(204,52,51,.12),transparent 55%),linear-gradient(180deg,#0a0c12 0%,#0d0f14 40%,#0b0d12 100%);
+  background-attachment:fixed;position:relative;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.06;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
+a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
+a:hover{color:var(--paper);border-bottom-color:var(--paper)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:3px}
+.masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
+.masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
+.masthead .kicker .vol{color:var(--gold)}
+.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);}
+.masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
+.masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.masthead .dek{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;}
+.masthead .dek .item{display:flex;gap:8px;align-items:center}
+.masthead .dek .label{color:var(--paper-mute)}
+.masthead .dek .val{color:var(--paper)}
+.masthead .dek .rec{color:var(--gold);font-weight:600}
+.masthead .dek .pill{display:inline-block;padding:3px 8px;border:1px solid var(--rule-hi);border-radius:2px;background:rgba(14,51,134,.25);}
+.wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 20px 40px;display:grid;grid-template-columns:200px 1fr;gap:20px;}
+@media (max-width:900px){.wrap{grid-template-columns:1fr;gap:0;padding:0 16px 30px}}
+.toc{position:sticky;top:14px;align-self:start;padding:16px 14px 14px;background:var(--ink-2);border:1px solid var(--rule);border-top:2px solid var(--gold-dim);border-radius:3px}
+.toc .title{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:10px;}
+.toc ol{list-style:none;padding:0;margin:0;counter-reset:toc}
+.toc li{counter-increment:toc;border-bottom:1px dashed var(--rule);padding:7px 0}
+.toc li::before{content:counter(toc,decimal-leading-zero);font-family:var(--mono);font-size:10px;color:var(--gold-dim);margin-right:10px;}
+.toc a{color:var(--paper-dim);border:none;font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:13px;transition:color .12s;}
+.toc a:hover,.toc a.active{color:var(--team-accent-hi)}
+@media (max-width:900px){.toc{position:static;padding:14px 0 8px;margin-bottom:8px;border-bottom:1px solid var(--rule)}.toc ol{display:flex;flex-wrap:wrap;gap:4px 6px}.toc li{border:none;padding:0}.toc li::before{display:none}.toc a{display:inline-block;padding:6px 10px;border:1px solid var(--rule);background:var(--ink-2);border-radius:2px;font-size:11px;}}
+main{min-width:0}
+section{margin:10px 0 14px;scroll-margin-top:10px}
+section > summary,section > .sechead{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:14px;border-top:none;border-bottom:1px solid var(--rule);padding:10px 0 7px;margin-bottom:8px;font-family:var(--cond);text-transform:uppercase;background-image:linear-gradient(90deg,var(--paper) 0%,var(--gold) 50%,var(--paper) 100%);background-size:100% 3px;background-repeat:no-repeat;background-position:top;}
+section > summary::-webkit-details-marker{display:none}
+section > summary .num{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.1em;border:1px solid var(--gold-dim);padding:2px 6px;border-radius:3px;background:rgba(201,162,74,.1);}
+section > summary .h{font-size:clamp(22px,4vw,34px);font-weight:700;letter-spacing:.04em;color:var(--paper);flex:1;line-height:1;transition:color .15s;}
+section > summary:hover .h{color:var(--gold)}
+section > summary .tag{font-size:11px;letter-spacing:.22em;color:var(--paper-mute);}
+section > summary .chev{font-family:var(--mono);font-size:18px;color:var(--gold);transition:transform .2s;}
+section[open] > summary .chev{transform:rotate(90deg)}
+section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:13px;color:var(--team-accent-hi);margin:10px 0 6px;border-bottom:1px dotted var(--rule-hi);padding-bottom:4px;}
+section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--gold);margin:8px 0 4px;}
+p{margin:0 0 8px}
+em.slang{font-style:italic;color:var(--paper-dim)}
+.scoreboard{background:linear-gradient(180deg,#0a1528 0%,#08101e 100%);border:1px solid var(--team-primary);border-radius:3px;padding:18px 18px 14px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.03),0 10px 30px -10px rgba(14,51,134,.5);position:relative;overflow:hidden;}
+.scoreboard::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,transparent 0 22px,rgba(255,255,255,.018) 22px 23px);}
+.scoreboard .meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--paper-mute);margin-bottom:10px;}
+.scoreboard .meta .fin{color:var(--gold);border:1px solid var(--gold-dim);padding:2px 8px;border-radius:2px;font-weight:600;}
+.scoreboard table{width:100%;border-collapse:collapse;font-family:var(--mono)}
+.scoreboard th,.scoreboard td{padding:7px 6px;text-align:center;font-size:13px;border-bottom:1px solid rgba(255,255,255,.06);}
+.scoreboard th{font-weight:500;color:var(--paper-mute);font-size:10px;letter-spacing:.1em;}
+.scoreboard td.team{text-align:left;font-family:var(--cond);font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--paper);font-weight:600;padding-left:10px;width:80px;}
+.scoreboard td.rhe{font-weight:700;color:var(--gold);font-size:15px}
+.scoreboard tr.won td.team{color:var(--team-accent-hi)}
+.scoreboard tr.won td.rhe{color:var(--paper)}
+.scoreboard .pitchers{display:flex;flex-wrap:wrap;gap:18px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--rule-hi);font-size:13px;}
+.scoreboard .pitchers span strong{font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:10px;color:var(--paper-mute);margin-right:6px;}
+.scoreboard .pitchers .w{color:var(--win)}
+.scoreboard .pitchers .l{color:var(--loss)}
+.scoreboard .pitchers .s{color:var(--gold)}
+.stars{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:6px 0;}
+@media (max-width:640px){.stars{grid-template-columns:1fr}}
+.star{background:linear-gradient(135deg,var(--ink-2) 0%,var(--ink-3) 100%);border:1px solid var(--rule);padding:10px 12px;border-radius:3px;position:relative;border-left:3px solid var(--gold);box-shadow:0 2px 8px -2px rgba(0,0,0,.35);transition:transform .15s,box-shadow .15s,border-color .15s;}
+.star:hover{border-color:var(--rule-hi);box-shadow:0 4px 16px -4px rgba(201,162,74,.15),0 2px 8px -2px rgba(0,0,0,.5);transform:translateY(-1px)}
+.star:first-child{border-left-width:4px;box-shadow:0 4px 16px -4px rgba(201,162,74,.25),0 2px 8px -2px rgba(0,0,0,.4)}
+.star:nth-child(2){border-left-color:var(--paper-dim)}
+.star:nth-child(3){border-left-color:var(--rule-hi)}
+.star .rank{font-family:var(--serif);font-style:italic;font-weight:900;font-size:42px;color:var(--gold);line-height:1;position:absolute;top:8px;right:14px;opacity:.4;text-shadow:0 0 20px rgba(201,162,74,.3);}
+.star .name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:16px;font-weight:600;color:var(--paper);}
+.star .line{font-family:var(--mono);font-size:11.5px;color:var(--paper-dim);margin-top:3px}
+.star .note{font-size:13px;color:var(--paper-dim);margin-top:6px;font-style:italic}
+.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:6px 0 10px}
+table.data{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px;min-width:480px;}
+table.data th{text-align:left;font-weight:500;color:var(--paper-mute);font-size:10px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--rule-hi);padding:8px 10px 6px;background:rgba(255,255,255,.015);position:sticky;top:0;}
+table.data td{padding:7px 10px;border-bottom:1px solid var(--rule);color:var(--paper-dim);}
+table.data td.name{color:var(--paper);font-family:var(--cond);letter-spacing:.04em;font-size:14px;text-transform:uppercase}
+table.data td.num{text-align:right;color:var(--gold)}
+table.data tr:hover td{background:rgba(201,162,74,.04)}
+table.data td.w{color:var(--win)}
+table.data td.l{color:var(--loss)}
+table.standings td.team{color:var(--paper);font-family:var(--cond);font-size:14px;text-transform:uppercase;letter-spacing:.04em}
+table.standings tr.my-team td{background:rgba(14,51,134,.28)}
+table.standings tr.my-team td:first-child{box-shadow:inset 3px 0 0 var(--team-primary-hi)}
+table.standings tr.my-team td.team{color:var(--team-accent-hi);font-weight:700}
+table.standings td.pct{font-family:var(--mono);color:var(--gold)}
+ul.plays{list-style:none;padding:0;margin:4px 0}
+ul.plays li{display:grid;grid-template-columns:38px 1fr;gap:8px;padding:7px 0;border-bottom:1px dashed var(--rule);}
+ul.plays .inn{font-family:var(--cond);font-weight:700;letter-spacing:.06em;color:var(--gold);font-size:13px;text-transform:uppercase;border-right:2px solid var(--gold-dim);padding-right:12px;text-align:right;}
+ul.plays .txt{font-size:14px;color:var(--paper-dim)}
+ul.plays .txt strong{color:var(--paper);font-weight:500}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:720px){.two{grid-template-columns:1fr;gap:0}}
+.tempbox{border:1px solid var(--rule);padding:12px 14px;border-radius:3px;box-shadow:0 1px 4px -1px rgba(0,0,0,.25)}
+.tempbox.hot{border-top:4px solid var(--team-accent);background:linear-gradient(180deg,rgba(204,52,51,.08) 0%,var(--ink-2) 40%);box-shadow:inset 0 1px 0 rgba(204,52,51,.15),0 1px 4px -1px rgba(0,0,0,.25)}
+.tempbox.cold{border-top:4px solid #4a7fc4;background:linear-gradient(180deg,rgba(74,127,196,.08) 0%,var(--ink-2) 40%);box-shadow:inset 0 1px 0 rgba(74,127,196,.15),0 1px 4px -1px rgba(0,0,0,.25)}
+.tempbox.hot .n{color:var(--team-accent-hi)}
+.tempbox.cold .n{color:#6a9ad4}
+.tempbox h4{margin-top:0}
+.tempbox ul{list-style:none;padding:0;margin:0}
+.tempbox li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dotted var(--rule);font-size:13px;}
+.tempbox li:last-child{border-bottom:none}
+.tempbox .n{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
+.tempbox .s{font-family:var(--mono);font-size:11px;color:var(--gold)}
+.next-games{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px;margin:6px 0}
+.nx-card{background:var(--ink-2);border:1px solid var(--rule);padding:10px 14px;border-radius:3px;border-left:3px solid var(--team-primary-hi);box-shadow:0 2px 8px -2px rgba(0,0,0,.35);transition:border-color .15s,box-shadow .15s,transform .15s;}
+.nx-card:hover{border-color:var(--rule-hi);box-shadow:0 4px 12px -4px rgba(0,0,0,.4);transform:translateY(-1px)}
+.nx-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.nx-day{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--paper-mute)}
+.nx-time{font-family:var(--mono);font-size:12px;color:var(--gold);font-weight:600}
+.nx-venue{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-bottom:8px}
+.nx-dome{font-family:var(--cond);font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:var(--team-primary);color:var(--paper);padding:1px 6px;border-radius:2px;margin-left:6px}
+.nx-pitcher{margin:4px 0;padding:4px 0;border-top:1px dashed var(--rule)}
+.nx-pitcher:first-of-type{border-top:1px solid var(--rule-hi)}
+.nx-side{font-family:var(--cond);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--paper-mute);margin-right:6px}
+.nx-pitcher{font-family:var(--body);font-size:13px;color:var(--paper)}
+.nx-pline{font-family:var(--mono);font-size:10.5px;color:var(--paper-dim);margin-top:2px}
+.nx-bc{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-top:4px}
+.nx-bc-tag{font-family:var(--cond);font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:var(--rule-hi);color:var(--paper);padding:1px 5px;border-radius:2px;margin-right:4px}
+.nx-wx{font-family:var(--mono);font-size:11px;color:var(--paper-dim);margin-top:6px;padding-top:6px;border-top:1px dashed var(--rule)}
+.nx-wrigley{color:var(--gold);font-style:italic}
+.nx-today{border-left-width:4px;border-left-color:var(--gold)}
+.nx-meta{font-family:var(--mono);font-size:11px;color:var(--paper-dim);margin:6px 0 2px;display:flex;flex-wrap:wrap;gap:4px;align-items:baseline}
+.nx-opp-rec{color:var(--paper-mute)}
+.nx-series{color:var(--gold-dim)}
+.nx-lineup{margin-top:8px;padding-top:8px;border-top:1px solid var(--rule-hi)}
+.nx-lu-label{font-family:var(--cond);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:4px}
+.lu-slots{display:flex;flex-wrap:wrap;gap:2px 8px}
+.lu-slot{font-family:var(--mono);font-size:11px;color:var(--paper-dim);white-space:nowrap}
+.lu-pos{font-size:9px;color:var(--paper-mute);margin-right:2px}
+dl.transac{margin:4px 0;font-size:13px}
+dl.transac dt{font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--team-accent-hi);margin-top:6px;}
+dl.transac dd{margin:2px 0 0;color:var(--paper-dim)}
+.minors{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
+@media (max-width:720px){.minors{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.minors{grid-template-columns:1fr}}
+.minors .lvl{background:var(--ink-2);border:1px solid var(--rule);padding:10px 12px;border-radius:3px;position:relative;box-shadow:0 1px 4px -1px rgba(0,0,0,.25);}
+.minors .lvl.w{border-left:3px solid var(--win)}
+.minors .lvl.l{border-left:3px solid var(--loss)}
+.minors .lvl::after{content:attr(data-lvl);position:absolute;top:6px;right:8px;font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:.1em;background:rgba(201,162,74,.1);padding:2px 5px;border-radius:2px;}
+.minors .aff{font-family:var(--cond);text-transform:uppercase;font-size:14px;color:var(--paper);letter-spacing:.06em}
+.minors .res{font-family:var(--mono);font-size:13px;margin-top:4px}
+.minors .res .w{color:var(--win)}
+.minors .res .l{color:var(--loss)}
+.minors .note{font-size:11.5px;color:var(--paper-dim);margin-top:6px;line-height:1.4}
+.prospect-tag{font-family:var(--cond);font-size:9px;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:var(--ink);padding:1px 5px;border-radius:2px;margin-left:2px;font-weight:600}
+.prosp-header{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--gold);margin:8px 0 4px;border-top:1px solid var(--rule);padding-top:8px}
+.prosp-tracker{display:flex;flex-direction:column;gap:3px}
+.prosp-row{display:grid;grid-template-columns:32px 1fr 36px 36px 2fr;align-items:baseline;gap:6px;padding:7px 10px;font-size:12px;border-radius:3px;transition:background .12s}
+.prosp-row.played{background:var(--ink-2);border-left:2px solid var(--gold-dim)}
+.prosp-row.played:nth-child(even){background:rgba(20,24,35,.7)}
+.prosp-row.played:hover{background:rgba(201,162,74,.06)}
+.prosp-row.dnp{background:transparent;opacity:.55;border-left:2px solid transparent}
+.prosp-rank{font-family:var(--mono);font-size:10px;color:var(--gold);font-weight:600}
+.prosp-name{font-family:var(--cond);color:var(--paper);font-weight:600;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prosp-pos{font-family:var(--mono);font-size:10px;color:var(--paper-mute);text-align:center}
+.prosp-lvl{font-family:var(--mono);font-size:10px;color:var(--gold-dim);text-align:center;letter-spacing:.05em}
+.prosp-stat{font-family:var(--mono);font-size:11px;color:var(--paper-dim)}
+.prosp-row.dnp .prosp-stat{font-style:italic;color:var(--paper-mute)}
+@media(max-width:640px){.prosp-row{grid-template-columns:28px 1fr 30px 30px 1.5fr;font-size:11px;gap:4px;padding:4px 6px}}
+.rivals{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+@media (max-width:640px){.rivals{grid-template-columns:1fr}}
+.rival{background:var(--ink-2);border:1px solid var(--rule);padding:12px 14px;border-radius:3px;border-left:3px solid var(--gold-dim);box-shadow:0 2px 8px -2px rgba(0,0,0,.35);transition:border-color .15s,box-shadow .15s,transform .15s;}
+.rival:hover{border-color:var(--rule-hi);box-shadow:0 4px 12px -4px rgba(0,0,0,.4);transform:translateY(-1px)}
+.rival h4{margin:0 0 4px;color:var(--paper)}
+.rival .score{font-family:var(--mono);font-size:12px;color:var(--gold)}
+.rival p{font-size:13px;margin:6px 0 0;color:var(--paper-dim)}
+.news-wire{display:flex;flex-direction:column;gap:4px;margin:6px 0 8px}
+.blurb{background:var(--ink-2);border:1px solid var(--rule);border-left:3px solid var(--team-accent);
+  padding:8px 12px;border-radius:3px;display:flex;gap:10px;align-items:baseline;box-shadow:0 1px 4px -1px rgba(0,0,0,.25);}
+.blurb-tag{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:10px;
+  color:var(--team-accent-hi);border:1px solid var(--team-accent);padding:2px 8px;border-radius:3px;
+  white-space:nowrap;font-weight:600;flex-shrink:0;}
+.blurb-tag.extras,.blurb-tag.streak{color:var(--gold);border-color:var(--gold-dim)}
+.blurb-tag.shutout{color:var(--paper-mute);border-color:var(--rule-hi)}
+.blurb-tag.blowout{color:var(--team-accent-hi);border-color:var(--team-accent)}
+.blurb-tag.high_scoring{color:var(--gold);border-color:var(--gold-dim)}
+.blurb-tag.walkoff{color:var(--ink);background:var(--gold);border-color:var(--gold);font-weight:700}
+.blurb:has(.blurb-tag.walkoff){border-left-color:var(--gold)}
+.blurb-text{font-size:14px;color:var(--paper-dim);margin:0}
+@media (max-width:640px){.blurb{flex-direction:column;gap:6px}}
+.slate{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+@media (max-width:640px){.slate{grid-template-columns:1fr}}
+.slate .g{background:var(--ink-2);border:1px solid var(--rule);padding:10px 12px;border-radius:3px;display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;transition:border-color .12s,background .12s;}
+.slate .g:hover{border-color:var(--rule-hi);background:rgba(20,24,35,.8)}
+.slate .matchup{font-family:var(--cond);text-transform:uppercase;font-size:13px;color:var(--paper);letter-spacing:.04em}
+.slate .time{font-family:var(--mono);font-size:11px;color:var(--gold);text-align:right}
+.slate .probs{font-family:var(--mono);font-size:10.5px;color:var(--paper-mute);grid-column:1/-1}
+.slate .bc{font-family:var(--mono);font-size:9.5px;color:var(--paper-mute);grid-column:1/-1;opacity:.7}
+footer.foot{max-width:var(--maxw);margin:16px auto 0;padding:12px 20px;border-top:6px double var(--paper);position:relative;z-index:2;font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--paper-mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+footer.foot .flag{color:var(--gold)}
+#live-game{margin:0 0 8px}
+.live-widget{background:linear-gradient(180deg,#0a1528,#08101e);border:2px solid var(--team-primary);border-radius:3px;padding:16px 20px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.03),0 10px 30px -10px rgba(14,51,134,.5);position:relative;overflow:hidden}
+.live-widget::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,transparent 0 22px,rgba(255,255,255,.018) 22px 23px)}
+.live-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--team-accent-hi);margin-bottom:12px}
+.live-badge .dot{width:8px;height:8px;background:var(--team-accent);border-radius:50%;animation:pulse 1.5s ease-in-out infinite}
+.live-badge .flag{color:var(--gold);font-size:13px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.live-widget .score-row{display:flex;justify-content:center;align-items:center;gap:18px;font-family:var(--cond);font-size:clamp(28px,6vw,48px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8px 0 14px}
+.live-widget .team-abbr{min-width:2.6em;text-align:center}
+.live-widget .runs{color:var(--gold);font-family:var(--mono)}
+.live-widget .score-sep{color:var(--paper-mute);font-size:.5em}
+.live-widget .situation{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;color:var(--paper-dim);padding:10px 0;border-top:1px dashed var(--rule-hi);margin:10px 0 0}
+.live-widget .count{display:flex;gap:10px;align-items:center}
+.live-widget .count-label{color:var(--paper-mute);font-size:10px;margin-right:2px}
+.live-widget .count-val{color:var(--gold);font-weight:600}
+.live-widget .diamond{display:block}
+.live-widget .live-matchup{text-align:center;font-family:var(--body);font-size:13px;color:var(--paper-dim);margin-top:10px}
+.live-widget .live-matchup strong{color:var(--paper);font-weight:500}
+.live-widget .last-play{text-align:center;font-size:13px;color:var(--paper-mute);font-style:italic;margin-top:8px;padding-top:8px;border-top:1px dotted var(--rule)}
+.live-widget.final .live-badge{color:var(--paper-mute)}
+.live-widget.preview .live-badge{color:var(--gold)}
+.live-widget.preview .score-row{font-size:clamp(20px,4vw,32px)}
+.pw-meta{font-family:var(--mono);font-size:11px;color:var(--paper-dim);text-align:center;margin:8px 0 2px}
+.pw-opp{color:var(--paper-mute)}
+.pw-series{color:var(--gold-dim)}
+.pw-lineup{margin-top:12px;padding-top:10px;border-top:1px dashed var(--rule-hi);text-align:center}
+.pw-lu-label{font-family:var(--cond);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px}
+.pw-lu-slots{display:flex;flex-wrap:wrap;justify-content:center;gap:2px 10px}
+.pw-lu-slot{font-family:var(--mono);font-size:11.5px;color:var(--paper-dim);white-space:nowrap}
+.pw-lu-pos{font-size:9px;color:var(--paper-mute);margin-right:2px}
+.live-widget.idle{border-color:var(--rule);opacity:.7}
+.idle-msg{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--paper-mute);text-align:center;padding:10px 0}
+.g-live{border-color:var(--team-primary) !important;box-shadow:0 0 8px rgba(14,51,134,.3)}
+.g-live .time{font-size:13px}
+.slate-live{color:var(--gold);font-family:var(--mono);font-weight:700}
+.slate-inn{color:var(--team-accent-hi);font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:10px}
+.g-final .time{font-size:13px}
+.slate-final{color:var(--paper-dim);font-family:var(--mono);font-weight:600}
+.scorecard-expand{margin:8px 0}
+.scorecard-expand summary{cursor:pointer;list-style:none;display:inline-block}
+.scorecard-expand summary::-webkit-details-marker{display:none}
+.scorecard-toggle{font-family:var(--cond);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-dim);padding:5px 14px;border-radius:3px;transition:background .15s,color .15s}
+.scorecard-expand[open] .scorecard-toggle{background:var(--gold-dim);color:var(--ink)}
+.scorecard-expand summary:hover .scorecard-toggle{background:var(--gold-dim);color:var(--ink)}
+.scorecard-frame{width:100%;min-height:600px;border:none;margin-top:12px;border-radius:3px}
+tr.scorecard-link{cursor:pointer;transition:background .12s}
+tr.scorecard-link:hover{background:rgba(201,162,74,.1)}
+tr.scorecard-link:hover td{color:var(--gold) !important}
+.scorecard-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--cond);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-dim);padding:6px 16px;border-radius:3px;text-decoration:none;transition:background .15s,color .15s;margin:12px 0}
+.scorecard-btn:hover{background:var(--gold-dim);color:var(--ink)}
+.lede{max-width:var(--maxw);margin:0 auto;padding:10px 20px 8px;font-family:var(--body);font-size:clamp(16px,2vw,19px);font-style:italic;line-height:1.55;color:var(--paper);text-align:center;border-bottom:1px dashed var(--rule);position:relative;z-index:2}
+.lede::before{content:"";display:block;width:40px;height:2px;background:var(--gold);margin:0 auto 8px}
+@media (max-width:900px){.lede{padding:14px 16px 12px}}
+.scout-ctx{display:flex;justify-content:space-between;font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--paper-mute);margin-bottom:10px}
+.matchup-vs{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:start}
+@media(max-width:640px){.matchup-vs{grid-template-columns:1fr;gap:8px}}
+.vs-divider{font-family:var(--serif);font-style:italic;font-weight:900;font-size:24px;color:var(--gold);align-self:center;text-align:center;padding:0 6px}
+@media(max-width:640px){.vs-divider{display:none}}
+.sp-card{background:linear-gradient(135deg,var(--ink-2) 0%,var(--ink-3) 100%);border:1px solid var(--rule);border-radius:3px;padding:10px 12px;border-top:3px solid var(--team-primary-hi)}
+.sp-side{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px}
+.sp-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:18px;font-weight:700;color:var(--paper)}
+.sp-season{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
+.sp-log{min-width:auto !important;margin-top:4px}
+.sp-log .opp{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
+.pulse-record{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;padding:10px 0;border-bottom:1px solid var(--rule);margin-bottom:10px}
+.pulse-wl{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--paper)}
+.pulse-pct{font-family:var(--mono);font-size:16px;color:var(--gold)}
+.pulse-gb{font-family:var(--mono);font-size:13px;color:var(--paper-dim)}
+.pulse-rank{font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:12px;color:var(--paper-mute)}
+.pulse-streak{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--gold);border:1px solid var(--gold-dim);padding:2px 8px;border-radius:3px}
+.pulse-diff{text-align:center;padding:12px 0;margin:8px 0;background:var(--ink-2);border:1px solid var(--rule);border-radius:3px}
+.diff-label{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px}
+.diff-num{font-family:var(--mono);font-size:32px;font-weight:700}
+.diff-num.w{color:var(--win)}
+.diff-num.l{color:var(--loss)}
+.diff-detail{font-family:var(--mono);font-size:11px;color:var(--paper-dim);margin-top:4px}
+.splits-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+@media(max-width:640px){.splits-grid{grid-template-columns:1fr}}
+.split-row{display:flex;justify-content:space-between;align-items:baseline;padding:6px 10px;background:var(--ink-2);border-radius:2px;gap:8px}
+.split-label{font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:12px;color:var(--paper-mute);flex:1}
+.split-val{font-family:var(--mono);font-size:12px;color:var(--paper);min-width:40px;text-align:right}
+.split-pct{font-family:var(--mono);font-size:11px;color:var(--gold);min-width:40px;text-align:right}
+.transac-list{display:flex;flex-direction:column;gap:2px;margin:4px 0}
+.transac-item{display:flex;gap:6px;align-items:baseline;padding:4px 8px;background:var(--ink-2);border-radius:3px;border:1px solid var(--rule)}
+.transac-date{font-family:var(--mono);font-size:10px;color:var(--paper-mute);min-width:40px;flex-shrink:0}
+.transac-badge{font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:9px;padding:2px 6px;border-radius:3px;white-space:nowrap;font-weight:600;flex-shrink:0;border:1px solid var(--rule-hi);color:var(--paper-mute)}
+.transac-badge.il{color:var(--team-accent-hi);border-color:var(--team-accent)}
+.transac-badge.act{color:var(--win);border-color:var(--win)}
+.transac-badge.opt{color:var(--gold);border-color:var(--gold-dim)}
+.transac-badge.rcl{color:var(--team-primary-hi);border-color:var(--team-primary)}
+.transac-desc{font-family:var(--body);font-size:12px;color:var(--paper-dim);line-height:1.4}
+@media(max-width:640px){.transac-item{flex-direction:column;gap:4px}.transac-date{min-width:auto}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="kicker">
+    <span>Vol. 3 &middot; <span class="vol">No. 098</span></span>
+    <span>A Daily Dispatch from The Juice Box & Beyond</span>
+    <span>Est. 2024</span>
+  </div>
+  <h1>
+    <span class="the">The</span>
+    <span class="lineup">Morning <em style="font-style:italic">Lineup</em></span>
+  </h1>
+  <div class="dek">
+    <span class="item"><span class="label">Wed</span><span class="val">Apr 8, 2026</span></span>
+    <span class="item"><span class="label">Astros</span><span class="rec">6&ndash;6 &middot; 3rd AL West</span></span>
+    <span class="item pill">Data: MLB Stats API</span>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="toc" aria-label="Sections">
+    <div class="title">Sections</div>
+    <ol>
+      <li><a href="#team">The Astros</a></li>
+      <li><a href="#scout">Scouting Report</a></li>
+      <li><a href="#pulse">The Stretch</a></li>
+      <li><a href="#pressbox">The Pressbox</a></li>
+      <li><a href="#farm">Down on the Farm</a></li>
+      <li><a href="#today">Today&rsquo;s Slate</a></li>
+      <li><a href="#div">AL West</a></li>
+      <li><a href="#league">Around the League</a></li>
+      <li><a href="#history">Astros History</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+  <div id="live-game"></div>
+
+  <section id="team" open>
+    <summary>
+      <span class="num">01</span>
+      <span class="h">The Astros</span>
+      <span class="tag">L 1-5 at COL</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    
+    <div class="scoreboard" aria-label="Line score">
+      <div class="meta">
+        <span>Coors Field &middot; 7:40 CT</span>
+        <span class="fin">Final</span>
+      </div>
+      <table>
+        <thead><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>R</th><th>H</th><th>E</th></tr></thead>
+        <tbody>
+          <tr><td class="team">HOU</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="rhe">1</td><td class="rhe">3</td><td class="rhe">0</td></tr>
+          <tr class="won"><td class="team">COL</td><td>0</td><td>1</td><td>0</td><td>2</td><td>0</td><td>0</td><td>2</td><td>0</td><td></td><td class="rhe">5</td><td class="rhe">10</td><td class="rhe">1</td></tr>
+        </tbody>
+      </table>
+      <div class="pitchers"><span><strong>W</strong><span class="w">Kyle Freeland</span></span><span><strong>L</strong><span class="l">Mike Burrows</span></span><span><strong>S</strong><span class="s">Antonio Senzatela</span></span></div>
+    </div>
+    
+    <h3>Three Stars</h3>
+    <div class="stars"><div class="star">
+        <div class="rank">1</div>
+        <div class="name">Mike Burrows</div>
+        <div class="line">5.1 IP, 8 H, 3 ER, 1 BB, 3 K</div>
+      </div><div class="star">
+        <div class="rank">2</div>
+        <div class="name">Christian Walker</div>
+        <div class="line">1-4, 1 HR, 1 RBI</div>
+      </div><div class="star">
+        <div class="rank">3</div>
+        <div class="name">Isaac Paredes</div>
+        <div class="line">1-4</div>
+      </div></div>
+    <h3>Key Plays</h3><ul class="plays"><li><span class="inn">T2</span><span class="txt">Christian Walker homers (3) on a fly ball to right field.</span></li><li><span class="inn">B2</span><span class="txt">Willi Castro singles on a line drive to left fielder Brice Matthews. Troy Johnston scores. TJ Rumfield to 2nd.</span></li><li><span class="inn">B4</span><span class="txt">Willi Castro homers (1) on a fly ball to right center field. TJ Rumfield scores.</span></li><li><span class="inn">B7</span><span class="txt">Mickey Moniak homers (3) on a fly ball to right center field. Kyle Karros scores.</span></li></ul>
+    <details class="scorecard-expand">
+      <summary><span class="scorecard-toggle">View Full Scorecard</span></summary>
+      <iframe src="scorecard/?game=824375&amp;embed=1" class="scorecard-frame" loading="lazy" frameborder="0"></iframe>
+    </details>
+    <h3>Astros Leaders</h3>
+    <div class="tblwrap"><table class="data">
+    <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
+    <tbody><tr><td>AVG</td><td class="name">Walker <span style="color:var(--paper-mute);font-size:10px">1B</span></td><td class="num">.340</td></tr><tr><td>OBP</td><td class="name">Alvarez <span style="color:var(--paper-mute);font-size:10px">LF</span></td><td class="num">.509</td></tr><tr><td>HR</td><td class="name">Alvarez <span style="color:var(--paper-mute);font-size:10px">LF</span></td><td class="num">4</td></tr><tr><td>RBI</td><td class="name">Walker <span style="color:var(--paper-mute);font-size:10px">1B</span></td><td class="num">13</td></tr><tr><td>SB</td><td class="name">Smith <span style="color:var(--paper-mute);font-size:10px">RF</span></td><td class="num">3</td></tr></tbody></table></div>
+    <h3>Next Games</h3>
+    <div class="next-games"><div class="nx-card nx-today">
+        <div class="nx-head">
+          <div class="nx-day">Wed, Apr 8 &middot; at COL</div>
+          <div class="nx-time">2:10 CT</div>
+        </div>
+        <div class="nx-venue">Coors Field <span class="nx-dome">Retractable Roof</span></div>
+        <div class="nx-meta"><span class="nx-opp-rec">COL: 5-6, 4th NL West (W3)</span> &middot; <span class="nx-series">Season series: 0-2</span></div>
+        <div class="nx-pitcher"><span class="nx-side">Astros</span> Cristian Javier<div class="nx-pline">12.54 ERA &middot; 0-1 &middot; 9.1 IP &middot; 4 K &middot; 2.36 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">COL</span> Michael Lorenzen<div class="nx-pline">12.54 ERA &middot; 0-1 &middot; 9.1 IP &middot; 9 K &middot; 2.57 WHIP</div></div>
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> Peña</span><span class="lu-slot"><span class="lu-pos">LF</span> Alvarez</span><span class="lu-slot"><span class="lu-pos">LF</span> Altuve</span><span class="lu-slot"><span class="lu-pos">3B</span> Paredes</span><span class="lu-slot"><span class="lu-pos">1B</span> Walker</span><span class="lu-slot"><span class="lu-pos">RF</span> Smith</span><span class="lu-slot"><span class="lu-pos">LF</span> Loperfido</span><span class="lu-slot"><span class="lu-pos">SS</span> Matthews</span><span class="lu-slot"><span class="lu-pos">C</span> Vázquez</span></div></div>
+        <div class="nx-bc"><span class="nx-bc-tag">TV</span> Space City Home Network &middot; Rockies.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KBME 790 AM/94.5 FM HD-2 &middot; KOA 850 AM/94.1 FM </div>
+        <div class="nx-wx">72°F &middot; Climate controlled</div>
+      </div><div class="nx-card">
+        <div class="nx-head">
+          <div class="nx-day">Fri, Apr 10 &middot; at SEA</div>
+          <div class="nx-time">8:40 CT</div>
+        </div>
+        <div class="nx-venue">T-Mobile Park <span class="nx-dome">Retractable Roof</span></div>
+        
+        <div class="nx-pitcher"><span class="nx-side">Astros</span> Tatsuya Imai<div class="nx-pline">4.32 ERA &middot; 1-0 &middot; 8.1 IP &middot; 13 K &middot; 1.56 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">SEA</span> Emerson Hancock<div class="nx-pline">0.71 ERA &middot; 1-1 &middot; 12.2 IP &middot; 14 K &middot; 0.55 WHIP</div></div>
+        
+        <div class="nx-bc"><span class="nx-bc-tag">TV</span> Space City Home Network &middot; Mariners.TV &middot; KING 5</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KBME 790 AM/94.5 FM HD-2 &middot; Seattle Sports (710 AM)</div>
+        
+      </div><div class="nx-card">
+        <div class="nx-head">
+          <div class="nx-day">Sat, Apr 11 &middot; at SEA</div>
+          <div class="nx-time">8:40 CT</div>
+        </div>
+        <div class="nx-venue">T-Mobile Park <span class="nx-dome">Retractable Roof</span></div>
+        
+        <div class="nx-pitcher"><span class="nx-side">Astros</span> Lance McCullers Jr.<div class="nx-pline">3.27 ERA &middot; 1-0 &middot; 11.0 IP &middot; 13 K &middot; 1.18 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">SEA</span> Luis Castillo<div class="nx-pline">2.79 ERA &middot; 0-0 &middot; 9.2 IP &middot; 11 K &middot; 1.24 WHIP</div></div>
+        
+        <div class="nx-bc"><span class="nx-bc-tag">TV</span> Space City Home Network &middot; Mariners.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KBME 790 AM/94.5 FM HD-2 &middot; Seattle Sports (710 AM)</div>
+        
+      </div></div>
+    <h3>Form Guide (Last 7 Days)</h3>
+    
+    <div class="two">
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Walker</span><span class="s">.346 / 3 HR / 1.124 OPS</span></li><li><span class="n">Smith</span><span class="s">.364 / 2 HR / 1.099 OPS</span></li><li><span class="n">Alvarez</span><span class="s">.235 / 1 HR / .952 OPS</span></li><li><span class="n">Vázquez</span><span class="s">.294 / 1 HR / .921 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n">Matthews</span><span class="s">.091 / 0 HR / .322 OPS</span></li><li><span class="n">Diaz</span><span class="s">.250 / 0 HR / .576 OPS</span></li><li><span class="n">Loperfido</span><span class="s">.214 / 0 HR / .654 OPS</span></li></ul></div>
+    </div>
+    <div class="two">
+      <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n">King</span><span class="s">5.1 IP &middot; 1.69 ERA &middot; 8 K</span></li><li><span class="n">Teng</span><span class="s">6.1 IP &middot; 2.84 ERA &middot; 6 K</span></li><li><span class="n">Roa</span><span class="s">3.0 IP &middot; 3.00 ERA &middot; 3 K</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n">Abreu</span><span class="s">2.2 IP &middot; 23.63 ERA &middot; 6 K</span></li><li><span class="n">Javier</span><span class="s">9.1 IP &middot; 12.54 ERA &middot; 4 K</span></li></ul></div>
+    </div>
+    
+  </section>
+
+  <section id="scout" open>
+    <summary>
+      <span class="num">02</span>
+      <span class="h">Scouting Report</span>
+      <span class="tag">Today&rsquo;s Matchup</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    <div class="scout-ctx"><span>at COL &middot; 2:10 CT</span><span>Coors Field</span></div>
+    <div class="matchup-vs">
+        <div class="sp-card">
+        <div class="sp-side">Astros</div>
+        <div class="sp-name">Cristian Javier</div>
+        <div class="sp-season">12.54 ERA &middot; 0-1 &middot; 9.1 IP &middot; 4 K &middot; 2.36 WHIP</div>
+        <h4>Last 3 Starts</h4><table class="data sp-log">
+            <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
+            <tbody><tr><td>03-28</td><td class="opp">vs Los Angeles Angels</td><td class="num">4.2</td><td class="num">6</td><td class="num">1</td><td class="num">4</td><td class="num">4</td></tr><tr><td>04-03</td><td class="opp">vs Athletics</td><td class="num">3.2</td><td class="num">6</td><td class="num">2</td><td class="num">6</td><td class="num">5</td></tr><tr><td>04-08</td><td class="opp">vs Colorado Rockies</td><td class="num">1.0</td><td class="num">1</td><td class="num">1</td><td class="num">3</td><td class="num">0</td></tr></tbody></table>
+        </div>
+        <div class="vs-divider">VS</div>
+        <div class="sp-card">
+        <div class="sp-side">COL</div>
+        <div class="sp-name">Michael Lorenzen</div>
+        <div class="sp-season">12.54 ERA &middot; 0-1 &middot; 9.1 IP &middot; 9 K &middot; 2.57 WHIP</div>
+        <h4>Last 3 Starts</h4><table class="data sp-log">
+            <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
+            <tbody><tr><td>03-28</td><td class="opp">vs Miami Marlins</td><td class="num">4.1</td><td class="num">3</td><td class="num">4</td><td class="num">7</td><td class="num">0</td></tr><tr><td>04-03</td><td class="opp">vs Philadelphia Phillies</td><td class="num">3.0</td><td class="num">9</td><td class="num">2</td><td class="num">12</td><td class="num">2</td></tr><tr><td>04-08</td><td class="opp">vs Houston Astros</td><td class="num">2.0</td><td class="num">1</td><td class="num">3</td><td class="num">2</td><td class="num">1</td></tr></tbody></table>
+        </div>
+    </div>
+  </section>
+
+  <section id="pulse" open>
+    <summary>
+      <span class="num">03</span>
+      <span class="h">The Stretch</span>
+      <span class="tag">Season Pulse</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    <div class="pulse-record">
+        <span class="pulse-wl">6&ndash;6</span>
+        <span class="pulse-pct">.500</span>
+        <span class="pulse-gb">0.5 GB</span>
+        <span class="pulse-rank">3rd AL West</span>
+        <span class="pulse-streak">L3</span>
+    </div>
+    <div class="pulse-diff">
+        <div class="diff-label">Run Differential</div>
+        <div class="diff-num w">+9</div>
+        <div class="diff-detail">78 RS &middot; 69 RA &middot; Pythag: 7-5</div>
+    </div>
+    <h3>Splits</h3>
+    <div class="splits-grid"><div class="split-row"><span class="split-label">Home</span><span class="split-val">5-2</span><span class="split-pct">.714</span></div><div class="split-row"><span class="split-label">Away</span><span class="split-val">1-4</span><span class="split-pct">.200</span></div><div class="split-row"><span class="split-label">vs RHP</span><span class="split-val">3-2</span><span class="split-pct">.600</span></div><div class="split-row"><span class="split-label">vs LHP</span><span class="split-val">3-4</span><span class="split-pct">.429</span></div><div class="split-row"><span class="split-label">1-Run</span><span class="split-val">0-0</span><span class="split-pct">.000</span></div><div class="split-row"><span class="split-label">Extras</span><span class="split-val">0-1</span><span class="split-pct">.000</span></div><div class="split-row"><span class="split-label">Day</span><span class="split-val">3-2</span><span class="split-pct">.600</span></div><div class="split-row"><span class="split-label">Night</span><span class="split-val">3-4</span><span class="split-pct">.429</span></div><div class="split-row"><span class="split-label">Last 10</span><span class="split-val">6-4</span><span class="split-pct">.600</span></div><div class="split-row"><span class="split-label">Grass</span><span class="split-val">6-6</span><span class="split-pct">.500</span></div></div>
+  </section>
+
+  <section id="pressbox" open>
+    <summary>
+      <span class="num">04</span>
+      <span class="h">The Pressbox</span>
+      <span class="tag">Roster &middot; Transactions</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Houston Astros activated RHP Enyel De Los Santos from the 15-day injured list.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Houston Astros activated 3B Isaac Paredes from the bereavement list.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge ">Designated f</span><span class="transac-desc">Houston Astros designated RHP Roddery Muñoz for assignment.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Houston Astros optioned LF Shay Whitcomb to Sugar Land Space Cowboys.</span></div><div class="transac-item"><span class="transac-date">04-05</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Houston Astros recalled RHP Christian Roa from Sugar Land Space Cowboys.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Houston Astros sent RHP Enyel De Los Santos on a rehab assignment to Corpus Christi Hooks.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Houston Astros placed 3B Isaac Paredes on the bereavement list.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Houston Astros sent RHP Enyel De Los Santos on a rehab assignment to Corpus Christi Hooks.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Houston Astros recalled LF Shay Whitcomb from Sugar Land Space Cowboys.</span></div><div class="transac-item"><span class="transac-date">04-02</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Houston Astros placed RHP Hunter Brown on the 15-day injured list retroactive to April 2, 2026. Right shoulder strain.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>LF <strong>Zach Dezenzo</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Bennett Sousa</strong></dd><dd>P <strong>Hunter Brown</strong></dd><dd>P <strong>Josh Hader</strong></dd><dd>P <strong>Nate Pearson</strong></dd><dd>P <strong>Ronel Blanco</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Brandon Walter</strong></dd><dd>P <strong>Hayden Wesneski</strong></dd></dl></div></div>
+  </section>
+
+  <section id="farm" open>
+    <summary>
+      <span class="num">05</span>
+      <span class="h">Down on the Farm</span>
+      <span class="tag">1&ndash;3</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    <div class="minors"><div class="lvl l" data-lvl="AAA">
+        <div class="aff">Sugar Land Space Cowboys</div>
+        <div class="res"><span class="l">L 0&ndash;1</span> vs Rainiers</div>
+        <div class="note"><strong>Whitcomb</strong> 1-4. <strong>Alexander</strong> 7.0 IP, 0 ER, 3 K.</div>
+      </div><div class="lvl w" data-lvl="AA">
+        <div class="aff">Corpus Christi Hooks</div>
+        <div class="res"><span class="w">W 6&ndash;3</span> at Missions</div>
+        <div class="note"><strong>Sullivan</strong> 1-3, 1 HR, 1 RBI. <strong>Mancini</strong> 2.1 IP, 0 ER, 0 K.</div>
+      </div><div class="lvl l" data-lvl="A+">
+        <div class="aff">Asheville Tourists</div>
+        <div class="res"><span class="l">L 0&ndash;1</span> at Grasshoppers</div>
+        <div class="note"><strong>Brutcher</strong> 1-3. <strong>Rodriguez</strong> 4.0 IP, 0 ER, 5 K.</div>
+      </div><div class="lvl l" data-lvl="A">
+        <div class="aff">Fayetteville Woodpeckers</div>
+        <div class="res"><span class="l">L 5&ndash;13</span> vs RiverDogs</div>
+        <div class="note"><strong>Wakefield</strong> 2-4, 1 HR, 2 RBI. <strong>Beck</strong> 2.2 IP, 0 ER, 3 K.</div>
+      </div></div>
+  </section>
+
+  <section id="today" open>
+    <summary>
+      <span class="num">06</span>
+      <span class="h">Today&rsquo;s Slate</span>
+      <span class="tag">Wed Apr 8</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    <div class="slate"><div class="g" data-gpk="823403">
+        <div class="matchup">SD @ PIT</div>
+        <div class="time">11:35 CT</div>
+        <div class="probs">King vs Keller</div>
+        <div class="bc">SportsNet-PIT · Padres.TV Presented by UC San Diego Health</div>
+      </div><div class="g" data-gpk="824455">
+        <div class="matchup">KC @ CLE</div>
+        <div class="time">12:10 CT</div>
+        <div class="probs">Ragans vs Cantillo</div>
+        <div class="bc">Guardians.TV Presented by Progressive · Royals.TV</div>
+      </div><div class="g" data-gpk="824779">
+        <div class="matchup">MIL @ BOS</div>
+        <div class="time">12:35 CT</div>
+        <div class="probs">Drohan vs Gray</div>
+        <div class="bc">NESN · Brewers.TV</div>
+      </div><div class="g" data-gpk="824617">
+        <div class="matchup">BAL @ CWS</div>
+        <div class="time">1:10 CT</div>
+        <div class="probs">Bradish vs Burke</div>
+        <div class="bc">MASN · Chicago Sports Network</div>
+      </div><div class="g" data-gpk="822915">
+        <div class="matchup">SEA @ TEX</div>
+        <div class="time">1:35 CT</div>
+        <div class="probs">Woo vs Gore</div>
+        <div class="bc">Rangers Sports Network · Mariners.TV</div>
+      </div><div class="g" data-gpk="822833">
+        <div class="matchup">LAD @ TOR</div>
+        <div class="time">2:07 CT</div>
+        <div class="probs">Ohtani vs Cease</div>
+        <div class="bc">Sportsnet · SportsNet LA</div>
+      </div><div class="g" data-gpk="824374">
+        <div class="matchup">HOU @ COL</div>
+        <div class="time">2:10 CT</div>
+        <div class="probs">Javier vs Lorenzen</div>
+        <div class="bc">Space City Home Network · Rockies.TV</div>
+      </div><div class="g" data-gpk="823234">
+        <div class="matchup">PHI @ SF</div>
+        <div class="time">2:45 CT</div>
+        <div class="probs">Nola vs Mahle</div>
+        <div class="bc">NBCSP · NBCS BA</div>
+      </div><div class="g" data-gpk="822753">
+        <div class="matchup">STL @ WSH</div>
+        <div class="time">3:05 CT</div>
+        <div class="probs">McGreevy vs Mikolas</div>
+        <div class="bc">Nationals.TV · Cardinals.TV</div>
+      </div><div class="g" data-gpk="824050">
+        <div class="matchup">ATL @ LAA</div>
+        <div class="time">3:07 CT</div>
+        <div class="probs">Holmes vs Detmers</div>
+        <div class="bc">FanDuel Sports Network West · BravesVision</div>
+      </div><div class="g" data-gpk="823646">
+        <div class="matchup">AZ @ NYM</div>
+        <div class="time">3:10 CT</div>
+        <div class="probs">Nelson vs Peterson</div>
+        <div class="bc">SNY · Dbacks.TV</div>
+      </div><div class="g" data-gpk="823000">
+        <div class="matchup">CHC @ TB</div>
+        <div class="time">5:40 CT</div>
+        <div class="probs">Rea vs Boyle</div>
+        <div class="bc">Rays.TV · Marquee Sports Network</div>
+      </div><div class="g" data-gpk="823885">
+        <div class="matchup">CIN @ MIA</div>
+        <div class="time">5:40 CT</div>
+        <div class="probs">Singer vs Pérez</div>
+        <div class="bc">Reds.TV · Marlins.TV</div>
+      </div><div class="g" data-gpk="823564">
+        <div class="matchup">ATH @ NYY</div>
+        <div class="time">6:05 CT</div>
+        <div class="probs">Severino vs Warren</div>
+        <div class="bc">NBCSCA · Amazon Prime Video</div>
+      </div><div class="g" data-gpk="823726">
+        <div class="matchup">DET @ MIN</div>
+        <div class="time">6:40 CT</div>
+        <div class="probs">Valdez vs Ober</div>
+        <div class="bc">Detroit SportsNet · FS1 · FS1 · Twins.TV Presented by Progressive</div>
+      </div></div>
+  </section>
+
+  <section id="div" open>
+    <summary>
+      <span class="num">07</span>
+      <span class="h">AL West</span>
+      <span class="tag">Rivals &middot; Yesterday</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    <h3>Standings</h3>
+    <div class="tblwrap"><table class="data standings">
+    <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
+    <th style="text-align:right">PCT</th><th style="text-align:right">GB</th>
+    <th style="text-align:right">L10</th></tr></thead>
+    <tbody><tr><td class="team">Rangers</td><td class="num">6</td><td class="num">5</td><td class="num pct">.545</td><td class="num">&mdash;</td><td class="num">6-4</td></tr><tr><td class="team">Angels</td><td class="num">6</td><td class="num">6</td><td class="num pct">.500</td><td class="num">0.5</td><td class="num">4-6</td></tr><tr class="my-team"><td class="team">Astros</td><td class="num">6</td><td class="num">6</td><td class="num pct">.500</td><td class="num">0.5</td><td class="num">6-4</td></tr><tr><td class="team">Mariners</td><td class="num">4</td><td class="num">8</td><td class="num pct">.333</td><td class="num">2.5</td><td class="num">3-7</td></tr><tr><td class="team">Athletics</td><td class="num">3</td><td class="num">7</td><td class="num pct">.300</td><td class="num">2.5</td><td class="num">3-7</td></tr></tbody></table></div>
+    <h3>Rivals &middot; Yesterday</h3>
+    <div class="rivals"><div class="rival">
+        <h4>Athletics <span class="score">L 3-5 at NYY</span></h4>
+        <p>WP: Fernando Cruz · LP: Mark Leiter Jr.</p>
+      </div><div class="rival">
+        <h4>Mariners <span class="score">L 2-3 at TEX</span></h4>
+        <p>WP: Nathan Eovaldi · LP: George Kirby</p>
+      </div><div class="rival">
+        <h4>Angels <span class="score">L 2-7 vs ATL</span></h4>
+        <p>WP: Tyler Kinley · LP: Yusei Kikuchi</p>
+      </div></div>
+  </section>
+
+  <section id="league" open>
+    <summary>
+      <span class="num">08</span>
+      <span class="h">Around the League</span>
+      <span class="tag">Apr 7 &middot; 5 Notes</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    <h3>News Wire</h3>
+    <div class="news-wire"><div class="blurb"><span class="blurb-tag walkoff">Walk-Off</span><p class="blurb-text">Guardians walked off the Royals, 2-1. Smith got the win.</p></div><div class="blurb"><span class="blurb-tag walkoff">Walk-Off</span><p class="blurb-text">Mets walked off the D-backs, 4-3 in 10 innings. Weaver got the win.</p></div><div class="blurb"><span class="blurb-tag extras">10 Innings</span><p class="blurb-text">Reds outlasted the Marlins in 10 innings, 6-3.</p></div><div class="blurb"><span class="blurb-tag extras">10 Innings</span><p class="blurb-text">Cardinals outlasted the Nationals in 10 innings, 7-6.</p></div><div class="blurb"><span class="blurb-tag shutout">Shutout</span><p class="blurb-text">Giants shut out the Phillies, 6-0. Ray earned the win.</p></div></div>
+    <h3>Yesterday&rsquo;s Scoreboard</h3>
+    <div class="tblwrap"><table class="data">
+    <thead><tr><th>Away</th><th></th><th>Home</th><th></th><th>W</th><th>WP</th></tr></thead>
+    <tbody><tr class="scorecard-link" data-href="scorecard/?game=824457"><td class="name">KC</td><td class="num">1</td><td class="name">CLE</td><td class="num">2</td><td class="num w">CLE</td><td>Smith</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824618"><td class="name">BAL</td><td class="num">4</td><td class="name">CWS</td><td class="num">2</td><td class="num w">BAL</td><td>Cano</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823648"><td class="name">AZ</td><td class="num">3</td><td class="name">NYM</td><td class="num">4</td><td class="num w">NYM</td><td>Weaver</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823402"><td class="name">SD</td><td class="num">1</td><td class="name">PIT</td><td class="num">7</td><td class="num w">PIT</td><td>Skenes</td></tr><tr class="scorecard-link" data-href="scorecard/?game=822999"><td class="name">CHC</td><td class="num">9</td><td class="name">TB</td><td class="num">2</td><td class="num w">CHC</td><td>Assad</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823887"><td class="name">CIN</td><td class="num">6</td><td class="name">MIA</td><td class="num">3</td><td class="num w">CIN</td><td>Pagán</td></tr><tr class="scorecard-link" data-href="scorecard/?game=822754"><td class="name">STL</td><td class="num">7</td><td class="name">WSH</td><td class="num">6</td><td class="num w">STL</td><td>Soriano</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824780"><td class="name">MIL</td><td class="num">2</td><td class="name">BOS</td><td class="num">3</td><td class="num w">BOS</td><td>Crochet</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823567"><td class="name">ATH</td><td class="num">3</td><td class="name">NYY</td><td class="num">5</td><td class="num w">NYY</td><td>Cruz</td></tr><tr class="scorecard-link" data-href="scorecard/?game=822831"><td class="name">LAD</td><td class="num">4</td><td class="name">TOR</td><td class="num">1</td><td class="num w">LAD</td><td>Yamamoto</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823727"><td class="name">DET</td><td class="num">2</td><td class="name">MIN</td><td class="num">4</td><td class="num w">MIN</td><td>Bradley</td></tr><tr class="scorecard-link" data-href="scorecard/?game=822916"><td class="name">SEA</td><td class="num">2</td><td class="name">TEX</td><td class="num">3</td><td class="num w">TEX</td><td>Eovaldi</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824375"><td class="name">HOU</td><td class="num">1</td><td class="name">COL</td><td class="num">5</td><td class="num w">COL</td><td>Freeland</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824051"><td class="name">ATL</td><td class="num">7</td><td class="name">LAA</td><td class="num">2</td><td class="num w">ATL</td><td>Kinley</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823235"><td class="name">PHI</td><td class="num">0</td><td class="name">SF</td><td class="num">6</td><td class="num w">SF</td><td>Ray</td></tr></tbody></table></div>
+    <a href="scorecard/" class="scorecard-btn">Browse All Scorecards &rsaquo;</a>
+    <h3>Standings &mdash; All Six Divisions</h3>
+    <div class="two"><div><h4>AL East</h4><div class="tblwrap"><table class="data standings">
+        <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
+        <th style="text-align:right">GB</th></tr></thead>
+        <tbody><tr><td class="team">Yankees</td><td class="num">8</td><td class="num">2</td><td class="num">&mdash;</td></tr><tr><td class="team">Orioles</td><td class="num">5</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">Rays</td><td class="num">5</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">Blue Jays</td><td class="num">4</td><td class="num">7</td><td class="num">4.5</td></tr><tr><td class="team">Red Sox</td><td class="num">3</td><td class="num">8</td><td class="num">5.5</td></tr></tbody></table></div><h4>AL Central</h4><div class="tblwrap"><table class="data standings">
+        <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
+        <th style="text-align:right">GB</th></tr></thead>
+        <tbody><tr><td class="team">Guardians</td><td class="num">7</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Royals</td><td class="num">5</td><td class="num">6</td><td class="num">1.5</td></tr><tr><td class="team">Twins</td><td class="num">5</td><td class="num">6</td><td class="num">1.5</td></tr><tr><td class="team">Tigers</td><td class="num">4</td><td class="num">7</td><td class="num">2.5</td></tr><tr><td class="team">White Sox</td><td class="num">4</td><td class="num">7</td><td class="num">2.5</td></tr></tbody></table></div><h4>AL West</h4><div class="tblwrap"><table class="data standings">
+        <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
+        <th style="text-align:right">GB</th></tr></thead>
+        <tbody><tr><td class="team">Rangers</td><td class="num">6</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Angels</td><td class="num">6</td><td class="num">6</td><td class="num">0.5</td></tr><tr class="my-team"><td class="team">Astros</td><td class="num">6</td><td class="num">6</td><td class="num">0.5</td></tr><tr><td class="team">Mariners</td><td class="num">4</td><td class="num">8</td><td class="num">2.5</td></tr><tr><td class="team">Athletics</td><td class="num">3</td><td class="num">7</td><td class="num">2.5</td></tr></tbody></table></div></div><div><h4>NL East</h4><div class="tblwrap"><table class="data standings">
+        <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
+        <th style="text-align:right">GB</th></tr></thead>
+        <tbody><tr><td class="team">Mets</td><td class="num">7</td><td class="num">4</td><td class="num">&mdash;</td></tr><tr><td class="team">Braves</td><td class="num">7</td><td class="num">5</td><td class="num">0.5</td></tr><tr><td class="team">Phillies</td><td class="num">6</td><td class="num">5</td><td class="num">1.0</td></tr><tr><td class="team">Marlins</td><td class="num">6</td><td class="num">5</td><td class="num">1.0</td></tr><tr><td class="team">Nationals</td><td class="num">4</td><td class="num">7</td><td class="num">3.0</td></tr></tbody></table></div><h4>NL Central</h4><div class="tblwrap"><table class="data standings">
+        <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
+        <th style="text-align:right">GB</th></tr></thead>
+        <tbody><tr><td class="team">Reds</td><td class="num">8</td><td class="num">3</td><td class="num">&mdash;</td></tr><tr><td class="team">Brewers</td><td class="num">8</td><td class="num">3</td><td class="num">&mdash;</td></tr><tr><td class="team">Pirates</td><td class="num">7</td><td class="num">5</td><td class="num">1.5</td></tr><tr><td class="team">Cardinals</td><td class="num">6</td><td class="num">5</td><td class="num">2.0</td></tr><tr><td class="team">Cubs</td><td class="num">5</td><td class="num">6</td><td class="num">3.0</td></tr></tbody></table></div><h4>NL West</h4><div class="tblwrap"><table class="data standings">
+        <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
+        <th style="text-align:right">GB</th></tr></thead>
+        <tbody><tr><td class="team">Dodgers</td><td class="num">9</td><td class="num">2</td><td class="num">&mdash;</td></tr><tr><td class="team">Padres</td><td class="num">6</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">D-backs</td><td class="num">5</td><td class="num">6</td><td class="num">4.0</td></tr><tr><td class="team">Rockies</td><td class="num">5</td><td class="num">6</td><td class="num">4.0</td></tr><tr><td class="team">Giants</td><td class="num">4</td><td class="num">8</td><td class="num">5.5</td></tr></tbody></table></div></div></div>
+    <h3>League Leaders</h3>
+    <div class="two">
+    <div><h4>Batting</h4><div class="tblwrap"><table class="data">
+    <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
+    <tbody><tr><td>AVG</td><td class="name">Andy Pages (LAD)</td><td class="num">.442</td></tr><tr><td>HR</td><td class="name">Drake Baldwin (ATL)</td><td class="num">5</td></tr><tr><td>RBI</td><td class="name">CJ Abrams (WSH)</td><td class="num">14</td></tr><tr><td>SB</td><td class="name">Nasim Nuñez (WSH)</td><td class="num">7</td></tr><tr><td>OPS</td><td class="name">Ben Rice (NYY)</td><td class="num">1.378</td></tr></tbody></table></div></div>
+    <div><h4>Pitching</h4><div class="tblwrap"><table class="data">
+    <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
+    <tbody><tr><td>ERA</td><td class="name">Edward Cabrera (CHC)</td><td class="num">0.00</td></tr><tr><td>SV</td><td class="name">David Bednar (NYY)</td><td class="num">5</td></tr><tr><td>W</td><td class="name">Aaron Ashby (MIL)</td><td class="num">3</td></tr></tbody></table></div></div>
+    </div>
+  </section>
+
+  <section id="history" open>
+    <summary>
+      <span class="num">09</span>
+      <span class="h">This Day in Astros History</span>
+      <span class="tag">Apr 8</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    <p class="idle-msg">No historical entries for today&rsquo;s date.</p>
+  </section>
+
+  </main>
+</div>
+
+<footer class="foot">
+  <span>The Morning Lineup &middot; <span class="flag">A Minute Maid Park Broadsheet</span></span>
+  <span>Data: MLB Stats API (statsapi.mlb.com)</span>
+  <span>Filed 04/08/26 14:52 CT</span>
+</footer>
+
+<script>
+(function(){
+  var links = document.querySelectorAll('.toc a[href^="#"]');
+  var sections = Array.from(links).map(function(a){return {link:a, el:document.querySelector(a.getAttribute('href'))}});
+  function onScroll(){
+    var y = window.scrollY + 120;
+    var current = sections[0];
+    for (var i=0;i<sections.length;i++){ if (sections[i].el && sections[i].el.offsetTop <= y) current = sections[i]; }
+    links.forEach(function(l){l.classList.remove('active')});
+    if (current) current.link.classList.add('active');
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  links.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href').slice(1);
+      var el = document.getElementById(id); if (!el) return;
+      e.preventDefault();
+      var details = el.closest('details');
+      if (details && !details.open) details.open = true;
+      window.scrollTo({top: el.offsetTop - 10, behavior: 'smooth'});
+      history.replaceState(null,'','#'+id);
+    });
+  });
+})();
+</script>
+<script>var TEAM_ID=117;var TEAM_IDLE_MSG="No Astros game in progress";</script>
+<script src="live.js"></script>
+<script>
+window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
+document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});
+</script>
+
+</body>
+</html>

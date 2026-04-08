@@ -1,0 +1,59 @@
+{
+  "id": 113,
+  "name": "Reds",
+  "full_name": "Cincinnati Reds",
+  "abbreviation": "CIN",
+  "division_id": 205,
+  "division_name": "NL Central",
+  "colors": {
+    "primary": "#C6011F",
+    "primary_hi": "#e01a35",
+    "accent": "#000000",
+    "accent_hi": "#333333"
+  },
+  "venue": {
+    "id": 2602,
+    "name": "Great American Ball Park",
+    "azimuth": 0,
+    "nickname": "GABP"
+  },
+  "affiliates": [
+    {
+      "id": 416,
+      "name": "Louisville Bats",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 498,
+      "name": "Chattanooga Lookouts",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 459,
+      "name": "Dayton Dragons",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 450,
+      "name": "Daytona Tortugas",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from GABP & Beyond",
+    "footer_tag": "A Great American Ball Park Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Reds pride",
+    "idle_msg": "No Reds game in progress"
+  },
+  "rivals": {
+    "134": "Pirates",
+    "138": "Cardinals",
+    "158": "Brewers",
+    "112": "Cubs",
+    "113": "Reds"
+  }
+}

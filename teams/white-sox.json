@@ -1,0 +1,59 @@
+{
+  "id": 145,
+  "name": "White Sox",
+  "full_name": "Chicago White Sox",
+  "abbreviation": "CWS",
+  "division_id": 202,
+  "division_name": "AL Central",
+  "colors": {
+    "primary": "#27251F",
+    "primary_hi": "#444440",
+    "accent": "#C4CED4",
+    "accent_hi": "#d4dee4"
+  },
+  "venue": {
+    "id": 4,
+    "name": "Guaranteed Rate Field",
+    "azimuth": 0,
+    "nickname": "The South Side"
+  },
+  "affiliates": [
+    {
+      "id": 494,
+      "name": "Charlotte Knights",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 247,
+      "name": "Birmingham Barons",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 580,
+      "name": "Winston-Salem Dash",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 487,
+      "name": "Kannapolis Cannon Ballers",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The South Side & Beyond",
+    "footer_tag": "A Guaranteed Rate Field Broadsheet",
+    "lede_tone": "like a beat writer who bleeds White Sox pride",
+    "idle_msg": "No White Sox game in progress"
+  },
+  "rivals": {
+    "142": "Twins",
+    "145": "White Sox",
+    "114": "Guardians",
+    "116": "Tigers",
+    "118": "Royals"
+  }
+}

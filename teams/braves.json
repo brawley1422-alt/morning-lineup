@@ -1,0 +1,59 @@
+{
+  "id": 144,
+  "name": "Braves",
+  "full_name": "Atlanta Braves",
+  "abbreviation": "ATL",
+  "division_id": 204,
+  "division_name": "NL East",
+  "colors": {
+    "primary": "#13274F",
+    "primary_hi": "#1d3a70",
+    "accent": "#CE1141",
+    "accent_hi": "#e8394f"
+  },
+  "venue": {
+    "id": 4705,
+    "name": "Truist Park",
+    "azimuth": 0,
+    "nickname": "The Battery"
+  },
+  "affiliates": [
+    {
+      "id": 431,
+      "name": "Gwinnett Stripers",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 6325,
+      "name": "Columbus Clingstones",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 432,
+      "name": "Rome Emperors",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 478,
+      "name": "Augusta GreenJackets",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Battery & Beyond",
+    "footer_tag": "A Truist Park Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Braves pride",
+    "idle_msg": "No Braves game in progress"
+  },
+  "rivals": {
+    "143": "Phillies",
+    "144": "Braves",
+    "146": "Marlins",
+    "120": "Nationals",
+    "121": "Mets"
+  }
+}

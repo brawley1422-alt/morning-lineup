@@ -1,0 +1,59 @@
+{
+  "id": 108,
+  "name": "Angels",
+  "full_name": "Los Angeles Angels",
+  "abbreviation": "LAA",
+  "division_id": 200,
+  "division_name": "AL West",
+  "colors": {
+    "primary": "#BA0021",
+    "primary_hi": "#d41a3a",
+    "accent": "#003263",
+    "accent_hi": "#0a4a80"
+  },
+  "venue": {
+    "id": 1,
+    "name": "Angel Stadium",
+    "azimuth": 0,
+    "nickname": "The Big A"
+  },
+  "affiliates": [
+    {
+      "id": 561,
+      "name": "Salt Lake Bees",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 559,
+      "name": "Rocket City Trash Pandas",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 460,
+      "name": "Tri-City Dust Devils",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 526,
+      "name": "Rancho Cucamonga Quakes",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Big A & Beyond",
+    "footer_tag": "A Angel Stadium Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Angels pride",
+    "idle_msg": "No Angels game in progress"
+  },
+  "rivals": {
+    "133": "Athletics",
+    "136": "Mariners",
+    "140": "Rangers",
+    "108": "Angels",
+    "117": "Astros"
+  }
+}

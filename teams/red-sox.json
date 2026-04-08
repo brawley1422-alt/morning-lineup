@@ -1,0 +1,59 @@
+{
+  "id": 111,
+  "name": "Red Sox",
+  "full_name": "Boston Red Sox",
+  "abbreviation": "BOS",
+  "division_id": 201,
+  "division_name": "AL East",
+  "colors": {
+    "primary": "#BD3039",
+    "primary_hi": "#d4464e",
+    "accent": "#0C2340",
+    "accent_hi": "#1d3a60"
+  },
+  "venue": {
+    "id": 3,
+    "name": "Fenway Park",
+    "azimuth": 67,
+    "nickname": "The Cathedral"
+  },
+  "affiliates": [
+    {
+      "id": 533,
+      "name": "Worcester Red Sox",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 546,
+      "name": "Portland Sea Dogs",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 428,
+      "name": "Greenville Drive",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 414,
+      "name": "Salem RidgeYaks",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Cathedral & Beyond",
+    "footer_tag": "A Fenway Park Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Red Sox pride",
+    "idle_msg": "No Red Sox game in progress"
+  },
+  "rivals": {
+    "139": "Rays",
+    "141": "Blue Jays",
+    "147": "Yankees",
+    "110": "Orioles",
+    "111": "Red Sox"
+  }
+}

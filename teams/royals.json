@@ -1,0 +1,59 @@
+{
+  "id": 118,
+  "name": "Royals",
+  "full_name": "Kansas City Royals",
+  "abbreviation": "KC",
+  "division_id": 202,
+  "division_name": "AL Central",
+  "colors": {
+    "primary": "#004687",
+    "primary_hi": "#1a60a0",
+    "accent": "#BD9B60",
+    "accent_hi": "#d4b478"
+  },
+  "venue": {
+    "id": 7,
+    "name": "Kauffman Stadium",
+    "azimuth": 0,
+    "nickname": "The K"
+  },
+  "affiliates": [
+    {
+      "id": 541,
+      "name": "Omaha Storm Chasers",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 1350,
+      "name": "Northwest Arkansas Naturals",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 565,
+      "name": "Quad Cities River Bandits",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 3705,
+      "name": "Columbia Fireflies",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The K & Beyond",
+    "footer_tag": "A Kauffman Stadium Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Royals pride",
+    "idle_msg": "No Royals game in progress"
+  },
+  "rivals": {
+    "142": "Twins",
+    "145": "White Sox",
+    "114": "Guardians",
+    "116": "Tigers",
+    "118": "Royals"
+  }
+}

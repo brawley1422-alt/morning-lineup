@@ -1,0 +1,59 @@
+{
+  "id": 137,
+  "name": "Giants",
+  "full_name": "San Francisco Giants",
+  "abbreviation": "SF",
+  "division_id": 203,
+  "division_name": "NL West",
+  "colors": {
+    "primary": "#FD5A1E",
+    "primary_hi": "#ff7a40",
+    "accent": "#27251F",
+    "accent_hi": "#444440"
+  },
+  "venue": {
+    "id": 2395,
+    "name": "Oracle Park",
+    "azimuth": 0,
+    "nickname": "The Cove"
+  },
+  "affiliates": [
+    {
+      "id": 105,
+      "name": "Sacramento River Cats",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 3410,
+      "name": "Richmond Flying Squirrels",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 461,
+      "name": "Eugene Emeralds",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 476,
+      "name": "San Jose Giants",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Cove & Beyond",
+    "footer_tag": "A Oracle Park Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Giants pride",
+    "idle_msg": "No Giants game in progress"
+  },
+  "rivals": {
+    "135": "Padres",
+    "137": "Giants",
+    "109": "D-backs",
+    "115": "Rockies",
+    "119": "Dodgers"
+  }
+}

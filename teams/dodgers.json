@@ -1,0 +1,59 @@
+{
+  "id": 119,
+  "name": "Dodgers",
+  "full_name": "Los Angeles Dodgers",
+  "abbreviation": "LAD",
+  "division_id": 203,
+  "division_name": "NL West",
+  "colors": {
+    "primary": "#005A9C",
+    "primary_hi": "#1a70b5",
+    "accent": "#EF3E42",
+    "accent_hi": "#ff5858"
+  },
+  "venue": {
+    "id": 22,
+    "name": "Dodger Stadium",
+    "azimuth": 0,
+    "nickname": "Chavez Ravine"
+  },
+  "affiliates": [
+    {
+      "id": 238,
+      "name": "Oklahoma City Comets",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 260,
+      "name": "Tulsa Drillers",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 456,
+      "name": "Great Lakes Loons",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 6482,
+      "name": "Ontario Tower Buzzers",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from Chavez Ravine & Beyond",
+    "footer_tag": "A Dodger Stadium Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Dodgers pride",
+    "idle_msg": "No Dodgers game in progress"
+  },
+  "rivals": {
+    "135": "Padres",
+    "137": "Giants",
+    "109": "D-backs",
+    "115": "Rockies",
+    "119": "Dodgers"
+  }
+}

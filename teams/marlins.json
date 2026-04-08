@@ -1,0 +1,59 @@
+{
+  "id": 146,
+  "name": "Marlins",
+  "full_name": "Miami Marlins",
+  "abbreviation": "MIA",
+  "division_id": 204,
+  "division_name": "NL East",
+  "colors": {
+    "primary": "#00A3E0",
+    "primary_hi": "#1ab8f0",
+    "accent": "#EF3340",
+    "accent_hi": "#ff5060"
+  },
+  "venue": {
+    "id": 4169,
+    "name": "loanDepot park",
+    "azimuth": 0,
+    "nickname": "The Depot"
+  },
+  "affiliates": [
+    {
+      "id": 564,
+      "name": "Jacksonville Jumbo Shrimp",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 4124,
+      "name": "Pensacola Blue Wahoos",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 554,
+      "name": "Beloit Sky Carp",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 479,
+      "name": "Jupiter Hammerheads",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Depot & Beyond",
+    "footer_tag": "A loanDepot park Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Marlins pride",
+    "idle_msg": "No Marlins game in progress"
+  },
+  "rivals": {
+    "143": "Phillies",
+    "144": "Braves",
+    "146": "Marlins",
+    "120": "Nationals",
+    "121": "Mets"
+  }
+}

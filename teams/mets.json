@@ -1,0 +1,59 @@
+{
+  "id": 121,
+  "name": "Mets",
+  "full_name": "New York Mets",
+  "abbreviation": "NYM",
+  "division_id": 204,
+  "division_name": "NL East",
+  "colors": {
+    "primary": "#002D72",
+    "primary_hi": "#0a4590",
+    "accent": "#FF5910",
+    "accent_hi": "#ff7a40"
+  },
+  "venue": {
+    "id": 3289,
+    "name": "Citi Field",
+    "azimuth": 0,
+    "nickname": "Flushing"
+  },
+  "affiliates": [
+    {
+      "id": 552,
+      "name": "Syracuse Mets",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 505,
+      "name": "Binghamton Rumble Ponies",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 453,
+      "name": "Brooklyn Cyclones",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 507,
+      "name": "St. Lucie Mets",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from Flushing & Beyond",
+    "footer_tag": "A Citi Field Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Mets pride",
+    "idle_msg": "No Mets game in progress"
+  },
+  "rivals": {
+    "143": "Phillies",
+    "144": "Braves",
+    "146": "Marlins",
+    "120": "Nationals",
+    "121": "Mets"
+  }
+}

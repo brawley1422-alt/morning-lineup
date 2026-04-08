@@ -1,0 +1,59 @@
+{
+  "id": 114,
+  "name": "Guardians",
+  "full_name": "Cleveland Guardians",
+  "abbreviation": "CLE",
+  "division_id": 202,
+  "division_name": "AL Central",
+  "colors": {
+    "primary": "#00385D",
+    "primary_hi": "#0a5080",
+    "accent": "#E31937",
+    "accent_hi": "#f03050"
+  },
+  "venue": {
+    "id": 5,
+    "name": "Progressive Field",
+    "azimuth": 0,
+    "nickname": "The Prog"
+  },
+  "affiliates": [
+    {
+      "id": 445,
+      "name": "Columbus Clippers",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 402,
+      "name": "Akron RubberDucks",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 437,
+      "name": "Lake County Captains",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 481,
+      "name": "Hill City Howlers",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Prog & Beyond",
+    "footer_tag": "A Progressive Field Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Guardians pride",
+    "idle_msg": "No Guardians game in progress"
+  },
+  "rivals": {
+    "142": "Twins",
+    "145": "White Sox",
+    "114": "Guardians",
+    "116": "Tigers",
+    "118": "Royals"
+  }
+}

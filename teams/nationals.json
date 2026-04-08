@@ -1,0 +1,59 @@
+{
+  "id": 120,
+  "name": "Nationals",
+  "full_name": "Washington Nationals",
+  "abbreviation": "WSH",
+  "division_id": 204,
+  "division_name": "NL East",
+  "colors": {
+    "primary": "#AB0003",
+    "primary_hi": "#c41a1d",
+    "accent": "#14225A",
+    "accent_hi": "#1d3470"
+  },
+  "venue": {
+    "id": 3309,
+    "name": "Nationals Park",
+    "azimuth": 0,
+    "nickname": "The Park"
+  },
+  "affiliates": [
+    {
+      "id": 534,
+      "name": "Rochester Red Wings",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 547,
+      "name": "Harrisburg Senators",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 426,
+      "name": "Wilmington Blue Rocks",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 436,
+      "name": "Fredericksburg Nationals",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Park & Beyond",
+    "footer_tag": "A Nationals Park Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Nationals pride",
+    "idle_msg": "No Nationals game in progress"
+  },
+  "rivals": {
+    "143": "Phillies",
+    "144": "Braves",
+    "146": "Marlins",
+    "120": "Nationals",
+    "121": "Mets"
+  }
+}

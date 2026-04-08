@@ -1,0 +1,59 @@
+{
+  "id": 133,
+  "name": "Athletics",
+  "full_name": "Athletics",
+  "abbreviation": "ATH",
+  "division_id": 200,
+  "division_name": "AL West",
+  "colors": {
+    "primary": "#003831",
+    "primary_hi": "#0a5040",
+    "accent": "#EFB21E",
+    "accent_hi": "#ffc838"
+  },
+  "venue": {
+    "id": 10,
+    "name": "Oakland Coliseum",
+    "azimuth": 0,
+    "nickname": "The Coliseum"
+  },
+  "affiliates": [
+    {
+      "id": 400,
+      "name": "Las Vegas Aviators",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 237,
+      "name": "Midland RockHounds",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 499,
+      "name": "Lansing Lugnuts",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 524,
+      "name": "Stockton Ports",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Coliseum & Beyond",
+    "footer_tag": "A Oakland Coliseum Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Athletics pride",
+    "idle_msg": "No Athletics game in progress"
+  },
+  "rivals": {
+    "133": "Athletics",
+    "136": "Mariners",
+    "140": "Rangers",
+    "108": "Angels",
+    "117": "Astros"
+  }
+}

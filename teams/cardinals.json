@@ -1,0 +1,59 @@
+{
+  "id": 138,
+  "name": "Cardinals",
+  "full_name": "St. Louis Cardinals",
+  "abbreviation": "STL",
+  "division_id": 205,
+  "division_name": "NL Central",
+  "colors": {
+    "primary": "#C41E3A",
+    "primary_hi": "#da3654",
+    "accent": "#0C2340",
+    "accent_hi": "#1d3a60"
+  },
+  "venue": {
+    "id": 2889,
+    "name": "Busch Stadium",
+    "azimuth": 0,
+    "nickname": "Busch"
+  },
+  "affiliates": [
+    {
+      "id": 235,
+      "name": "Memphis Redbirds",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 440,
+      "name": "Springfield Cardinals",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 443,
+      "name": "Peoria Chiefs",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 279,
+      "name": "Palm Beach Cardinals",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from Busch & Beyond",
+    "footer_tag": "A Busch Stadium Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Cardinals pride",
+    "idle_msg": "No Cardinals game in progress"
+  },
+  "rivals": {
+    "134": "Pirates",
+    "138": "Cardinals",
+    "158": "Brewers",
+    "112": "Cubs",
+    "113": "Reds"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": 117,
+  "name": "Astros",
+  "full_name": "Houston Astros",
+  "abbreviation": "HOU",
+  "division_id": 200,
+  "division_name": "AL West",
+  "colors": {
+    "primary": "#002D62",
+    "primary_hi": "#0a4580",
+    "accent": "#EB6E1F",
+    "accent_hi": "#ff8a3d"
+  },
+  "venue": {
+    "id": 2392,
+    "name": "Minute Maid Park",
+    "azimuth": 0,
+    "nickname": "The Juice Box"
+  },
+  "affiliates": [
+    {
+      "id": 5434,
+      "name": "Sugar Land Space Cowboys",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 482,
+      "name": "Corpus Christi Hooks",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 573,
+      "name": "Asheville Tourists",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 3712,
+      "name": "Fayetteville Woodpeckers",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Juice Box & Beyond",
+    "footer_tag": "A Minute Maid Park Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Astros pride",
+    "idle_msg": "No Astros game in progress"
+  },
+  "rivals": {
+    "133": "Athletics",
+    "136": "Mariners",
+    "140": "Rangers",
+    "108": "Angels",
+    "117": "Astros"
+  }
+}

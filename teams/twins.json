@@ -1,0 +1,59 @@
+{
+  "id": 142,
+  "name": "Twins",
+  "full_name": "Minnesota Twins",
+  "abbreviation": "MIN",
+  "division_id": 202,
+  "division_name": "AL Central",
+  "colors": {
+    "primary": "#002B5C",
+    "primary_hi": "#0a4078",
+    "accent": "#D31145",
+    "accent_hi": "#e83060"
+  },
+  "venue": {
+    "id": 3312,
+    "name": "Target Field",
+    "azimuth": 0,
+    "nickname": "The Target"
+  },
+  "affiliates": [
+    {
+      "id": 1960,
+      "name": "St. Paul Saints",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 3898,
+      "name": "Wichita Wind Surge",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 492,
+      "name": "Cedar Rapids Kernels",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 509,
+      "name": "Fort Myers Mighty Mussels",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Target & Beyond",
+    "footer_tag": "A Target Field Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Twins pride",
+    "idle_msg": "No Twins game in progress"
+  },
+  "rivals": {
+    "142": "Twins",
+    "145": "White Sox",
+    "114": "Guardians",
+    "116": "Tigers",
+    "118": "Royals"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": 109,
+  "name": "D-backs",
+  "full_name": "Arizona Diamondbacks",
+  "abbreviation": "AZ",
+  "division_id": 203,
+  "division_name": "NL West",
+  "colors": {
+    "primary": "#A71930",
+    "primary_hi": "#c42d47",
+    "accent": "#E3D4AD",
+    "accent_hi": "#f0e4c0"
+  },
+  "venue": {
+    "id": 15,
+    "name": "Chase Field",
+    "azimuth": 0,
+    "nickname": "The Pool"
+  },
+  "affiliates": [
+    {
+      "id": 2310,
+      "name": "Reno Aces",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 5368,
+      "name": "Amarillo Sod Poodles",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 419,
+      "name": "Hillsboro Hops",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 516,
+      "name": "Visalia Rawhide",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Pool & Beyond",
+    "footer_tag": "A Chase Field Broadsheet",
+    "lede_tone": "like a beat writer who bleeds D-backs pride",
+    "idle_msg": "No D-backs game in progress"
+  },
+  "rivals": {
+    "135": "Padres",
+    "137": "Giants",
+    "109": "D-backs",
+    "115": "Rockies",
+    "119": "Dodgers"
+  }
+}

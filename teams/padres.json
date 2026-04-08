@@ -1,0 +1,59 @@
+{
+  "id": 135,
+  "name": "Padres",
+  "full_name": "San Diego Padres",
+  "abbreviation": "SD",
+  "division_id": 203,
+  "division_name": "NL West",
+  "colors": {
+    "primary": "#2F241D",
+    "primary_hi": "#4a3a30",
+    "accent": "#FFC425",
+    "accent_hi": "#ffd450"
+  },
+  "venue": {
+    "id": 2680,
+    "name": "Petco Park",
+    "azimuth": 0,
+    "nickname": "The Park"
+  },
+  "affiliates": [
+    {
+      "id": 4904,
+      "name": "El Paso Chihuahuas",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 510,
+      "name": "San Antonio Missions",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 584,
+      "name": "Fort Wayne TinCaps",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 103,
+      "name": "Lake Elsinore Storm",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Park & Beyond",
+    "footer_tag": "A Petco Park Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Padres pride",
+    "idle_msg": "No Padres game in progress"
+  },
+  "rivals": {
+    "135": "Padres",
+    "137": "Giants",
+    "109": "D-backs",
+    "115": "Rockies",
+    "119": "Dodgers"
+  }
+}

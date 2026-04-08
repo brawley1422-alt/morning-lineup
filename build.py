@@ -1343,7 +1343,7 @@ def render_minors(minors_data, prospects=None):
 
 def generate_lede(data):
     """Generate a 3-4 sentence editorial lede via Ollama (or Anthropic API)."""
-    lede_cache = DATA_DIR / f"lede-{data['today'].isoformat()}.txt"
+    lede_cache = DATA_DIR / f"lede-{_team_slug}-{data['today'].isoformat()}.txt"
     if lede_cache.exists():
         cached = lede_cache.read_text(encoding="utf-8").strip()
         if cached:

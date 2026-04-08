@@ -1,0 +1,59 @@
+{
+  "id": 139,
+  "name": "Rays",
+  "full_name": "Tampa Bay Rays",
+  "abbreviation": "TB",
+  "division_id": 201,
+  "division_name": "AL East",
+  "colors": {
+    "primary": "#092C5C",
+    "primary_hi": "#1a4078",
+    "accent": "#8FBCE6",
+    "accent_hi": "#a8d0f0"
+  },
+  "venue": {
+    "id": 12,
+    "name": "Tropicana Field",
+    "azimuth": 0,
+    "nickname": "The Trop"
+  },
+  "affiliates": [
+    {
+      "id": 234,
+      "name": "Durham Bulls",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 421,
+      "name": "Montgomery Biscuits",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 2498,
+      "name": "Bowling Green Hot Rods",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 233,
+      "name": "Charleston RiverDogs",
+      "level": "A",
+      "sport_id": 14
+    }
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Trop & Beyond",
+    "footer_tag": "A Tropicana Field Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Rays pride",
+    "idle_msg": "No Rays game in progress"
+  },
+  "rivals": {
+    "139": "Rays",
+    "141": "Blue Jays",
+    "147": "Yankees",
+    "110": "Orioles",
+    "111": "Red Sox"
+  }
+}
