@@ -91,7 +91,7 @@ def load_all():
         "/schedule",
         sportId=1, teamId=CUBS_ID,
         startDate=today.isoformat(), endDate=end.isoformat(),
-        hydrate="team,probablePitcher",
+        hydrate="team,probablePitcher,broadcasts,venue",
     )
     next_games = []
     for dd in sched_next.get("dates", []):
@@ -446,6 +446,74 @@ def render_injuries(injuries):
         return '<p class="slang"><em>Clean bill of health.</em></p>'
     return f'<dl class="transac">{"".join(out)}</dl>'
 
+DOME_VENUES = {12: "Dome", 32: "Retractable Roof", 680: "Retractable Roof",
+               2889: "Retractable Roof", 14: "Retractable Roof",
+               2394: "Retractable Roof", 19: "Retractable Roof"}
+
+def fetch_pitcher_line(pid):
+    """Fetch a pitcher's season stats. Returns formatted string or empty."""
+    if not pid: return ""
+    try:
+        data = fetch(f"/people/{pid}/stats", stats="season", season="2026", group="pitching")
+        for s in data.get("stats", []):
+            for sp in s.get("splits", []):
+                st = sp.get("stat", {})
+                era = st.get("era", "-")
+                w = st.get("wins", 0)
+                l = st.get("losses", 0)
+                ip = st.get("inningsPitched", "-")
+                k = st.get("strikeOuts", "-")
+                whip = st.get("whip", "-")
+                return f'{era} ERA &middot; {w}-{l} &middot; {ip} IP &middot; {k} K &middot; {whip} WHIP'
+    except Exception:
+        pass
+    return ""
+
+def fetch_weather_for_venue(venue):
+    """Fetch current weather for a venue. Returns (temp, cond, wind_str, wrigley_note) or None."""
+    if not venue: return None
+    vid = venue.get("id")
+    if vid in DOME_VENUES: return None
+    try:
+        vdata = fetch(f"/venues/{vid}", hydrate="location")
+        v = vdata.get("venues", [{}])[0]
+        loc = v.get("location", {})
+        coords = loc.get("defaultCoordinates", {})
+        lat, lon = coords.get("latitude"), coords.get("longitude")
+        if not lat or not lon: return None
+        wx_url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current=temperature_2m,weathercode,windspeed_10m,winddirection_10m&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=America/Chicago"
+        req = urllib.request.Request(wx_url, headers={"User-Agent": "morning-lineup/0.1"})
+        with urllib.request.urlopen(req, timeout=10) as r:
+            wx = json.loads(r.read())
+        c = wx.get("current", {})
+        temp = round(c.get("temperature_2m", 0))
+        wind_spd = round(c.get("windspeed_10m", 0))
+        wind_dir = c.get("winddirection_10m", 0)
+        code = c.get("weathercode", 0)
+        WMO = {0:"Clear",1:"Mostly Clear",2:"Partly Cloudy",3:"Overcast",
+               45:"Foggy",51:"Light Drizzle",61:"Light Rain",63:"Rain",65:"Heavy Rain",
+               80:"Showers",95:"Thunderstorm"}
+        cond = WMO.get(code, "")
+        dirs = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"]
+        compass = dirs[round(wind_dir / 22.5) % 16]
+        wind_str = f"{wind_spd} mph {compass}" if wind_spd >= 3 else "Calm"
+        # Wrigley wind interpretation
+        wrigley_note = ""
+        if vid == 17 and wind_spd >= 5:
+            cf = (37 + 180) % 360
+            diff = wind_dir - cf
+            if diff > 180: diff -= 360
+            if diff < -180: diff += 360
+            ad = abs(diff)
+            if ad <= 30: wrigley_note = "Blowing out to center"
+            elif ad <= 60: wrigley_note = f"Blowing out to {'right' if diff > 0 else 'left'} field"
+            elif ad >= 150: wrigley_note = "Blowing in"
+            elif ad >= 120: wrigley_note = f"Blowing in from {'left' if diff > 0 else 'right'} field"
+            else: wrigley_note = f"Crosswind {'L→R' if diff > 0 else 'R→L'}"
+        return (temp, cond, wind_str, wrigley_note)
+    except Exception:
+        return None
+
 def render_next_games(next_games, tmap):
     cards = []
     for g in next_games:
@@ -469,14 +537,65 @@ def render_next_games(next_games, tmap):
         opp_prob = g["teams"][opp_side].get("probablePitcher", {})
         cubs_p = cubs_prob.get("fullName", "TBD") if cubs_prob else "TBD"
         opp_p = opp_prob.get("fullName", "TBD") if opp_prob else "TBD"
-        vs_line = f"{cubs_p.split()[-1] if cubs_p!='TBD' else 'TBD'} vs {opp_p.split()[-1] if opp_p!='TBD' else 'TBD'}"
-        cards.append(f"""<div class="g">
-        <div class="day">{day_str} &middot; {vs}</div>
-        <div class="vs">{escape(vs_line)}</div>
-        <div class="prob">{escape(cubs_p)} &middot; {escape(opp_p)}</div>
-        <div class="time">{time_str}</div>
+
+        # Pitcher season stats
+        cubs_pid = cubs_prob.get("id") if cubs_prob else None
+        opp_pid = opp_prob.get("id") if opp_prob else None
+        cubs_line = fetch_pitcher_line(cubs_pid)
+        opp_line = fetch_pitcher_line(opp_pid)
+
+        # Broadcasts
+        bc = g.get("broadcasts", [])
+        tvs = [escape(b["name"]) for b in bc if b.get("type") == "TV" and b.get("language","en") == "en"]
+        radios = [escape(b["name"]) for b in bc if b.get("type") in ("AM","FM") and b.get("language","en") == "en"]
+        bc_html = ""
+        if tvs:
+            bc_html += f'<div class="nx-bc"><span class="nx-bc-tag">TV</span> {" &middot; ".join(tvs)}</div>'
+        if radios:
+            bc_html += f'<div class="nx-bc"><span class="nx-bc-tag">Radio</span> {" &middot; ".join(radios)}</div>'
+
+        # Venue + dome/weather
+        venue = g.get("venue", {})
+        venue_name = venue.get("name", "")
+        vid = venue.get("id")
+        dome_label = ""
+        if vid in DOME_VENUES:
+            dome_label = f'<span class="nx-dome">{DOME_VENUES[vid]}</span>'
+
+        # Weather (only for today's game — first card)
+        wx_html = ""
+        if next_games.index(g) == 0:
+            wx = fetch_weather_for_venue(venue)
+            if wx:
+                temp, cond, wind_str, wrigley = wx
+                wx_html = f'<div class="nx-wx">{temp}°F &middot; {escape(cond)} &middot; {wind_str}'
+                if wrigley:
+                    wx_html += f' <span class="nx-wrigley">&mdash; {escape(wrigley)}</span>'
+                wx_html += '</div>'
+            elif vid in DOME_VENUES:
+                wx_html = '<div class="nx-wx">72°F &middot; Climate controlled</div>'
+
+        pitcher_html = ""
+        if cubs_p != "TBD":
+            pitcher_html += f'<div class="nx-pitcher"><span class="nx-side">Cubs</span> {escape(cubs_p)}'
+            if cubs_line: pitcher_html += f'<div class="nx-pline">{cubs_line}</div>'
+            pitcher_html += '</div>'
+        if opp_p != "TBD":
+            pitcher_html += f'<div class="nx-pitcher"><span class="nx-side">{escape(opp_ab)}</span> {escape(opp_p)}'
+            if opp_line: pitcher_html += f'<div class="nx-pline">{opp_line}</div>'
+            pitcher_html += '</div>'
+
+        cards.append(f"""<div class="nx-card">
+        <div class="nx-head">
+          <div class="nx-day">{day_str} &middot; {vs}</div>
+          <div class="nx-time">{time_str}</div>
+        </div>
+        <div class="nx-venue">{escape(venue_name)} {dome_label}</div>
+        {pitcher_html}
+        {bc_html}
+        {wx_html}
       </div>""")
-    return f'<div class="upcoming">{"".join(cards)}</div>'
+    return f'<div class="next-games">{"".join(cards)}</div>'
 
 def render_hot_cold(hitters_data, pitchers_data):
     # Hitters: sort by OPS, take top 4 & bottom 3 of qualified (>=10 PA)
@@ -1070,13 +1189,22 @@ ul.plays .txt strong{color:var(--paper);font-weight:500}
 .tempbox li:last-child{border-bottom:none}
 .tempbox .n{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
 .tempbox .s{font-family:var(--mono);font-size:11px;color:var(--gold)}
-.upcoming{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
-@media (max-width:640px){.upcoming{grid-template-columns:1fr}}
-.upcoming .g{background:var(--ink-2);border:1px solid var(--rule);padding:10px 12px;border-radius:2px;border-left:3px solid var(--cubs-blue-hi);}
-.upcoming .day{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute)}
-.upcoming .vs{font-family:var(--cond);text-transform:uppercase;font-size:15px;color:var(--paper);margin:2px 0;letter-spacing:.06em}
-.upcoming .prob{font-family:var(--mono);font-size:11px;color:var(--paper-dim)}
-.upcoming .time{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
+.next-games{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin:12px 0}
+.nx-card{background:var(--ink-2);border:1px solid var(--rule);padding:14px 16px;border-radius:3px;border-left:3px solid var(--cubs-blue-hi)}
+.nx-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.nx-day{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--paper-mute)}
+.nx-time{font-family:var(--mono);font-size:12px;color:var(--gold);font-weight:600}
+.nx-venue{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-bottom:8px}
+.nx-dome{font-family:var(--cond);font-size:9px;letter-spacing:.1em;text-transform:uppercase;background:var(--cubs-blue);color:var(--paper);padding:1px 6px;border-radius:2px;margin-left:6px}
+.nx-pitcher{margin:6px 0;padding:6px 0;border-top:1px dashed var(--rule)}
+.nx-pitcher:first-of-type{border-top:1px solid var(--rule-hi)}
+.nx-side{font-family:var(--cond);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--paper-mute);margin-right:6px}
+.nx-pitcher{font-family:var(--body);font-size:13px;color:var(--paper)}
+.nx-pline{font-family:var(--mono);font-size:10.5px;color:var(--paper-dim);margin-top:2px}
+.nx-bc{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-top:4px}
+.nx-bc-tag{font-family:var(--cond);font-size:9px;letter-spacing:.1em;text-transform:uppercase;background:var(--rule-hi);color:var(--paper);padding:1px 5px;border-radius:2px;margin-right:4px}
+.nx-wx{font-family:var(--mono);font-size:11px;color:var(--paper-dim);margin-top:6px;padding-top:6px;border-top:1px dashed var(--rule)}
+.nx-wrigley{color:var(--gold);font-style:italic}
 dl.transac{margin:8px 0;font-size:13px}
 dl.transac dt{font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--cubs-red-hi);margin-top:10px;}
 dl.transac dd{margin:3px 0 0;color:var(--paper-dim)}

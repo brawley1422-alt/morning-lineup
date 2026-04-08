@@ -120,13 +120,22 @@ ul.plays .txt strong{color:var(--paper);font-weight:500}
 .tempbox li:last-child{border-bottom:none}
 .tempbox .n{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
 .tempbox .s{font-family:var(--mono);font-size:11px;color:var(--gold)}
-.upcoming{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
-@media (max-width:640px){.upcoming{grid-template-columns:1fr}}
-.upcoming .g{background:var(--ink-2);border:1px solid var(--rule);padding:10px 12px;border-radius:2px;border-left:3px solid var(--cubs-blue-hi);}
-.upcoming .day{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute)}
-.upcoming .vs{font-family:var(--cond);text-transform:uppercase;font-size:15px;color:var(--paper);margin:2px 0;letter-spacing:.06em}
-.upcoming .prob{font-family:var(--mono);font-size:11px;color:var(--paper-dim)}
-.upcoming .time{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
+.next-games{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin:12px 0}
+.nx-card{background:var(--ink-2);border:1px solid var(--rule);padding:14px 16px;border-radius:3px;border-left:3px solid var(--cubs-blue-hi)}
+.nx-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.nx-day{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--paper-mute)}
+.nx-time{font-family:var(--mono);font-size:12px;color:var(--gold);font-weight:600}
+.nx-venue{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-bottom:8px}
+.nx-dome{font-family:var(--cond);font-size:9px;letter-spacing:.1em;text-transform:uppercase;background:var(--cubs-blue);color:var(--paper);padding:1px 6px;border-radius:2px;margin-left:6px}
+.nx-pitcher{margin:6px 0;padding:6px 0;border-top:1px dashed var(--rule)}
+.nx-pitcher:first-of-type{border-top:1px solid var(--rule-hi)}
+.nx-side{font-family:var(--cond);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--paper-mute);margin-right:6px}
+.nx-pitcher{font-family:var(--body);font-size:13px;color:var(--paper)}
+.nx-pline{font-family:var(--mono);font-size:10.5px;color:var(--paper-dim);margin-top:2px}
+.nx-bc{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-top:4px}
+.nx-bc-tag{font-family:var(--cond);font-size:9px;letter-spacing:.1em;text-transform:uppercase;background:var(--rule-hi);color:var(--paper);padding:1px 5px;border-radius:2px;margin-right:4px}
+.nx-wx{font-family:var(--mono);font-size:11px;color:var(--paper-dim);margin-top:6px;padding-top:6px;border-top:1px dashed var(--rule)}
+.nx-wrigley{color:var(--gold);font-style:italic}
 dl.transac{margin:8px 0;font-size:13px}
 dl.transac dt{font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--cubs-red-hi);margin-top:10px;}
 dl.transac dd{margin:3px 0 0;color:var(--paper-dim)}
@@ -301,21 +310,33 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div>
     </div>
     <h3>Next Games</h3>
-    <div class="upcoming"><div class="g">
-        <div class="day">Wed, Apr 8 &middot; at TB</div>
-        <div class="vs">Rea vs Boyle</div>
-        <div class="prob">Colin Rea &middot; Joe Boyle</div>
-        <div class="time">5:40 CT</div>
-      </div><div class="g">
-        <div class="day">Fri, Apr 10 &middot; vs PIT</div>
-        <div class="vs">TBD vs Mlodzinski</div>
-        <div class="prob">TBD &middot; Carmen Mlodzinski</div>
-        <div class="time">1:20 CT</div>
-      </div><div class="g">
-        <div class="day">Sat, Apr 11 &middot; vs PIT</div>
-        <div class="vs">TBD vs Ashcraft</div>
-        <div class="prob">TBD &middot; Braxton Ashcraft</div>
-        <div class="time">1:20 CT</div>
+    <div class="next-games"><div class="nx-card">
+        <div class="nx-head">
+          <div class="nx-day">Wed, Apr 8 &middot; at TB</div>
+          <div class="nx-time">5:40 CT</div>
+        </div>
+        <div class="nx-venue">Tropicana Field <span class="nx-dome">Dome</span></div>
+        <div class="nx-pitcher"><span class="nx-side">Cubs</span> Colin Rea<div class="nx-pline">4.26 ERA &middot; 0-0 &middot; 6.1 IP &middot; 8 K &middot; 1.42 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">TB</span> Joe Boyle<div class="nx-pline">3.18 ERA &middot; 0-0 &middot; 11.1 IP &middot; 13 K &middot; 0.88 WHIP</div></div>
+        <div class="nx-bc"><span class="nx-bc-tag">TV</span> Rays.TV &middot; Marquee Sports Network</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 104.3 The Score &middot; WDAE 95.7 FM</div>
+        <div class="nx-wx">72°F &middot; Climate controlled</div>
+      </div><div class="nx-card">
+        <div class="nx-head">
+          <div class="nx-day">Fri, Apr 10 &middot; vs PIT</div>
+          <div class="nx-time">1:20 CT</div>
+        </div>
+        <div class="nx-venue">Wrigley Field </div>
+        <div class="nx-pitcher"><span class="nx-side">PIT</span> Carmen Mlodzinski<div class="nx-pline">4.00 ERA &middot; 0-0 &middot; 9.0 IP &middot; 13 K &middot; 1.56 WHIP</div></div>
+        <div class="nx-bc"><span class="nx-bc-tag">TV</span> Marquee Sports Network &middot; SportsNet Pittsburgh </div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 104.3 The Score &middot; 100.1 FM/KDKA-AM 1020</div>
+        
+      </div><div class="nx-card">
+        <div class="nx-head">
+          <div class="nx-day">Sat, Apr 11 &middot; vs PIT</div>
+          <div class="nx-time">1:20 CT</div>
+        </div>
+        <div class="nx-venue">Wrigley Field </div>
+        <div class="nx-pitcher"><span class="nx-side">PIT</span> Braxton Ashcraft<div class="nx-pline">2.25 ERA &middot; 1-1 &middot; 12.0 IP &middot; 11 K &middot; 1.00 WHIP</div></div>
+        <div class="nx-bc"><span class="nx-bc-tag">TV</span> Marquee Sports Network &middot; SportsNet Pittsburgh </div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 104.3 The Score &middot; Sports Radio 93.7 KDKA The Fan</div>
+        
       </div></div>
     <h3>Form Guide (Last 7 Days)</h3>
     
@@ -523,7 +544,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Friendly Confines Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/08/26 10:21 CT</span>
+  <span>Filed 04/08/26 10:51 CT</span>
 </footer>
 
 <script>
