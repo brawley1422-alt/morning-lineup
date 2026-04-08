@@ -104,7 +104,10 @@
       var html = "";
       for (var i = 0; i < filtered.length; i++) {
         var g = filtered[i];
-        var isFinal = g.status && g.status.abstractGameState === "Final";
+        var gameState = g.status && g.status.abstractGameState;
+        var isFinal = gameState === "Final";
+        var isLive = gameState === "Live";
+        var isClickable = isFinal || isLive;
         var awayAbbr = teamAbbr(g.teams.away.team.id);
         var homeAbbr = teamAbbr(g.teams.home.team.id);
         var awayScore = g.teams.away.score != null ? g.teams.away.score : "";
@@ -112,16 +115,20 @@
         var status = g.status ? g.status.detailedState : "";
         var isDH = g.gameNumber && g.gameNumber > 1;
 
-        html += '<div class="game-card' + (isFinal ? "" : " disabled") + '" ' +
-                (isFinal ? 'data-gamepk="' + g.gamePk + '"' : '') + '>';
+        html += '<div class="game-card' + (isClickable ? "" : " disabled") + (isLive ? " live" : "") + '" ' +
+                (isClickable ? 'data-gamepk="' + g.gamePk + '"' : '') + '>';
         html += '<div class="matchup">';
         html += '<span>' + esc(awayAbbr) + ' @ ' + esc(homeAbbr) + '</span>';
-        if (isFinal) {
+        if (isFinal || isLive) {
           html += '<span class="score">' + awayScore + ' - ' + homeScore + '</span>';
         }
         html += '</div>';
         html += '<div class="meta">';
-        html += '<span class="status-' + (isFinal ? "final" : "live") + '">' + esc(status) + '</span>';
+        if (isLive) {
+          html += '<span class="status-live"><span class="card-dot"></span> ' + esc(status) + '</span>';
+        } else {
+          html += '<span class="status-' + (isFinal ? "final" : "preview") + '">' + esc(status) + '</span>';
+        }
         if (isDH) {
           html += '<span class="dh-label">Game ' + g.gameNumber + '</span>';
         }

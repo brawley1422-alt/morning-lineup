@@ -34,6 +34,11 @@
         cache[key] = feed;
         return feed;
       });
+    },
+
+    fetchGameFeedLive: function (gamePk) {
+      var url = LIVE_API + "/game/" + gamePk + "/feed/live?t=" + Date.now();
+      return fetchJSON(url);
     }
   };
 

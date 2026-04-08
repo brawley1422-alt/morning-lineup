@@ -73,7 +73,8 @@
             }
           }
           var changeClass = changeMap[inn2] ? " pitching-change" : "";
-          html += '<td class="diamond-td' + changeClass + '">';
+          var cellId = side + "-" + batter.id + "-" + inn2;
+          html += '<td class="diamond-td' + changeClass + '" id="cell-' + cellId + '">';
           if (ab) {
             html += SC.diamond.render(ab);
           }
@@ -82,6 +83,7 @@
 
         // Stat cells
         var bs = batter.stats || {};
+        var statKeys = ["atBats", "runs", "hits", "rbi", "baseOnBalls", "strikeOuts"];
         var statVals = [
           bs.atBats || 0,
           bs.runs || 0,
@@ -91,7 +93,7 @@
           bs.strikeOuts || 0
         ];
         for (var sv = 0; sv < statVals.length; sv++) {
-          html += '<td class="stat-cell">' + statVals[sv] + '</td>';
+          html += '<td class="stat-cell" id="stat-' + side + "-" + batter.id + "-" + statKeys[sv] + '">' + statVals[sv] + '</td>';
         }
 
         html += '</tr>';
@@ -101,8 +103,8 @@
     // Totals row
     html += '<tr class="slot-first"><td class="player-cell" style="font-weight:700">Totals</td>';
     for (var ti = 1; ti <= totalInnings; ti++) {
-      var innRuns = (side === "away" ? teamData.linescore : teamData.linescore)[ti - 1];
-      html += '<td class="diamond-td" style="font-family:var(--mono);font-size:14px;color:var(--gold);font-weight:700">' +
+      var innRuns = teamData.linescore[ti - 1];
+      html += '<td class="diamond-td" id="inn-' + side + '-' + ti + '" style="font-family:var(--mono);font-size:14px;color:var(--gold);font-weight:700">' +
               (innRuns != null ? innRuns : "") + '</td>';
     }
     // Total stats for team
