@@ -1176,7 +1176,7 @@ def render_minors(minors_data, prospects=None):
                 parts.append(f"<strong>{escape(name.split()[-1])}</strong>{prospect_badge(pid)} {s.get('inningsPitched','?')} IP, {s.get('earnedRuns',0)} ER, {s.get('strikeOuts',0)} K")
             note = ". ".join(parts) + "." if parts else ""
 
-        cards.append(f"""<div class="lvl" data-lvl="{aff['level']}">
+        cards.append(f"""<div class="lvl {wl_cls}" data-lvl="{aff['level']}">
         <div class="aff">{escape(aff['name'])}</div>
         <div class="res"><span class="{wl_cls}">{wl} {my_score}&ndash;{opp_score}</span> {vs_at} {escape(opp_name)}</div>
         {f'<div class="note">{note}</div>' if note else ''}
