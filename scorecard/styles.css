@@ -892,15 +892,16 @@ body.embed-mode #app { padding: 0; max-width: none; }
 .scorebook-tab-pane { display: none; }
 .scorebook-tab-pane.active { display: block; }
 
-/* Tighter widths in embed mode */
-body.embed-mode .scorebook-grid { min-width: 0; }
-body.embed-mode .scorebook-grid th.inning-header { min-width: 48px; }
-body.embed-mode .scorebook-grid th.stat-header { min-width: 30px; }
-body.embed-mode .scorebook-grid td.stat-cell { min-width: 30px; }
-body.embed-mode .scorebook-grid th.player-header { min-width: 110px; }
-body.embed-mode .scorebook-grid td.player-cell { min-width: 110px; font-size: 11px; }
-body.embed-mode .scorebook-page { overflow-x: hidden; }
-body.embed-mode .diamond-cell svg { width: 48px; height: 48px; }
+/* Tighter widths in embed mode — must fit ~920px single-page */
+body.embed-mode .scorebook-grid { min-width: 0; width: 100%; table-layout: fixed; }
+body.embed-mode .scorebook-grid th.inning-header { min-width: 0; width: 44px; }
+body.embed-mode .scorebook-grid th.stat-header { min-width: 0; width: 28px; }
+body.embed-mode .scorebook-grid td.stat-cell { min-width: 0; }
+body.embed-mode .scorebook-grid th.player-header { min-width: 0; width: 100px; }
+body.embed-mode .scorebook-grid td.player-cell { min-width: 0; font-size: 11px; }
+body.embed-mode .scorebook-grid td.diamond-td { min-width: 0; padding: 1px; }
+body.embed-mode .scorebook-grid td.diamond-td svg { width: 40px; height: 40px; }
+body.embed-mode .scorebook-page { overflow-x: auto; }
 
 @media (max-width: 600px) {
   #app { padding: 12px; }
