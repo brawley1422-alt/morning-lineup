@@ -1542,17 +1542,17 @@ def render_stretch(cubs_rec):
 
 
 def render_pressbox(injuries, transactions):
-    """Render The Pressbox — injuries + recent transactions."""
-    inj_html = render_injuries(injuries) if injuries else '<p><em>No players currently on the injured list.</em></p>'
+    """Render The Pressbox — recent transactions + injuries."""
+    # Sort transactions newest-first
+    sorted_tx = sorted(transactions, key=lambda t: t.get("effectiveDate", t.get("date", "")), reverse=True)
 
     tx_rows = []
-    for tx in transactions[:10]:
+    for tx in sorted_tx[:10]:
         d = tx.get("effectiveDate", tx.get("date", ""))
         if len(d) >= 10:
             d = d[5:]  # MM-DD
         tc = tx.get("typeCode", "")
         desc = tx.get("description", "")
-        # Map type codes to display labels and CSS classes
         type_map = {
             "DIS": ("IL", "il"), "DTD": ("IL", "il"),
             "ACT": ("Activated", "act"),
@@ -1577,7 +1577,9 @@ def render_pressbox(injuries, transactions):
     else:
         tx_html = '<h3>Recent Transactions</h3><p><em class="slang">No roster moves in the last 7 days.</em></p>'
 
-    return f'<h3>Injured List</h3>{inj_html}{tx_html}'
+    inj_html = render_injuries(injuries) if injuries else '<p><em>Clean bill of health.</em></p>'
+
+    return f'{tx_html}<h3>Injured List</h3>{inj_html}'
 
 
 def render_history(history_items):
