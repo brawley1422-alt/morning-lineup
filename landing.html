@@ -14,6 +14,7 @@
   --paper:#ece4d0;--paper-dim:#c9bfa6;--paper-mute:#8b836d;
   --rule:#2a3142;--rule-hi:#3a4360;
   --gold:#c9a24a;--gold-dim:#8a6f32;
+  --win:#6ea86a;--loss:#c0554f;
   --serif:"Playfair Display",Georgia,serif;
   --body:"Lora","Source Serif Pro",Georgia,serif;
   --cond:"Oswald","Bebas Neue",Impact,sans-serif;
@@ -41,10 +42,17 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
 .div-teams{display:flex;flex-direction:column;gap:4px}
 .team-card{display:flex;align-items:center;gap:10px;background:var(--ink-2);border:1px solid var(--rule);border-radius:3px;padding:8px 12px;text-decoration:none;transition:border-color .15s,box-shadow .15s,transform .15s;border-left:3px solid var(--rule)}
 .team-card:hover{border-color:var(--rule-hi);box-shadow:0 4px 16px -4px rgba(0,0,0,.5);transform:translateY(-1px)}
+.team-card.has-live{border-color:var(--gold);box-shadow:0 0 8px rgba(201,162,74,.2)}
 .team-logo{width:32px;height:32px;flex-shrink:0;object-fit:contain}
 .team-info{text-align:left;flex:1;min-width:0}
 .team-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:14px;font-weight:600;color:var(--paper);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.team-rec{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-top:1px}
+.team-meta{display:flex;gap:8px;align-items:baseline;margin-top:2px}
+.team-rec{font-family:var(--mono);font-size:10px;color:var(--paper-mute)}
+.team-streak{font-family:var(--mono);font-size:9px;color:var(--gold-dim)}
+.team-live{font-family:var(--mono);font-size:10px;color:var(--gold);font-weight:600;margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.live-dot{width:6px;height:6px;background:var(--loss);border-radius:50%;animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.team-final{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-left:auto;white-space:nowrap}
 .foot{font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--paper-mute);margin-top:30px;padding-top:16px;border-top:1px solid var(--rule);text-align:center}
 .foot .flag{color:var(--gold)}
 </style>
@@ -66,11 +74,16 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
 <script>
 var teams = __TEAMS_JSON__;
 var LOGO = "https://www.mlbstatic.com/team-logos/team-cap-on-dark/";
+var API = "https://statsapi.mlb.com/api/v1";
 
 var divOrder = [
   {league:"American League",divs:["AL East","AL Central","AL West"]},
   {league:"National League",divs:["NL East","NL Central","NL West"]}
 ];
+
+// Index teams by ID for fast lookup
+var teamById = {};
+for (var i = 0; i < teams.length; i++) teamById[teams[i].id] = teams[i];
 
 // Group teams by division
 var byDiv = {};
@@ -79,10 +92,11 @@ for (var i = 0; i < teams.length; i++) {
   if (!byDiv[d]) byDiv[d] = [];
   byDiv[d].push(teams[i]);
 }
-// Sort teams within each division alphabetically
-for (var d in byDiv) byDiv[d].sort(function(a,b){ return a.full_name.localeCompare(b.full_name); });
 
+// Build the page structure (cards will be updated with live data)
 var container = document.getElementById("leagues");
+var cardEls = {}; // team_id -> card element
+
 for (var li = 0; li < divOrder.length; li++) {
   var lg = divOrder[li];
   var col = document.createElement("div");
@@ -97,23 +111,127 @@ for (var li = 0; li < divOrder.length; li++) {
 
     var list = document.createElement("div");
     list.className = "div-teams";
+    list.id = "div-" + divName.replace(/\s/g, "-");
+
     var dt = byDiv[divName] || [];
+    // Placeholder sort alphabetically; will re-sort by standings
+    dt.sort(function(a,b){ return a.full_name.localeCompare(b.full_name); });
+
     for (var ti = 0; ti < dt.length; ti++) {
       var t = dt[ti];
       var a = document.createElement("a");
       a.className = "team-card";
+      a.id = "card-" + t.id;
       a.href = t.slug + "/";
       a.style.borderLeftColor = t.colors.primary;
       a.innerHTML =
         '<img class="team-logo" src="' + LOGO + t.id + '.svg" alt="" loading="lazy">' +
-        '<div class="team-info"><div class="team-name">' + t.full_name + '</div></div>';
+        '<div class="team-info">' +
+          '<div class="team-name">' + t.full_name + '</div>' +
+          '<div class="team-meta">' +
+            '<span class="team-rec" id="rec-' + t.id + '"></span>' +
+            '<span class="team-streak" id="streak-' + t.id + '"></span>' +
+          '</div>' +
+        '</div>' +
+        '<span class="team-live" id="live-' + t.id + '"></span>';
       list.appendChild(a);
+      cardEls[t.id] = a;
     }
     group.appendChild(list);
     col.appendChild(group);
   }
   container.appendChild(col);
 }
+
+// Fetch standings and sort divisions by rank
+fetch(API + "/standings?leagueId=103,104&season=" + new Date().getFullYear() + "&standingsTypes=regularSeason")
+  .then(function(r){ return r.json(); })
+  .then(function(data) {
+    var divMap = {
+      201:"AL-East",202:"AL-Central",200:"AL-West",
+      204:"NL-East",205:"NL-Central",203:"NL-West"
+    };
+    for (var ri = 0; ri < data.records.length; ri++) {
+      var rec = data.records[ri];
+      var divId = rec.division.id;
+      var listEl = document.getElementById("div-" + divMap[divId]);
+      if (!listEl) continue;
+
+      // Sort by division rank and rebuild order
+      var sorted = rec.teamRecords.slice().sort(function(a,b){
+        return parseInt(a.divisionRank) - parseInt(b.divisionRank);
+      });
+
+      for (var si = 0; si < sorted.length; si++) {
+        var tr = sorted[si];
+        var tid = tr.team.id;
+        var recEl = document.getElementById("rec-" + tid);
+        var streakEl = document.getElementById("streak-" + tid);
+        if (recEl) recEl.textContent = tr.wins + "-" + tr.losses;
+        if (streakEl) streakEl.textContent = tr.streak ? tr.streak.streakCode : "";
+
+        // Re-order card in DOM by standings rank
+        var card = document.getElementById("card-" + tid);
+        if (card) listEl.appendChild(card);
+      }
+    }
+  })
+  .catch(function(){});
+
+// Fetch today's schedule for live scores
+fetch(API + "/schedule?sportId=1&date=" + new Date().toISOString().slice(0,10) + "&hydrate=team,linescore")
+  .then(function(r){ return r.json(); })
+  .then(function(data) {
+    var dates = data.dates || [];
+    if (!dates.length) return;
+    var games = dates[0].games || [];
+
+    for (var gi = 0; gi < games.length; gi++) {
+      var g = games[gi];
+      var state = g.status.abstractGameState;
+      var away = g.teams.away;
+      var home = g.teams.home;
+      var aids = [away.team.id, home.team.id];
+
+      for (var ai = 0; ai < aids.length; ai++) {
+        var tid = aids[ai];
+        var el = document.getElementById("live-" + tid);
+        var card = document.getElementById("card-" + tid);
+        if (!el) continue;
+
+        var isHome = tid === home.team.id;
+        var opp = isHome ? away.team.abbreviation : home.team.abbreviation;
+        var prefix = isHome ? "vs" : "@";
+
+        if (state === "Live") {
+          var ls = g.linescore || {};
+          var as = away.score || 0;
+          var hs = home.score || 0;
+          var inn = ls.currentInningOrdinal || "";
+          var half = ls.isTopInning ? "Top" : "Bot";
+          el.innerHTML = '<span class="live-dot"></span> ' + prefix + ' ' + opp + ' ' + as + '-' + hs + ' ' + half + ' ' + inn;
+          if (card) card.classList.add("has-live");
+        } else if (state === "Final") {
+          var as2 = away.score || 0;
+          var hs2 = home.score || 0;
+          var myScore = isHome ? hs2 : as2;
+          var oppScore = isHome ? as2 : hs2;
+          var wl = myScore > oppScore ? "W" : "L";
+          el.className = "team-final";
+          el.textContent = wl + " " + myScore + "-" + oppScore + " " + prefix + " " + opp;
+        } else if (state === "Preview") {
+          var time = "";
+          try {
+            var d = new Date(g.gameDate);
+            time = d.toLocaleTimeString("en-US", {hour:"numeric",minute:"2-digit",timeZone:"America/Chicago"});
+          } catch(e){}
+          el.className = "team-final";
+          el.textContent = prefix + " " + opp + " " + time;
+        }
+      }
+    }
+  })
+  .catch(function(){});
 </script>
 </body>
 </html>
