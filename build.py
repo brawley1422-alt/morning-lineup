@@ -1579,7 +1579,7 @@ def render_pressbox(injuries, transactions):
 
     inj_html = render_injuries(injuries) if injuries else '<p><em>Clean bill of health.</em></p>'
 
-    return f'{tx_html}<h3>Injured List</h3>{inj_html}'
+    return f'<div class="two"><div>{tx_html}</div><div><h3>Injured List</h3>{inj_html}</div></div>'
 
 
 def render_history(history_items):
