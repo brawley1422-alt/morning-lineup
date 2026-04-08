@@ -164,11 +164,13 @@
       "</div>";
   }
 
-  function renderPreview(game) {
+  function renderPreview(game, extras) {
     if (!container) return;
     var away = game.teams.away.team;
     var home = game.teams.home.team;
     var time = fmtTime(game.gameDate);
+    var isHome = home.id === CUBS_ID;
+    var oppAbbr = isHome ? teamAbbr(away) : teamAbbr(home);
 
     var probA = "", probH = "";
     if (game.teams && game.teams.away && game.teams.away.probablePitcher) {
@@ -186,6 +188,23 @@
         "</div>";
     }
 
+    // Extras: opponent record, season series, lineup
+    var extrasHTML = "";
+    if (extras) {
+      var metaParts = [];
+      if (extras.oppRecord) metaParts.push('<span class="pw-opp">' + esc(oppAbbr) + ': ' + esc(extras.oppRecord) + '</span>');
+      if (extras.series) metaParts.push('<span class="pw-series">Season series: ' + esc(extras.series) + '</span>');
+      if (metaParts.length) extrasHTML += '<div class="pw-meta">' + metaParts.join(' &middot; ') + '</div>';
+      if (extras.lineup && extras.lineup.length) {
+        var luItems = "";
+        for (var i = 0; i < extras.lineup.length; i++) {
+          var p = extras.lineup[i];
+          luItems += '<span class="pw-lu-slot"><span class="pw-lu-pos">' + esc(p.pos) + '</span> ' + esc(p.name) + '</span>';
+        }
+        extrasHTML += '<div class="pw-lineup"><span class="pw-lu-label">Lineup</span><div class="pw-lu-slots">' + luItems + '</div></div>';
+      }
+    }
+
     container.innerHTML =
       '<div class="live-widget preview">' +
         '<div class="live-badge"><span class="flag">&#9888;</span> FIRST PITCH &mdash; ' + time + "</div>" +
@@ -195,7 +214,92 @@
           '<span class="team-abbr">' + esc(teamAbbr(home)) + '</span>' +
         "</div>" +
         probHTML +
+        extrasHTML +
       "</div>";
+  }
+
+  /* ── preview data fetcher ────────────────────────────────────── */
+
+  var DIV_NAMES = {201:"AL East",202:"AL Central",200:"AL West",204:"NL East",205:"NL Central",203:"NL West"};
+
+  function ordinal(n) {
+    n = parseInt(n, 10);
+    if (isNaN(n)) return "";
+    var s = {1:"st",2:"nd",3:"rd"}[n < 20 ? n : n % 10];
+    return (s || "th");
+  }
+
+  function fetchPreviewExtras(game, callback) {
+    var isHome = game.teams.home.team.id === CUBS_ID;
+    var oppId = isHome ? game.teams.away.team.id : game.teams.home.team.id;
+    var cubsSide = isHome ? "home" : "away";
+    var extras = {oppRecord: "", series: "", lineup: []};
+    var pending = 3;
+    function done() { pending--; if (pending <= 0) callback(extras); }
+
+    // 1. Lineup from live feed
+    fetch(LIVE_API + "/game/" + game.gamePk + "/feed/live")
+      .then(function (r) { return r.json(); })
+      .then(function (feed) {
+        var players = (feed.gameData || {}).players || {};
+        var order = ((((feed.liveData || {}).boxscore || {}).teams || {})[cubsSide] || {}).battingOrder || [];
+        for (var i = 0; i < Math.min(order.length, 9); i++) {
+          var p = players["ID" + order[i]] || {};
+          var last = (p.fullName || "?").split(" ").pop();
+          extras.lineup.push({name: last, pos: (p.primaryPosition || {}).abbreviation || "?"});
+        }
+        done();
+      })
+      .catch(done);
+
+    // 2. Opponent record from standings
+    var leagueId = oppId < 200 ? "103,104" : "103,104";
+    fetch(API + "/standings?leagueId=103,104&season=" + new Date().getFullYear() + "&standingsTypes=regularSeason")
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var records = data.records || [];
+        for (var i = 0; i < records.length; i++) {
+          var teamRecs = records[i].teamRecords || [];
+          for (var j = 0; j < teamRecs.length; j++) {
+            if (teamRecs[j].team.id === oppId) {
+              var tr = teamRecs[j];
+              var divId = (records[i].division || {}).id;
+              var divName = DIV_NAMES[divId] || "";
+              var rank = tr.divisionRank || "?";
+              var streak = (tr.streak || {}).streakCode || "";
+              extras.oppRecord = tr.wins + "-" + tr.losses + ", " + rank + ordinal(rank) + " " + divName;
+              if (streak) extras.oppRecord += " (" + streak + ")";
+            }
+          }
+        }
+        done();
+      })
+      .catch(done);
+
+    // 3. Season series
+    var yr = new Date().getFullYear();
+    fetch(API + "/schedule?sportId=1&teamId=" + CUBS_ID + "&season=" + yr + "&startDate=" + yr + "-03-20&endDate=" + today() + "&hydrate=team")
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var sw = 0, sl = 0;
+        var dates = data.dates || [];
+        for (var i = 0; i < dates.length; i++) {
+          var games = dates[i].games || [];
+          for (var j = 0; j < games.length; j++) {
+            var g = games[j];
+            if ((g.status || {}).abstractGameState !== "Final") continue;
+            var ga = g.teams.away, gh = g.teams.home;
+            if (ga.team.id !== oppId && gh.team.id !== oppId) continue;
+            var cubsHome = gh.team.id === CUBS_ID;
+            var cs = cubsHome ? (gh.score || 0) : (ga.score || 0);
+            var os = cubsHome ? (ga.score || 0) : (gh.score || 0);
+            if (cs > os) sw++; else sl++;
+          }
+        }
+        if (sw + sl > 0) extras.series = sw + "-" + sl;
+        done();
+      })
+      .catch(done);
   }
 
   function renderIdle() {
@@ -278,7 +382,7 @@
         } else if (state === "Final") {
           renderFinal(game);
         } else {
-          renderPreview(game);
+          fetchPreviewExtras(game, function (ex) { renderPreview(game, ex); });
           scheduleCubs(IDLE_MS, checkCubs);
         }
       })
@@ -315,7 +419,7 @@
         if (live) {
           pollFeed(live.gamePk, live);
         } else if (preview) {
-          renderPreview(preview);
+          fetchPreviewExtras(preview, function (ex) { renderPreview(preview, ex); });
           scheduleCubs(IDLE_MS, checkCubs);
         } else if (final_) {
           renderFinal(final_);
