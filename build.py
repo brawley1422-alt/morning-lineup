@@ -289,6 +289,67 @@ def load_all():
         except Exception:
             history = []
 
+    # Transactions (last 7 days)
+    transactions = []
+    try:
+        tx_start = (today - timedelta(days=7)).isoformat()
+        tx_resp = fetch("/transactions", teamId=CUBS_ID,
+                        startDate=tx_start, endDate=today.isoformat())
+        skip_types = {"SFA"}  # minor league free agent signings
+        for tx in tx_resp.get("transactions", []):
+            tc = tx.get("typeCode", "")
+            desc = tx.get("description", "")
+            if tc in skip_types and "minor league" in desc.lower():
+                continue
+            transactions.append(tx)
+    except Exception as e:
+        print(f"  warning: transactions fetch failed: {e}", flush=True)
+
+    # Scouting report: pitcher game logs for today's matchup
+    scout_data = {}
+    if next_games:
+        tg = next_games[0]
+        tg_home_id = tg["teams"]["home"]["team"]["id"]
+        tg_is_home = tg_home_id == CUBS_ID
+        cubs_side = "home" if tg_is_home else "away"
+        opp_side = "away" if tg_is_home else "home"
+        cubs_pp = tg["teams"][cubs_side].get("probablePitcher", {})
+        opp_pp = tg["teams"][opp_side].get("probablePitcher", {})
+
+        def _pitcher_scout(pp):
+            if not pp or not pp.get("id"):
+                return None
+            pid = pp["id"]
+            info = {"id": pid, "name": pp.get("fullName", "TBD"), "season": "", "log": []}
+            # Season line
+            info["season"] = fetch_pitcher_line(pid)
+            # Game log (last 3 starts)
+            try:
+                gl = fetch(f"/people/{pid}/stats", stats="gameLog",
+                           season=str(season), group="pitching")
+                for s in gl.get("stats", []):
+                    for sp in s.get("splits", [])[:3]:
+                        st = sp.get("stat", {})
+                        info["log"].append({
+                            "date": sp.get("date", ""),
+                            "opp": sp.get("opponent", {}).get("abbreviation",
+                                   sp.get("opponent", {}).get("name", "?")),
+                            "ip": st.get("inningsPitched", "?"),
+                            "er": st.get("earnedRuns", "?"),
+                            "k": st.get("strikeOuts", "?"),
+                            "h": st.get("hits", "?"),
+                            "bb": st.get("baseOnBalls", "?"),
+                            "hr": st.get("homeRuns", "?"),
+                        })
+            except Exception as e:
+                print(f"  warning: game log for {pid} failed: {e}", flush=True)
+            return info
+
+        cubs_sp = _pitcher_scout(cubs_pp)
+        opp_sp = _pitcher_scout(opp_pp)
+        if cubs_sp or opp_sp:
+            scout_data = {"cubs_sp": cubs_sp, "opp_sp": opp_sp}
+
     return {
         "today": today, "yest": yest, "season": season,
         "tmap": tmap,
@@ -304,6 +365,7 @@ def load_all():
         "cubs_season": cubs_season,
         "leaders_hit": leaders_hit, "leaders_pit": leaders_pit,
         "minors": minors, "prospects": prospects, "history": history,
+        "transactions": transactions, "scout_data": scout_data,
     }
 
 # ─── rendering helpers ───────────────────────────────────────────────────────
@@ -1355,14 +1417,177 @@ def render_lede(lede_text):
         return ""
     return f'<div class="lede">{escape(lede_text)}</div>'
 
+def render_scouting_report(scout_data, next_games, tmap):
+    """Render Scouting Report — today's pitching matchup deep dive."""
+    if not scout_data:
+        return ""
+    cubs_sp = scout_data.get("cubs_sp")
+    opp_sp = scout_data.get("opp_sp")
+    if not cubs_sp and not opp_sp:
+        return ""
+
+    def _sp_card(sp, side_label):
+        if not sp:
+            return f'<div class="sp-card"><div class="sp-side">{side_label}</div><div class="sp-name">TBD</div></div>'
+        log_rows = []
+        for g in sp.get("log", [])[:3]:
+            d = g.get("date", "")
+            if len(d) >= 10:
+                d = d[5:]  # MM-DD
+            log_rows.append(
+                f'<tr><td>{d}</td><td class="opp">vs {escape(str(g.get("opp","?")))}</td>'
+                f'<td class="num">{g.get("ip","?")}</td><td class="num">{g.get("er","?")}</td>'
+                f'<td class="num">{g.get("k","?")}</td><td class="num">{g.get("h","?")}</td>'
+                f'<td class="num">{g.get("bb","?")}</td></tr>')
+        log_html = ""
+        if log_rows:
+            log_html = f"""<table class="data sp-log">
+            <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
+            <tbody>{"".join(log_rows)}</tbody></table>"""
+        return f"""<div class="sp-card">
+        <div class="sp-side">{side_label}</div>
+        <div class="sp-name">{escape(sp.get("name","TBD"))}</div>
+        <div class="sp-season">{sp.get("season","")}</div>
+        {f'<h4>Last {len(sp.get("log",[]))} Starts</h4>{log_html}' if log_html else ''}
+        </div>"""
+
+    # Game context line
+    game_ctx = ""
+    if next_games:
+        tg = next_games[0]
+        home_id = tg["teams"]["home"]["team"]["id"]
+        away_id = tg["teams"]["away"]["team"]["id"]
+        is_home = home_id == CUBS_ID
+        opp_abbr = abbr(tmap, away_id if is_home else home_id)
+        venue = tg.get("venue", {}).get("name", "")
+        time_str = fmt_time_ct(tg.get("gameDate", ""))
+        ha = "vs" if is_home else "at"
+        game_ctx = f'<div class="scout-ctx"><span>{ha} {opp_abbr} &middot; {time_str}</span><span>{escape(venue)}</span></div>'
+
+    return f"""{game_ctx}
+    <div class="matchup-vs">
+        {_sp_card(cubs_sp, "Cubs")}
+        <div class="vs-divider">VS</div>
+        {_sp_card(opp_sp, abbr(tmap, next_games[0]["teams"]["away" if next_games[0]["teams"]["home"]["team"]["id"] == CUBS_ID else "home"]["team"]["id"]) if next_games else "OPP")}
+    </div>"""
+
+
+def render_stretch(cubs_rec):
+    """Render The Stretch — season pulse, run differential, splits."""
+    if not cubs_rec:
+        return '<p class="slang"><em>Season data not yet available.</em></p>'
+    cr = cubs_rec
+    w, l = cr["wins"], cr["losses"]
+    g = w + l
+    pct = cr.get("winningPercentage", ".000")
+    gb = cr.get("gamesBack", "-")
+    if gb in ("-", "0.0"):
+        gb = "&mdash;"
+    streak = cr.get("streak", {}).get("streakCode", "")
+    rank = cr.get("divisionRank", "?")
+
+    # Run differential
+    rs = cr.get("runsScored", 0)
+    ra = cr.get("runsAllowed", 0)
+    rd = cr.get("runDifferential", rs - ra)
+    rd_cls = "w" if rd >= 0 else "l"
+    rd_str = f"+{rd}" if rd > 0 else str(rd)
+
+    # Pythagorean W-L
+    pyth_pct = (rs ** 2) / (rs ** 2 + ra ** 2) if (rs + ra) > 0 else 0.5
+    pyth_w = round(pyth_pct * g)
+    pyth_l = g - pyth_w
+
+    # Splits from standings
+    splits = {}
+    for s in cr.get("records", {}).get("splitRecords", []):
+        splits[s["type"]] = s
+
+    def _split_row(label, key):
+        s = splits.get(key)
+        if not s:
+            return ""
+        sw, sl = s.get("wins", 0), s.get("losses", 0)
+        sp = s.get("pct", ".000")
+        return f'<div class="split-row"><span class="split-label">{label}</span><span class="split-val">{sw}-{sl}</span><span class="split-pct">{sp}</span></div>'
+
+    split_rows = [
+        _split_row("Home", "home"),
+        _split_row("Away", "away"),
+        _split_row("vs RHP", "right"),
+        _split_row("vs LHP", "left"),
+        _split_row("1-Run", "oneRun"),
+        _split_row("Extras", "extraInning"),
+        _split_row("Day", "day"),
+        _split_row("Night", "night"),
+        _split_row("Last 10", "lastTen"),
+        _split_row("Grass", "grass"),
+    ]
+    split_rows = [r for r in split_rows if r]
+
+    return f"""<div class="pulse-record">
+        <span class="pulse-wl">{w}&ndash;{l}</span>
+        <span class="pulse-pct">{pct}</span>
+        <span class="pulse-gb">{gb} GB</span>
+        <span class="pulse-rank">{rank}{_ordinal(rank)} NL Central</span>
+        {f'<span class="pulse-streak">{streak}</span>' if streak else ''}
+    </div>
+    <div class="pulse-diff">
+        <div class="diff-label">Run Differential</div>
+        <div class="diff-num {rd_cls}">{rd_str}</div>
+        <div class="diff-detail">{rs} RS &middot; {ra} RA &middot; Pythag: {pyth_w}-{pyth_l}</div>
+    </div>
+    <h3>Splits</h3>
+    <div class="splits-grid">{"".join(split_rows)}</div>"""
+
+
+def render_pressbox(injuries, transactions):
+    """Render The Pressbox — injuries + recent transactions."""
+    inj_html = render_injuries(injuries) if injuries else '<p><em>No players currently on the injured list.</em></p>'
+
+    tx_rows = []
+    for tx in transactions[:10]:
+        d = tx.get("effectiveDate", tx.get("date", ""))
+        if len(d) >= 10:
+            d = d[5:]  # MM-DD
+        tc = tx.get("typeCode", "")
+        desc = tx.get("description", "")
+        # Map type codes to display labels and CSS classes
+        type_map = {
+            "DIS": ("IL", "il"), "DTD": ("IL", "il"),
+            "ACT": ("Activated", "act"),
+            "OPT": ("Optioned", "opt"), "OUT": ("Outrighted", "opt"),
+            "RCL": ("Recalled", "rcl"),
+            "DFA": ("DFA", "il"), "REL": ("Released", "il"),
+            "ASG": ("Assigned", "opt"), "SC": ("Status Change", "act"),
+            "SFA": ("Signed", "act"), "SGN": ("Signed", "act"),
+            "TR": ("Trade", "il"),
+        }
+        label, cls = type_map.get(tc, (tx.get("typeDesc", tc)[:12], ""))
+        tx_rows.append(
+            f'<div class="transac-item">'
+            f'<span class="transac-date">{d}</span>'
+            f'<span class="transac-badge {cls}">{escape(label)}</span>'
+            f'<span class="transac-desc">{escape(desc)}</span>'
+            f'</div>')
+
+    tx_html = ""
+    if tx_rows:
+        tx_html = f'<h3>Recent Transactions</h3><div class="transac-list">{"".join(tx_rows)}</div>'
+    else:
+        tx_html = '<h3>Recent Transactions</h3><p><em class="slang">No roster moves in the last 7 days.</em></p>'
+
+    return f'<h3>Injured List</h3>{inj_html}{tx_html}'
+
+
 def render_history(history_items):
     """Render This Day in Cubs History."""
     if not history_items:
-        return ""
+        return '<p class="idle-msg">No historical entries for today&rsquo;s date.</p>'
     items = []
-    for h in history_items[:3]:
+    for h in history_items[:5]:
         items.append(f'<li><span class="inn">{h["year"]}</span><span class="txt">{escape(h["text"])}</span></li>')
-    return f'<h3>This Day in Cubs History</h3><ul class="plays">{"".join(items)}</ul>'
+    return f'<ul class="plays">{"".join(items)}</ul>'
 
 
 # ─── page assembly ──────────────────────────────────────────────────────────
@@ -1399,7 +1624,6 @@ def page(data):
       <iframe src="scorecard/?game={cubs_pk}&amp;embed=1" class="scorecard-frame" loading="lazy" frameborder="0"></iframe>
     </details>'''
     nlc_stand = render_nlc_standings(data["standings"], data["tmap"])
-    injuries_html = render_injuries(data["injuries"])
     next_games_html = render_next_games(data["next_games"], data["tmap"],
                                        data.get("today_lineup"), data.get("today_series", ""),
                                        data.get("today_opp_info", ""))
@@ -1423,7 +1647,10 @@ def page(data):
     # Cubs team leaders
     cubs_leaders_html = render_cubs_leaders(data["cubs_season"])
 
-    # History
+    # New sections
+    scout_html = render_scouting_report(data.get("scout_data", {}), data["next_games"], data["tmap"])
+    stretch_html = render_stretch(data["cubs_rec"])
+    pressbox_html = render_pressbox(data["injuries"], data.get("transactions", []))
     history_html = render_history(data["history"])
 
     # Editorial lede
@@ -1471,10 +1698,14 @@ def page(data):
     <div class="title">Sections</div>
     <ol>
       <li><a href="#cubs">The Cubs</a></li>
-      <li><a href="#today">Today&rsquo;s Slate</a></li>
+      {'<li><a href="#scout">Scouting Report</a></li>' if scout_html else ''}
+      <li><a href="#pulse">The Stretch</a></li>
+      <li><a href="#pressbox">The Pressbox</a></li>
       <li><a href="#farm">Down on the Farm</a></li>
+      <li><a href="#today">Today&rsquo;s Slate</a></li>
       <li><a href="#nlc">NL Central</a></li>
       <li><a href="#league">Around the League</a></li>
+      <li><a href="#history">Cubs History</a></li>
     </ol>
   </nav>
 
@@ -1494,35 +1725,47 @@ def page(data):
     {three_stars}
     {key_plays}
     {scorecard_embed}
-    <div class="two">
-      <div>
-        <h3>Cubs Leaders</h3>
-        {cubs_leaders_html}
-      </div>
-      <div>
-        <h3>Injuries &amp; Roster</h3>
-        {injuries_html}
-      </div>
-    </div>
+    <h3>Cubs Leaders</h3>
+    {cubs_leaders_html}
     <h3>Next Games</h3>
     {next_games_html}
     <h3>Form Guide (Last 7 Days)</h3>
     {hot_cold_html}
   </section>
 
-  <section id="today" open>
+  {f"""<section id="scout" open>
     <summary>
       <span class="num">02</span>
-      <span class="h">Today&rsquo;s Slate</span>
-      <span class="tag">{t.strftime("%a %b ")}{t.day}</span>
+      <span class="h">Scouting Report</span>
+      <span class="tag">Today&rsquo;s Matchup</span>
       <span class="chev">&#9656;</span>
     </summary>
-    {slate_html}
+    {scout_html}
+  </section>""" if scout_html else ''}
+
+  <section id="pulse" open>
+    <summary>
+      <span class="num">{"03" if scout_html else "02"}</span>
+      <span class="h">The Stretch</span>
+      <span class="tag">Season Pulse</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    {stretch_html}
+  </section>
+
+  <section id="pressbox" open>
+    <summary>
+      <span class="num">{"04" if scout_html else "03"}</span>
+      <span class="h">The Pressbox</span>
+      <span class="tag">Roster &middot; Transactions</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    {pressbox_html}
   </section>
 
   <section id="farm" open>
     <summary>
-      <span class="num">03</span>
+      <span class="num">{"05" if scout_html else "04"}</span>
       <span class="h">Down on the Farm</span>
       <span class="tag">{minors_tag}</span>
       <span class="chev">&#9656;</span>
@@ -1530,9 +1773,19 @@ def page(data):
     {minors_html}
   </section>
 
+  <section id="today" open>
+    <summary>
+      <span class="num">{"06" if scout_html else "05"}</span>
+      <span class="h">Today&rsquo;s Slate</span>
+      <span class="tag">{t.strftime("%a %b ")}{t.day}</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    {slate_html}
+  </section>
+
   <section id="nlc" open>
     <summary>
-      <span class="num">04</span>
+      <span class="num">{"07" if scout_html else "06"}</span>
       <span class="h">NL Central</span>
       <span class="tag">Rivals &middot; Yesterday</span>
       <span class="chev">&#9656;</span>
@@ -1545,7 +1798,7 @@ def page(data):
 
   <section id="league" open>
     <summary>
-      <span class="num">05</span>
+      <span class="num">{"08" if scout_html else "07"}</span>
       <span class="h">Around the League</span>
       <span class="tag">{y.strftime("%b ")}{y.day} &middot; {news_count} Note{"s" if news_count != 1 else ""}</span>
       <span class="chev">&#9656;</span>
@@ -1561,7 +1814,15 @@ def page(data):
     {leaders_html}
   </section>
 
-  {f'<section id="history" open><summary><span class="num">06</span><span class="h">This Day in Cubs History</span><span class="chev">&#9656;</span></summary>{history_html}</section>' if history_html else ''}
+  <section id="history" open>
+    <summary>
+      <span class="num">{"09" if scout_html else "08"}</span>
+      <span class="h">This Day in Cubs History</span>
+      <span class="tag">{t.strftime("%b ")}{t.day}</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    {history_html}
+  </section>
 
   </main>
 </div>
