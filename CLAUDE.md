@@ -30,6 +30,8 @@ Static site generator that produces a daily Cubs briefing as a single HTML page,
 | `data/` | Daily JSON data ledger (`YYYY-MM-DD.json`) from `load_all()` |
 | `icons/` | PWA app icons (192px + 512px) |
 | `scripts/` | One-time utility scripts (e.g., `backfill_history.py`) |
+| `teams/` | Per-team JSON configs (ID, colors, affiliates, branding) — `build.py --team {slug}` |
+| `docs/solutions/` | Documented solutions and best practices (YAML frontmatter, organized by category) |
 
 ## Build & deploy
 
