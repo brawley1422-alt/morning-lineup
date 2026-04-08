@@ -170,47 +170,59 @@
       }).catch(function () { callback(""); });
     },
 
-    // ── Player Stats Panel ──
+    // ── Player Stats Bottom Bar ──
 
     activePlayerId: null,
 
-    togglePlayerPanel: function (playerId, playerName, side, opposingTeamId, model) {
-      var existingPanel = document.getElementById("player-panel-" + playerId);
-
-      // Close any open panel
-      var openPanels = document.querySelectorAll(".player-stats-panel");
-      for (var i = 0; i < openPanels.length; i++) {
-        openPanels[i].remove();
+    ensureBar: function () {
+      var bar = document.getElementById("player-bar");
+      if (!bar) {
+        bar = document.createElement("div");
+        bar.id = "player-bar";
+        bar.className = "player-bar";
+        bar.innerHTML = '<div class="player-bar-inner" id="player-bar-inner"></div>' +
+          '<button class="player-bar-close" id="player-bar-close">&times;</button>';
+        document.body.appendChild(bar);
+        document.getElementById("player-bar-close").addEventListener("click", function () {
+          SC.panels.closeBar();
+        });
       }
+      return bar;
+    },
 
-      // If we clicked the same player, just close
+    closeBar: function () {
+      var bar = document.getElementById("player-bar");
+      if (bar) {
+        bar.classList.remove("visible");
+        // Highlight off
+        var prev = document.querySelector(".clickable-name.active");
+        if (prev) prev.classList.remove("active");
+      }
+      this.activePlayerId = null;
+    },
+
+    togglePlayerPanel: function (playerId, playerName, side, opposingTeamId, model) {
+      // If same player, toggle off
       if (this.activePlayerId === playerId) {
-        this.activePlayerId = null;
+        this.closeBar();
         return;
       }
 
       this.activePlayerId = playerId;
 
-      // Find the player's row in the scorebook
-      var playerCells = document.querySelectorAll(".player-cell");
-      var targetRow = null;
-      for (var j = 0; j < playerCells.length; j++) {
-        if (playerCells[j].getAttribute("data-pid") === String(playerId)) {
-          targetRow = playerCells[j].closest("tr");
-          break;
-        }
-      }
-      if (!targetRow) return;
+      // Highlight active player name
+      var allNames = document.querySelectorAll(".clickable-name");
+      for (var i = 0; i < allNames.length; i++) allNames[i].classList.remove("active");
+      var activeNames = document.querySelectorAll('.clickable-name[data-pid="' + playerId + '"]');
+      for (var j = 0; j < activeNames.length; j++) activeNames[j].classList.add("active");
 
-      // Insert loading panel
-      var colCount = targetRow.children.length;
-      var panelRow = document.createElement("tr");
-      panelRow.className = "player-panel-row";
-      panelRow.innerHTML = '<td colspan="' + colCount + '" class="player-stats-panel" id="player-panel-' + playerId + '">' +
-        '<div class="panel-loading">Loading stats...</div></td>';
-      targetRow.parentNode.insertBefore(panelRow, targetRow.nextSibling);
+      // Show bar with loading state
+      var bar = this.ensureBar();
+      var inner = document.getElementById("player-bar-inner");
+      inner.innerHTML = '<div class="panel-loading">Loading stats for ' + esc(playerName) + '...</div>';
+      bar.classList.add("visible");
 
-      // Determine opposing pitcher (current or last faced)
+      // Determine opposing pitcher
       var opposingPitcherId = 0;
       var lineup = side === "away" ? model.away.lineup : model.home.lineup;
       for (var s = 0; s < lineup.length; s++) {
@@ -222,14 +234,13 @@
         }
       }
 
-      // Fetch stats
+      // Fetch and render
       SC.api.fetchPlayerStats(playerId, opposingPitcherId, opposingTeamId).then(function (data) {
-        var panelEl = document.getElementById("player-panel-" + playerId);
-        if (!panelEl) return;
-        panelEl.innerHTML = SC.panels.renderPlayerStats(data, playerName, opposingPitcherId, opposingTeamId);
+        if (SC.panels.activePlayerId !== playerId) return; // user clicked away
+        inner.innerHTML = SC.panels.renderPlayerStats(data, playerName, opposingPitcherId, opposingTeamId);
       }).catch(function () {
-        var panelEl = document.getElementById("player-panel-" + playerId);
-        if (panelEl) panelEl.innerHTML = '<div class="panel-loading">Stats unavailable</div>';
+        if (SC.panels.activePlayerId !== playerId) return;
+        inner.innerHTML = '<div class="panel-loading">Stats unavailable</div>';
       });
     },
 
