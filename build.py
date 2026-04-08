@@ -20,7 +20,10 @@ except (ImportError, KeyError):
 CUBS_ID = 112
 API = "https://statsapi.mlb.com/api/v1"
 OUT = Path(__file__).parent / "index.html"
+STYLE_FILE = Path(__file__).parent / "style.css"
 HISTORY_FILE = Path(__file__).parent / "history.json"
+PROSPECTS_FILE = Path(__file__).parent / "prospects.json"
+DATA_DIR = Path(__file__).parent / "data"
 
 # Cubs minor league affiliates (2026)
 AFFILIATES = [
@@ -184,6 +187,15 @@ def load_all():
             print(f"  warning: {aff['name']} schedule failed: {e}", flush=True)
             minors.append({"aff": aff, "game": None, "boxscore": None})
 
+    # Prospect watchlist
+    prospects = {}
+    if PROSPECTS_FILE.exists():
+        try:
+            pdata = json.loads(PROSPECTS_FILE.read_text())
+            prospects = {p["id"]: p for p in pdata}
+        except Exception:
+            prospects = {}
+
     # This Day in Cubs History
     history = []
     if HISTORY_FILE.exists():
@@ -206,7 +218,7 @@ def load_all():
         "cubs_hitters": cubs_hitters, "cubs_pitchers": cubs_pitchers,
         "cubs_season": cubs_season,
         "leaders_hit": leaders_hit, "leaders_pit": leaders_pit,
-        "minors": minors, "history": history,
+        "minors": minors, "prospects": prospects, "history": history,
     }
 
 # ─── rendering helpers ───────────────────────────────────────────────────────
@@ -973,8 +985,10 @@ def render_cubs_leaders(cubs_season_data):
     <tbody>{"".join(rows)}</tbody></table></div>"""
 
 
-def render_minors(minors_data):
-    """Render minor league affiliate results."""
+def render_minors(minors_data, prospects=None):
+    """Render minor league affiliate results with prospect tagging."""
+    if prospects is None:
+        prospects = {}
     cards = []
     for m in minors_data:
         aff = m["aff"]
@@ -1011,7 +1025,8 @@ def render_minors(minors_data):
             best_score = -1
             best_pitcher = None
             best_p_score = -1
-            for pid, p in players.items():
+            for pid_key, p in players.items():
+                player_id = p.get("person", {}).get("id", 0)
                 # Hitter
                 bs = p.get("stats", {}).get("batting", {})
                 if bs and bs.get("atBats", 0) > 0:
@@ -1021,7 +1036,7 @@ def render_minors(minors_data):
                     sc = h + 3 * hr + rbi
                     if sc > best_score:
                         best_score = sc
-                        best_hitter = (p["person"]["fullName"], bs)
+                        best_hitter = (p["person"]["fullName"], bs, player_id)
                 # Pitcher
                 ps = p.get("stats", {}).get("pitching", {})
                 if ps and ps.get("inningsPitched") not in (None, "0.0", 0):
@@ -1031,19 +1046,25 @@ def render_minors(minors_data):
                     psc = ip * 2 + k - er * 3
                     if psc > best_p_score:
                         best_p_score = psc
-                        best_pitcher = (p["person"]["fullName"], ps)
+                        best_pitcher = (p["person"]["fullName"], ps, player_id)
+            def prospect_badge(player_id):
+                p = prospects.get(player_id)
+                if p:
+                    return f' <span class="prospect-tag">#{p["rank"]}</span>'
+                return ""
+
             parts = []
             if best_hitter:
-                name, s = best_hitter
+                name, s, pid = best_hitter
                 line = f"{s.get('hits',0)}-{s.get('atBats',0)}"
                 extras = []
                 if s.get("homeRuns", 0): extras.append(f"{s['homeRuns']} HR")
                 if s.get("rbi", 0): extras.append(f"{s['rbi']} RBI")
                 if extras: line += ", " + ", ".join(extras)
-                parts.append(f"<strong>{escape(name.split()[-1])}</strong> {line}")
+                parts.append(f"<strong>{escape(name.split()[-1])}</strong>{prospect_badge(pid)} {line}")
             if best_pitcher:
-                name, s = best_pitcher
-                parts.append(f"<strong>{escape(name.split()[-1])}</strong> {s.get('inningsPitched','?')} IP, {s.get('earnedRuns',0)} ER, {s.get('strikeOuts',0)} K")
+                name, s, pid = best_pitcher
+                parts.append(f"<strong>{escape(name.split()[-1])}</strong>{prospect_badge(pid)} {s.get('inningsPitched','?')} IP, {s.get('earnedRuns',0)} ER, {s.get('strikeOuts',0)} K")
             note = ". ".join(parts) + "." if parts else ""
 
         cards.append(f"""<div class="lvl" data-lvl="{aff['level']}">
@@ -1065,6 +1086,99 @@ def render_minors(minors_data):
     return f'<div class="minors">{"".join(cards)}</div>', tag
 
 
+def generate_lede(data):
+    """Generate a 3-4 sentence editorial lede via Ollama (or Anthropic API)."""
+    lede_cache = DATA_DIR / f"lede-{data['today'].isoformat()}.txt"
+    if lede_cache.exists():
+        cached = lede_cache.read_text(encoding="utf-8").strip()
+        if cached:
+            return cached
+
+    # Build summary for the prompt
+    parts = []
+    cg = data.get("cubs_game")
+    if cg:
+        away = cg["teams"]["away"]["team"].get("name", "?")
+        home = cg["teams"]["home"]["team"].get("name", "?")
+        asc = cg["teams"]["away"].get("score", 0)
+        hsc = cg["teams"]["home"].get("score", 0)
+        parts.append(f"Cubs game: {away} {asc}, {home} {hsc}")
+    else:
+        parts.append("No Cubs game yesterday.")
+
+    cr = data.get("cubs_rec")
+    if cr:
+        parts.append(f"Cubs record: {cr['wins']}-{cr['losses']}, {cr.get('gamesBack', '?')} GB in NL Central")
+
+    prompt = f"""Write a 3-4 sentence editorial lede for a Cubs fan newspaper called "The Morning Lineup."
+Tone: witty, opinionated, knowledgeable — like a beat writer who bleeds Cubbie blue.
+Keep it concise and punchy. No cliches. Reference specific details.
+Do NOT use any thinking tags or meta-commentary. Just write the paragraph directly.
+
+Today's context:
+{chr(10).join(parts)}
+
+Write ONLY the paragraph, nothing else."""
+
+    # Try Ollama first (chat endpoint)
+    try:
+        body = json.dumps({
+            "model": "qwen3:8b-q4_K_M",
+            "messages": [{"role": "user", "content": prompt}],
+            "stream": False,
+            "options": {"temperature": 0.7, "num_predict": 256}
+        }).encode()
+        req = urllib.request.Request("http://localhost:11434/api/chat",
+                                     data=body, method="POST",
+                                     headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=60) as r:
+            resp = json.loads(r.read())
+        text = resp.get("message", {}).get("content", "").strip()
+        # Clean up: remove thinking tags if present
+        import re
+        text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
+        if text and len(text) > 50:
+            # Cache the lede
+            DATA_DIR.mkdir(exist_ok=True)
+            lede_cache.write_text(text, encoding="utf-8")
+            return text
+    except Exception as e:
+        print(f"  Ollama lede failed: {e}", flush=True)
+
+    # Try Anthropic API as fallback
+    api_key = __import__("os").environ.get("ANTHROPIC_API_KEY")
+    if api_key:
+        try:
+            body = json.dumps({
+                "model": "claude-sonnet-4-20250514",
+                "max_tokens": 256,
+                "messages": [{"role": "user", "content": prompt}],
+            }).encode()
+            req = urllib.request.Request("https://api.anthropic.com/v1/messages",
+                                         data=body, method="POST",
+                                         headers={
+                                             "Content-Type": "application/json",
+                                             "x-api-key": api_key,
+                                             "anthropic-version": "2023-06-01",
+                                         })
+            with urllib.request.urlopen(req, timeout=15) as r:
+                resp = json.loads(r.read())
+            text = resp["content"][0]["text"].strip()
+            if text:
+                DATA_DIR.mkdir(exist_ok=True)
+                lede_cache.write_text(text, encoding="utf-8")
+                return text
+        except Exception as e:
+            print(f"  Anthropic lede failed: {e}", flush=True)
+
+    return ""
+
+def render_lede(lede_text):
+    """Render the editorial lede section."""
+    if not lede_text:
+        return ""
+    return f'<div class="lede">{escape(lede_text)}</div>'
+
 def render_history(history_items):
     """Render This Day in Cubs History."""
     if not history_items:
@@ -1077,217 +1191,8 @@ def render_history(history_items):
 
 # ─── page assembly ──────────────────────────────────────────────────────────
 
-CSS = r"""
-:root{
-  --ink:#0d0f14;--ink-2:#141823;--ink-3:#1c2230;
-  --paper:#ece4d0;--paper-dim:#c9bfa6;--paper-mute:#8b836d;
-  --rule:#2a3142;--rule-hi:#3a4360;
-  --cubs-blue:#0E3386;--cubs-blue-hi:#2a56c4;
-  --cubs-red:#CC3433;--cubs-red-hi:#e8544f;
-  --gold:#c9a24a;--gold-dim:#8a6f32;
-  --win:#6ea86a;--loss:#c0554f;
-  --serif:"Playfair Display",Georgia,serif;
-  --body:"Lora","Source Serif Pro",Georgia,serif;
-  --cond:"Oswald","Bebas Neue",Impact,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-  --maxw:1180px;
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--ink);color:var(--paper)}
-body{font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-  background:radial-gradient(1200px 600px at 10% -10%,rgba(14,51,134,.22),transparent 60%),radial-gradient(900px 500px at 110% 10%,rgba(204,52,51,.12),transparent 55%),linear-gradient(180deg,#0a0c12 0%,#0d0f14 40%,#0b0d12 100%);
-  background-attachment:fixed;position:relative;overflow-x:hidden;}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.06;mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
-a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
-a:hover{color:var(--paper);border-bottom-color:var(--paper)}
-a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
-.masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:28px 20px 18px;max-width:var(--maxw);margin:0 auto;}
-.masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;}
-.masthead .kicker .vol{color:var(--gold)}
-.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);}
-.masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
-.masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
-.masthead .dek{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;}
-.masthead .dek .item{display:flex;gap:8px;align-items:center}
-.masthead .dek .label{color:var(--paper-mute)}
-.masthead .dek .val{color:var(--paper)}
-.masthead .dek .rec{color:var(--gold);font-weight:600}
-.masthead .dek .pill{display:inline-block;padding:3px 8px;border:1px solid var(--rule-hi);border-radius:2px;background:rgba(14,51,134,.25);}
-.wrap{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 20px 80px;display:grid;grid-template-columns:220px 1fr;gap:36px;}
-@media (max-width:900px){.wrap{grid-template-columns:1fr;gap:0;padding:0 16px 60px}}
-.toc{position:sticky;top:14px;align-self:start;padding-top:24px}
-.toc .title{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:10px;}
-.toc ol{list-style:none;padding:0;margin:0;counter-reset:toc}
-.toc li{counter-increment:toc;border-bottom:1px dashed var(--rule);padding:7px 0}
-.toc li::before{content:counter(toc,decimal-leading-zero);font-family:var(--mono);font-size:10px;color:var(--gold-dim);margin-right:10px;}
-.toc a{color:var(--paper-dim);border:none;font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:13px;}
-.toc a:hover,.toc a.active{color:var(--cubs-red-hi)}
-@media (max-width:900px){.toc{position:static;padding:14px 0 8px;margin-bottom:8px;border-bottom:1px solid var(--rule)}.toc ol{display:flex;flex-wrap:wrap;gap:4px 6px}.toc li{border:none;padding:0}.toc li::before{display:none}.toc a{display:inline-block;padding:6px 10px;border:1px solid var(--rule);background:var(--ink-2);border-radius:2px;font-size:11px;}}
-main{min-width:0}
-section{margin:28px 0 36px;scroll-margin-top:10px}
-section > summary,section > .sechead{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:14px;border-top:4px solid var(--paper);border-bottom:1px solid var(--rule);padding:12px 0 10px;margin-bottom:18px;font-family:var(--cond);text-transform:uppercase;}
-section > summary::-webkit-details-marker{display:none}
-section > summary .num{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.1em;border:1px solid var(--gold-dim);padding:2px 6px;border-radius:2px;}
-section > summary .h{font-size:clamp(22px,4vw,34px);font-weight:700;letter-spacing:.04em;color:var(--paper);flex:1;line-height:1;}
-section > summary .tag{font-size:11px;letter-spacing:.22em;color:var(--paper-mute);}
-section > summary .chev{font-family:var(--mono);font-size:18px;color:var(--gold);transition:transform .2s;}
-section[open] > summary .chev{transform:rotate(90deg)}
-section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:13px;color:var(--cubs-red-hi);margin:22px 0 10px;border-bottom:1px dotted var(--rule-hi);padding-bottom:6px;}
-section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:12px;color:var(--gold);margin:16px 0 8px;}
-p{margin:0 0 12px}
-em.slang{font-style:italic;color:var(--paper-dim)}
-.scoreboard{background:linear-gradient(180deg,#0a1528 0%,#08101e 100%);border:1px solid var(--cubs-blue);border-radius:3px;padding:18px 18px 14px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.03),0 10px 30px -10px rgba(14,51,134,.5);position:relative;overflow:hidden;}
-.scoreboard::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,transparent 0 22px,rgba(255,255,255,.018) 22px 23px);}
-.scoreboard .meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--paper-mute);margin-bottom:10px;}
-.scoreboard .meta .fin{color:var(--gold);border:1px solid var(--gold-dim);padding:2px 8px;border-radius:2px;font-weight:600;}
-.scoreboard table{width:100%;border-collapse:collapse;font-family:var(--mono)}
-.scoreboard th,.scoreboard td{padding:7px 6px;text-align:center;font-size:13px;border-bottom:1px solid rgba(255,255,255,.06);}
-.scoreboard th{font-weight:500;color:var(--paper-mute);font-size:10px;letter-spacing:.1em;}
-.scoreboard td.team{text-align:left;font-family:var(--cond);font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--paper);font-weight:600;padding-left:10px;width:80px;}
-.scoreboard td.rhe{font-weight:700;color:var(--gold);font-size:15px}
-.scoreboard tr.won td.team{color:var(--cubs-red-hi)}
-.scoreboard tr.won td.rhe{color:var(--paper)}
-.scoreboard .pitchers{display:flex;flex-wrap:wrap;gap:18px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--rule-hi);font-size:13px;}
-.scoreboard .pitchers span strong{font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:10px;color:var(--paper-mute);margin-right:6px;}
-.scoreboard .pitchers .w{color:var(--win)}
-.scoreboard .pitchers .l{color:var(--loss)}
-.scoreboard .pitchers .s{color:var(--gold)}
-.stars{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0;}
-@media (max-width:640px){.stars{grid-template-columns:1fr}}
-.star{background:var(--ink-2);border:1px solid var(--rule);padding:12px 14px;border-radius:2px;position:relative;border-left:3px solid var(--gold);}
-.star .rank{font-family:var(--serif);font-style:italic;font-weight:900;font-size:42px;color:var(--gold);line-height:1;position:absolute;top:8px;right:14px;opacity:.25;}
-.star .name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:16px;font-weight:600;color:var(--paper);}
-.star .line{font-family:var(--mono);font-size:12px;color:var(--paper-dim);margin-top:4px}
-.star .note{font-size:13px;color:var(--paper-dim);margin-top:6px;font-style:italic}
-.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0 14px}
-table.data{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px;min-width:480px;}
-table.data th{text-align:left;font-weight:500;color:var(--paper-mute);font-size:10px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--rule-hi);padding:8px 10px 6px;background:rgba(255,255,255,.015);position:sticky;top:0;}
-table.data td{padding:7px 10px;border-bottom:1px solid var(--rule);color:var(--paper-dim);}
-table.data td.name{color:var(--paper);font-family:var(--cond);letter-spacing:.04em;font-size:14px;text-transform:uppercase}
-table.data td.num{text-align:right;color:var(--gold)}
-table.data tr:hover td{background:rgba(201,162,74,.04)}
-table.data td.w{color:var(--win)}
-table.data td.l{color:var(--loss)}
-table.standings td.team{color:var(--paper);font-family:var(--cond);font-size:14px;text-transform:uppercase;letter-spacing:.04em}
-table.standings tr.cubs td{background:rgba(14,51,134,.18)}
-table.standings tr.cubs td.team{color:var(--cubs-red-hi)}
-table.standings td.pct{font-family:var(--mono);color:var(--gold)}
-ul.plays{list-style:none;padding:0;margin:8px 0}
-ul.plays li{display:grid;grid-template-columns:48px 1fr;gap:12px;padding:10px 0;border-bottom:1px dashed var(--rule);}
-ul.plays .inn{font-family:var(--cond);font-weight:700;letter-spacing:.06em;color:var(--gold);font-size:13px;text-transform:uppercase;border-right:2px solid var(--gold-dim);padding-right:12px;text-align:right;}
-ul.plays .txt{font-size:14px;color:var(--paper-dim)}
-ul.plays .txt strong{color:var(--paper);font-weight:500}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-@media (max-width:720px){.two{grid-template-columns:1fr;gap:0}}
-.tempbox{border:1px solid var(--rule);padding:12px 14px;border-radius:2px;background:var(--ink-2)}
-.tempbox.hot{border-top:3px solid var(--cubs-red)}
-.tempbox.cold{border-top:3px solid #4a7fc4}
-.tempbox h4{margin-top:0}
-.tempbox ul{list-style:none;padding:0;margin:0}
-.tempbox li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dotted var(--rule);font-size:13px;}
-.tempbox li:last-child{border-bottom:none}
-.tempbox .n{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
-.tempbox .s{font-family:var(--mono);font-size:11px;color:var(--gold)}
-.next-games{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin:12px 0}
-.nx-card{background:var(--ink-2);border:1px solid var(--rule);padding:14px 16px;border-radius:3px;border-left:3px solid var(--cubs-blue-hi)}
-.nx-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.nx-day{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--paper-mute)}
-.nx-time{font-family:var(--mono);font-size:12px;color:var(--gold);font-weight:600}
-.nx-venue{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-bottom:8px}
-.nx-dome{font-family:var(--cond);font-size:9px;letter-spacing:.1em;text-transform:uppercase;background:var(--cubs-blue);color:var(--paper);padding:1px 6px;border-radius:2px;margin-left:6px}
-.nx-pitcher{margin:6px 0;padding:6px 0;border-top:1px dashed var(--rule)}
-.nx-pitcher:first-of-type{border-top:1px solid var(--rule-hi)}
-.nx-side{font-family:var(--cond);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--paper-mute);margin-right:6px}
-.nx-pitcher{font-family:var(--body);font-size:13px;color:var(--paper)}
-.nx-pline{font-family:var(--mono);font-size:10.5px;color:var(--paper-dim);margin-top:2px}
-.nx-bc{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-top:4px}
-.nx-bc-tag{font-family:var(--cond);font-size:9px;letter-spacing:.1em;text-transform:uppercase;background:var(--rule-hi);color:var(--paper);padding:1px 5px;border-radius:2px;margin-right:4px}
-.nx-wx{font-family:var(--mono);font-size:11px;color:var(--paper-dim);margin-top:6px;padding-top:6px;border-top:1px dashed var(--rule)}
-.nx-wrigley{color:var(--gold);font-style:italic}
-dl.transac{margin:8px 0;font-size:13px}
-dl.transac dt{font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--cubs-red-hi);margin-top:10px;}
-dl.transac dd{margin:3px 0 0;color:var(--paper-dim)}
-.minors{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-@media (max-width:720px){.minors{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:420px){.minors{grid-template-columns:1fr}}
-.minors .lvl{background:var(--ink-2);border:1px solid var(--rule);padding:10px 12px;border-radius:2px;position:relative;}
-.minors .lvl::after{content:attr(data-lvl);position:absolute;top:6px;right:8px;font-family:var(--mono);font-size:9px;color:var(--gold-dim);letter-spacing:.1em;}
-.minors .aff{font-family:var(--cond);text-transform:uppercase;font-size:14px;color:var(--paper);letter-spacing:.06em}
-.minors .res{font-family:var(--mono);font-size:12px;margin-top:4px}
-.minors .res .w{color:var(--win)}
-.minors .res .l{color:var(--loss)}
-.minors .note{font-size:11.5px;color:var(--paper-dim);margin-top:6px;line-height:1.4}
-.rivals{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-@media (max-width:640px){.rivals{grid-template-columns:1fr}}
-.rival{background:var(--ink-2);border:1px solid var(--rule);padding:12px 14px;border-radius:2px;border-left:3px solid var(--gold-dim);}
-.rival h4{margin:0 0 4px;color:var(--paper)}
-.rival .score{font-family:var(--mono);font-size:12px;color:var(--gold)}
-.rival p{font-size:13px;margin:6px 0 0;color:var(--paper-dim)}
-.news-wire{display:flex;flex-direction:column;gap:10px;margin:12px 0 18px}
-.blurb{background:var(--ink-2);border:1px solid var(--rule);border-left:3px solid var(--cubs-red);
-  padding:10px 14px;border-radius:2px;display:flex;gap:12px;align-items:baseline;}
-.blurb-tag{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:10px;
-  color:var(--cubs-red-hi);border:1px solid var(--cubs-red);padding:2px 8px;border-radius:2px;
-  white-space:nowrap;font-weight:600;flex-shrink:0;}
-.blurb-tag.extras,.blurb-tag.streak{color:var(--gold);border-color:var(--gold-dim)}
-.blurb-tag.shutout{color:var(--paper-mute);border-color:var(--rule-hi)}
-.blurb-tag.blowout{color:var(--cubs-red-hi);border-color:var(--cubs-red)}
-.blurb-tag.high_scoring{color:var(--gold);border-color:var(--gold-dim)}
-.blurb-text{font-size:14px;color:var(--paper-dim);margin:0}
-@media (max-width:640px){.blurb{flex-direction:column;gap:6px}}
-.slate{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-@media (max-width:640px){.slate{grid-template-columns:1fr}}
-.slate .g{background:var(--ink-2);border:1px solid var(--rule);padding:10px 12px;border-radius:2px;display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;}
-.slate .matchup{font-family:var(--cond);text-transform:uppercase;font-size:13px;color:var(--paper);letter-spacing:.04em}
-.slate .time{font-family:var(--mono);font-size:11px;color:var(--gold);text-align:right}
-.slate .probs{font-family:var(--mono);font-size:10.5px;color:var(--paper-mute);grid-column:1/-1}
-.slate .bc{font-family:var(--mono);font-size:9.5px;color:var(--paper-mute);grid-column:1/-1;opacity:.7}
-footer.foot{max-width:var(--maxw);margin:40px auto 0;padding:20px;border-top:6px double var(--paper);position:relative;z-index:2;font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--paper-mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-footer.foot .flag{color:var(--gold)}
-#live-game{margin:0 0 28px}
-.live-widget{background:linear-gradient(180deg,#0a1528,#08101e);border:2px solid var(--cubs-blue);border-radius:3px;padding:20px 24px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.03),0 10px 30px -10px rgba(14,51,134,.5);position:relative;overflow:hidden}
-.live-widget::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,transparent 0 22px,rgba(255,255,255,.018) 22px 23px)}
-.live-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--cubs-red-hi);margin-bottom:12px}
-.live-badge .dot{width:8px;height:8px;background:var(--cubs-red);border-radius:50%;animation:pulse 1.5s ease-in-out infinite}
-.live-badge .flag{color:var(--gold);font-size:13px}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.live-widget .score-row{display:flex;justify-content:center;align-items:center;gap:18px;font-family:var(--cond);font-size:clamp(28px,6vw,48px);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin:8px 0 14px}
-.live-widget .team-abbr{min-width:2.6em;text-align:center}
-.live-widget .runs{color:var(--gold);font-family:var(--mono)}
-.live-widget .score-sep{color:var(--paper-mute);font-size:.5em}
-.live-widget .situation{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;color:var(--paper-dim);padding:10px 0;border-top:1px dashed var(--rule-hi);margin:10px 0 0}
-.live-widget .count{display:flex;gap:10px;align-items:center}
-.live-widget .count-label{color:var(--paper-mute);font-size:10px;margin-right:2px}
-.live-widget .count-val{color:var(--gold);font-weight:600}
-.live-widget .diamond{display:block}
-.live-widget .live-matchup{text-align:center;font-family:var(--body);font-size:13px;color:var(--paper-dim);margin-top:10px}
-.live-widget .live-matchup strong{color:var(--paper);font-weight:500}
-.live-widget .last-play{text-align:center;font-size:13px;color:var(--paper-mute);font-style:italic;margin-top:8px;padding-top:8px;border-top:1px dotted var(--rule)}
-.live-widget.final .live-badge{color:var(--paper-mute)}
-.live-widget.preview .live-badge{color:var(--gold)}
-.live-widget.preview .score-row{font-size:clamp(20px,4vw,32px)}
-.live-widget.idle{border-color:var(--rule);opacity:.7}
-.idle-msg{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--paper-mute);text-align:center;padding:10px 0}
-.g-live{border-color:var(--cubs-blue) !important;box-shadow:0 0 8px rgba(14,51,134,.3)}
-.g-live .time{font-size:13px}
-.slate-live{color:var(--gold);font-family:var(--mono);font-weight:700}
-.slate-inn{color:var(--cubs-red-hi);font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:10px}
-.g-final .time{font-size:13px}
-.slate-final{color:var(--paper-dim);font-family:var(--mono);font-weight:600}
-.scorecard-expand{margin:16px 0}
-.scorecard-expand summary{cursor:pointer;list-style:none;display:inline-block}
-.scorecard-expand summary::-webkit-details-marker{display:none}
-.scorecard-toggle{font-family:var(--cond);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-dim);padding:5px 14px;border-radius:3px;transition:background .15s,color .15s}
-.scorecard-expand[open] .scorecard-toggle{background:var(--gold-dim);color:var(--ink)}
-.scorecard-expand summary:hover .scorecard-toggle{background:var(--gold-dim);color:var(--ink)}
-.scorecard-frame{width:100%;min-height:600px;border:none;margin-top:12px;border-radius:3px}
-tr.scorecard-link{cursor:pointer;transition:background .12s}
-tr.scorecard-link:hover{background:rgba(201,162,74,.1)}
-tr.scorecard-link:hover td{color:var(--gold) !important}
-.scorecard-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--cond);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-dim);padding:6px 16px;border-radius:3px;text-decoration:none;transition:background .15s,color .15s;margin:12px 0}
-.scorecard-btn:hover{background:var(--gold-dim);color:var(--ink)}
-"""
+CSS = STYLE_FILE.read_text(encoding="utf-8")
+
 
 def page(data):
     t = data["today"]; y = data["yest"]
@@ -1331,7 +1236,7 @@ def page(data):
     league_news_html = render_league_news_from_items(news_items)
 
     # Minors
-    minors_out = render_minors(data["minors"])
+    minors_out = render_minors(data["minors"], data.get("prospects", {}))
     if isinstance(minors_out, tuple):
         minors_html, minors_tag = minors_out
     else:
@@ -1343,6 +1248,10 @@ def page(data):
     # History
     history_html = render_history(data["history"])
 
+    # Editorial lede
+    lede_text = generate_lede(data)
+    lede_html = render_lede(lede_text)
+
     vol_no = (t - date(t.year, 1, 1)).days + 1
     filed = datetime.now(tz=CT).strftime("%m/%d/%y %H:%M CT")
 
@@ -1352,6 +1261,8 @@ def page(data):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0d0f14">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>The Morning Lineup &mdash; {fmt_date(t)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1376,7 +1287,7 @@ def page(data):
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-
+{lede_html}
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -1513,6 +1424,7 @@ def page(data):
 <script>
 window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});
 document.addEventListener("click",function(e){{var tr=e.target.closest("tr.scorecard-link");if(tr){{var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}}}});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(function(){{}});
 </script>
 
 </body>
@@ -1520,9 +1432,24 @@ document.addEventListener("click",function(e){{var tr=e.target.closest("tr.score
 
 # ─── main ───────────────────────────────────────────────────────────────────
 
+def _json_default(obj):
+    """Serialize date/datetime objects for JSON output."""
+    if hasattr(obj, "isoformat"):
+        return obj.isoformat()
+    raise TypeError(f"Object of type {type(obj).__name__} is not JSON serializable")
+
+def save_data_ledger(data):
+    """Persist the daily data snapshot as data/YYYY-MM-DD.json."""
+    DATA_DIR.mkdir(exist_ok=True)
+    day = data["today"].isoformat()
+    out = DATA_DIR / f"{day}.json"
+    out.write_text(json.dumps(data, default=_json_default, ensure_ascii=False), encoding="utf-8")
+    print(f"Saved data ledger → {out.name} ({out.stat().st_size:,} bytes)")
+
 if __name__ == "__main__":
     print("Fetching MLB data …", flush=True)
     data = load_all()
+    save_data_ledger(data)
     print("Rendering page …", flush=True)
     html = page(data)
     OUT.write_text(html, encoding="utf-8")

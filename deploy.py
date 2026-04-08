@@ -76,4 +76,23 @@ except urllib.error.HTTPError as e:
     sys.exit(f"index.html PUT failed: {e.code} {body}")
 
 print(f"deployed  → {resp['commit']['sha'][:7]} ({resp['content']['size']:,} bytes)")
+
+# 4) push data ledger JSON if it exists
+today_iso = date.today().isoformat()
+data_file = Path(__file__).parent / "data" / f"{today_iso}.json"
+if data_file.exists():
+    data_b64 = base64.b64encode(data_file.read_bytes()).decode()
+    data_path = f"/data/{today_iso}.json"
+    try:
+        gh("PUT", data_path, {
+            "message": f"data ledger {today_iso}",
+            "content": data_b64,
+        })
+        print(f"ledger    → data/{today_iso}.json")
+    except urllib.error.HTTPError as e:
+        if e.code == 422:
+            print(f"data/{today_iso}.json already exists; skipping")
+        else:
+            print(f"warning: data ledger push failed: {e.code}")
+
 print(f"live      → https://{OWNER}.github.io/{REPO}/")
