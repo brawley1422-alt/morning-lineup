@@ -88,8 +88,8 @@
     for (var i = 0; i < runners.length; i++) {
       var r = runners[i];
       var start = r.movement && r.movement.start;
-      if (!start || start === "") {
-        // This is the batter
+      if (start == null || start === "") {
+        // This is the batter (start is null for the batter)
         return {
           end: r.movement.end || null,
           isOut: r.movement.isOut || false

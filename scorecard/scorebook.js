@@ -8,12 +8,9 @@
   }
 
   function buildPitchingChangeMap(changes, halfInning) {
-    // Map inning number → true if there was a pitching change for this half
+    // Away page shows pitching changes during the Top half (away batting),
+    // Home page shows pitching changes during the Bottom half (home batting)
     var map = {};
-    var half = halfInning === "away" ? "Bottom" : "Top"; // pitcher faces opposite side
-    // Actually: pitching change for away batters = top half = home pitcher changes
-    // For the away page, we show pitcher changes in the Top half (away batting)
-    // For the home page, we show pitcher changes in the Bottom half (home batting)
     var targetHalf = halfInning === "away" ? "Top" : "Bottom";
     for (var i = 0; i < changes.length; i++) {
       if (changes[i].halfInning === targetHalf) {

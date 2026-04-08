@@ -72,8 +72,9 @@
         var model = SC.parser.parse(feed);
         self.renderScorecard(model);
       }).catch(function (err) {
+        var msg = String(err.message || "Unknown error").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
         mainEl.innerHTML = '<div class="error-state">Failed to load game: ' +
-          err.message + '</div>' +
+          msg + '</div>' +
           '<button class="back-btn" onclick="Scorecard.app.showFinder()">&larr; Back to games</button>';
       });
     },

@@ -1178,7 +1178,7 @@ def page(data):
     if cubs_pk:
         scorecard_embed = f'''<details class="scorecard-expand">
       <summary><span class="scorecard-toggle">View Full Scorecard</span></summary>
-      <iframe src="scorecard/?game={cubs_pk}&embed=1" class="scorecard-frame" loading="lazy" frameborder="0"></iframe>
+      <iframe src="scorecard/?game={cubs_pk}&amp;embed=1" class="scorecard-frame" loading="lazy" frameborder="0"></iframe>
     </details>'''
     nlc_stand = render_nlc_standings(data["standings"], data["tmap"])
     injuries_html = render_injuries(data["injuries"])
