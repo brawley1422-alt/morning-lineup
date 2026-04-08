@@ -37,7 +37,8 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offs
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
 .masthead .kicker .vol{color:var(--gold)}
-.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);}
+.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);position:relative;}
+.mast-logo{width:clamp(48px,10vw,96px);height:auto;float:right;margin-top:4px;opacity:.85;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
 .masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
 .masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .masthead .dek{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;}
@@ -319,6 +320,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span>Est. 2024</span>
   </div>
   <h1>
+    <img src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/116.svg" alt="Tigers" class="mast-logo">
     <span class="the">The</span>
     <span class="lineup">Morning <em style="font-style:italic">Lineup</em></span>
   </h1>
@@ -402,11 +404,11 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
           <div class="nx-time">6:40 CT</div>
         </div>
         <div class="nx-venue">Target Field </div>
-        <div class="nx-meta"><span class="nx-opp-rec">MIN: 5-6, 3rd AL Central (W2)</span> &middot; <span class="nx-series">Season series: 0-2</span></div>
+        <div class="nx-meta"><span class="nx-opp-rec">MIN: 5-6, 2nd AL Central (W2)</span> &middot; <span class="nx-series">Season series: 0-2</span></div>
         <div class="nx-pitcher"><span class="nx-side">Tigers</span> Framber Valdez<div class="nx-pline">0.75 ERA &middot; 1-0 &middot; 12.0 IP &middot; 10 K &middot; 1.08 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">MIN</span> Bailey Ober<div class="nx-pline">6.75 ERA &middot; 0-0 &middot; 8.0 IP &middot; 5 K &middot; 1.38 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Detroit SportsNet &middot; FS1 &middot; FS1 &middot; Twins.TV Presented by Progressive</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> TIBN &middot; WXYT 97.1 FM &middot; WCCO 830 &middot; The Wolf 102.9 FM &middot; Audacy App</div>
-        <div class="nx-wx">58°F &middot; Partly Cloudy &middot; 16 mph WNW</div>
+        <div class="nx-wx">56°F &middot; Overcast &middot; 17 mph WNW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Thu, Apr 9 &middot; at MIN</div>
@@ -482,7 +484,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <div class="pulse-record">
         <span class="pulse-wl">4&ndash;7</span>
         <span class="pulse-pct">.364</span>
-        <span class="pulse-gb">2.5 GB</span>
+        <span class="pulse-gb">3.0 GB</span>
         <span class="pulse-rank">4th AL Central</span>
         <span class="pulse-streak">L3</span>
     </div>
@@ -628,7 +630,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
     <th style="text-align:right">PCT</th><th style="text-align:right">GB</th>
     <th style="text-align:right">L10</th></tr></thead>
-    <tbody><tr><td class="team">Guardians</td><td class="num">7</td><td class="num">5</td><td class="num pct">.583</td><td class="num">&mdash;</td><td class="num">6-4</td></tr><tr><td class="team">Royals</td><td class="num">5</td><td class="num">6</td><td class="num pct">.455</td><td class="num">1.5</td><td class="num">5-5</td></tr><tr><td class="team">Twins</td><td class="num">5</td><td class="num">6</td><td class="num pct">.455</td><td class="num">1.5</td><td class="num">5-5</td></tr><tr class="my-team"><td class="team">Tigers</td><td class="num">4</td><td class="num">7</td><td class="num pct">.364</td><td class="num">2.5</td><td class="num">3-7</td></tr><tr><td class="team">White Sox</td><td class="num">4</td><td class="num">7</td><td class="num pct">.364</td><td class="num">2.5</td><td class="num">4-6</td></tr></tbody></table></div>
+    <tbody><tr><td class="team">Guardians</td><td class="num">8</td><td class="num">5</td><td class="num pct">.615</td><td class="num">&mdash;</td><td class="num">6-4</td></tr><tr><td class="team">Twins</td><td class="num">5</td><td class="num">6</td><td class="num pct">.455</td><td class="num">2.0</td><td class="num">5-5</td></tr><tr><td class="team">Royals</td><td class="num">5</td><td class="num">7</td><td class="num pct">.417</td><td class="num">2.5</td><td class="num">5-5</td></tr><tr class="my-team"><td class="team">Tigers</td><td class="num">4</td><td class="num">7</td><td class="num pct">.364</td><td class="num">3.0</td><td class="num">3-7</td></tr><tr><td class="team">White Sox</td><td class="num">4</td><td class="num">7</td><td class="num pct">.364</td><td class="num">3.0</td><td class="num">4-6</td></tr></tbody></table></div>
     <h3>Rivals &middot; Yesterday</h3>
     <div class="rivals"><div class="rival">
         <h4>Royals <span class="score">L 1-2 at CLE</span></h4>
@@ -660,10 +662,10 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <div class="two"><div><h4>AL East</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Yankees</td><td class="num">8</td><td class="num">2</td><td class="num">&mdash;</td></tr><tr><td class="team">Orioles</td><td class="num">5</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">Rays</td><td class="num">5</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">Blue Jays</td><td class="num">4</td><td class="num">7</td><td class="num">4.5</td></tr><tr><td class="team">Red Sox</td><td class="num">3</td><td class="num">8</td><td class="num">5.5</td></tr></tbody></table></div><h4>AL Central</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team">Yankees</td><td class="num">8</td><td class="num">2</td><td class="num">&mdash;</td></tr><tr><td class="team">Orioles</td><td class="num">5</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">Rays</td><td class="num">5</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">Blue Jays</td><td class="num">4</td><td class="num">7</td><td class="num">4.5</td></tr><tr><td class="team">Red Sox</td><td class="num">4</td><td class="num">8</td><td class="num">5.0</td></tr></tbody></table></div><h4>AL Central</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Guardians</td><td class="num">7</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Royals</td><td class="num">5</td><td class="num">6</td><td class="num">1.5</td></tr><tr><td class="team">Twins</td><td class="num">5</td><td class="num">6</td><td class="num">1.5</td></tr><tr class="my-team"><td class="team">Tigers</td><td class="num">4</td><td class="num">7</td><td class="num">2.5</td></tr><tr><td class="team">White Sox</td><td class="num">4</td><td class="num">7</td><td class="num">2.5</td></tr></tbody></table></div><h4>AL West</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team">Guardians</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Twins</td><td class="num">5</td><td class="num">6</td><td class="num">2.0</td></tr><tr><td class="team">Royals</td><td class="num">5</td><td class="num">7</td><td class="num">2.5</td></tr><tr class="my-team"><td class="team">Tigers</td><td class="num">4</td><td class="num">7</td><td class="num">3.0</td></tr><tr><td class="team">White Sox</td><td class="num">4</td><td class="num">7</td><td class="num">3.0</td></tr></tbody></table></div><h4>AL West</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
         <tbody><tr><td class="team">Rangers</td><td class="num">6</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Angels</td><td class="num">6</td><td class="num">6</td><td class="num">0.5</td></tr><tr><td class="team">Astros</td><td class="num">6</td><td class="num">6</td><td class="num">0.5</td></tr><tr><td class="team">Mariners</td><td class="num">4</td><td class="num">8</td><td class="num">2.5</td></tr><tr><td class="team">Athletics</td><td class="num">3</td><td class="num">7</td><td class="num">2.5</td></tr></tbody></table></div></div><div><h4>NL East</h4><div class="tblwrap"><table class="data standings">
@@ -672,7 +674,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <tbody><tr><td class="team">Mets</td><td class="num">7</td><td class="num">4</td><td class="num">&mdash;</td></tr><tr><td class="team">Braves</td><td class="num">7</td><td class="num">5</td><td class="num">0.5</td></tr><tr><td class="team">Phillies</td><td class="num">6</td><td class="num">5</td><td class="num">1.0</td></tr><tr><td class="team">Marlins</td><td class="num">6</td><td class="num">5</td><td class="num">1.0</td></tr><tr><td class="team">Nationals</td><td class="num">4</td><td class="num">7</td><td class="num">3.0</td></tr></tbody></table></div><h4>NL Central</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Reds</td><td class="num">8</td><td class="num">3</td><td class="num">&mdash;</td></tr><tr><td class="team">Brewers</td><td class="num">8</td><td class="num">3</td><td class="num">&mdash;</td></tr><tr><td class="team">Pirates</td><td class="num">7</td><td class="num">5</td><td class="num">1.5</td></tr><tr><td class="team">Cardinals</td><td class="num">6</td><td class="num">5</td><td class="num">2.0</td></tr><tr><td class="team">Cubs</td><td class="num">5</td><td class="num">6</td><td class="num">3.0</td></tr></tbody></table></div><h4>NL West</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team">Reds</td><td class="num">8</td><td class="num">3</td><td class="num">&mdash;</td></tr><tr><td class="team">Brewers</td><td class="num">8</td><td class="num">4</td><td class="num">0.5</td></tr><tr><td class="team">Pirates</td><td class="num">7</td><td class="num">5</td><td class="num">1.5</td></tr><tr><td class="team">Cardinals</td><td class="num">6</td><td class="num">5</td><td class="num">2.0</td></tr><tr><td class="team">Cubs</td><td class="num">5</td><td class="num">6</td><td class="num">3.0</td></tr></tbody></table></div><h4>NL West</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
         <tbody><tr><td class="team">Dodgers</td><td class="num">9</td><td class="num">2</td><td class="num">&mdash;</td></tr><tr><td class="team">Padres</td><td class="num">6</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">D-backs</td><td class="num">5</td><td class="num">6</td><td class="num">4.0</td></tr><tr><td class="team">Rockies</td><td class="num">5</td><td class="num">6</td><td class="num">4.0</td></tr><tr><td class="team">Giants</td><td class="num">4</td><td class="num">8</td><td class="num">5.5</td></tr></tbody></table></div></div></div>
@@ -703,7 +705,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Comerica Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/08/26 14:56 CT</span>
+  <span>Filed 04/08/26 15:17 CT</span>
 </footer>
 
 <script>

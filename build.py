@@ -1710,6 +1710,7 @@ def page(data):
     <span>Est. 2024</span>
   </div>
   <h1>
+    <img src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/{TEAM_ID}.svg" alt="{TEAM_NAME}" class="mast-logo">
     <span class="the">The</span>
     <span class="lineup">Morning <em style="font-style:italic">Lineup</em></span>
   </h1>

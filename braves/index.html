@@ -37,7 +37,8 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offs
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
 .masthead .kicker .vol{color:var(--gold)}
-.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);}
+.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);position:relative;}
+.mast-logo{width:clamp(48px,10vw,96px);height:auto;float:right;margin-top:4px;opacity:.85;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
 .masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
 .masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .masthead .dek{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;}
@@ -319,6 +320,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span>Est. 2024</span>
   </div>
   <h1>
+    <img src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/144.svg" alt="Braves" class="mast-logo">
     <span class="the">The</span>
     <span class="lineup">Morning <em style="font-style:italic">Lineup</em></span>
   </h1>
@@ -403,10 +405,10 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         </div>
         <div class="nx-venue">Angel Stadium </div>
         <div class="nx-meta"><span class="nx-opp-rec">LAA: 6-6, 2nd AL West (L1)</span> &middot; <span class="nx-series">Season series: 1-1</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Braves</span> Grant Holmes<div class="nx-pline">2.45 ERA &middot; 0-1 &middot; 11.0 IP &middot; 8 K &middot; 1.00 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">LAA</span> Reid Detmers<div class="nx-pline">2.38 ERA &middot; 0-0 &middot; 11.1 IP &middot; 13 K &middot; 1.15 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">Braves</span> Grant Holmes<div class="nx-pline">2.45 ERA &middot; 0-1 &middot; 11.0 IP &middot; 8 K &middot; 1.00 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">LAA</span> Reid Detmers<div class="nx-pline">2.38 ERA &middot; 0-0 &middot; 11.1 IP &middot; 13 K &middot; 1.24 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">RF</span> Jr.</span><span class="lu-slot"><span class="lu-pos">C</span> Baldwin</span><span class="lu-slot"><span class="lu-pos">2B</span> Albies</span><span class="lu-slot"><span class="lu-pos">1B</span> Olson</span><span class="lu-slot"><span class="lu-pos">3B</span> Riley</span><span class="lu-slot"><span class="lu-pos">2B</span> Dubón</span><span class="lu-slot"><span class="lu-pos">RF</span> Yastrzemski</span><span class="lu-slot"><span class="lu-pos">C</span> Heim</span><span class="lu-slot"><span class="lu-pos">CF</span> II</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> FanDuel Sports Network West &middot; BravesVision</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KLAA 830 &middot; 680 AM/93.7 FM The Fan</div>
-        <div class="nx-wx">76°F &middot; Clear &middot; 6 mph WSW</div>
+        <div class="nx-wx">77°F &middot; Clear &middot; 7 mph WSW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Fri, Apr 10 &middot; vs CLE</div>
@@ -433,7 +435,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Mateo</span><span class="s">.333 / 1 HR / 1.178 OPS</span></li><li><span class="n">Olson</span><span class="s">.296 / 2 HR / 1.073 OPS</span></li><li><span class="n">Baldwin</span><span class="s">.367 / 2 HR / 1.006 OPS</span></li><li><span class="n">Dubón</span><span class="s">.308 / 2 HR / .948 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Mateo</span><span class="s">.333 / 1 HR / 1.178 OPS</span></li><li><span class="n">Olson</span><span class="s">.296 / 2 HR / 1.073 OPS</span></li><li><span class="n">Dubón</span><span class="s">.308 / 2 HR / .948 OPS</span></li><li><span class="n">Baldwin</span><span class="s">.321 / 2 HR / .881 OPS</span></li></ul></div>
       <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n">Heim</span><span class="s">.091 / 0 HR / .377 OPS</span></li><li><span class="n">White</span><span class="s">.154 / 0 HR / .431 OPS</span></li><li><span class="n">Yastrzemski</span><span class="s">.136 / 0 HR / .451 OPS</span></li></ul></div>
     </div>
     <div class="two">
@@ -464,10 +466,10 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="sp-card">
         <div class="sp-side">LAA</div>
         <div class="sp-name">Reid Detmers</div>
-        <div class="sp-season">2.38 ERA &middot; 0-0 &middot; 11.1 IP &middot; 13 K &middot; 1.15 WHIP</div>
-        <h4>Last 2 Starts</h4><table class="data sp-log">
+        <div class="sp-season">2.38 ERA &middot; 0-0 &middot; 11.1 IP &middot; 13 K &middot; 1.24 WHIP</div>
+        <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>03-28</td><td class="opp">vs Houston Astros</td><td class="num">4.2</td><td class="num">3</td><td class="num">9</td><td class="num">6</td><td class="num">0</td></tr><tr><td>04-03</td><td class="opp">vs Seattle Mariners</td><td class="num">6.2</td><td class="num">0</td><td class="num">4</td><td class="num">3</td><td class="num">4</td></tr></tbody></table>
+            <tbody><tr><td>03-28</td><td class="opp">vs Houston Astros</td><td class="num">4.2</td><td class="num">3</td><td class="num">9</td><td class="num">6</td><td class="num">0</td></tr><tr><td>04-03</td><td class="opp">vs Seattle Mariners</td><td class="num">6.2</td><td class="num">0</td><td class="num">4</td><td class="num">3</td><td class="num">4</td></tr><tr><td>04-08</td><td class="opp">vs Atlanta Braves</td><td class="num">0.0</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">0</td></tr></tbody></table>
         </div>
     </div>
   </section>
@@ -502,7 +504,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Atlanta Braves transferred RHP AJ Smith-Shawver from the 15-day injured list to the 60-day injured list. Right elbow reconstruction.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge il">Trade</span><span class="transac-desc">Los Angeles Angels traded RHP Victor Mederos to Atlanta Braves for Future Considerations. International Bonus Pool Money.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge il">Trade</span><span class="transac-desc">Los Angeles Angels traded RHP Victor Mederos to Atlanta Braves for Future Considerations. International Bonus Pool Money.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Atlanta Braves optioned RHP Victor Mederos to Gwinnett Stripers.</span></div><div class="transac-item"><span class="transac-date">04-01</span><span class="transac-badge opt">Outrighted</span><span class="transac-desc">Atlanta Braves sent 2B Brett Wisely outright to Gwinnett Stripers.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>SS <strong>Ha-Seong Kim</strong></dd><dd>C <strong>Sean Murphy</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Danny Young</strong></dd><dd>P <strong>Daysbel Hernández</strong></dd><dd>P <strong>Hurston Waldrep</strong></dd><dd>P <strong>Spencer Strider</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>AJ Smith-Shawver</strong></dd><dd>P <strong>Joe Jiménez</strong></dd><dd>P <strong>Joey Wentz</strong></dd><dd>P <strong>Spencer Schwellenbach</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-08</span><span class="transac-badge ">Suspension</span><span class="transac-desc">RHP Reynaldo López suspended.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Atlanta Braves transferred RHP AJ Smith-Shawver from the 15-day injured list to the 60-day injured list. Right elbow reconstruction.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge il">Trade</span><span class="transac-desc">Los Angeles Angels traded RHP Victor Mederos to Atlanta Braves for Future Considerations. International Bonus Pool Money.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Atlanta Braves optioned RHP Victor Mederos to Gwinnett Stripers.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge il">Trade</span><span class="transac-desc">Los Angeles Angels traded RHP Victor Mederos to Atlanta Braves for Future Considerations. International Bonus Pool Money.</span></div><div class="transac-item"><span class="transac-date">04-01</span><span class="transac-badge opt">Outrighted</span><span class="transac-desc">Atlanta Braves sent 2B Brett Wisely outright to Gwinnett Stripers.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>SS <strong>Ha-Seong Kim</strong></dd><dd>C <strong>Sean Murphy</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Danny Young</strong></dd><dd>P <strong>Daysbel Hernández</strong></dd><dd>P <strong>Hurston Waldrep</strong></dd><dd>P <strong>Spencer Strider</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>AJ Smith-Shawver</strong></dd><dd>P <strong>Joe Jiménez</strong></dd><dd>P <strong>Joey Wentz</strong></dd><dd>P <strong>Spencer Schwellenbach</strong></dd><dt>Suspended # days</dt><dd>P <strong>Reynaldo López</strong></dd></dl></div></div>
   </section>
 
   <section id="farm" open>
@@ -666,7 +668,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <tbody><tr><td class="team">Yankees</td><td class="num">8</td><td class="num">2</td><td class="num">&mdash;</td></tr><tr><td class="team">Orioles</td><td class="num">5</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">Rays</td><td class="num">5</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">Blue Jays</td><td class="num">4</td><td class="num">7</td><td class="num">4.5</td></tr><tr><td class="team">Red Sox</td><td class="num">3</td><td class="num">8</td><td class="num">5.5</td></tr></tbody></table></div><h4>AL Central</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Guardians</td><td class="num">7</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Royals</td><td class="num">5</td><td class="num">6</td><td class="num">1.5</td></tr><tr><td class="team">Twins</td><td class="num">5</td><td class="num">6</td><td class="num">1.5</td></tr><tr><td class="team">Tigers</td><td class="num">4</td><td class="num">7</td><td class="num">2.5</td></tr><tr><td class="team">White Sox</td><td class="num">4</td><td class="num">7</td><td class="num">2.5</td></tr></tbody></table></div><h4>AL West</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team">Guardians</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Twins</td><td class="num">5</td><td class="num">6</td><td class="num">2.0</td></tr><tr><td class="team">Royals</td><td class="num">5</td><td class="num">7</td><td class="num">2.5</td></tr><tr><td class="team">Tigers</td><td class="num">4</td><td class="num">7</td><td class="num">3.0</td></tr><tr><td class="team">White Sox</td><td class="num">4</td><td class="num">7</td><td class="num">3.0</td></tr></tbody></table></div><h4>AL West</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
         <tbody><tr><td class="team">Rangers</td><td class="num">6</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Angels</td><td class="num">6</td><td class="num">6</td><td class="num">0.5</td></tr><tr><td class="team">Astros</td><td class="num">6</td><td class="num">6</td><td class="num">0.5</td></tr><tr><td class="team">Mariners</td><td class="num">4</td><td class="num">8</td><td class="num">2.5</td></tr><tr><td class="team">Athletics</td><td class="num">3</td><td class="num">7</td><td class="num">2.5</td></tr></tbody></table></div></div><div><h4>NL East</h4><div class="tblwrap"><table class="data standings">
@@ -706,7 +708,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Truist Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/08/26 14:53 CT</span>
+  <span>Filed 04/08/26 15:13 CT</span>
 </footer>
 
 <script>

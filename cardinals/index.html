@@ -37,7 +37,8 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offs
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
 .masthead .kicker .vol{color:var(--gold)}
-.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);}
+.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);position:relative;}
+.mast-logo{width:clamp(48px,10vw,96px);height:auto;float:right;margin-top:4px;opacity:.85;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
 .masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
 .masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .masthead .dek{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;}
@@ -319,6 +320,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span>Est. 2024</span>
   </div>
   <h1>
+    <img src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/138.svg" alt="Cardinals" class="mast-logo">
     <span class="the">The</span>
     <span class="lineup">Morning <em style="font-style:italic">Lineup</em></span>
   </h1>
@@ -403,7 +405,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         </div>
         <div class="nx-venue">Nationals Park </div>
         <div class="nx-meta"><span class="nx-opp-rec">WSH: 4-7, 5th NL East (L1)</span> &middot; <span class="nx-series">Season series: 1-1</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Cardinals</span> Michael McGreevy<div class="nx-pline">2.53 ERA &middot; 0-1 &middot; 10.2 IP &middot; 9 K &middot; 0.84 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">WSH</span> Miles Mikolas<div class="nx-pline">14.46 ERA &middot; 0-2 &middot; 9.1 IP &middot; 8 K &middot; 2.25 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">Cardinals</span> Michael McGreevy<div class="nx-pline">2.53 ERA &middot; 0-1 &middot; 10.2 IP &middot; 9 K &middot; 0.84 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">WSH</span> Miles Mikolas<div class="nx-pline">13.50 ERA &middot; 0-2 &middot; 10.0 IP &middot; 9 K &middot; 2.40 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> Wetherholt</span><span class="lu-slot"><span class="lu-pos">C</span> Herrera</span><span class="lu-slot"><span class="lu-pos">1B</span> Burleson</span><span class="lu-slot"><span class="lu-pos">RF</span> Walker</span><span class="lu-slot"><span class="lu-pos">2B</span> Gorman</span><span class="lu-slot"><span class="lu-pos">SS</span> Winn</span><span class="lu-slot"><span class="lu-pos">3B</span> Urías</span><span class="lu-slot"><span class="lu-pos">2B</span> Saggese</span><span class="lu-slot"><span class="lu-pos">LF</span> Church</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Nationals.TV &middot; Cardinals.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KMOX 1120 AM/104.1 FM &middot; WJFK 106.7 The Fan</div>
         <div class="nx-wx">54°F &middot; Clear &middot; 6 mph E</div>
@@ -414,7 +416,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         </div>
         <div class="nx-venue">Busch Stadium <span class="nx-dome">Retractable Roof</span></div>
         
-        <div class="nx-pitcher"><span class="nx-side">Cardinals</span> Dustin May</div><div class="nx-pitcher"><span class="nx-side">BOS</span> Connelly Early<div class="nx-pline">2.89 ERA &middot; 0-0 &middot; 9.1 IP &middot; 10 K &middot; 1.50 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">Cardinals</span> Dustin May<div class="nx-pline">15.95 ERA &middot; 0-2 &middot; 7.1 IP &middot; 7 K &middot; 2.73 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">BOS</span> Connelly Early<div class="nx-pline">2.89 ERA &middot; 0-0 &middot; 9.1 IP &middot; 10 K &middot; 1.50 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> NESN &middot; Cardinals.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KMOX 1120 AM/104.1 FM &middot; WEEI 93.7</div>
         
@@ -433,8 +435,8 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Urías</span><span class="s">.333 / 2 HR / 1.346 OPS</span></li><li><span class="n">Walker</span><span class="s">.259 / 3 HR / .879 OPS</span></li><li><span class="n">Herrera</span><span class="s">.227 / 0 HR / .803 OPS</span></li><li><span class="n">Wetherholt</span><span class="s">.280 / 0 HR / .739 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n">Church</span><span class="s">.063 / 1 HR / .368 OPS</span></li><li><span class="n">II</span><span class="s">.190 / 0 HR / .428 OPS</span></li><li><span class="n">Burleson</span><span class="s">.120 / 0 HR / .473 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Urías</span><span class="s">.333 / 2 HR / 1.346 OPS</span></li><li><span class="n">Walker</span><span class="s">.292 / 3 HR / .987 OPS</span></li><li><span class="n">Herrera</span><span class="s">.238 / 0 HR / .753 OPS</span></li><li><span class="n">Wetherholt</span><span class="s">.227 / 0 HR / .666 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n">Church</span><span class="s">.063 / 1 HR / .368 OPS</span></li><li><span class="n">II</span><span class="s">.190 / 0 HR / .428 OPS</span></li><li><span class="n">Winn</span><span class="s">.143 / 0 HR / .476 OPS</span></li></ul></div>
     </div>
     <div class="two">
       <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n">Romero</span><span class="s">6.2 IP &middot; 0.00 ERA &middot; 4 K</span></li><li><span class="n">O&#x27;Brien</span><span class="s">6.1 IP &middot; 0.00 ERA &middot; 7 K</span></li><li><span class="n">Pallante</span><span class="s">10.0 IP &middot; 1.80 ERA &middot; 5 K</span></li></ul></div>
@@ -464,10 +466,10 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="sp-card">
         <div class="sp-side">WSH</div>
         <div class="sp-name">Miles Mikolas</div>
-        <div class="sp-season">14.46 ERA &middot; 0-2 &middot; 9.1 IP &middot; 8 K &middot; 2.25 WHIP</div>
-        <h4>Last 2 Starts</h4><table class="data sp-log">
+        <div class="sp-season">13.50 ERA &middot; 0-2 &middot; 10.0 IP &middot; 9 K &middot; 2.40 WHIP</div>
+        <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>03-28</td><td class="opp">vs Chicago Cubs</td><td class="num">5.0</td><td class="num">4</td><td class="num">4</td><td class="num">6</td><td class="num">3</td></tr><tr><td>04-03</td><td class="opp">vs Los Angeles Dodgers</td><td class="num">4.1</td><td class="num">11</td><td class="num">4</td><td class="num">11</td><td class="num">1</td></tr></tbody></table>
+            <tbody><tr><td>03-28</td><td class="opp">vs Chicago Cubs</td><td class="num">5.0</td><td class="num">4</td><td class="num">4</td><td class="num">6</td><td class="num">3</td></tr><tr><td>04-03</td><td class="opp">vs Los Angeles Dodgers</td><td class="num">4.1</td><td class="num">11</td><td class="num">4</td><td class="num">11</td><td class="num">1</td></tr><tr><td>04-08</td><td class="opp">vs St. Louis Cardinals</td><td class="num">1.0</td><td class="num">0</td><td class="num">1</td><td class="num">2</td><td class="num">1</td></tr></tbody></table>
         </div>
     </div>
   </section>
@@ -666,7 +668,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <tbody><tr><td class="team">Yankees</td><td class="num">8</td><td class="num">2</td><td class="num">&mdash;</td></tr><tr><td class="team">Orioles</td><td class="num">5</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">Rays</td><td class="num">5</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">Blue Jays</td><td class="num">4</td><td class="num">7</td><td class="num">4.5</td></tr><tr><td class="team">Red Sox</td><td class="num">3</td><td class="num">8</td><td class="num">5.5</td></tr></tbody></table></div><h4>AL Central</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Guardians</td><td class="num">7</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Royals</td><td class="num">5</td><td class="num">6</td><td class="num">1.5</td></tr><tr><td class="team">Twins</td><td class="num">5</td><td class="num">6</td><td class="num">1.5</td></tr><tr><td class="team">Tigers</td><td class="num">4</td><td class="num">7</td><td class="num">2.5</td></tr><tr><td class="team">White Sox</td><td class="num">4</td><td class="num">7</td><td class="num">2.5</td></tr></tbody></table></div><h4>AL West</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team">Guardians</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Twins</td><td class="num">5</td><td class="num">6</td><td class="num">2.0</td></tr><tr><td class="team">Royals</td><td class="num">5</td><td class="num">7</td><td class="num">2.5</td></tr><tr><td class="team">Tigers</td><td class="num">4</td><td class="num">7</td><td class="num">3.0</td></tr><tr><td class="team">White Sox</td><td class="num">4</td><td class="num">7</td><td class="num">3.0</td></tr></tbody></table></div><h4>AL West</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
         <tbody><tr><td class="team">Rangers</td><td class="num">6</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Angels</td><td class="num">6</td><td class="num">6</td><td class="num">0.5</td></tr><tr><td class="team">Astros</td><td class="num">6</td><td class="num">6</td><td class="num">0.5</td></tr><tr><td class="team">Mariners</td><td class="num">4</td><td class="num">8</td><td class="num">2.5</td></tr><tr><td class="team">Athletics</td><td class="num">3</td><td class="num">7</td><td class="num">2.5</td></tr></tbody></table></div></div><div><h4>NL East</h4><div class="tblwrap"><table class="data standings">
@@ -706,7 +708,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Busch Stadium Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/08/26 14:53 CT</span>
+  <span>Filed 04/08/26 15:13 CT</span>
 </footer>
 
 <script>

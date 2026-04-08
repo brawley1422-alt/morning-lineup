@@ -37,7 +37,8 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offs
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
 .masthead .kicker .vol{color:var(--gold)}
-.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);}
+.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);position:relative;}
+.mast-logo{width:clamp(48px,10vw,96px);height:auto;float:right;margin-top:4px;opacity:.85;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
 .masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
 .masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .masthead .dek{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;}
@@ -319,6 +320,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span>Est. 2024</span>
   </div>
   <h1>
+    <img src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/137.svg" alt="Giants" class="mast-logo">
     <span class="the">The</span>
     <span class="lineup">Morning <em style="font-style:italic">Lineup</em></span>
   </h1>
@@ -394,7 +396,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <h3>Giants Leaders</h3>
     <div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>AVG</td><td class="name">Encarnacion <span style="color:var(--paper-mute);font-size:10px">RF</span></td><td class="num">.313</td></tr><tr><td>OBP</td><td class="name">Schmitt <span style="color:var(--paper-mute);font-size:10px">3B</span></td><td class="num">.379</td></tr><tr><td>HR</td><td class="name">Bader <span style="color:var(--paper-mute);font-size:10px">LF</span></td><td class="num">1</td></tr><tr><td>RBI</td><td class="name">Chapman <span style="color:var(--paper-mute);font-size:10px">3B</span></td><td class="num">7</td></tr><tr><td>SB</td><td class="name">Arraez <span style="color:var(--paper-mute);font-size:10px">IF</span></td><td class="num">2</td></tr></tbody></table></div>
+    <tbody><tr><td>AVG</td><td class="name">Arraez <span style="color:var(--paper-mute);font-size:10px">IF</span></td><td class="num">.306</td></tr><tr><td>OBP</td><td class="name">Schmitt <span style="color:var(--paper-mute);font-size:10px">3B</span></td><td class="num">.379</td></tr><tr><td>HR</td><td class="name">Bader <span style="color:var(--paper-mute);font-size:10px">LF</span></td><td class="num">1</td></tr><tr><td>RBI</td><td class="name">Chapman <span style="color:var(--paper-mute);font-size:10px">3B</span></td><td class="num">7</td></tr><tr><td>SB</td><td class="name">Arraez <span style="color:var(--paper-mute);font-size:10px">IF</span></td><td class="num">2</td></tr></tbody></table></div>
     <h3>Next Games</h3>
     <div class="next-games"><div class="nx-card nx-today">
         <div class="nx-head">
@@ -403,10 +405,10 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         </div>
         <div class="nx-venue">Oracle Park </div>
         <div class="nx-meta"><span class="nx-opp-rec">PHI: 6-5, 3rd NL East (L1)</span> &middot; <span class="nx-series">Season series: 1-1</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Giants</span> Tyler Mahle<div class="nx-pline">6.75 ERA &middot; 0-2 &middot; 9.1 IP &middot; 10 K &middot; 1.93 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">PHI</span> Aaron Nola<div class="nx-pline">3.18 ERA &middot; 1-0 &middot; 11.1 IP &middot; 16 K &middot; 1.15 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">Giants</span> Tyler Mahle<div class="nx-pline">5.73 ERA &middot; 0-2 &middot; 11.0 IP &middot; 13 K &middot; 1.64 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">PHI</span> Aaron Nola<div class="nx-pline">2.92 ERA &middot; 1-0 &middot; 12.1 IP &middot; 18 K &middot; 1.14 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> Adames</span><span class="lu-slot"><span class="lu-pos">IF</span> Arraez</span><span class="lu-slot"><span class="lu-pos">3B</span> Chapman</span><span class="lu-slot"><span class="lu-pos">DH</span> Devers</span><span class="lu-slot"><span class="lu-pos">CF</span> Lee</span><span class="lu-slot"><span class="lu-pos">RF</span> Encarnacion</span><span class="lu-slot"><span class="lu-pos">LF</span> Bader</span><span class="lu-slot"><span class="lu-pos">C</span> Bailey</span><span class="lu-slot"><span class="lu-pos">2B</span> Koss</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> NBCSP &middot; NBCS BA</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KNBR 680 &middot; 94 WIP</div>
-        <div class="nx-wx">68°F &middot; Clear &middot; 8 mph W</div>
+        <div class="nx-wx">68°F &middot; Clear &middot; 9 mph W</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Fri, Apr 10 &middot; at BAL</div>
@@ -433,8 +435,8 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Chapman</span><span class="s">.357 / 0 HR / .915 OPS</span></li><li><span class="n">Schmitt</span><span class="s">.318 / 0 HR / .809 OPS</span></li><li><span class="n">Adames</span><span class="s">.227 / 0 HR / .801 OPS</span></li><li><span class="n">Arraez</span><span class="s">.345 / 0 HR / .781 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n">Bader</span><span class="s">.095 / 0 HR / .262 OPS</span></li><li><span class="n">Lee</span><span class="s">.118 / 0 HR / .308 OPS</span></li><li><span class="n">Ramos</span><span class="s">.172 / 0 HR / .344 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Chapman</span><span class="s">.400 / 0 HR / 1.023 OPS</span></li><li><span class="n">Schmitt</span><span class="s">.318 / 0 HR / .809 OPS</span></li><li><span class="n">Adames</span><span class="s">.217 / 0 HR / .768 OPS</span></li><li><span class="n">Arraez</span><span class="s">.308 / 0 HR / .758 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n">Bader</span><span class="s">.095 / 0 HR / .262 OPS</span></li><li><span class="n">Lee</span><span class="s">.111 / 0 HR / .293 OPS</span></li><li><span class="n">Ramos</span><span class="s">.172 / 0 HR / .344 OPS</span></li></ul></div>
     </div>
     <div class="two">
       <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n">Tidwell</span><span class="s">4.0 IP &middot; 0.00 ERA &middot; 4 K</span></li><li><span class="n">Kilian</span><span class="s">4.2 IP &middot; 0.00 ERA &middot; 6 K</span></li><li><span class="n">Gage</span><span class="s">5.2 IP &middot; 0.00 ERA &middot; 4 K</span></li></ul></div>
@@ -455,19 +457,19 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="sp-card">
         <div class="sp-side">Giants</div>
         <div class="sp-name">Tyler Mahle</div>
-        <div class="sp-season">6.75 ERA &middot; 0-2 &middot; 9.1 IP &middot; 10 K &middot; 1.93 WHIP</div>
+        <div class="sp-season">5.73 ERA &middot; 0-2 &middot; 11.0 IP &middot; 13 K &middot; 1.64 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>03-28</td><td class="opp">vs New York Yankees</td><td class="num">4.0</td><td class="num">2</td><td class="num">5</td><td class="num">5</td><td class="num">1</td></tr><tr><td>04-03</td><td class="opp">vs New York Mets</td><td class="num">5.0</td><td class="num">5</td><td class="num">4</td><td class="num">8</td><td class="num">2</td></tr><tr><td>04-08</td><td class="opp">vs Philadelphia Phillies</td><td class="num">1.0</td><td class="num">0</td><td class="num">2</td><td class="num">2</td><td class="num">0</td></tr></tbody></table>
+            <tbody><tr><td>03-28</td><td class="opp">vs New York Yankees</td><td class="num">4.0</td><td class="num">2</td><td class="num">5</td><td class="num">5</td><td class="num">1</td></tr><tr><td>04-03</td><td class="opp">vs New York Mets</td><td class="num">5.0</td><td class="num">5</td><td class="num">4</td><td class="num">8</td><td class="num">2</td></tr><tr><td>04-08</td><td class="opp">vs Philadelphia Phillies</td><td class="num">2.0</td><td class="num">0</td><td class="num">4</td><td class="num">2</td><td class="num">0</td></tr></tbody></table>
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
         <div class="sp-side">PHI</div>
         <div class="sp-name">Aaron Nola</div>
-        <div class="sp-season">3.18 ERA &middot; 1-0 &middot; 11.1 IP &middot; 16 K &middot; 1.15 WHIP</div>
-        <h4>Last 2 Starts</h4><table class="data sp-log">
+        <div class="sp-season">2.92 ERA &middot; 1-0 &middot; 12.1 IP &middot; 18 K &middot; 1.14 WHIP</div>
+        <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>03-28</td><td class="opp">vs Texas Rangers</td><td class="num">5.0</td><td class="num">3</td><td class="num">7</td><td class="num">5</td><td class="num">2</td></tr><tr><td>04-03</td><td class="opp">vs Colorado Rockies</td><td class="num">6.1</td><td class="num">1</td><td class="num">9</td><td class="num">5</td><td class="num">1</td></tr></tbody></table>
+            <tbody><tr><td>03-28</td><td class="opp">vs Texas Rangers</td><td class="num">5.0</td><td class="num">3</td><td class="num">7</td><td class="num">5</td><td class="num">2</td></tr><tr><td>04-03</td><td class="opp">vs Colorado Rockies</td><td class="num">6.1</td><td class="num">1</td><td class="num">9</td><td class="num">5</td><td class="num">1</td></tr><tr><td>04-08</td><td class="opp">vs San Francisco Giants</td><td class="num">1.2</td><td class="num">0</td><td class="num">2</td><td class="num">1</td><td class="num">0</td></tr></tbody></table>
         </div>
     </div>
   </section>
@@ -666,7 +668,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <tbody><tr><td class="team">Yankees</td><td class="num">8</td><td class="num">2</td><td class="num">&mdash;</td></tr><tr><td class="team">Orioles</td><td class="num">5</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">Rays</td><td class="num">5</td><td class="num">6</td><td class="num">3.5</td></tr><tr><td class="team">Blue Jays</td><td class="num">4</td><td class="num">7</td><td class="num">4.5</td></tr><tr><td class="team">Red Sox</td><td class="num">3</td><td class="num">8</td><td class="num">5.5</td></tr></tbody></table></div><h4>AL Central</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Guardians</td><td class="num">7</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Royals</td><td class="num">5</td><td class="num">6</td><td class="num">1.5</td></tr><tr><td class="team">Twins</td><td class="num">5</td><td class="num">6</td><td class="num">1.5</td></tr><tr><td class="team">Tigers</td><td class="num">4</td><td class="num">7</td><td class="num">2.5</td></tr><tr><td class="team">White Sox</td><td class="num">4</td><td class="num">7</td><td class="num">2.5</td></tr></tbody></table></div><h4>AL West</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team">Guardians</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Twins</td><td class="num">5</td><td class="num">6</td><td class="num">2.0</td></tr><tr><td class="team">Royals</td><td class="num">5</td><td class="num">7</td><td class="num">2.5</td></tr><tr><td class="team">Tigers</td><td class="num">4</td><td class="num">7</td><td class="num">3.0</td></tr><tr><td class="team">White Sox</td><td class="num">4</td><td class="num">7</td><td class="num">3.0</td></tr></tbody></table></div><h4>AL West</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
         <tbody><tr><td class="team">Rangers</td><td class="num">6</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Angels</td><td class="num">6</td><td class="num">6</td><td class="num">0.5</td></tr><tr><td class="team">Astros</td><td class="num">6</td><td class="num">6</td><td class="num">0.5</td></tr><tr><td class="team">Mariners</td><td class="num">4</td><td class="num">8</td><td class="num">2.5</td></tr><tr><td class="team">Athletics</td><td class="num">3</td><td class="num">7</td><td class="num">2.5</td></tr></tbody></table></div></div><div><h4>NL East</h4><div class="tblwrap"><table class="data standings">
@@ -706,7 +708,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Oracle Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/08/26 14:54 CT</span>
+  <span>Filed 04/08/26 15:14 CT</span>
 </footer>
 
 <script>
