@@ -541,6 +541,11 @@ body {
   .game-cards { grid-template-columns: 1fr; }
 }
 
+/* ── Embed Mode ── */
+body.embed-mode { background: transparent; }
+body.embed-mode .masthead { display: none; }
+body.embed-mode #app { padding: 0; max-width: none; }
+
 @media (max-width: 600px) {
   #app { padding: 12px; }
   .diamond-cell svg { width: 48px; height: 48px; }

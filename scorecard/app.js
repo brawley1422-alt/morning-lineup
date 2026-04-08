@@ -18,12 +18,18 @@
 
   SC.app = {
     view: "finder",
+    embed: false,
 
     init: function () {
       mainEl = document.getElementById("main");
       SC.tooltip.init();
 
       var params = getParams();
+      this.embed = params.embed === "1";
+
+      if (this.embed) {
+        document.body.classList.add("embed-mode");
+      }
 
       if (params.game) {
         this.loadGame(parseInt(params.game, 10));
@@ -74,10 +80,20 @@
 
     renderScorecard: function (model) {
       var html = '';
-      html += '<button class="back-btn" onclick="Scorecard.app.showFinder()">&larr; Back to games</button>';
+      if (!this.embed) {
+        html += '<button class="back-btn" onclick="Scorecard.app.showFinder()">&larr; Back to games</button>';
+      }
       html += SC.header.render(model);
       html += SC.scorebook.render(model);
       mainEl.innerHTML = html;
+
+      // In embed mode, tell parent frame our height
+      if (this.embed && window.parent !== window) {
+        try {
+          var h = document.documentElement.scrollHeight;
+          window.parent.postMessage({ type: "scorecard-height", height: h }, "*");
+        } catch (e) {}
+      }
     },
 
     updateURL: function () {

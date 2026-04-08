@@ -1136,6 +1136,13 @@ footer.foot .flag{color:var(--gold)}
 .slate-inn{color:var(--cubs-red-hi);font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:10px}
 .g-final .time{font-size:13px}
 .slate-final{color:var(--paper-dim);font-family:var(--mono);font-weight:600}
+.scorecard-expand{margin:16px 0}
+.scorecard-expand summary{cursor:pointer;list-style:none;display:inline-block}
+.scorecard-expand summary::-webkit-details-marker{display:none}
+.scorecard-toggle{font-family:var(--cond);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-dim);padding:5px 14px;border-radius:3px;transition:background .15s,color .15s}
+.scorecard-expand[open] .scorecard-toggle{background:var(--gold-dim);color:var(--ink)}
+.scorecard-expand summary:hover .scorecard-toggle{background:var(--gold-dim);color:var(--ink)}
+.scorecard-frame{width:100%;min-height:600px;border:none;margin-top:12px;border-radius:3px}
 """
 
 def page(data):
@@ -1159,6 +1166,13 @@ def page(data):
 
     three_stars = render_three_stars(data["boxscore"], data["cubs_game"], data["tmap"])
     key_plays = render_key_plays(data["plays"], data["cubs_game"], data["tmap"])
+    cubs_pk = data["cubs_game"]["gamePk"] if data["cubs_game"] else None
+    scorecard_embed = ""
+    if cubs_pk:
+        scorecard_embed = f'''<details class="scorecard-expand">
+      <summary><span class="scorecard-toggle">View Full Scorecard</span></summary>
+      <iframe src="scorecard/?game={cubs_pk}&embed=1" class="scorecard-frame" loading="lazy" frameborder="0"></iframe>
+    </details>'''
     nlc_stand = render_nlc_standings(data["standings"], data["tmap"])
     injuries_html = render_injuries(data["injuries"])
     next_games_html = render_next_games(data["next_games"], data["tmap"])
@@ -1246,6 +1260,7 @@ def page(data):
     <h3>Three Stars</h3>
     {three_stars}
     {key_plays}
+    {scorecard_embed}
     <div class="two">
       <div>
         <h3>Cubs Leaders</h3>
@@ -1350,6 +1365,7 @@ def page(data):
 }})();
 </script>
 <script src="live.js"></script>
+<script>window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});</script>
 
 </body>
 </html>"""
