@@ -1921,6 +1921,7 @@ def build_landing():
         cfg = json.loads(cfg_file.read_text())
         cfg["slug"] = cfg_file.stem
         teams.append({
+            "id": cfg["id"],
             "slug": cfg["slug"],
             "full_name": cfg["full_name"],
             "division_name": cfg["division_name"],

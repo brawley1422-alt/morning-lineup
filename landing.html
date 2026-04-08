@@ -26,21 +26,26 @@ body{font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smooth
   background-attachment:fixed;position:relative}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.06;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
-.landing{position:relative;z-index:2;max-width:800px;margin:0 auto;padding:60px 20px 40px;text-align:center}
+.landing{position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:40px 20px 40px;text-align:center}
 .masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(40px,8vw,88px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4)}
 .masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase}
 .masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .sub{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--paper-mute);margin-top:14px}
-.divider{width:40px;height:2px;background:var(--gold);margin:24px auto}
-.pick{font-family:var(--body);font-style:italic;font-size:clamp(16px,2vw,19px);color:var(--paper);margin-bottom:28px}
-.teams{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:0 auto}
-.team-card{display:flex;align-items:center;gap:12px;background:var(--ink-2);border:1px solid var(--rule);border-radius:3px;padding:12px 16px;text-decoration:none;transition:border-color .15s,box-shadow .15s,transform .15s;border-left:4px solid var(--rule)}
+.divider{width:40px;height:2px;background:var(--gold);margin:20px auto}
+.pick{font-family:var(--body);font-style:italic;font-size:clamp(16px,2vw,19px);color:var(--paper);margin-bottom:20px}
+.leagues{display:grid;grid-template-columns:1fr 1fr;gap:24px;text-align:left}
+@media(max-width:700px){.leagues{grid-template-columns:1fr;gap:16px}}
+.league-label{font-family:var(--serif);font-style:italic;font-weight:900;font-size:24px;color:var(--paper);margin:0 0 12px;padding-bottom:8px;border-bottom:3px solid var(--gold)}
+.div-group{margin-bottom:16px}
+.div-label{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--gold);margin:0 0 6px;padding-left:2px}
+.div-teams{display:flex;flex-direction:column;gap:4px}
+.team-card{display:flex;align-items:center;gap:10px;background:var(--ink-2);border:1px solid var(--rule);border-radius:3px;padding:8px 12px;text-decoration:none;transition:border-color .15s,box-shadow .15s,transform .15s;border-left:3px solid var(--rule)}
 .team-card:hover{border-color:var(--rule-hi);box-shadow:0 4px 16px -4px rgba(0,0,0,.5);transform:translateY(-1px)}
-.team-swatch{width:36px;height:36px;border-radius:3px;flex-shrink:0}
-.team-info{text-align:left}
-.team-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:16px;font-weight:600;color:var(--paper)}
-.team-div{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-top:2px}
-.foot{font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--paper-mute);margin-top:40px;padding-top:16px;border-top:1px solid var(--rule)}
+.team-logo{width:32px;height:32px;flex-shrink:0;object-fit:contain}
+.team-info{text-align:left;flex:1;min-width:0}
+.team-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:14px;font-weight:600;color:var(--paper);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-rec{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-top:1px}
+.foot{font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--paper-mute);margin-top:30px;padding-top:16px;border-top:1px solid var(--rule);text-align:center}
 .foot .flag{color:var(--gold)}
 </style>
 </head>
@@ -55,23 +60,59 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
   </header>
   <div class="divider"></div>
   <p class="pick">Choose your team</p>
-  <div class="teams" id="teams"></div>
+  <div class="leagues" id="leagues"></div>
   <div class="foot">The Morning Lineup &middot; <span class="flag">Data: MLB Stats API</span></div>
 </div>
 <script>
 var teams = __TEAMS_JSON__;
-var grid = document.getElementById("teams");
-teams.sort(function(a,b){ return a.full_name.localeCompare(b.full_name); });
+var LOGO = "https://www.mlb.com/assets/images/team/166x166/t";
+
+var divOrder = [
+  {league:"American League",divs:["AL East","AL Central","AL West"]},
+  {league:"National League",divs:["NL East","NL Central","NL West"]}
+];
+
+// Group teams by division
+var byDiv = {};
 for (var i = 0; i < teams.length; i++) {
-  var t = teams[i];
-  var a = document.createElement("a");
-  a.className = "team-card";
-  a.href = t.slug + "/";
-  a.style.borderLeftColor = t.colors.primary;
-  a.innerHTML =
-    '<div class="team-swatch" style="background:linear-gradient(135deg,' + t.colors.primary + ',' + t.colors.accent + ')"></div>' +
-    '<div class="team-info"><div class="team-name">' + t.full_name + '</div><div class="team-div">' + t.division_name + '</div></div>';
-  grid.appendChild(a);
+  var d = teams[i].division_name;
+  if (!byDiv[d]) byDiv[d] = [];
+  byDiv[d].push(teams[i]);
+}
+// Sort teams within each division alphabetically
+for (var d in byDiv) byDiv[d].sort(function(a,b){ return a.full_name.localeCompare(b.full_name); });
+
+var container = document.getElementById("leagues");
+for (var li = 0; li < divOrder.length; li++) {
+  var lg = divOrder[li];
+  var col = document.createElement("div");
+  col.className = "league-col";
+  col.innerHTML = '<div class="league-label">' + lg.league + '</div>';
+
+  for (var di = 0; di < lg.divs.length; di++) {
+    var divName = lg.divs[di];
+    var group = document.createElement("div");
+    group.className = "div-group";
+    group.innerHTML = '<div class="div-label">' + divName + '</div>';
+
+    var list = document.createElement("div");
+    list.className = "div-teams";
+    var dt = byDiv[divName] || [];
+    for (var ti = 0; ti < dt.length; ti++) {
+      var t = dt[ti];
+      var a = document.createElement("a");
+      a.className = "team-card";
+      a.href = t.slug + "/";
+      a.style.borderLeftColor = t.colors.primary;
+      a.innerHTML =
+        '<img class="team-logo" src="' + LOGO + t.id + '.png" alt="" loading="lazy">' +
+        '<div class="team-info"><div class="team-name">' + t.full_name + '</div></div>';
+      list.appendChild(a);
+    }
+    group.appendChild(list);
+    col.appendChild(group);
+  }
+  container.appendChild(col);
 }
 </script>
 </body>

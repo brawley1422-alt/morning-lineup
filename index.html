@@ -26,21 +26,26 @@ body{font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smooth
   background-attachment:fixed;position:relative}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.06;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
-.landing{position:relative;z-index:2;max-width:800px;margin:0 auto;padding:60px 20px 40px;text-align:center}
+.landing{position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:40px 20px 40px;text-align:center}
 .masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(40px,8vw,88px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4)}
 .masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase}
 .masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .sub{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--paper-mute);margin-top:14px}
-.divider{width:40px;height:2px;background:var(--gold);margin:24px auto}
-.pick{font-family:var(--body);font-style:italic;font-size:clamp(16px,2vw,19px);color:var(--paper);margin-bottom:28px}
-.teams{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:0 auto}
-.team-card{display:flex;align-items:center;gap:12px;background:var(--ink-2);border:1px solid var(--rule);border-radius:3px;padding:12px 16px;text-decoration:none;transition:border-color .15s,box-shadow .15s,transform .15s;border-left:4px solid var(--rule)}
+.divider{width:40px;height:2px;background:var(--gold);margin:20px auto}
+.pick{font-family:var(--body);font-style:italic;font-size:clamp(16px,2vw,19px);color:var(--paper);margin-bottom:20px}
+.leagues{display:grid;grid-template-columns:1fr 1fr;gap:24px;text-align:left}
+@media(max-width:700px){.leagues{grid-template-columns:1fr;gap:16px}}
+.league-label{font-family:var(--serif);font-style:italic;font-weight:900;font-size:24px;color:var(--paper);margin:0 0 12px;padding-bottom:8px;border-bottom:3px solid var(--gold)}
+.div-group{margin-bottom:16px}
+.div-label{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--gold);margin:0 0 6px;padding-left:2px}
+.div-teams{display:flex;flex-direction:column;gap:4px}
+.team-card{display:flex;align-items:center;gap:10px;background:var(--ink-2);border:1px solid var(--rule);border-radius:3px;padding:8px 12px;text-decoration:none;transition:border-color .15s,box-shadow .15s,transform .15s;border-left:3px solid var(--rule)}
 .team-card:hover{border-color:var(--rule-hi);box-shadow:0 4px 16px -4px rgba(0,0,0,.5);transform:translateY(-1px)}
-.team-swatch{width:36px;height:36px;border-radius:3px;flex-shrink:0}
-.team-info{text-align:left}
-.team-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:16px;font-weight:600;color:var(--paper)}
-.team-div{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-top:2px}
-.foot{font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--paper-mute);margin-top:40px;padding-top:16px;border-top:1px solid var(--rule)}
+.team-logo{width:32px;height:32px;flex-shrink:0;object-fit:contain}
+.team-info{text-align:left;flex:1;min-width:0}
+.team-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:14px;font-weight:600;color:var(--paper);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-rec{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-top:1px}
+.foot{font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--paper-mute);margin-top:30px;padding-top:16px;border-top:1px solid var(--rule);text-align:center}
 .foot .flag{color:var(--gold)}
 </style>
 </head>
@@ -55,23 +60,59 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
   </header>
   <div class="divider"></div>
   <p class="pick">Choose your team</p>
-  <div class="teams" id="teams"></div>
+  <div class="leagues" id="leagues"></div>
   <div class="foot">The Morning Lineup &middot; <span class="flag">Data: MLB Stats API</span></div>
 </div>
 <script>
-var teams = [{"slug": "angels", "full_name": "Los Angeles Angels", "division_name": "AL West", "colors": {"primary": "#BA0021", "primary_hi": "#d41a3a", "accent": "#003263", "accent_hi": "#0a4a80"}}, {"slug": "astros", "full_name": "Houston Astros", "division_name": "AL West", "colors": {"primary": "#002D62", "primary_hi": "#0a4580", "accent": "#EB6E1F", "accent_hi": "#ff8a3d"}}, {"slug": "athletics", "full_name": "Athletics", "division_name": "AL West", "colors": {"primary": "#003831", "primary_hi": "#0a5040", "accent": "#EFB21E", "accent_hi": "#ffc838"}}, {"slug": "blue-jays", "full_name": "Toronto Blue Jays", "division_name": "AL East", "colors": {"primary": "#134A8E", "primary_hi": "#1d60a8", "accent": "#1D2D5C", "accent_hi": "#2a4070"}}, {"slug": "braves", "full_name": "Atlanta Braves", "division_name": "NL East", "colors": {"primary": "#13274F", "primary_hi": "#1d3a70", "accent": "#CE1141", "accent_hi": "#e8394f"}}, {"slug": "brewers", "full_name": "Milwaukee Brewers", "division_name": "NL Central", "colors": {"primary": "#12284B", "primary_hi": "#1d3a60", "accent": "#FFC52F", "accent_hi": "#ffd460"}}, {"slug": "cardinals", "full_name": "St. Louis Cardinals", "division_name": "NL Central", "colors": {"primary": "#C41E3A", "primary_hi": "#da3654", "accent": "#0C2340", "accent_hi": "#1d3a60"}}, {"slug": "cubs", "full_name": "Chicago Cubs", "division_name": "NL Central", "colors": {"primary": "#0E3386", "primary_hi": "#2a56c4", "accent": "#CC3433", "accent_hi": "#e8544f"}}, {"slug": "dbacks", "full_name": "Arizona Diamondbacks", "division_name": "NL West", "colors": {"primary": "#A71930", "primary_hi": "#c42d47", "accent": "#E3D4AD", "accent_hi": "#f0e4c0"}}, {"slug": "dodgers", "full_name": "Los Angeles Dodgers", "division_name": "NL West", "colors": {"primary": "#005A9C", "primary_hi": "#1a70b5", "accent": "#EF3E42", "accent_hi": "#ff5858"}}, {"slug": "giants", "full_name": "San Francisco Giants", "division_name": "NL West", "colors": {"primary": "#FD5A1E", "primary_hi": "#ff7a40", "accent": "#27251F", "accent_hi": "#444440"}}, {"slug": "guardians", "full_name": "Cleveland Guardians", "division_name": "AL Central", "colors": {"primary": "#00385D", "primary_hi": "#0a5080", "accent": "#E31937", "accent_hi": "#f03050"}}, {"slug": "mariners", "full_name": "Seattle Mariners", "division_name": "AL West", "colors": {"primary": "#0C2C56", "primary_hi": "#1a4070", "accent": "#005C5C", "accent_hi": "#0a7878"}}, {"slug": "marlins", "full_name": "Miami Marlins", "division_name": "NL East", "colors": {"primary": "#00A3E0", "primary_hi": "#1ab8f0", "accent": "#EF3340", "accent_hi": "#ff5060"}}, {"slug": "mets", "full_name": "New York Mets", "division_name": "NL East", "colors": {"primary": "#002D72", "primary_hi": "#0a4590", "accent": "#FF5910", "accent_hi": "#ff7a40"}}, {"slug": "nationals", "full_name": "Washington Nationals", "division_name": "NL East", "colors": {"primary": "#AB0003", "primary_hi": "#c41a1d", "accent": "#14225A", "accent_hi": "#1d3470"}}, {"slug": "orioles", "full_name": "Baltimore Orioles", "division_name": "AL East", "colors": {"primary": "#DF4601", "primary_hi": "#ff6020", "accent": "#000000", "accent_hi": "#333333"}}, {"slug": "padres", "full_name": "San Diego Padres", "division_name": "NL West", "colors": {"primary": "#2F241D", "primary_hi": "#4a3a30", "accent": "#FFC425", "accent_hi": "#ffd450"}}, {"slug": "phillies", "full_name": "Philadelphia Phillies", "division_name": "NL East", "colors": {"primary": "#E81828", "primary_hi": "#ff3040", "accent": "#002D72", "accent_hi": "#0a4590"}}, {"slug": "pirates", "full_name": "Pittsburgh Pirates", "division_name": "NL Central", "colors": {"primary": "#27251F", "primary_hi": "#444440", "accent": "#FDB827", "accent_hi": "#ffc840"}}, {"slug": "rangers", "full_name": "Texas Rangers", "division_name": "AL West", "colors": {"primary": "#003278", "primary_hi": "#0a4590", "accent": "#C0111F", "accent_hi": "#da2a38"}}, {"slug": "rays", "full_name": "Tampa Bay Rays", "division_name": "AL East", "colors": {"primary": "#092C5C", "primary_hi": "#1a4078", "accent": "#8FBCE6", "accent_hi": "#a8d0f0"}}, {"slug": "red-sox", "full_name": "Boston Red Sox", "division_name": "AL East", "colors": {"primary": "#BD3039", "primary_hi": "#d4464e", "accent": "#0C2340", "accent_hi": "#1d3a60"}}, {"slug": "reds", "full_name": "Cincinnati Reds", "division_name": "NL Central", "colors": {"primary": "#C6011F", "primary_hi": "#e01a35", "accent": "#000000", "accent_hi": "#333333"}}, {"slug": "rockies", "full_name": "Colorado Rockies", "division_name": "NL West", "colors": {"primary": "#33006F", "primary_hi": "#4d1a8f", "accent": "#C4CED4", "accent_hi": "#d4dee4"}}, {"slug": "royals", "full_name": "Kansas City Royals", "division_name": "AL Central", "colors": {"primary": "#004687", "primary_hi": "#1a60a0", "accent": "#BD9B60", "accent_hi": "#d4b478"}}, {"slug": "tigers", "full_name": "Detroit Tigers", "division_name": "AL Central", "colors": {"primary": "#0C2340", "primary_hi": "#1d4070", "accent": "#FA4616", "accent_hi": "#ff6a3d"}}, {"slug": "twins", "full_name": "Minnesota Twins", "division_name": "AL Central", "colors": {"primary": "#002B5C", "primary_hi": "#0a4078", "accent": "#D31145", "accent_hi": "#e83060"}}, {"slug": "white-sox", "full_name": "Chicago White Sox", "division_name": "AL Central", "colors": {"primary": "#27251F", "primary_hi": "#444440", "accent": "#C4CED4", "accent_hi": "#d4dee4"}}, {"slug": "yankees", "full_name": "New York Yankees", "division_name": "AL East", "colors": {"primary": "#003087", "primary_hi": "#0a45a0", "accent": "#C4CED4", "accent_hi": "#d4dee4"}}];
-var grid = document.getElementById("teams");
-teams.sort(function(a,b){ return a.full_name.localeCompare(b.full_name); });
+var teams = [{"id": 108, "slug": "angels", "full_name": "Los Angeles Angels", "division_name": "AL West", "colors": {"primary": "#BA0021", "primary_hi": "#d41a3a", "accent": "#003263", "accent_hi": "#0a4a80"}}, {"id": 117, "slug": "astros", "full_name": "Houston Astros", "division_name": "AL West", "colors": {"primary": "#002D62", "primary_hi": "#0a4580", "accent": "#EB6E1F", "accent_hi": "#ff8a3d"}}, {"id": 133, "slug": "athletics", "full_name": "Athletics", "division_name": "AL West", "colors": {"primary": "#003831", "primary_hi": "#0a5040", "accent": "#EFB21E", "accent_hi": "#ffc838"}}, {"id": 141, "slug": "blue-jays", "full_name": "Toronto Blue Jays", "division_name": "AL East", "colors": {"primary": "#134A8E", "primary_hi": "#1d60a8", "accent": "#1D2D5C", "accent_hi": "#2a4070"}}, {"id": 144, "slug": "braves", "full_name": "Atlanta Braves", "division_name": "NL East", "colors": {"primary": "#13274F", "primary_hi": "#1d3a70", "accent": "#CE1141", "accent_hi": "#e8394f"}}, {"id": 158, "slug": "brewers", "full_name": "Milwaukee Brewers", "division_name": "NL Central", "colors": {"primary": "#12284B", "primary_hi": "#1d3a60", "accent": "#FFC52F", "accent_hi": "#ffd460"}}, {"id": 138, "slug": "cardinals", "full_name": "St. Louis Cardinals", "division_name": "NL Central", "colors": {"primary": "#C41E3A", "primary_hi": "#da3654", "accent": "#0C2340", "accent_hi": "#1d3a60"}}, {"id": 112, "slug": "cubs", "full_name": "Chicago Cubs", "division_name": "NL Central", "colors": {"primary": "#0E3386", "primary_hi": "#2a56c4", "accent": "#CC3433", "accent_hi": "#e8544f"}}, {"id": 109, "slug": "dbacks", "full_name": "Arizona Diamondbacks", "division_name": "NL West", "colors": {"primary": "#A71930", "primary_hi": "#c42d47", "accent": "#E3D4AD", "accent_hi": "#f0e4c0"}}, {"id": 119, "slug": "dodgers", "full_name": "Los Angeles Dodgers", "division_name": "NL West", "colors": {"primary": "#005A9C", "primary_hi": "#1a70b5", "accent": "#EF3E42", "accent_hi": "#ff5858"}}, {"id": 137, "slug": "giants", "full_name": "San Francisco Giants", "division_name": "NL West", "colors": {"primary": "#FD5A1E", "primary_hi": "#ff7a40", "accent": "#27251F", "accent_hi": "#444440"}}, {"id": 114, "slug": "guardians", "full_name": "Cleveland Guardians", "division_name": "AL Central", "colors": {"primary": "#00385D", "primary_hi": "#0a5080", "accent": "#E31937", "accent_hi": "#f03050"}}, {"id": 136, "slug": "mariners", "full_name": "Seattle Mariners", "division_name": "AL West", "colors": {"primary": "#0C2C56", "primary_hi": "#1a4070", "accent": "#005C5C", "accent_hi": "#0a7878"}}, {"id": 146, "slug": "marlins", "full_name": "Miami Marlins", "division_name": "NL East", "colors": {"primary": "#00A3E0", "primary_hi": "#1ab8f0", "accent": "#EF3340", "accent_hi": "#ff5060"}}, {"id": 121, "slug": "mets", "full_name": "New York Mets", "division_name": "NL East", "colors": {"primary": "#002D72", "primary_hi": "#0a4590", "accent": "#FF5910", "accent_hi": "#ff7a40"}}, {"id": 120, "slug": "nationals", "full_name": "Washington Nationals", "division_name": "NL East", "colors": {"primary": "#AB0003", "primary_hi": "#c41a1d", "accent": "#14225A", "accent_hi": "#1d3470"}}, {"id": 110, "slug": "orioles", "full_name": "Baltimore Orioles", "division_name": "AL East", "colors": {"primary": "#DF4601", "primary_hi": "#ff6020", "accent": "#000000", "accent_hi": "#333333"}}, {"id": 135, "slug": "padres", "full_name": "San Diego Padres", "division_name": "NL West", "colors": {"primary": "#2F241D", "primary_hi": "#4a3a30", "accent": "#FFC425", "accent_hi": "#ffd450"}}, {"id": 143, "slug": "phillies", "full_name": "Philadelphia Phillies", "division_name": "NL East", "colors": {"primary": "#E81828", "primary_hi": "#ff3040", "accent": "#002D72", "accent_hi": "#0a4590"}}, {"id": 134, "slug": "pirates", "full_name": "Pittsburgh Pirates", "division_name": "NL Central", "colors": {"primary": "#27251F", "primary_hi": "#444440", "accent": "#FDB827", "accent_hi": "#ffc840"}}, {"id": 140, "slug": "rangers", "full_name": "Texas Rangers", "division_name": "AL West", "colors": {"primary": "#003278", "primary_hi": "#0a4590", "accent": "#C0111F", "accent_hi": "#da2a38"}}, {"id": 139, "slug": "rays", "full_name": "Tampa Bay Rays", "division_name": "AL East", "colors": {"primary": "#092C5C", "primary_hi": "#1a4078", "accent": "#8FBCE6", "accent_hi": "#a8d0f0"}}, {"id": 111, "slug": "red-sox", "full_name": "Boston Red Sox", "division_name": "AL East", "colors": {"primary": "#BD3039", "primary_hi": "#d4464e", "accent": "#0C2340", "accent_hi": "#1d3a60"}}, {"id": 113, "slug": "reds", "full_name": "Cincinnati Reds", "division_name": "NL Central", "colors": {"primary": "#C6011F", "primary_hi": "#e01a35", "accent": "#000000", "accent_hi": "#333333"}}, {"id": 115, "slug": "rockies", "full_name": "Colorado Rockies", "division_name": "NL West", "colors": {"primary": "#33006F", "primary_hi": "#4d1a8f", "accent": "#C4CED4", "accent_hi": "#d4dee4"}}, {"id": 118, "slug": "royals", "full_name": "Kansas City Royals", "division_name": "AL Central", "colors": {"primary": "#004687", "primary_hi": "#1a60a0", "accent": "#BD9B60", "accent_hi": "#d4b478"}}, {"id": 116, "slug": "tigers", "full_name": "Detroit Tigers", "division_name": "AL Central", "colors": {"primary": "#0C2340", "primary_hi": "#1d4070", "accent": "#FA4616", "accent_hi": "#ff6a3d"}}, {"id": 142, "slug": "twins", "full_name": "Minnesota Twins", "division_name": "AL Central", "colors": {"primary": "#002B5C", "primary_hi": "#0a4078", "accent": "#D31145", "accent_hi": "#e83060"}}, {"id": 145, "slug": "white-sox", "full_name": "Chicago White Sox", "division_name": "AL Central", "colors": {"primary": "#27251F", "primary_hi": "#444440", "accent": "#C4CED4", "accent_hi": "#d4dee4"}}, {"id": 147, "slug": "yankees", "full_name": "New York Yankees", "division_name": "AL East", "colors": {"primary": "#003087", "primary_hi": "#0a45a0", "accent": "#C4CED4", "accent_hi": "#d4dee4"}}];
+var LOGO = "https://www.mlb.com/assets/images/team/166x166/t";
+
+var divOrder = [
+  {league:"American League",divs:["AL East","AL Central","AL West"]},
+  {league:"National League",divs:["NL East","NL Central","NL West"]}
+];
+
+// Group teams by division
+var byDiv = {};
 for (var i = 0; i < teams.length; i++) {
-  var t = teams[i];
-  var a = document.createElement("a");
-  a.className = "team-card";
-  a.href = t.slug + "/";
-  a.style.borderLeftColor = t.colors.primary;
-  a.innerHTML =
-    '<div class="team-swatch" style="background:linear-gradient(135deg,' + t.colors.primary + ',' + t.colors.accent + ')"></div>' +
-    '<div class="team-info"><div class="team-name">' + t.full_name + '</div><div class="team-div">' + t.division_name + '</div></div>';
-  grid.appendChild(a);
+  var d = teams[i].division_name;
+  if (!byDiv[d]) byDiv[d] = [];
+  byDiv[d].push(teams[i]);
+}
+// Sort teams within each division alphabetically
+for (var d in byDiv) byDiv[d].sort(function(a,b){ return a.full_name.localeCompare(b.full_name); });
+
+var container = document.getElementById("leagues");
+for (var li = 0; li < divOrder.length; li++) {
+  var lg = divOrder[li];
+  var col = document.createElement("div");
+  col.className = "league-col";
+  col.innerHTML = '<div class="league-label">' + lg.league + '</div>';
+
+  for (var di = 0; di < lg.divs.length; di++) {
+    var divName = lg.divs[di];
+    var group = document.createElement("div");
+    group.className = "div-group";
+    group.innerHTML = '<div class="div-label">' + divName + '</div>';
+
+    var list = document.createElement("div");
+    list.className = "div-teams";
+    var dt = byDiv[divName] || [];
+    for (var ti = 0; ti < dt.length; ti++) {
+      var t = dt[ti];
+      var a = document.createElement("a");
+      a.className = "team-card";
+      a.href = t.slug + "/";
+      a.style.borderLeftColor = t.colors.primary;
+      a.innerHTML =
+        '<img class="team-logo" src="' + LOGO + t.id + '.png" alt="" loading="lazy">' +
+        '<div class="team-info"><div class="team-name">' + t.full_name + '</div></div>';
+      list.appendChild(a);
+    }
+    group.appendChild(list);
+    col.appendChild(group);
+  }
+  container.appendChild(col);
 }
 </script>
 </body>
