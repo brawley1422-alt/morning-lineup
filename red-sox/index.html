@@ -37,8 +37,8 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offs
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
 .masthead .kicker .vol{color:var(--gold)}
-.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);position:relative;}
-.mast-logo{width:clamp(48px,10vw,96px);height:auto;float:right;margin-top:4px;opacity:.85;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);display:flex;align-items:center;gap:16px}
+.mast-logo{width:clamp(48px,10vw,80px);height:auto;flex-shrink:0;opacity:.9;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
 .masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
 .masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .masthead .dek{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;}
@@ -321,8 +321,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
   </div>
   <h1>
     <img src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/111.svg" alt="Red Sox" class="mast-logo">
-    <span class="the">The</span>
-    <span class="lineup">Morning <em style="font-style:italic">Lineup</em></span>
+    <span class="mast-text"><span class="the">The</span><span class="lineup">Morning <em style="font-style:italic">Lineup</em></span></span>
   </h1>
   <div class="dek">
     <span class="item"><span class="label">Wed</span><span class="val">Apr 8, 2026</span></span>
@@ -408,7 +407,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-pitcher"><span class="nx-side">Red Sox</span> Sonny Gray<div class="nx-pline">2.76 ERA &middot; 2-0 &middot; 16.1 IP &middot; 10 K &middot; 0.98 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">MIL</span> Shane Drohan<div class="nx-pline">10.13 ERA &middot; 0-1 &middot; 2.2 IP &middot; 2 K &middot; 2.63 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">RF</span> Anthony</span><span class="lu-slot"><span class="lu-pos">SS</span> Monasterio</span><span class="lu-slot"><span class="lu-pos">1B</span> Contreras</span><span class="lu-slot"><span class="lu-pos">RF</span> Abreu</span><span class="lu-slot"><span class="lu-pos">SS</span> Story</span><span class="lu-slot"><span class="lu-pos">3B</span> Durbin</span><span class="lu-slot"><span class="lu-pos">C</span> Narváez</span><span class="lu-slot"><span class="lu-pos">CF</span> Rafaela</span><span class="lu-slot"><span class="lu-pos">SS</span> Kiner-Falefa</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> NESN &middot; Brewers.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WTMJ 620 &middot; WEEI 93.7</div>
-        <div class="nx-wx">42°F &middot; Clear &middot; 7 mph E</div>
+        <div class="nx-wx">41°F &middot; Clear &middot; 7 mph ENE</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Fri, Apr 10 &middot; at STL</div>
@@ -685,7 +684,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <div class="two">
     <div><h4>Batting</h4><div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>AVG</td><td class="name">Andy Pages (LAD)</td><td class="num">.442</td></tr><tr><td>HR</td><td class="name">Drake Baldwin (ATL)</td><td class="num">5</td></tr><tr><td>RBI</td><td class="name">CJ Abrams (WSH)</td><td class="num">14</td></tr><tr><td>SB</td><td class="name">Nasim Nuñez (WSH)</td><td class="num">7</td></tr><tr><td>OPS</td><td class="name">Ben Rice (NYY)</td><td class="num">1.378</td></tr></tbody></table></div></div>
+    <tbody><tr><td>AVG</td><td class="name">Andy Pages (LAD)</td><td class="num">.432</td></tr><tr><td>HR</td><td class="name">Drake Baldwin (ATL)</td><td class="num">5</td></tr><tr><td>RBI</td><td class="name">CJ Abrams (WSH)</td><td class="num">14</td></tr><tr><td>SB</td><td class="name">Nasim Nuñez (WSH)</td><td class="num">7</td></tr><tr><td>OPS</td><td class="name">Ben Rice (NYY)</td><td class="num">1.378</td></tr></tbody></table></div></div>
     <div><h4>Pitching</h4><div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
     <tbody><tr><td>ERA</td><td class="name">Edward Cabrera (CHC)</td><td class="num">0.00</td></tr><tr><td>SV</td><td class="name">David Bednar (NYY)</td><td class="num">5</td></tr><tr><td>W</td><td class="name">Aaron Ashby (MIL)</td><td class="num">3</td></tr></tbody></table></div></div>
@@ -708,7 +707,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Fenway Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/08/26 15:16 CT</span>
+  <span>Filed 04/08/26 15:37 CT</span>
 </footer>
 
 <script>

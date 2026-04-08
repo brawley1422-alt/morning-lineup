@@ -37,8 +37,8 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offs
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
 .masthead .kicker .vol{color:var(--gold)}
-.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);position:relative;}
-.mast-logo{width:clamp(48px,10vw,96px);height:auto;float:right;margin-top:4px;opacity:.85;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);display:flex;align-items:center;gap:16px}
+.mast-logo{width:clamp(48px,10vw,80px);height:auto;flex-shrink:0;opacity:.9;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
 .masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
 .masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .masthead .dek{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;}
@@ -321,8 +321,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
   </div>
   <h1>
     <img src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/115.svg" alt="Rockies" class="mast-logo">
-    <span class="the">The</span>
-    <span class="lineup">Morning <em style="font-style:italic">Lineup</em></span>
+    <span class="mast-text"><span class="the">The</span><span class="lineup">Morning <em style="font-style:italic">Lineup</em></span></span>
   </h1>
   <div class="dek">
     <span class="item"><span class="label">Wed</span><span class="val">Apr 8, 2026</span></span>
@@ -405,7 +404,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         </div>
         <div class="nx-venue">Coors Field <span class="nx-dome">Retractable Roof</span></div>
         <div class="nx-meta"><span class="nx-opp-rec">HOU: 6-6, 3rd AL West (L3)</span> &middot; <span class="nx-series">Season series: 2-0</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Rockies</span> Michael Lorenzen<div class="nx-pline">12.54 ERA &middot; 0-1 &middot; 9.1 IP &middot; 9 K &middot; 2.57 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">HOU</span> Cristian Javier<div class="nx-pline">12.54 ERA &middot; 0-1 &middot; 9.1 IP &middot; 4 K &middot; 2.36 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">Rockies</span> Michael Lorenzen<div class="nx-pline">10.64 ERA &middot; 0-1 &middot; 11.0 IP &middot; 9 K &middot; 2.27 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">HOU</span> Cristian Javier<div class="nx-pline">12.54 ERA &middot; 0-1 &middot; 9.1 IP &middot; 4 K &middot; 2.36 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">2B</span> Julien</span><span class="lu-slot"><span class="lu-pos">RF</span> Freeman</span><span class="lu-slot"><span class="lu-pos">RF</span> Moniak</span><span class="lu-slot"><span class="lu-pos">C</span> Goodman</span><span class="lu-slot"><span class="lu-pos">1B</span> Rumfield</span><span class="lu-slot"><span class="lu-pos">SS</span> Tovar</span><span class="lu-slot"><span class="lu-pos">OF</span> Johnston</span><span class="lu-slot"><span class="lu-pos">CF</span> Doyle</span><span class="lu-slot"><span class="lu-pos">3B</span> Karros</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Space City Home Network &middot; Rockies.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KBME 790 AM/94.5 FM HD-2 &middot; KOA 850 AM/94.1 FM </div>
         <div class="nx-wx">72°F &middot; Climate controlled</div>
@@ -436,11 +435,11 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     
     <div class="two">
       <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Moniak</span><span class="s">.316 / 3 HR / 1.089 OPS</span></li><li><span class="n">Rumfield</span><span class="s">.316 / 1 HR / .988 OPS</span></li><li><span class="n">Johnston</span><span class="s">.360 / 1 HR / .985 OPS</span></li><li><span class="n">Castro</span><span class="s">.280 / 1 HR / .797 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n">Beck</span><span class="s">.045 / 0 HR / .178 OPS</span></li><li><span class="n">Doyle</span><span class="s">.125 / 0 HR / .301 OPS</span></li><li><span class="n">Goodman</span><span class="s">.130 / 0 HR / .330 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n">Beck</span><span class="s">.045 / 0 HR / .178 OPS</span></li><li><span class="n">Doyle</span><span class="s">.118 / 0 HR / .285 OPS</span></li><li><span class="n">Goodman</span><span class="s">.130 / 0 HR / .330 OPS</span></li></ul></div>
     </div>
     <div class="two">
       <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n">Senzatela</span><span class="s">7.1 IP &middot; 0.00 ERA &middot; 9 K</span></li><li><span class="n">Herget</span><span class="s">6.0 IP &middot; 1.50 ERA &middot; 6 K</span></li><li><span class="n">Bellozo</span><span class="s">6.0 IP &middot; 1.50 ERA &middot; 7 K</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n">Agnos</span><span class="s">3.2 IP &middot; 12.27 ERA &middot; 5 K</span></li><li><span class="n">Lorenzen</span><span class="s">9.2 IP &middot; 12.10 ERA &middot; 9 K</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n">Agnos</span><span class="s">3.2 IP &middot; 12.27 ERA &middot; 5 K</span></li><li><span class="n">Lorenzen</span><span class="s">11.1 IP &middot; 10.32 ERA &middot; 9 K</span></li></ul></div>
     </div>
     
   </section>
@@ -457,10 +456,10 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="sp-card">
         <div class="sp-side">Rockies</div>
         <div class="sp-name">Michael Lorenzen</div>
-        <div class="sp-season">12.54 ERA &middot; 0-1 &middot; 9.1 IP &middot; 9 K &middot; 2.57 WHIP</div>
+        <div class="sp-season">10.64 ERA &middot; 0-1 &middot; 11.0 IP &middot; 9 K &middot; 2.27 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>03-28</td><td class="opp">vs Miami Marlins</td><td class="num">4.1</td><td class="num">3</td><td class="num">4</td><td class="num">7</td><td class="num">0</td></tr><tr><td>04-03</td><td class="opp">vs Philadelphia Phillies</td><td class="num">3.0</td><td class="num">9</td><td class="num">2</td><td class="num">12</td><td class="num">2</td></tr><tr><td>04-08</td><td class="opp">vs Houston Astros</td><td class="num">2.0</td><td class="num">1</td><td class="num">3</td><td class="num">2</td><td class="num">1</td></tr></tbody></table>
+            <tbody><tr><td>03-28</td><td class="opp">vs Miami Marlins</td><td class="num">4.1</td><td class="num">3</td><td class="num">4</td><td class="num">7</td><td class="num">0</td></tr><tr><td>04-03</td><td class="opp">vs Philadelphia Phillies</td><td class="num">3.0</td><td class="num">9</td><td class="num">2</td><td class="num">12</td><td class="num">2</td></tr><tr><td>04-08</td><td class="opp">vs Houston Astros</td><td class="num">3.0</td><td class="num">1</td><td class="num">3</td><td class="num">3</td><td class="num">1</td></tr></tbody></table>
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
@@ -685,7 +684,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <div class="two">
     <div><h4>Batting</h4><div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>AVG</td><td class="name">Andy Pages (LAD)</td><td class="num">.442</td></tr><tr><td>HR</td><td class="name">Drake Baldwin (ATL)</td><td class="num">5</td></tr><tr><td>RBI</td><td class="name">CJ Abrams (WSH)</td><td class="num">14</td></tr><tr><td>SB</td><td class="name">Nasim Nuñez (WSH)</td><td class="num">7</td></tr><tr><td>OPS</td><td class="name">Ben Rice (NYY)</td><td class="num">1.378</td></tr></tbody></table></div></div>
+    <tbody><tr><td>AVG</td><td class="name">Andy Pages (LAD)</td><td class="num">.432</td></tr><tr><td>HR</td><td class="name">Drake Baldwin (ATL)</td><td class="num">5</td></tr><tr><td>RBI</td><td class="name">CJ Abrams (WSH)</td><td class="num">14</td></tr><tr><td>SB</td><td class="name">Nasim Nuñez (WSH)</td><td class="num">7</td></tr><tr><td>OPS</td><td class="name">Ben Rice (NYY)</td><td class="num">1.378</td></tr></tbody></table></div></div>
     <div><h4>Pitching</h4><div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
     <tbody><tr><td>ERA</td><td class="name">Edward Cabrera (CHC)</td><td class="num">0.00</td></tr><tr><td>SV</td><td class="name">David Bednar (NYY)</td><td class="num">5</td></tr><tr><td>W</td><td class="name">Aaron Ashby (MIL)</td><td class="num">3</td></tr></tbody></table></div></div>
@@ -708,7 +707,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Coors Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/08/26 15:16 CT</span>
+  <span>Filed 04/08/26 15:37 CT</span>
 </footer>
 
 <script>

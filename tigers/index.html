@@ -37,8 +37,8 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offs
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
 .masthead .kicker .vol{color:var(--gold)}
-.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);position:relative;}
-.mast-logo{width:clamp(48px,10vw,96px);height:auto;float:right;margin-top:4px;opacity:.85;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);display:flex;align-items:center;gap:16px}
+.mast-logo{width:clamp(48px,10vw,80px);height:auto;flex-shrink:0;opacity:.9;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
 .masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
 .masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .masthead .dek{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;}
@@ -321,8 +321,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
   </div>
   <h1>
     <img src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/116.svg" alt="Tigers" class="mast-logo">
-    <span class="the">The</span>
-    <span class="lineup">Morning <em style="font-style:italic">Lineup</em></span>
+    <span class="mast-text"><span class="the">The</span><span class="lineup">Morning <em style="font-style:italic">Lineup</em></span></span>
   </h1>
   <div class="dek">
     <span class="item"><span class="label">Wed</span><span class="val">Apr 8, 2026</span></span>
@@ -406,9 +405,9 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-venue">Target Field </div>
         <div class="nx-meta"><span class="nx-opp-rec">MIN: 5-6, 2nd AL Central (W2)</span> &middot; <span class="nx-series">Season series: 0-2</span></div>
         <div class="nx-pitcher"><span class="nx-side">Tigers</span> Framber Valdez<div class="nx-pline">0.75 ERA &middot; 1-0 &middot; 12.0 IP &middot; 10 K &middot; 1.08 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">MIN</span> Bailey Ober<div class="nx-pline">6.75 ERA &middot; 0-0 &middot; 8.0 IP &middot; 5 K &middot; 1.38 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">2B</span> Keith</span><span class="lu-slot"><span class="lu-pos">SS</span> McGonigle</span><span class="lu-slot"><span class="lu-pos">2B</span> Torres</span><span class="lu-slot"><span class="lu-pos">RF</span> Carpenter</span><span class="lu-slot"><span class="lu-pos">LF</span> Greene</span><span class="lu-slot"><span class="lu-pos">C</span> Dingler</span><span class="lu-slot"><span class="lu-pos">CF</span> Vierling</span><span class="lu-slot"><span class="lu-pos">3B</span> McKinstry</span><span class="lu-slot"><span class="lu-pos">CF</span> Báez</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Detroit SportsNet &middot; FS1 &middot; FS1 &middot; Twins.TV Presented by Progressive</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> TIBN &middot; WXYT 97.1 FM &middot; WCCO 830 &middot; The Wolf 102.9 FM &middot; Audacy App</div>
-        <div class="nx-wx">56°F &middot; Overcast &middot; 17 mph WNW</div>
+        <div class="nx-wx">56°F &middot; Overcast &middot; 15 mph WNW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Thu, Apr 9 &middot; at MIN</div>
@@ -682,7 +681,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <div class="two">
     <div><h4>Batting</h4><div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>AVG</td><td class="name">Andy Pages (LAD)</td><td class="num">.442</td></tr><tr><td>HR</td><td class="name">Drake Baldwin (ATL)</td><td class="num">5</td></tr><tr><td>RBI</td><td class="name">CJ Abrams (WSH)</td><td class="num">14</td></tr><tr><td>SB</td><td class="name">Nasim Nuñez (WSH)</td><td class="num">7</td></tr><tr><td>OPS</td><td class="name">Ben Rice (NYY)</td><td class="num">1.378</td></tr></tbody></table></div></div>
+    <tbody><tr><td>AVG</td><td class="name">Andy Pages (LAD)</td><td class="num">.432</td></tr><tr><td>HR</td><td class="name">Drake Baldwin (ATL)</td><td class="num">5</td></tr><tr><td>RBI</td><td class="name">CJ Abrams (WSH)</td><td class="num">14</td></tr><tr><td>SB</td><td class="name">Nasim Nuñez (WSH)</td><td class="num">7</td></tr><tr><td>OPS</td><td class="name">Ben Rice (NYY)</td><td class="num">1.378</td></tr></tbody></table></div></div>
     <div><h4>Pitching</h4><div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
     <tbody><tr><td>ERA</td><td class="name">Edward Cabrera (CHC)</td><td class="num">0.00</td></tr><tr><td>SV</td><td class="name">David Bednar (NYY)</td><td class="num">5</td></tr><tr><td>W</td><td class="name">Aaron Ashby (MIL)</td><td class="num">3</td></tr></tbody></table></div></div>
@@ -705,7 +704,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Comerica Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/08/26 15:17 CT</span>
+  <span>Filed 04/08/26 15:37 CT</span>
 </footer>
 
 <script>
