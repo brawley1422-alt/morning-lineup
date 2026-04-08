@@ -65,7 +65,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
 </div>
 <script>
 var teams = __TEAMS_JSON__;
-var LOGO = "https://www.mlb.com/assets/images/team/166x166/t";
+var LOGO = "https://www.mlbstatic.com/team-logos/team-cap-on-dark/";
 
 var divOrder = [
   {league:"American League",divs:["AL East","AL Central","AL West"]},
@@ -105,7 +105,7 @@ for (var li = 0; li < divOrder.length; li++) {
       a.href = t.slug + "/";
       a.style.borderLeftColor = t.colors.primary;
       a.innerHTML =
-        '<img class="team-logo" src="' + LOGO + t.id + '.png" alt="" loading="lazy">' +
+        '<img class="team-logo" src="' + LOGO + t.id + '.svg" alt="" loading="lazy">' +
         '<div class="team-info"><div class="team-name">' + t.full_name + '</div></div>';
       list.appendChild(a);
     }
