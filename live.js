@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var CUBS_ID = 112;
+  var CUBS_ID = window.TEAM_ID || 112;
   var API = "https://statsapi.mlb.com/api/v1";
   var LIVE_API = "https://statsapi.mlb.com/api/v1.1";
   var POLL_MS = 20000;
@@ -306,7 +306,7 @@
     if (!container) return;
     container.innerHTML =
       '<div class="live-widget idle">' +
-        '<div class="idle-msg">No Cubs game in progress</div>' +
+        '<div class="idle-msg">' + (window.TEAM_IDLE_MSG || "No game in progress") + '</div>' +
       "</div>";
   }
 

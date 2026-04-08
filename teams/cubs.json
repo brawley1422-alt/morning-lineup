@@ -1,0 +1,39 @@
+{
+  "id": 112,
+  "name": "Cubs",
+  "full_name": "Chicago Cubs",
+  "abbreviation": "CHC",
+  "division_id": 205,
+  "division_name": "NL Central",
+  "colors": {
+    "primary": "#0E3386",
+    "primary_hi": "#2a56c4",
+    "accent": "#CC3433",
+    "accent_hi": "#e8544f"
+  },
+  "venue": {
+    "id": 17,
+    "name": "Wrigley Field",
+    "azimuth": 37,
+    "nickname": "The Friendly Confines"
+  },
+  "affiliates": [
+    {"id": 451, "name": "Iowa Cubs", "level": "AAA", "sport_id": 11},
+    {"id": 553, "name": "Knoxville Smokies", "level": "AA", "sport_id": 12},
+    {"id": 550, "name": "South Bend Cubs", "level": "A+", "sport_id": 13},
+    {"id": 521, "name": "Myrtle Beach Pelicans", "level": "A", "sport_id": 14}
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from the Friendly Confines & Beyond",
+    "footer_tag": "A Friendly Confines Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Cubbie blue",
+    "idle_msg": "No Cubs game in progress"
+  },
+  "rivals": {
+    "112": "Cubs",
+    "158": "Brewers",
+    "138": "Cardinals",
+    "113": "Reds",
+    "134": "Pirates"
+  }
+}

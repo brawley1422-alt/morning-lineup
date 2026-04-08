@@ -1,0 +1,39 @@
+{
+  "id": 116,
+  "name": "Tigers",
+  "full_name": "Detroit Tigers",
+  "abbreviation": "DET",
+  "division_id": 202,
+  "division_name": "AL Central",
+  "colors": {
+    "primary": "#0C2340",
+    "primary_hi": "#1d4070",
+    "accent": "#FA4616",
+    "accent_hi": "#ff6a3d"
+  },
+  "venue": {
+    "id": 2394,
+    "name": "Comerica Park",
+    "azimuth": 30,
+    "nickname": "The Corner"
+  },
+  "affiliates": [
+    {"id": 512, "name": "Toledo Mud Hens", "level": "AAA", "sport_id": 11},
+    {"id": 106, "name": "Erie SeaWolves", "level": "AA", "sport_id": 12},
+    {"id": 582, "name": "West Michigan Whitecaps", "level": "A+", "sport_id": 13},
+    {"id": 570, "name": "Lakeland Flying Tigers", "level": "A", "sport_id": 14}
+  ],
+  "branding": {
+    "tagline": "A Daily Dispatch from The Corner & Beyond",
+    "footer_tag": "A Comerica Park Broadsheet",
+    "lede_tone": "like a beat writer who bleeds Midnight Blue and Orange",
+    "idle_msg": "No Tigers game in progress"
+  },
+  "rivals": {
+    "116": "Tigers",
+    "114": "Guardians",
+    "118": "Royals",
+    "142": "Twins",
+    "145": "White Sox"
+  }
+}

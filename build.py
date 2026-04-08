@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-build.py — generate ~/morning-lineup/index.html with real MLB data
-pulled from statsapi.mlb.com. No external deps; stdlib only.
-Run: python3 build.py
+build.py — generate a daily MLB briefing page with real data.
+Supports any team via --team flag (default: cubs).
+Run: python3 build.py --team cubs
 """
 import json
+import sys
 import urllib.request
 import urllib.parse
 from datetime import date, timedelta, datetime, timezone
@@ -14,24 +15,40 @@ try:
     from zoneinfo import ZoneInfo
     CT = ZoneInfo("America/Chicago")
 except (ImportError, KeyError):
-    # Minimal container without tzdata — fall back to CDT (UTC-5)
     CT = timezone(timedelta(hours=-5))
 
-CUBS_ID = 112
-API = "https://statsapi.mlb.com/api/v1"
-OUT = Path(__file__).parent / "index.html"
-STYLE_FILE = Path(__file__).parent / "style.css"
-HISTORY_FILE = Path(__file__).parent / "history.json"
-PROSPECTS_FILE = Path(__file__).parent / "prospects.json"
-DATA_DIR = Path(__file__).parent / "data"
+# ─── team config ────────────────────────────────────────────────────────────
 
-# Cubs minor league affiliates (2026)
-AFFILIATES = [
-    {"id": 451, "name": "Iowa Cubs",          "level": "AAA", "sport_id": 11},
-    {"id": 553, "name": "Knoxville Smokies",  "level": "AA",  "sport_id": 12},
-    {"id": 550, "name": "South Bend Cubs",    "level": "A+",  "sport_id": 13},
-    {"id": 521, "name": "Myrtle Beach Pelicans", "level": "A", "sport_id": 14},
-]
+ROOT = Path(__file__).parent
+
+def load_team_config(team_slug="cubs"):
+    cfg_path = ROOT / "teams" / f"{team_slug}.json"
+    if not cfg_path.exists():
+        print(f"ERROR: team config not found: {cfg_path}", file=sys.stderr)
+        sys.exit(1)
+    cfg = json.loads(cfg_path.read_text())
+    cfg["slug"] = team_slug
+    return cfg
+
+# Parse --team argument
+_team_slug = "cubs"
+for i, a in enumerate(sys.argv):
+    if a == "--team" and i + 1 < len(sys.argv):
+        _team_slug = sys.argv[i + 1]
+
+CFG = load_team_config(_team_slug)
+TEAM_ID = CFG["id"]
+TEAM_NAME = CFG["name"]
+AFFILIATES = CFG["affiliates"]
+DIV_ID = CFG["division_id"]
+DIV_NAME = CFG["division_name"]
+
+API = "https://statsapi.mlb.com/api/v1"
+STYLE_FILE = ROOT / "style.css"
+HISTORY_FILE = ROOT / "teams" / _team_slug / "history.json"
+PROSPECTS_FILE = ROOT / "teams" / _team_slug / "prospects.json"
+DATA_DIR = ROOT / "data"
+OUT = ROOT / _team_slug / "index.html" if _team_slug != "cubs" else ROOT / "index.html"
 
 DIV_ORDER = [
     (201, "AL East"), (202, "AL Central"), (200, "AL West"),
@@ -92,7 +109,7 @@ def load_all():
     cubs_rec = None
     for rec in stand["records"]:
         for tr in rec["teamRecords"]:
-            if tr["team"]["id"] == CUBS_ID:
+            if tr["team"]["id"] == TEAM_ID:
                 cubs_rec = tr
                 break
 
@@ -100,7 +117,7 @@ def load_all():
     end = today + timedelta(days=8)
     sched_next = fetch(
         "/schedule",
-        sportId=1, teamId=CUBS_ID,
+        sportId=1, teamId=TEAM_ID,
         startDate=today.isoformat(), endDate=end.isoformat(),
         hydrate="team,probablePitcher,broadcasts,venue",
     )
@@ -119,8 +136,8 @@ def load_all():
         tg_pk = tg["gamePk"]
         tg_home_id = tg["teams"]["home"]["team"]["id"]
         tg_away_id = tg["teams"]["away"]["team"]["id"]
-        tg_opp_id = tg_away_id if tg_home_id == CUBS_ID else tg_home_id
-        tg_is_home = tg_home_id == CUBS_ID
+        tg_opp_id = tg_away_id if tg_home_id == TEAM_ID else tg_home_id
+        tg_is_home = tg_home_id == TEAM_ID
 
         # Batting order from live feed
         try:
@@ -144,7 +161,7 @@ def load_all():
 
         # Season series: Cubs vs this opponent
         try:
-            ss_url = fetch("/schedule", sportId=1, teamId=CUBS_ID, season=season,
+            ss_url = fetch("/schedule", sportId=1, teamId=TEAM_ID, season=season,
                            startDate=f"{season}-03-20", endDate=today.isoformat(),
                            hydrate="team")
             sw, sl = 0, 0
@@ -155,7 +172,7 @@ def load_all():
                     ga, gh = g["teams"]["away"], g["teams"]["home"]
                     if ga["team"]["id"] != tg_opp_id and gh["team"]["id"] != tg_opp_id:
                         continue
-                    cubs_home = gh["team"]["id"] == CUBS_ID
+                    cubs_home = gh["team"]["id"] == TEAM_ID
                     cs = gh.get("score", 0) if cubs_home else ga.get("score", 0)
                     os_ = ga.get("score", 0) if cubs_home else gh.get("score", 0)
                     if cs > os_:
@@ -189,7 +206,7 @@ def load_all():
     def find_cubs_final(start_day):
         for back in range(0, 8):
             day = start_day - timedelta(days=back)
-            dd = fetch("/schedule", sportId=1, date=day.isoformat(), teamId=CUBS_ID,
+            dd = fetch("/schedule", sportId=1, date=day.isoformat(), teamId=TEAM_ID,
                        hydrate="team,linescore,decisions,probablePitcher,venue")
             if not dd.get("dates"): continue
             for g in dd["dates"][0]["games"]:
@@ -219,25 +236,25 @@ def load_all():
             plays = None
 
     # Cubs injuries (40-man, filter D-codes)
-    roster = fetch(f"/teams/{CUBS_ID}/roster", rosterType="40Man")
+    roster = fetch(f"/teams/{TEAM_ID}/roster", rosterType="40Man")
     injuries = [p for p in roster.get("roster", [])
                 if p.get("status", {}).get("code", "A") != "A"]
 
     # Hot Cubs bats: last 7 games, min 10 PA, sort by OPS
     cubs_hitters = fetch(
-        f"/teams/{CUBS_ID}/roster",
+        f"/teams/{TEAM_ID}/roster",
         rosterType="active",
         hydrate=f"person(stats(type=lastXGames,limit=7,season={season},gameType=R))",
     )
     cubs_pitchers = fetch(
-        f"/teams/{CUBS_ID}/roster",
+        f"/teams/{TEAM_ID}/roster",
         rosterType="active",
         hydrate=f"person(stats(type=lastXGames,limit=7,season={season},gameType=R,group=pitching))",
     )
 
     # Cubs season stats for team leaders
     cubs_season = fetch(
-        f"/teams/{CUBS_ID}/roster",
+        f"/teams/{TEAM_ID}/roster",
         rosterType="active",
         hydrate=f"person(stats(type=season,season={season},gameType=R))",
     )
@@ -293,7 +310,7 @@ def load_all():
     transactions = []
     try:
         tx_start = (today - timedelta(days=7)).isoformat()
-        tx_resp = fetch("/transactions", teamId=CUBS_ID,
+        tx_resp = fetch("/transactions", teamId=TEAM_ID,
                         startDate=tx_start, endDate=today.isoformat())
         skip_types = {"SFA"}  # minor league free agent signings
         for tx in tx_resp.get("transactions", []):
@@ -310,7 +327,7 @@ def load_all():
     if next_games:
         tg = next_games[0]
         tg_home_id = tg["teams"]["home"]["team"]["id"]
-        tg_is_home = tg_home_id == CUBS_ID
+        tg_is_home = tg_home_id == TEAM_ID
         cubs_side = "home" if tg_is_home else "away"
         opp_side = "away" if tg_is_home else "home"
         cubs_pp = tg["teams"][cubs_side].get("probablePitcher", {})
@@ -399,8 +416,8 @@ def render_line_score(game, tmap, game_date=None, yest=None):
     home_ab = abbr(tmap, home_id)
     away_score = game["teams"]["away"].get("score", 0)
     home_score = game["teams"]["home"].get("score", 0)
-    cubs_won = (away_id == CUBS_ID and away_score > home_score) or \
-               (home_id == CUBS_ID and home_score > away_score)
+    cubs_won = (away_id == TEAM_ID and away_score > home_score) or \
+               (home_id == TEAM_ID and home_score > away_score)
     innings = list(game["linescore"].get("innings", []))
     max_inn = max(len(innings), 9)
     # pad to 9
@@ -441,8 +458,8 @@ def render_line_score(game, tmap, game_date=None, yest=None):
     if lp: pitcher_bits.append(f'<span><strong>L</strong><span class="l">{escape(lp)}</span></span>')
     if sv: pitcher_bits.append(f'<span><strong>S</strong><span class="s">{escape(sv)}</span></span>')
 
-    summary_tag = f'W {away_score}-{home_score} at {home_ab}' if (away_id==CUBS_ID and cubs_won) else \
-                  f'L {away_score}-{home_score} at {home_ab}' if away_id==CUBS_ID else \
+    summary_tag = f'W {away_score}-{home_score} at {home_ab}' if (away_id==TEAM_ID and cubs_won) else \
+                  f'L {away_score}-{home_score} at {home_ab}' if away_id==TEAM_ID else \
                   f'W {home_score}-{away_score} vs {away_ab}' if cubs_won else \
                   f'L {home_score}-{away_score} vs {away_ab}'
 
@@ -472,7 +489,7 @@ def render_three_stars(boxscore, game, tmap):
     if not boxscore or not game:
         return '<p class="slang"><em>Three stars unavailable.</em></p>'
     # determine Cubs side
-    cubs_side = "away" if game["teams"]["away"]["team"]["id"]==CUBS_ID else "home"
+    cubs_side = "away" if game["teams"]["away"]["team"]["id"]==TEAM_ID else "home"
     players = boxscore["teams"][cubs_side]["players"]
     # rank hitters by (H + 2B + 2*3B + 3*HR + RBI + SB) as crude productivity
     hitters = []
@@ -560,13 +577,13 @@ def render_key_plays(plays_data, game, tmap):
 def render_nlc_standings(standings_data, tmap):
     recs = []
     for rec in standings_data["records"]:
-        if rec["division"]["id"] == 205:
+        if rec["division"]["id"] == DIV_ID:
             recs = rec["teamRecords"]
             break
     rows = []
     for tr in recs:
         tid = tr["team"]["id"]
-        cls = ' class="cubs"' if tid == CUBS_ID else ''
+        cls = ' class="my-team"' if tid == TEAM_ID else ''
         name = team_name(tmap, tid)
         l10 = next((s for s in tr["records"]["splitRecords"] if s["type"]=="lastTen"), {})
         l10_str = f'{l10.get("wins",0)}-{l10.get("losses",0)}' if l10 else "–"
@@ -678,7 +695,7 @@ def render_next_games(next_games, tmap, today_lineup=None, today_series="", toda
     for idx, g in enumerate(next_games):
         home_id = g["teams"]["home"]["team"]["id"]
         away_id = g["teams"]["away"]["team"]["id"]
-        is_home = home_id == CUBS_ID
+        is_home = home_id == TEAM_ID
         opp_id = away_id if is_home else home_id
         opp_ab = abbr(tmap, opp_id)
         vs = f"vs {opp_ab}" if is_home else f"at {opp_ab}"
@@ -736,7 +753,7 @@ def render_next_games(next_games, tmap, today_lineup=None, today_series="", toda
 
         pitcher_html = ""
         if cubs_p != "TBD":
-            pitcher_html += f'<div class="nx-pitcher"><span class="nx-side">Cubs</span> {escape(cubs_p)}'
+            pitcher_html += f'<div class="nx-pitcher"><span class="nx-side">{TEAM_NAME}</span> {escape(cubs_p)}'
             if cubs_line: pitcher_html += f'<div class="nx-pline">{cubs_line}</div>'
             pitcher_html += '</div>'
         if opp_p != "TBD":
@@ -885,7 +902,7 @@ def render_all_divisions(standings_data, tmap):
         rows = []
         for tr in recs:
             tid = tr["team"]["id"]
-            cls = ' class="cubs"' if tid == CUBS_ID else ''
+            cls = ' class="my-team"' if tid == TEAM_ID else ''
             tn = team_name(tmap, tid)
             gb = tr.get("gamesBack","-")
             if gb in ("-","0.0"): gb = "&mdash;"
@@ -963,13 +980,13 @@ def render_slate_today(games_t, tmap):
     return f'<div class="slate">{"".join(cards)}</div>'
 
 def render_nlc_rivals(games_y, tmap):
-    NLC = {112:"Cubs", 158:"Brewers", 138:"Cardinals", 113:"Reds", 134:"Pirates"}
+    NLC = {int(k): v for k, v in CFG["rivals"].items()}
     cards = []
     for g in games_y:
         aid = g["teams"]["away"]["team"]["id"]; hid = g["teams"]["home"]["team"]["id"]
         tid = None
-        if aid in NLC and aid != CUBS_ID: tid = aid
-        elif hid in NLC and hid != CUBS_ID: tid = hid
+        if aid in NLC and aid != TEAM_ID: tid = aid
+        elif hid in NLC and hid != TEAM_ID: tid = hid
         else: continue
         name = NLC[tid]
         is_away = tid == aid
@@ -987,7 +1004,7 @@ def render_nlc_rivals(games_y, tmap):
         <p>{escape(blurb)}</p>
       </div>""")
     if not cards:
-        cards.append('<div class="rival"><h4>NL Central Rivals</h4><p>All off yesterday.</p></div>')
+        cards.append(f'<div class="rival"><h4>{DIV_NAME} Rivals</h4><p>All off yesterday.</p></div>')
     return f'<div class="rivals">{"".join(cards)}</div>'
 
 def detect_league_news(games_y, standings_data, tmap):
@@ -1340,16 +1357,16 @@ def generate_lede(data):
         home = cg["teams"]["home"]["team"].get("name", "?")
         asc = cg["teams"]["away"].get("score", 0)
         hsc = cg["teams"]["home"].get("score", 0)
-        parts.append(f"Cubs game: {away} {asc}, {home} {hsc}")
+        parts.append(f"{TEAM_NAME} game: {away} {asc}, {home} {hsc}")
     else:
-        parts.append("No Cubs game yesterday.")
+        parts.append(f"No {TEAM_NAME} game yesterday.")
 
     cr = data.get("cubs_rec")
     if cr:
-        parts.append(f"Cubs record: {cr['wins']}-{cr['losses']}, {cr.get('gamesBack', '?')} GB in NL Central")
+        parts.append(f"{TEAM_NAME} record: {cr['wins']}-{cr['losses']}, {cr.get('gamesBack', '?')} GB in {DIV_NAME}")
 
-    prompt = f"""Write a 3-4 sentence editorial lede for a Cubs fan newspaper called "The Morning Lineup."
-Tone: witty, opinionated, knowledgeable — like a beat writer who bleeds Cubbie blue.
+    prompt = f"""Write a 3-4 sentence editorial lede for a {TEAM_NAME} fan newspaper called "The Morning Lineup."
+Tone: witty, opinionated, knowledgeable — {CFG['branding']['lede_tone']}.
 Keep it concise and punchy. No cliches. Reference specific details.
 Do NOT use any thinking tags or meta-commentary. Just write the paragraph directly.
 
@@ -1457,7 +1474,7 @@ def render_scouting_report(scout_data, next_games, tmap):
         tg = next_games[0]
         home_id = tg["teams"]["home"]["team"]["id"]
         away_id = tg["teams"]["away"]["team"]["id"]
-        is_home = home_id == CUBS_ID
+        is_home = home_id == TEAM_ID
         opp_abbr = abbr(tmap, away_id if is_home else home_id)
         venue = tg.get("venue", {}).get("name", "")
         time_str = fmt_time_ct(tg.get("gameDate", ""))
@@ -1466,9 +1483,9 @@ def render_scouting_report(scout_data, next_games, tmap):
 
     return f"""{game_ctx}
     <div class="matchup-vs">
-        {_sp_card(cubs_sp, "Cubs")}
+        {_sp_card(cubs_sp, TEAM_NAME)}
         <div class="vs-divider">VS</div>
-        {_sp_card(opp_sp, abbr(tmap, next_games[0]["teams"]["away" if next_games[0]["teams"]["home"]["team"]["id"] == CUBS_ID else "home"]["team"]["id"]) if next_games else "OPP")}
+        {_sp_card(opp_sp, abbr(tmap, next_games[0]["teams"]["away" if next_games[0]["teams"]["home"]["team"]["id"] == TEAM_ID else "home"]["team"]["id"]) if next_games else "OPP")}
     </div>"""
 
 
@@ -1529,7 +1546,7 @@ def render_stretch(cubs_rec):
         <span class="pulse-wl">{w}&ndash;{l}</span>
         <span class="pulse-pct">{pct}</span>
         <span class="pulse-gb">{gb} GB</span>
-        <span class="pulse-rank">{rank}{_ordinal(rank)} NL Central</span>
+        <span class="pulse-rank">{rank}{_ordinal(rank)} {DIV_NAME}</span>
         {f'<span class="pulse-streak">{streak}</span>' if streak else ''}
     </div>
     <div class="pulse-diff">
@@ -1594,7 +1611,15 @@ def render_history(history_items):
 
 # ─── page assembly ──────────────────────────────────────────────────────────
 
-CSS = STYLE_FILE.read_text(encoding="utf-8")
+_css_raw = STYLE_FILE.read_text(encoding="utf-8")
+# Inject team colors into CSS variables
+_colors = CFG["colors"]
+_color_overrides = (
+    f'--team-primary:{_colors["primary"]};--team-primary-hi:{_colors["primary_hi"]};'
+    f'--team-accent:{_colors["accent"]};--team-accent-hi:{_colors["accent_hi"]};'
+)
+CSS = _css_raw.replace("--team-primary:#0E3386;--team-primary-hi:#2a56c4;", f"--team-primary:{_colors['primary']};--team-primary-hi:{_colors['primary_hi']};")
+CSS = CSS.replace("--team-accent:#CC3433;--team-accent-hi:#e8544f;", f"--team-accent:{_colors['accent']};--team-accent-hi:{_colors['accent_hi']};")
 
 
 def page(data):
@@ -1608,7 +1633,7 @@ def page(data):
         cubs_record_str = f'{cr["wins"]}&ndash;{cr["losses"]}'
         if dr:
             suffix = {"1":"st","2":"nd","3":"rd"}.get(dr, "th")
-            cubs_record_str += f' &middot; {dr}{suffix} NL Central'
+            cubs_record_str += f' &middot; {dr}{suffix} {DIV_NAME}'
 
     line_out = render_line_score(data["cubs_game"], data["tmap"], data.get("cubs_game_date"), y)
     if isinstance(line_out, tuple):
@@ -1681,7 +1706,7 @@ def page(data):
 <header class="masthead">
   <div class="kicker">
     <span>Vol. {t.year - 2023} &middot; <span class="vol">No. {vol_no:03d}</span></span>
-    <span>A Daily Dispatch from the Friendly Confines &amp; Beyond</span>
+    <span>{CFG['branding']['tagline']}</span>
     <span>Est. 2024</span>
   </div>
   <h1>
@@ -1690,7 +1715,7 @@ def page(data):
   </h1>
   <div class="dek">
     <span class="item"><span class="label">{t.strftime("%a")}</span><span class="val">{t.strftime("%b")} {t.day}, {t.year}</span></span>
-    <span class="item"><span class="label">Cubs</span><span class="rec">{cubs_record_str}</span></span>
+    <span class="item"><span class="label">{TEAM_NAME}</span><span class="rec">{cubs_record_str}</span></span>
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
@@ -1699,15 +1724,15 @@ def page(data):
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
     <ol>
-      <li><a href="#cubs">The Cubs</a></li>
+      <li><a href="#team">The {TEAM_NAME}</a></li>
       {'<li><a href="#scout">Scouting Report</a></li>' if scout_html else ''}
       <li><a href="#pulse">The Stretch</a></li>
       <li><a href="#pressbox">The Pressbox</a></li>
       <li><a href="#farm">Down on the Farm</a></li>
       <li><a href="#today">Today&rsquo;s Slate</a></li>
-      <li><a href="#nlc">NL Central</a></li>
+      <li><a href="#div">{DIV_NAME}</a></li>
       <li><a href="#league">Around the League</a></li>
-      <li><a href="#history">Cubs History</a></li>
+      <li><a href="#history">{TEAM_NAME} History</a></li>
     </ol>
   </nav>
 
@@ -1715,10 +1740,10 @@ def page(data):
 
   <div id="live-game"></div>
 
-  <section id="cubs" open>
+  <section id="team" open>
     <summary>
       <span class="num">01</span>
-      <span class="h">The Cubs</span>
+      <span class="h">The {TEAM_NAME}</span>
       <span class="tag">{escape(summary_tag)}</span>
       <span class="chev">&#9656;</span>
     </summary>
@@ -1727,7 +1752,7 @@ def page(data):
     {three_stars}
     {key_plays}
     {scorecard_embed}
-    <h3>Cubs Leaders</h3>
+    <h3>{TEAM_NAME} Leaders</h3>
     {cubs_leaders_html}
     <h3>Next Games</h3>
     {next_games_html}
@@ -1785,10 +1810,10 @@ def page(data):
     {slate_html}
   </section>
 
-  <section id="nlc" open>
+  <section id="div" open>
     <summary>
       <span class="num">{"07" if scout_html else "06"}</span>
-      <span class="h">NL Central</span>
+      <span class="h">{DIV_NAME}</span>
       <span class="tag">Rivals &middot; Yesterday</span>
       <span class="chev">&#9656;</span>
     </summary>
@@ -1819,7 +1844,7 @@ def page(data):
   <section id="history" open>
     <summary>
       <span class="num">{"09" if scout_html else "08"}</span>
-      <span class="h">This Day in Cubs History</span>
+      <span class="h">This Day in {TEAM_NAME} History</span>
       <span class="tag">{t.strftime("%b ")}{t.day}</span>
       <span class="chev">&#9656;</span>
     </summary>
@@ -1830,7 +1855,7 @@ def page(data):
 </div>
 
 <footer class="foot">
-  <span>The Morning Lineup &middot; <span class="flag">A Friendly Confines Broadsheet</span></span>
+  <span>The Morning Lineup &middot; <span class="flag">{CFG['branding']['footer_tag']}</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
   <span>Filed {filed}</span>
 </footer>
@@ -1861,6 +1886,7 @@ def page(data):
   }});
 }})();
 </script>
+<script>var TEAM_ID={TEAM_ID};var TEAM_IDLE_MSG="{CFG['branding']['idle_msg']}";</script>
 <script src="live.js"></script>
 <script>
 window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});
@@ -1893,5 +1919,6 @@ if __name__ == "__main__":
     save_data_ledger(data)
     print("Rendering page …", flush=True)
     html = page(data)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(html, encoding="utf-8")
     print(f"Wrote {OUT} ({len(html):,} bytes)")
