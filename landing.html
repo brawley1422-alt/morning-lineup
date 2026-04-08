@@ -59,7 +59,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
   <div class="foot">The Morning Lineup &middot; <span class="flag">Data: MLB Stats API</span></div>
 </div>
 <script>
-var teams = [{"slug": "cubs", "full_name": "Chicago Cubs", "division_name": "NL Central", "colors": {"primary": "#0E3386", "primary_hi": "#2a56c4", "accent": "#CC3433", "accent_hi": "#e8544f"}}, {"slug": "tigers", "full_name": "Detroit Tigers", "division_name": "AL Central", "colors": {"primary": "#0C2340", "primary_hi": "#1d4070", "accent": "#FA4616", "accent_hi": "#ff6a3d"}}];
+var teams = __TEAMS_JSON__;
 var grid = document.getElementById("teams");
 teams.sort(function(a,b){ return a.full_name.localeCompare(b.full_name); });
 for (var i = 0; i < teams.length; i++) {

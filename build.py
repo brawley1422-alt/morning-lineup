@@ -48,7 +48,7 @@ STYLE_FILE = ROOT / "style.css"
 HISTORY_FILE = ROOT / "teams" / _team_slug / "history.json"
 PROSPECTS_FILE = ROOT / "teams" / _team_slug / "prospects.json"
 DATA_DIR = ROOT / "data"
-OUT = ROOT / _team_slug / "index.html" if _team_slug != "cubs" else ROOT / "index.html"
+OUT = ROOT / _team_slug / "index.html"
 
 DIV_ORDER = [
     (201, "AL East"), (202, "AL Central"), (200, "AL West"),
@@ -1913,12 +1913,34 @@ def save_data_ledger(data):
     out.write_text(json.dumps(data, default=_json_default, ensure_ascii=False), encoding="utf-8")
     print(f"Saved data ledger → {out.name} ({out.stat().st_size:,} bytes)")
 
+def build_landing():
+    """Generate landing page from all team configs."""
+    teams_dir = ROOT / "teams"
+    teams = []
+    for cfg_file in sorted(teams_dir.glob("*.json")):
+        cfg = json.loads(cfg_file.read_text())
+        cfg["slug"] = cfg_file.stem
+        teams.append({
+            "slug": cfg["slug"],
+            "full_name": cfg["full_name"],
+            "division_name": cfg["division_name"],
+            "colors": cfg["colors"],
+        })
+    template = (ROOT / "landing.html").read_text(encoding="utf-8")
+    html = template.replace("__TEAMS_JSON__", json.dumps(teams))
+    out = ROOT / "index.html"
+    out.write_text(html, encoding="utf-8")
+    print(f"Wrote landing page → {out} ({len(html):,} bytes)")
+
 if __name__ == "__main__":
-    print("Fetching MLB data …", flush=True)
-    data = load_all()
-    save_data_ledger(data)
-    print("Rendering page …", flush=True)
-    html = page(data)
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(html, encoding="utf-8")
-    print(f"Wrote {OUT} ({len(html):,} bytes)")
+    if "--landing" in sys.argv:
+        build_landing()
+    else:
+        print("Fetching MLB data …", flush=True)
+        data = load_all()
+        save_data_ledger(data)
+        print("Rendering page …", flush=True)
+        html = page(data)
+        OUT.parent.mkdir(parents=True, exist_ok=True)
+        OUT.write_text(html, encoding="utf-8")
+        print(f"Wrote {OUT} ({len(html):,} bytes)")
