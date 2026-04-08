@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-build.py — generate ~/Downloads/morning-lineup/index.html with real MLB data
+build.py — generate ~/morning-lineup/index.html with real MLB data
 pulled from statsapi.mlb.com. No external deps; stdlib only.
 Run: python3 build.py
 """
@@ -10,9 +10,12 @@ import urllib.parse
 from datetime import date, timedelta, datetime, timezone
 from pathlib import Path
 from html import escape
-from zoneinfo import ZoneInfo
-
-CT = ZoneInfo("America/Chicago")
+try:
+    from zoneinfo import ZoneInfo
+    CT = ZoneInfo("America/Chicago")
+except (ImportError, KeyError):
+    # Minimal container without tzdata — fall back to CDT (UTC-5)
+    CT = timezone(timedelta(hours=-5))
 
 CUBS_ID = 112
 API = "https://statsapi.mlb.com/api/v1"
@@ -50,7 +53,7 @@ def teams_map():
 # ─── data gathering ──────────────────────────────────────────────────────────
 
 def load_all():
-    today = date.today()
+    today = datetime.now(tz=CT).date()
     yest = today - timedelta(days=1)
     season = today.year
     tmap = teams_map()

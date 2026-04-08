@@ -7,8 +7,14 @@ Env: GITHUB_TOKEN (fine-grained PAT with Contents:RW on this repo).
 Run AFTER build.py, from the folder containing the built index.html.
 """
 import base64, json, os, sys, urllib.request, urllib.error
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+
+try:
+    from zoneinfo import ZoneInfo
+    CT = ZoneInfo("America/Chicago")
+except (ImportError, KeyError):
+    CT = timezone(timedelta(hours=-5))
 
 OWNER = "brawley1422-alt"
 REPO  = "morning-lineup"
@@ -34,7 +40,7 @@ def gh(method, path, body=None):
 
 # 1) read live index.html → content + sha
 current = gh("GET", "/index.html")
-archive_name = (date.today() - timedelta(days=1)).isoformat()
+archive_name = (datetime.now(tz=CT).date() - timedelta(days=1)).isoformat()
 
 # 2) archive it (content is already base64 from GitHub)
 try:
