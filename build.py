@@ -563,7 +563,9 @@ def render_scoreboard_yest(games_y, tmap):
         hs = g["teams"]["home"].get("score",0)
         winner_ab = aa if as_ > hs else ha
         wp = g.get("decisions",{}).get("winner",{}).get("fullName","").split()[-1] if g.get("decisions") else ""
-        rows.append(f'<tr><td class="name">{escape(aa)}</td><td class="num">{as_}</td>'
+        pk = g.get("gamePk", "")
+        rows.append(f'<tr class="scorecard-link" data-href="scorecard/?game={pk}">'
+                    f'<td class="name">{escape(aa)}</td><td class="num">{as_}</td>'
                     f'<td class="name">{escape(ha)}</td><td class="num">{hs}</td>'
                     f'<td class="num w">{escape(winner_ab)}</td><td>{escape(wp)}</td></tr>')
     return f"""<div class="tblwrap"><table class="data">
@@ -1143,6 +1145,11 @@ footer.foot .flag{color:var(--gold)}
 .scorecard-expand[open] .scorecard-toggle{background:var(--gold-dim);color:var(--ink)}
 .scorecard-expand summary:hover .scorecard-toggle{background:var(--gold-dim);color:var(--ink)}
 .scorecard-frame{width:100%;min-height:600px;border:none;margin-top:12px;border-radius:3px}
+tr.scorecard-link{cursor:pointer;transition:background .12s}
+tr.scorecard-link:hover{background:rgba(201,162,74,.1)}
+tr.scorecard-link:hover td{color:var(--gold) !important}
+.scorecard-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--cond);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-dim);padding:6px 16px;border-radius:3px;text-decoration:none;transition:background .15s,color .15s;margin:12px 0}
+.scorecard-btn:hover{background:var(--gold-dim);color:var(--ink)}
 """
 
 def page(data):
@@ -1321,6 +1328,7 @@ def page(data):
     {league_news_html}
     <h3>Yesterday&rsquo;s Scoreboard</h3>
     {scoreboard_yest}
+    <a href="scorecard/" class="scorecard-btn">Browse All Scorecards &rsaquo;</a>
     <h3>Standings &mdash; All Six Divisions</h3>
     {all_div}
     <h3>League Leaders</h3>
@@ -1365,7 +1373,10 @@ def page(data):
 }})();
 </script>
 <script src="live.js"></script>
-<script>window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});</script>
+<script>
+window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});
+document.addEventListener("click",function(e){{var tr=e.target.closest("tr.scorecard-link");if(tr){{var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}}}});
+</script>
 
 </body>
 </html>"""

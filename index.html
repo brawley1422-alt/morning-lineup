@@ -203,6 +203,11 @@ footer.foot .flag{color:var(--gold)}
 .scorecard-expand[open] .scorecard-toggle{background:var(--gold-dim);color:var(--ink)}
 .scorecard-expand summary:hover .scorecard-toggle{background:var(--gold-dim);color:var(--ink)}
 .scorecard-frame{width:100%;min-height:600px;border:none;margin-top:12px;border-radius:3px}
+tr.scorecard-link{cursor:pointer;transition:background .12s}
+tr.scorecard-link:hover{background:rgba(201,162,74,.1)}
+tr.scorecard-link:hover td{color:var(--gold) !important}
+.scorecard-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--cond);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-dim);padding:6px 16px;border-radius:3px;text-decoration:none;transition:background .15s,color .15s;margin:12px 0}
+.scorecard-btn:hover{background:var(--gold-dim);color:var(--ink)}
 </style>
 </head>
 <body>
@@ -302,13 +307,13 @@ footer.foot .flag{color:var(--gold)}
         <div class="time">5:40 CT</div>
       </div><div class="g">
         <div class="day">Fri, Apr 10 &middot; vs PIT</div>
-        <div class="vs">TBD vs TBD</div>
-        <div class="prob">TBD &middot; TBD</div>
+        <div class="vs">TBD vs Mlodzinski</div>
+        <div class="prob">TBD &middot; Carmen Mlodzinski</div>
         <div class="time">1:20 CT</div>
       </div><div class="g">
         <div class="day">Sat, Apr 11 &middot; vs PIT</div>
-        <div class="vs">TBD vs TBD</div>
-        <div class="prob">TBD &middot; TBD</div>
+        <div class="vs">TBD vs Ashcraft</div>
+        <div class="prob">TBD &middot; Braxton Ashcraft</div>
         <div class="time">1:20 CT</div>
       </div></div>
     <h3>Form Guide (Last 7 Days)</h3>
@@ -461,7 +466,8 @@ footer.foot .flag{color:var(--gold)}
     <h3>Yesterday&rsquo;s Scoreboard</h3>
     <div class="tblwrap"><table class="data">
     <thead><tr><th>Away</th><th></th><th>Home</th><th></th><th>W</th><th>WP</th></tr></thead>
-    <tbody><tr><td class="name">KC</td><td class="num">1</td><td class="name">CLE</td><td class="num">2</td><td class="num w">CLE</td><td>Smith</td></tr><tr><td class="name">BAL</td><td class="num">4</td><td class="name">CWS</td><td class="num">2</td><td class="num w">BAL</td><td>Cano</td></tr><tr><td class="name">AZ</td><td class="num">3</td><td class="name">NYM</td><td class="num">4</td><td class="num w">NYM</td><td>Weaver</td></tr><tr><td class="name">SD</td><td class="num">1</td><td class="name">PIT</td><td class="num">7</td><td class="num w">PIT</td><td>Skenes</td></tr><tr><td class="name">CHC</td><td class="num">9</td><td class="name">TB</td><td class="num">2</td><td class="num w">CHC</td><td>Assad</td></tr><tr><td class="name">CIN</td><td class="num">6</td><td class="name">MIA</td><td class="num">3</td><td class="num w">CIN</td><td>Pagán</td></tr><tr><td class="name">STL</td><td class="num">7</td><td class="name">WSH</td><td class="num">6</td><td class="num w">STL</td><td>Soriano</td></tr><tr><td class="name">MIL</td><td class="num">2</td><td class="name">BOS</td><td class="num">3</td><td class="num w">BOS</td><td>Crochet</td></tr><tr><td class="name">ATH</td><td class="num">3</td><td class="name">NYY</td><td class="num">5</td><td class="num w">NYY</td><td>Cruz</td></tr><tr><td class="name">LAD</td><td class="num">4</td><td class="name">TOR</td><td class="num">1</td><td class="num w">LAD</td><td>Yamamoto</td></tr><tr><td class="name">DET</td><td class="num">2</td><td class="name">MIN</td><td class="num">4</td><td class="num w">MIN</td><td>Bradley</td></tr><tr><td class="name">SEA</td><td class="num">2</td><td class="name">TEX</td><td class="num">3</td><td class="num w">TEX</td><td>Eovaldi</td></tr><tr><td class="name">HOU</td><td class="num">1</td><td class="name">COL</td><td class="num">5</td><td class="num w">COL</td><td>Freeland</td></tr><tr><td class="name">ATL</td><td class="num">7</td><td class="name">LAA</td><td class="num">2</td><td class="num w">ATL</td><td>Kinley</td></tr><tr><td class="name">PHI</td><td class="num">0</td><td class="name">SF</td><td class="num">6</td><td class="num w">SF</td><td>Ray</td></tr></tbody></table></div>
+    <tbody><tr class="scorecard-link" data-href="scorecard/?game=824457"><td class="name">KC</td><td class="num">1</td><td class="name">CLE</td><td class="num">2</td><td class="num w">CLE</td><td>Smith</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824618"><td class="name">BAL</td><td class="num">4</td><td class="name">CWS</td><td class="num">2</td><td class="num w">BAL</td><td>Cano</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823648"><td class="name">AZ</td><td class="num">3</td><td class="name">NYM</td><td class="num">4</td><td class="num w">NYM</td><td>Weaver</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823402"><td class="name">SD</td><td class="num">1</td><td class="name">PIT</td><td class="num">7</td><td class="num w">PIT</td><td>Skenes</td></tr><tr class="scorecard-link" data-href="scorecard/?game=822999"><td class="name">CHC</td><td class="num">9</td><td class="name">TB</td><td class="num">2</td><td class="num w">CHC</td><td>Assad</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823887"><td class="name">CIN</td><td class="num">6</td><td class="name">MIA</td><td class="num">3</td><td class="num w">CIN</td><td>Pagán</td></tr><tr class="scorecard-link" data-href="scorecard/?game=822754"><td class="name">STL</td><td class="num">7</td><td class="name">WSH</td><td class="num">6</td><td class="num w">STL</td><td>Soriano</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824780"><td class="name">MIL</td><td class="num">2</td><td class="name">BOS</td><td class="num">3</td><td class="num w">BOS</td><td>Crochet</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823567"><td class="name">ATH</td><td class="num">3</td><td class="name">NYY</td><td class="num">5</td><td class="num w">NYY</td><td>Cruz</td></tr><tr class="scorecard-link" data-href="scorecard/?game=822831"><td class="name">LAD</td><td class="num">4</td><td class="name">TOR</td><td class="num">1</td><td class="num w">LAD</td><td>Yamamoto</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823727"><td class="name">DET</td><td class="num">2</td><td class="name">MIN</td><td class="num">4</td><td class="num w">MIN</td><td>Bradley</td></tr><tr class="scorecard-link" data-href="scorecard/?game=822916"><td class="name">SEA</td><td class="num">2</td><td class="name">TEX</td><td class="num">3</td><td class="num w">TEX</td><td>Eovaldi</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824375"><td class="name">HOU</td><td class="num">1</td><td class="name">COL</td><td class="num">5</td><td class="num w">COL</td><td>Freeland</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824051"><td class="name">ATL</td><td class="num">7</td><td class="name">LAA</td><td class="num">2</td><td class="num w">ATL</td><td>Kinley</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823235"><td class="name">PHI</td><td class="num">0</td><td class="name">SF</td><td class="num">6</td><td class="num w">SF</td><td>Ray</td></tr></tbody></table></div>
+    <a href="scorecard/" class="scorecard-btn">Browse All Scorecards &rsaquo;</a>
     <h3>Standings &mdash; All Six Divisions</h3>
     <div class="two"><div><h4>AL East</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
@@ -501,7 +507,7 @@ footer.foot .flag{color:var(--gold)}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Friendly Confines Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/08/26 09:14 CT</span>
+  <span>Filed 04/08/26 09:20 CT</span>
 </footer>
 
 <script>
@@ -531,7 +537,10 @@ footer.foot .flag{color:var(--gold)}
 })();
 </script>
 <script src="live.js"></script>
-<script>window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});</script>
+<script>
+window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
+document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});
+</script>
 
 </body>
 </html>
