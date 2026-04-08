@@ -55,8 +55,8 @@
         html += '<tr class="' + (isFirst ? "slot-first" : "") + '">';
 
         // Player cell
-        html += '<td class="player-cell' + (isSub ? " sub-row" : "") + '">';
-        html += '<span class="name">' + esc(batter.name) + '</span>';
+        html += '<td class="player-cell' + (isSub ? " sub-row" : "") + '" data-pid="' + batter.id + '">';
+        html += '<span class="name clickable-name" data-pid="' + batter.id + '" data-side="' + side + '">' + esc(batter.name) + '</span>';
         html += '<span class="pos">' + esc(batter.position) + '</span>';
         if (isSub) {
           html += '<span class="sub-label">PH</span>';

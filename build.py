@@ -645,10 +645,18 @@ def render_slate_today(games_t, tmap):
         hp = g["teams"]["home"].get("probablePitcher",{}) or {}
         ap_n = ap.get("fullName","TBD").split()[-1] if ap else "TBD"
         hp_n = hp.get("fullName","TBD").split()[-1] if hp else "TBD"
+        # Broadcast info
+        bc = g.get("broadcasts", [])
+        bc_parts = []
+        for b in bc:
+            if b.get("type") == "TV" and b.get("language","en") == "en":
+                bc_parts.append(escape(b.get("name","")))
+        bc_str = f'<div class="bc">{" · ".join(bc_parts)}</div>' if bc_parts else ""
         cards.append(f"""<div class="g" data-gpk="{g['gamePk']}">
         <div class="matchup">{aa} @ {ha}</div>
         <div class="time">{time_str}</div>
         <div class="probs">{escape(ap_n)} vs {escape(hp_n)}</div>
+        {bc_str}
       </div>""")
     return f'<div class="slate">{"".join(cards)}</div>'
 
@@ -1106,6 +1114,7 @@ dl.transac dd{margin:3px 0 0;color:var(--paper-dim)}
 .slate .matchup{font-family:var(--cond);text-transform:uppercase;font-size:13px;color:var(--paper);letter-spacing:.04em}
 .slate .time{font-family:var(--mono);font-size:11px;color:var(--gold);text-align:right}
 .slate .probs{font-family:var(--mono);font-size:10.5px;color:var(--paper-mute);grid-column:1/-1}
+.slate .bc{font-family:var(--mono);font-size:9.5px;color:var(--paper-mute);grid-column:1/-1;opacity:.7}
 footer.foot{max-width:var(--maxw);margin:40px auto 0;padding:20px;border-top:6px double var(--paper);position:relative;z-index:2;font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--paper-mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 footer.foot .flag{color:var(--gold)}
 #live-game{margin:0 0 28px}

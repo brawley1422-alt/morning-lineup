@@ -18,7 +18,7 @@
       var key = "sched:" + dateStr;
       if (cache[key]) return Promise.resolve(cache[key]);
       var url = API + "/schedule?sportId=1&date=" + dateStr +
-        "&hydrate=team,linescore,decisions";
+        "&hydrate=team,linescore,decisions,broadcasts";
       return fetchJSON(url).then(function (data) {
         var games = (data.dates && data.dates[0] && data.dates[0].games) || [];
         cache[key] = games;
@@ -38,6 +38,34 @@
 
     fetchGameFeedLive: function (gamePk) {
       var url = LIVE_API + "/game/" + gamePk + "/feed/live?t=" + Date.now();
+      return fetchJSON(url);
+    },
+
+    fetchVenue: function (venueId) {
+      var key = "venue:" + venueId;
+      if (cache[key]) return Promise.resolve(cache[key]);
+      var url = API + "/venues/" + venueId + "?hydrate=location";
+      return fetchJSON(url).then(function (data) {
+        var v = (data.venues && data.venues[0]) || {};
+        cache[key] = v;
+        return v;
+      });
+    },
+
+    fetchWeather: function (lat, lon) {
+      var url = "https://api.open-meteo.com/v1/forecast?latitude=" + lat +
+        "&longitude=" + lon + "&current=temperature_2m,weathercode,windspeed_10m,winddirection_10m" +
+        "&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=America/Chicago";
+      return fetchJSON(url);
+    },
+
+    fetchPlayerStats: function (playerId, opposingPitcherId, opposingTeamId, season) {
+      season = season || new Date().getFullYear();
+      var url = API + "/people/" + playerId + "/stats?stats=season,vsPlayer,vsTeam,byMonth,lastXGames" +
+        "&season=" + season + "&group=hitting,pitching" +
+        "&opposingPlayerId=" + (opposingPitcherId || 0) +
+        "&opposingTeamId=" + (opposingTeamId || 0) +
+        "&limit=7&gameType=R";
       return fetchJSON(url);
     }
   };

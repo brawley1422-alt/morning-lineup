@@ -553,6 +553,160 @@ body {
   .game-cards { grid-template-columns: 1fr; }
 }
 
+/* ── Panels (Broadcasts, Weather, Stats) ── */
+.panel {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: var(--ink-2);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 10px 16px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--paper-dim);
+  vertical-align: top;
+}
+.panel-header {
+  font-family: var(--cond);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper-mute);
+  margin-right: 8px;
+}
+.panel-body { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+#panels-area { margin-bottom: 16px; }
+
+/* Broadcast Panel */
+.bc-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.bc-icon {
+  font-family: var(--cond);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--rule-hi);
+  color: var(--paper);
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+.bc-lang {
+  font-size: 9px;
+  color: var(--paper-mute);
+  background: var(--ink-3);
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+/* Weather Panel */
+.wx-temp { font-size: 16px; font-weight: 700; color: var(--paper); }
+.wx-cond { color: var(--paper-dim); }
+.wx-wind { color: var(--paper-mute); }
+.wx-wrigley {
+  width: 100%;
+  margin-top: 4px;
+  font-family: var(--body);
+  font-size: 12px;
+  color: var(--gold);
+  font-style: italic;
+}
+
+/* Player Stats Panel */
+.clickable-name {
+  cursor: pointer;
+  transition: color 0.12s;
+}
+.clickable-name:hover {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.player-panel-row td {
+  padding: 0 !important;
+  border-bottom: 1px solid var(--rule-hi) !important;
+}
+.player-stats-panel {
+  background: var(--ink-2);
+  border-top: 1px solid var(--gold-dim);
+  border-bottom: 1px solid var(--gold-dim);
+}
+.pstat-content {
+  padding: 12px 16px;
+}
+.pstat-name {
+  font-family: var(--cond);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--paper);
+  margin-bottom: 8px;
+}
+.pstat-section { margin-bottom: 8px; }
+.pstat-label {
+  font-family: var(--cond);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper-mute);
+  margin-bottom: 3px;
+}
+.pstat-line {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--paper-dim);
+}
+.pstat-item { white-space: nowrap; }
+.pstat-key {
+  color: var(--paper-mute);
+  font-size: 10px;
+  margin-right: 2px;
+}
+.pstat-more {
+  margin-top: 8px;
+  border-top: 1px dashed var(--rule);
+  padding-top: 6px;
+}
+.pstat-toggle {
+  font-family: var(--cond);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  cursor: pointer;
+  list-style: none;
+}
+.pstat-toggle::-webkit-details-marker { display: none; }
+.pstat-month {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--paper-dim);
+  margin-top: 3px;
+}
+.pstat-month-name {
+  font-family: var(--cond);
+  color: var(--paper-mute);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  min-width: 50px;
+  display: inline-block;
+}
+.panel-loading {
+  padding: 12px 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--paper-mute);
+}
+
 /* ── Live Badge ── */
 @keyframes pulse {
   0%, 100% { opacity: 1; }

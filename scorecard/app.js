@@ -229,7 +229,7 @@
     }
   }
 
-  function renderFull(model) {
+  function renderFull(model, feed) {
     var html = '';
     if (!SC.app.embed) {
       html += '<button class="back-btn" onclick="Scorecard.app.showFinder()">&larr; Back to games</button>';
@@ -238,9 +238,56 @@
       html += '<div class="live-badge"><span class="dot"></span> LIVE</div>';
     }
     html += SC.header.render(model);
+    html += '<div id="panels-area"></div>';
     html += SC.scorebook.render(model);
     mainEl.innerHTML = html;
     currentModel = model;
+
+    // Load panels
+    loadPanels(model, feed);
+    bindPlayerClicks(model);
+  }
+
+  function loadPanels(model, feed) {
+    var panelsArea = document.getElementById("panels-area");
+    if (!panelsArea) return;
+
+    // Broadcasts from the feed
+    var broadcasts = [];
+    if (feed && feed.gameData && feed.gameData.broadcasts) {
+      broadcasts = feed.gameData.broadcasts;
+    }
+    // Also check game object from schedule
+    if (!broadcasts.length && SC.app._currentGameSchedule) {
+      broadcasts = SC.app._currentGameSchedule.broadcasts || [];
+    }
+
+    var html = "";
+    if (broadcasts.length) {
+      html += SC.panels.renderBroadcasts(broadcasts);
+    }
+    panelsArea.innerHTML = html;
+
+    // Load weather async
+    if (model.venueId) {
+      SC.panels.loadWeather(model.venueId, function (wxHtml) {
+        if (wxHtml) {
+          panelsArea.insertAdjacentHTML("beforeend", wxHtml);
+        }
+      });
+    }
+  }
+
+  function bindPlayerClicks(model) {
+    document.addEventListener("click", function handler(e) {
+      var nameEl = e.target.closest(".clickable-name");
+      if (!nameEl) return;
+      var pid = parseInt(nameEl.getAttribute("data-pid"), 10);
+      var side = nameEl.getAttribute("data-side");
+      var playerName = nameEl.textContent;
+      var opposingTeamId = side === "away" ? model.home.team.id : model.away.team.id;
+      SC.panels.togglePlayerPanel(pid, playerName, side, opposingTeamId, model);
+    });
   }
 
   // ── Visibility API ──
@@ -320,7 +367,7 @@
       SC.api.fetchGameFeedLive(gamePk).then(function (feed) {
         var model = SC.parser.parse(feed);
         currentModel = model;
-        renderFull(model);
+        renderFull(model, feed);
 
         if (isLive(model)) {
           updateSituationBar(feed);

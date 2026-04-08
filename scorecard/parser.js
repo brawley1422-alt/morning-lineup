@@ -302,6 +302,7 @@
         time: gd.datetime.time || "",
         ampm: gd.datetime.ampm || "",
         venue: (gd.venue && gd.venue.name) || "",
+        venueId: (gd.venue && gd.venue.id) || null,
         status: gd.status.abstractGameState,
 
         away: {
