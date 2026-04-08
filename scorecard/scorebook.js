@@ -136,12 +136,24 @@
   }
 
   SC.scorebook = {
-    render: function (model) {
-      var html = '<div class="scorebook-spread">';
-      html += renderPage(model.away, model.totalInnings, model.pitchingChanges, "away");
-      html += renderPage(model.home, model.totalInnings, model.pitchingChanges, "home");
-      html += '</div>';
-      return html;
+    render: function (model, embed) {
+      var awayHtml = renderPage(model.away, model.totalInnings, model.pitchingChanges, "away");
+      var homeHtml = renderPage(model.home, model.totalInnings, model.pitchingChanges, "home");
+
+      if (embed) {
+        var awayAbbr = esc(model.away.team.abbreviation);
+        var homeAbbr = esc(model.home.team.abbreviation);
+        return '<div class="scorebook-tabs">' +
+          '<button class="sb-tab active" data-side="away">' + awayAbbr + '</button>' +
+          '<button class="sb-tab" data-side="home">' + homeAbbr + '</button>' +
+          '</div>' +
+          '<div class="scorebook-spread embed-spread">' +
+          '<div class="scorebook-tab-pane active" data-side="away">' + awayHtml + '</div>' +
+          '<div class="scorebook-tab-pane" data-side="home">' + homeHtml + '</div>' +
+          '</div>';
+      }
+
+      return '<div class="scorebook-spread">' + awayHtml + homeHtml + '</div>';
     }
   };
 })();

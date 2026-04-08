@@ -239,9 +239,26 @@
     }
     html += SC.header.render(model);
     html += '<div id="panels-area"></div>';
-    html += SC.scorebook.render(model);
+    html += SC.scorebook.render(model, self.embed);
     mainEl.innerHTML = html;
     currentModel = model;
+
+    // Bind tab switching in embed mode
+    if (self.embed) {
+      var tabs = mainEl.querySelectorAll(".sb-tab");
+      var panes = mainEl.querySelectorAll(".scorebook-tab-pane");
+      for (var ti = 0; ti < tabs.length; ti++) {
+        tabs[ti].addEventListener("click", function () {
+          var side = this.getAttribute("data-side");
+          for (var j = 0; j < tabs.length; j++) { tabs[j].classList.remove("active"); }
+          for (var k = 0; k < panes.length; k++) { panes[k].classList.remove("active"); }
+          this.classList.add("active");
+          for (var m = 0; m < panes.length; m++) {
+            if (panes[m].getAttribute("data-side") === side) panes[m].classList.add("active");
+          }
+        });
+      }
+    }
 
     // Load panels
     loadPanels(model, feed);

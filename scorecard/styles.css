@@ -860,6 +860,48 @@ body.embed-mode { background: transparent; }
 body.embed-mode .masthead { display: none; }
 body.embed-mode #app { padding: 0; max-width: none; }
 
+/* Embed tabs */
+.scorebook-tabs { display: flex; gap: 2px; margin-bottom: 8px; }
+.sb-tab {
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: 12px;
+  padding: 6px 16px;
+  border: 1px solid var(--rule);
+  border-radius: 3px 3px 0 0;
+  background: var(--ink-2);
+  color: var(--paper-mute);
+  cursor: pointer;
+  transition: background .12s, color .12s;
+  border-bottom: none;
+}
+.sb-tab.active {
+  background: var(--ink);
+  color: var(--gold);
+  border-color: var(--rule-hi);
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: -1px;
+  position: relative;
+  z-index: 1;
+}
+.sb-tab:hover { color: var(--paper); }
+
+/* Embed spread: one page at a time */
+.embed-spread { border-top: 1px solid var(--rule-hi); }
+.scorebook-tab-pane { display: none; }
+.scorebook-tab-pane.active { display: block; }
+
+/* Tighter widths in embed mode */
+body.embed-mode .scorebook-grid { min-width: 0; }
+body.embed-mode .scorebook-grid th.inning-header { min-width: 48px; }
+body.embed-mode .scorebook-grid th.stat-header { min-width: 30px; }
+body.embed-mode .scorebook-grid td.stat-cell { min-width: 30px; }
+body.embed-mode .scorebook-grid th.player-header { min-width: 110px; }
+body.embed-mode .scorebook-grid td.player-cell { min-width: 110px; font-size: 11px; }
+body.embed-mode .scorebook-page { overflow-x: hidden; }
+body.embed-mode .diamond-cell svg { width: 48px; height: 48px; }
+
 @media (max-width: 600px) {
   #app { padding: 12px; }
   .diamond-cell svg { width: 48px; height: 48px; }
