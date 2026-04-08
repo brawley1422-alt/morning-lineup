@@ -174,53 +174,60 @@
 
     activePlayerId: null,
 
-    ensureBar: function () {
-      var bar = document.getElementById("player-bar");
-      if (!bar) {
-        bar = document.createElement("div");
-        bar.id = "player-bar";
-        bar.className = "player-bar";
-        bar.innerHTML = '<div class="player-bar-inner" id="player-bar-inner"></div>' +
-          '<button class="player-bar-close" id="player-bar-close">&times;</button>';
-        document.body.appendChild(bar);
-        document.getElementById("player-bar-close").addEventListener("click", function () {
-          SC.panels.closeBar();
+    ensureOverlay: function () {
+      var overlay = document.getElementById("player-overlay");
+      if (!overlay) {
+        overlay = document.createElement("div");
+        overlay.id = "player-overlay";
+        overlay.className = "player-overlay";
+        overlay.innerHTML = '<div class="player-card" id="player-card">' +
+          '<button class="player-card-close" id="player-card-close">&times;</button>' +
+          '<div class="player-card-inner" id="player-card-inner"></div>' +
+          '</div>';
+        document.body.appendChild(overlay);
+
+        // Close on X click
+        document.getElementById("player-card-close").addEventListener("click", function () {
+          SC.panels.closeCard();
+        });
+        // Close on backdrop click
+        overlay.addEventListener("click", function (e) {
+          if (e.target === overlay) SC.panels.closeCard();
         });
       }
-      return bar;
+      return overlay;
     },
 
-    closeBar: function () {
-      var bar = document.getElementById("player-bar");
-      if (bar) {
-        bar.classList.remove("visible");
-        // Highlight off
-        var prev = document.querySelector(".clickable-name.active");
-        if (prev) prev.classList.remove("active");
-      }
+    closeCard: function () {
+      var overlay = document.getElementById("player-overlay");
+      if (overlay) overlay.classList.remove("visible");
+      var prev = document.querySelector(".clickable-name.active");
+      if (prev) prev.classList.remove("active");
       this.activePlayerId = null;
     },
 
     togglePlayerPanel: function (playerId, playerName, side, opposingTeamId, model) {
-      // If same player, toggle off
       if (this.activePlayerId === playerId) {
-        this.closeBar();
+        this.closeCard();
         return;
       }
 
       this.activePlayerId = playerId;
 
-      // Highlight active player name
+      // Highlight active name
       var allNames = document.querySelectorAll(".clickable-name");
       for (var i = 0; i < allNames.length; i++) allNames[i].classList.remove("active");
       var activeNames = document.querySelectorAll('.clickable-name[data-pid="' + playerId + '"]');
       for (var j = 0; j < activeNames.length; j++) activeNames[j].classList.add("active");
 
-      // Show bar with loading state
-      var bar = this.ensureBar();
-      var inner = document.getElementById("player-bar-inner");
-      inner.innerHTML = '<div class="panel-loading">Loading stats for ' + esc(playerName) + '...</div>';
-      bar.classList.add("visible");
+      // Show overlay with loading
+      var overlay = this.ensureOverlay();
+      var inner = document.getElementById("player-card-inner");
+      inner.innerHTML = '<div class="panel-loading">Loading stats...</div>';
+      overlay.classList.add("visible");
+
+      // Scroll to top so card is visible
+      window.scrollTo({ top: 0, behavior: "smooth" });
 
       // Determine opposing pitcher
       var opposingPitcherId = 0;
@@ -234,9 +241,8 @@
         }
       }
 
-      // Fetch and render
       SC.api.fetchPlayerStats(playerId, opposingPitcherId, opposingTeamId).then(function (data) {
-        if (SC.panels.activePlayerId !== playerId) return; // user clicked away
+        if (SC.panels.activePlayerId !== playerId) return;
         inner.innerHTML = SC.panels.renderPlayerStats(data, playerName, opposingPitcherId, opposingTeamId);
       }).catch(function () {
         if (SC.panels.activePlayerId !== playerId) return;
