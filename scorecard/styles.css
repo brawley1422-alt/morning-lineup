@@ -47,6 +47,18 @@ body {
   border-bottom: 2px solid var(--gold-dim);
   margin-bottom: 24px;
 }
+.masthead .lineup-link {
+  display: inline-block;
+  font-family: var(--cond);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: color 0.15s;
+}
+.masthead .lineup-link:hover { color: var(--paper); }
 .masthead h1 {
   font-family: var(--serif);
   font-weight: 900;
