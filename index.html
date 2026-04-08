@@ -151,6 +151,18 @@ dl.transac dd{margin:3px 0 0;color:var(--paper-dim)}
 .minors .res .l{color:var(--loss)}
 .minors .note{font-size:11.5px;color:var(--paper-dim);margin-top:6px;line-height:1.4}
 .prospect-tag{font-family:var(--cond);font-size:9px;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:var(--ink);padding:1px 5px;border-radius:2px;margin-left:2px;font-weight:600}
+.prosp-header{font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:12px;color:var(--gold);margin:20px 0 8px;border-top:1px solid var(--rule);padding-top:14px}
+.prosp-tracker{display:flex;flex-direction:column;gap:1px}
+.prosp-row{display:grid;grid-template-columns:32px 1fr 36px 36px 2fr;align-items:baseline;gap:6px;padding:5px 8px;font-size:12px;border-radius:2px}
+.prosp-row.played{background:var(--ink-2)}
+.prosp-row.dnp{background:transparent;opacity:.45}
+.prosp-rank{font-family:var(--mono);font-size:10px;color:var(--gold);font-weight:600}
+.prosp-name{font-family:var(--serif);color:var(--paper);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prosp-pos{font-family:var(--mono);font-size:10px;color:var(--paper-mute);text-align:center}
+.prosp-lvl{font-family:var(--mono);font-size:10px;color:var(--gold-dim);text-align:center;letter-spacing:.05em}
+.prosp-stat{font-family:var(--mono);font-size:11px;color:var(--paper-dim)}
+.prosp-row.dnp .prosp-stat{font-style:italic;color:var(--paper-mute)}
+@media(max-width:640px){.prosp-row{grid-template-columns:28px 1fr 30px 30px 1.5fr;font-size:11px;gap:4px;padding:4px 6px}}
 .rivals{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media (max-width:640px){.rivals{grid-template-columns:1fr}}
 .rival{background:var(--ink-2);border:1px solid var(--rule);padding:12px 14px;border-radius:2px;border-left:3px solid var(--gold-dim);}
@@ -450,7 +462,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <div class="minors"><div class="lvl" data-lvl="AAA">
         <div class="aff">Iowa Cubs</div>
         <div class="res"><span class="l">L 1&ndash;8</span> vs Storm Chasers</div>
-        <div class="note"><strong>Alcántara</strong> 1-2, 1 HR, 1 RBI. <strong>Jensen</strong> 1.2 IP, 0 ER, 1 K.</div>
+        <div class="note"><strong>Alcántara</strong> <span class="prospect-tag">#4</span> 1-2, 1 HR, 1 RBI. <strong>Jensen</strong> 1.2 IP, 0 ER, 1 K.</div>
       </div><div class="lvl" data-lvl="AA">
         <div class="aff">Knoxville Smokies</div>
         <div class="res"><span class="w">W 14&ndash;6</span> vs Trash Pandas</div>
@@ -458,12 +470,12 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div><div class="lvl" data-lvl="A+">
         <div class="aff">South Bend Cubs</div>
         <div class="res"><span class="l">L 1&ndash;10</span> at Chiefs</div>
-        <div class="note"><strong>Ayers</strong> 2-4, 1 RBI. <strong>Santy</strong> 2.0 IP, 0 ER, 4 K.</div>
+        <div class="note"><strong>Ayers</strong> <span class="prospect-tag">#11</span> 2-4, 1 RBI. <strong>Santy</strong> 2.0 IP, 0 ER, 4 K.</div>
       </div><div class="lvl" data-lvl="A">
         <div class="aff">Myrtle Beach Pelicans</div>
         <div class="res"><span class="w">W 5&ndash;1</span> at Fireflies</div>
         <div class="note"><strong>Lovich</strong> 2-3, 1 RBI. <strong>Hunsaker</strong> 3.0 IP, 0 ER, 5 K.</div>
-      </div></div>
+      </div></div><h3 class="prosp-header">Prospect Watch</h3><div class="prosp-tracker"><div class="prosp-row dnp"><span class="prosp-rank">#2</span><span class="prosp-name">Jaxon Wiggins</span><span class="prosp-pos">RHP</span><span class="prosp-lvl">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row played"><span class="prosp-rank">#4</span><span class="prosp-name">Kevin Alcántara</span><span class="prosp-pos">OF</span><span class="prosp-lvl">AAA</span><span class="prosp-stat">1-2, 1 R, 1 HR, 1 RBI, 1 BB, 1 K</span></div><div class="prosp-row played"><span class="prosp-rank">#5</span><span class="prosp-name">Jefferson Rojas</span><span class="prosp-pos">SS</span><span class="prosp-lvl">AA</span><span class="prosp-stat">2-5, 2 R, 1 HR, 4 RBI, 1 K</span></div><div class="prosp-row played"><span class="prosp-rank">#6</span><span class="prosp-name">Kane Kepley</span><span class="prosp-pos">OF</span><span class="prosp-lvl">A+</span><span class="prosp-stat">2-4, 1 R</span></div><div class="prosp-row played"><span class="prosp-rank">#7</span><span class="prosp-name">Jonathon Long</span><span class="prosp-pos">1B</span><span class="prosp-lvl">AAA</span><span class="prosp-stat">2-4, 1 K</span></div><div class="prosp-row played"><span class="prosp-rank">#8</span><span class="prosp-name">Josiah Hartshorn</span><span class="prosp-pos">OF</span><span class="prosp-lvl">A</span><span class="prosp-stat">1-3, 2 BB</span></div><div class="prosp-row played"><span class="prosp-rank">#9</span><span class="prosp-name">Pedro Ramírez</span><span class="prosp-pos">2B</span><span class="prosp-lvl">AAA</span><span class="prosp-stat">0-4</span></div><div class="prosp-row played"><span class="prosp-rank">#10</span><span class="prosp-name">James Triantos</span><span class="prosp-pos">2B</span><span class="prosp-lvl">AAA</span><span class="prosp-stat">0-4</span></div><div class="prosp-row played"><span class="prosp-rank">#11</span><span class="prosp-name">Owen Ayers</span><span class="prosp-pos">C</span><span class="prosp-lvl">A+</span><span class="prosp-stat">2-4, 1 RBI, 1 K</span></div><div class="prosp-row played"><span class="prosp-rank">#15</span><span class="prosp-name">Cole Mathis</span><span class="prosp-pos">OF</span><span class="prosp-lvl">A</span><span class="prosp-stat">0-2, 1 RBI, 1 BB, 1 K</span></div><div class="prosp-row played"><span class="prosp-rank">#20</span><span class="prosp-name">Ariel Armas</span><span class="prosp-pos">C</span><span class="prosp-lvl">AA</span><span class="prosp-stat">1-4, 1 R, 1 BB, 2 K</span></div><div class="prosp-row played"><span class="prosp-rank">#21</span><span class="prosp-name">Brett Bateman</span><span class="prosp-pos">OF</span><span class="prosp-lvl">AAA</span><span class="prosp-stat">0-3, 3 K</span></div><div class="prosp-row dnp"><span class="prosp-rank">#23</span><span class="prosp-name">Erian Rodriguez</span><span class="prosp-pos">RHP</span><span class="prosp-lvl">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#24</span><span class="prosp-name">Luis Martinez-Gomez</span><span class="prosp-pos">LHP</span><span class="prosp-lvl">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row played"><span class="prosp-rank">#25</span><span class="prosp-name">Angel Cepeda</span><span class="prosp-pos">SS</span><span class="prosp-lvl">A+</span><span class="prosp-stat">0-4, 3 K</span></div></div>
   </section>
 
   <section id="nlc" open>
@@ -548,7 +560,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Friendly Confines Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/08/26 11:26 CT</span>
+  <span>Filed 04/08/26 11:48 CT</span>
 </footer>
 
 <script>

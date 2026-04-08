@@ -1083,7 +1083,74 @@ def render_minors(minors_data, prospects=None):
     losses = finals - wins
     tag = f"{wins}&ndash;{losses}" if finals > 0 else "No games"
 
-    return f'<div class="minors">{"".join(cards)}</div>', tag
+    # Prospect tracker — scan all boxscores for watched prospects
+    prospect_rows = []
+    if prospects:
+        # Build lookup: player_id -> (batting_stats, pitching_stats, aff_name)
+        found = {}
+        for m in minors_data:
+            box = m.get("boxscore")
+            g = m.get("game")
+            if not box or not g or g.get("status", {}).get("abstractGameState") != "Final":
+                continue
+            aff = m["aff"]
+            is_home = g["teams"]["home"]["team"]["id"] == aff["id"]
+            side = "home" if is_home else "away"
+            players = box.get("teams", {}).get(side, {}).get("players", {})
+            for pid_key, p in players.items():
+                player_id = p.get("person", {}).get("id", 0)
+                if player_id in prospects:
+                    bs = p.get("stats", {}).get("batting", {})
+                    ps = p.get("stats", {}).get("pitching", {})
+                    has_bat = bs and bs.get("atBats", 0) > 0
+                    has_pitch = ps and ps.get("inningsPitched") not in (None, "0.0", 0)
+                    if has_bat or has_pitch:
+                        found[player_id] = (bs, ps, aff["level"])
+
+        for pid, pr in sorted(prospects.items(), key=lambda x: x[1]["rank"]):
+            rank = pr["rank"]
+            name = escape(pr["name"])
+            pos = escape(pr["position"])
+            level = escape(pr["level"])
+            if pid in found:
+                bs, ps, game_level = found[pid]
+                stat_parts = []
+                if bs and bs.get("atBats", 0) > 0:
+                    line = f'{bs.get("hits",0)}-{bs.get("atBats",0)}'
+                    extras = []
+                    if bs.get("runs", 0): extras.append(f'{bs["runs"]} R')
+                    if bs.get("homeRuns", 0): extras.append(f'{bs["homeRuns"]} HR')
+                    if bs.get("rbi", 0): extras.append(f'{bs["rbi"]} RBI')
+                    if bs.get("baseOnBalls", 0): extras.append(f'{bs["baseOnBalls"]} BB')
+                    if bs.get("strikeOuts", 0): extras.append(f'{bs["strikeOuts"]} K')
+                    if extras: line += ", " + ", ".join(extras)
+                    stat_parts.append(line)
+                if ps and ps.get("inningsPitched") not in (None, "0.0", 0):
+                    stat_parts.append(f'{ps.get("inningsPitched","?")} IP, {ps.get("earnedRuns",0)} ER, {ps.get("strikeOuts",0)} K')
+                stat_str = " &middot; ".join(stat_parts) if stat_parts else "In lineup, no AB"
+                prospect_rows.append(
+                    f'<div class="prosp-row played">'
+                    f'<span class="prosp-rank">#{rank}</span>'
+                    f'<span class="prosp-name">{name}</span>'
+                    f'<span class="prosp-pos">{pos}</span>'
+                    f'<span class="prosp-lvl">{game_level}</span>'
+                    f'<span class="prosp-stat">{stat_str}</span>'
+                    f'</div>')
+            else:
+                prospect_rows.append(
+                    f'<div class="prosp-row dnp">'
+                    f'<span class="prosp-rank">#{rank}</span>'
+                    f'<span class="prosp-name">{name}</span>'
+                    f'<span class="prosp-pos">{pos}</span>'
+                    f'<span class="prosp-lvl">{level}</span>'
+                    f'<span class="prosp-stat">DNP</span>'
+                    f'</div>')
+
+    prospect_html = ""
+    if prospect_rows:
+        prospect_html = f'<h3 class="prosp-header">Prospect Watch</h3><div class="prosp-tracker">{"".join(prospect_rows)}</div>'
+
+    return f'<div class="minors">{"".join(cards)}</div>{prospect_html}', tag
 
 
 def generate_lede(data):
