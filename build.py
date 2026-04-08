@@ -53,6 +53,14 @@ def teams_map():
     d = fetch("/teams", sportId=1)
     return {t["id"]: t for t in d["teams"]}
 
+def _ordinal(n):
+    """Return ordinal suffix for a rank number (1st, 2nd, 3rd, etc.)."""
+    try:
+        n = int(n)
+    except (ValueError, TypeError):
+        return ""
+    return {1: "st", 2: "nd", 3: "rd"}.get(n if n < 20 else n % 10, "th")
+
 # ─── data gathering ──────────────────────────────────────────────────────────
 
 def load_all():
@@ -101,6 +109,81 @@ def load_all():
         for g in dd["games"]:
             next_games.append(g)
     next_games = next_games[:3]
+
+    # Today's game enhancements: lineup, season series, opponent info
+    today_lineup = {"home": [], "away": []}
+    today_series = ""
+    today_opp_info = ""
+    if next_games:
+        tg = next_games[0]
+        tg_pk = tg["gamePk"]
+        tg_home_id = tg["teams"]["home"]["team"]["id"]
+        tg_away_id = tg["teams"]["away"]["team"]["id"]
+        tg_opp_id = tg_away_id if tg_home_id == CUBS_ID else tg_home_id
+        tg_is_home = tg_home_id == CUBS_ID
+
+        # Batting order from live feed
+        try:
+            feed = json.loads(urllib.request.urlopen(
+                urllib.request.Request(
+                    f"https://statsapi.mlb.com/api/v1.1/game/{tg_pk}/feed/live",
+                    headers={"User-Agent": "morning-lineup/0.1"}),
+                timeout=15).read())
+            feed_players = feed.get("gameData", {}).get("players", {})
+            feed_box = feed.get("liveData", {}).get("boxscore", {})
+            for side in ["home", "away"]:
+                order = feed_box.get("teams", {}).get(side, {}).get("battingOrder", [])
+                for pid in order[:9]:
+                    p = feed_players.get(f"ID{pid}", {})
+                    today_lineup[side].append({
+                        "name": p.get("fullName", "?"),
+                        "pos": p.get("primaryPosition", {}).get("abbreviation", "?"),
+                    })
+        except Exception as e:
+            print(f"  warning: lineup fetch failed: {e}", flush=True)
+
+        # Season series: Cubs vs this opponent
+        try:
+            ss_url = fetch("/schedule", sportId=1, teamId=CUBS_ID, season=season,
+                           startDate=f"{season}-03-20", endDate=today.isoformat(),
+                           hydrate="team")
+            sw, sl = 0, 0
+            for dd in ss_url.get("dates", []):
+                for g in dd.get("games", []):
+                    if g.get("status", {}).get("abstractGameState") != "Final":
+                        continue
+                    ga, gh = g["teams"]["away"], g["teams"]["home"]
+                    if ga["team"]["id"] != tg_opp_id and gh["team"]["id"] != tg_opp_id:
+                        continue
+                    cubs_home = gh["team"]["id"] == CUBS_ID
+                    cs = gh.get("score", 0) if cubs_home else ga.get("score", 0)
+                    os_ = ga.get("score", 0) if cubs_home else gh.get("score", 0)
+                    if cs > os_:
+                        sw += 1
+                    else:
+                        sl += 1
+            if sw + sl > 0:
+                today_series = f"{sw}-{sl}"
+        except Exception as e:
+            print(f"  warning: season series fetch failed: {e}", flush=True)
+
+        # Opponent record from standings
+        div_lookup = {did: dname for did, dname in DIV_ORDER}
+        try:
+            for rec in stand["records"]:
+                for tr in rec["teamRecords"]:
+                    if tr["team"]["id"] == tg_opp_id:
+                        ow, ol = tr["wins"], tr["losses"]
+                        rank = tr.get("divisionRank", "?")
+                        div_id = rec.get("division", {}).get("id")
+                        div_name = div_lookup.get(div_id, "")
+                        streak = tr.get("streak", {}).get("streakCode", "")
+                        today_opp_info = f"{ow}-{ol}, {rank}{_ordinal(rank)} {div_name}"
+                        if streak:
+                            today_opp_info += f" ({streak})"
+                        break
+        except Exception as e:
+            print(f"  warning: opponent info failed: {e}", flush=True)
 
     # Cubs game yesterday → if no Final, walk back up to 7 days
     def find_cubs_final(start_day):
@@ -212,6 +295,8 @@ def load_all():
         "games_y": games_y, "games_t": games_t,
         "standings": stand, "cubs_rec": cubs_rec,
         "next_games": next_games,
+        "today_lineup": today_lineup, "today_series": today_series,
+        "today_opp_info": today_opp_info,
         "cubs_game": cubs_game, "cubs_game_date": cubs_game_date,
         "boxscore": boxscore, "plays": plays,
         "injuries": injuries,
@@ -526,9 +611,9 @@ def fetch_weather_for_venue(venue):
     except Exception:
         return None
 
-def render_next_games(next_games, tmap):
+def render_next_games(next_games, tmap, today_lineup=None, today_series="", today_opp_info=""):
     cards = []
-    for g in next_games:
+    for idx, g in enumerate(next_games):
         home_id = g["teams"]["home"]["team"]["id"]
         away_id = g["teams"]["away"]["team"]["id"]
         is_home = home_id == CUBS_ID
@@ -576,7 +661,7 @@ def render_next_games(next_games, tmap):
 
         # Weather (only for today's game — first card)
         wx_html = ""
-        if next_games.index(g) == 0:
+        if idx == 0:
             wx = fetch_weather_for_venue(venue)
             if wx:
                 temp, cond, wind_str, wrigley = wx
@@ -597,13 +682,37 @@ def render_next_games(next_games, tmap):
             if opp_line: pitcher_html += f'<div class="nx-pline">{opp_line}</div>'
             pitcher_html += '</div>'
 
-        cards.append(f"""<div class="nx-card">
+        # Today's game extras (first card only)
+        extras_html = ""
+        lineup_html = ""
+        if idx == 0:
+            meta_parts = []
+            if today_opp_info:
+                meta_parts.append(f'<span class="nx-opp-rec">{escape(opp_ab)}: {escape(today_opp_info)}</span>')
+            if today_series:
+                meta_parts.append(f'<span class="nx-series">Season series: {escape(today_series)}</span>')
+            if meta_parts:
+                extras_html = f'<div class="nx-meta">{" &middot; ".join(meta_parts)}</div>'
+
+            if today_lineup:
+                cubs_side = "home" if is_home else "away"
+                cubs_lu = today_lineup.get(cubs_side, [])
+                if cubs_lu:
+                    lu_items = "".join(
+                        f'<span class="lu-slot"><span class="lu-pos">{escape(p["pos"])}</span> {escape(p["name"].split()[-1])}</span>'
+                        for p in cubs_lu
+                    )
+                    lineup_html = f'<div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots">{lu_items}</div></div>'
+
+        cards.append(f"""<div class="nx-card{' nx-today' if idx == 0 else ''}">
         <div class="nx-head">
           <div class="nx-day">{day_str} &middot; {vs}</div>
           <div class="nx-time">{time_str}</div>
         </div>
         <div class="nx-venue">{escape(venue_name)} {dome_label}</div>
+        {extras_html}
         {pitcher_html}
+        {lineup_html}
         {bc_html}
         {wx_html}
       </div>""")
@@ -1291,7 +1400,9 @@ def page(data):
     </details>'''
     nlc_stand = render_nlc_standings(data["standings"], data["tmap"])
     injuries_html = render_injuries(data["injuries"])
-    next_games_html = render_next_games(data["next_games"], data["tmap"])
+    next_games_html = render_next_games(data["next_games"], data["tmap"],
+                                       data.get("today_lineup"), data.get("today_series", ""),
+                                       data.get("today_opp_info", ""))
     hot_cold_html = render_hot_cold(data["cubs_hitters"], data["cubs_pitchers"])
     scoreboard_yest = render_scoreboard_yest(data["games_y"], data["tmap"])
     all_div = render_all_divisions(data["standings"], data["tmap"])

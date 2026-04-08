@@ -125,6 +125,15 @@ ul.plays .txt strong{color:var(--paper);font-weight:500}
 .nx-bc-tag{font-family:var(--cond);font-size:9px;letter-spacing:.1em;text-transform:uppercase;background:var(--rule-hi);color:var(--paper);padding:1px 5px;border-radius:2px;margin-right:4px}
 .nx-wx{font-family:var(--mono);font-size:11px;color:var(--paper-dim);margin-top:6px;padding-top:6px;border-top:1px dashed var(--rule)}
 .nx-wrigley{color:var(--gold);font-style:italic}
+.nx-today{border-left-width:4px;border-left-color:var(--gold)}
+.nx-meta{font-family:var(--mono);font-size:11px;color:var(--paper-dim);margin:6px 0 2px;display:flex;flex-wrap:wrap;gap:4px;align-items:baseline}
+.nx-opp-rec{color:var(--paper-mute)}
+.nx-series{color:var(--gold-dim)}
+.nx-lineup{margin-top:8px;padding-top:8px;border-top:1px solid var(--rule-hi)}
+.nx-lu-label{font-family:var(--cond);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:4px}
+.lu-slots{display:flex;flex-wrap:wrap;gap:2px 8px}
+.lu-slot{font-family:var(--mono);font-size:11px;color:var(--paper-dim);white-space:nowrap}
+.lu-pos{font-size:9px;color:var(--paper-mute);margin-right:2px}
 dl.transac{margin:8px 0;font-size:13px}
 dl.transac dt{font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--cubs-red-hi);margin-top:10px;}
 dl.transac dd{margin:3px 0 0;color:var(--paper-dim)}

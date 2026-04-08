@@ -137,6 +137,15 @@ ul.plays .txt strong{color:var(--paper);font-weight:500}
 .nx-bc-tag{font-family:var(--cond);font-size:9px;letter-spacing:.1em;text-transform:uppercase;background:var(--rule-hi);color:var(--paper);padding:1px 5px;border-radius:2px;margin-right:4px}
 .nx-wx{font-family:var(--mono);font-size:11px;color:var(--paper-dim);margin-top:6px;padding-top:6px;border-top:1px dashed var(--rule)}
 .nx-wrigley{color:var(--gold);font-style:italic}
+.nx-today{border-left-width:4px;border-left-color:var(--gold)}
+.nx-meta{font-family:var(--mono);font-size:11px;color:var(--paper-dim);margin:6px 0 2px;display:flex;flex-wrap:wrap;gap:4px;align-items:baseline}
+.nx-opp-rec{color:var(--paper-mute)}
+.nx-series{color:var(--gold-dim)}
+.nx-lineup{margin-top:8px;padding-top:8px;border-top:1px solid var(--rule-hi)}
+.nx-lu-label{font-family:var(--cond);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:4px}
+.lu-slots{display:flex;flex-wrap:wrap;gap:2px 8px}
+.lu-slot{font-family:var(--mono);font-size:11px;color:var(--paper-dim);white-space:nowrap}
+.lu-pos{font-size:9px;color:var(--paper-mute);margin-right:2px}
 dl.transac{margin:8px 0;font-size:13px}
 dl.transac dt{font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--cubs-red-hi);margin-top:10px;}
 dl.transac dd{margin:3px 0 0;color:var(--paper-dim)}
@@ -326,13 +335,15 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div>
     </div>
     <h3>Next Games</h3>
-    <div class="next-games"><div class="nx-card">
+    <div class="next-games"><div class="nx-card nx-today">
         <div class="nx-head">
           <div class="nx-day">Wed, Apr 8 &middot; at TB</div>
           <div class="nx-time">5:40 CT</div>
         </div>
         <div class="nx-venue">Tropicana Field <span class="nx-dome">Dome</span></div>
+        <div class="nx-meta"><span class="nx-opp-rec">TB: 5-6, 3rd AL East (L1)</span> &middot; <span class="nx-series">Season series: 1-1</span></div>
         <div class="nx-pitcher"><span class="nx-side">Cubs</span> Colin Rea<div class="nx-pline">4.26 ERA &middot; 0-0 &middot; 6.1 IP &middot; 8 K &middot; 1.42 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">TB</span> Joe Boyle<div class="nx-pline">3.18 ERA &middot; 0-0 &middot; 11.1 IP &middot; 13 K &middot; 0.88 WHIP</div></div>
+        
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Rays.TV &middot; Marquee Sports Network</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 104.3 The Score &middot; WDAE 95.7 FM</div>
         <div class="nx-wx">72°F &middot; Climate controlled</div>
       </div><div class="nx-card">
@@ -341,7 +352,9 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
           <div class="nx-time">1:20 CT</div>
         </div>
         <div class="nx-venue">Wrigley Field </div>
+        
         <div class="nx-pitcher"><span class="nx-side">PIT</span> Carmen Mlodzinski<div class="nx-pline">4.00 ERA &middot; 0-0 &middot; 9.0 IP &middot; 13 K &middot; 1.56 WHIP</div></div>
+        
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Marquee Sports Network &middot; SportsNet Pittsburgh </div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 104.3 The Score &middot; 100.1 FM/KDKA-AM 1020</div>
         
       </div><div class="nx-card">
@@ -350,7 +363,9 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
           <div class="nx-time">1:20 CT</div>
         </div>
         <div class="nx-venue">Wrigley Field </div>
+        
         <div class="nx-pitcher"><span class="nx-side">PIT</span> Braxton Ashcraft<div class="nx-pline">2.25 ERA &middot; 1-1 &middot; 12.0 IP &middot; 11 K &middot; 1.00 WHIP</div></div>
+        
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Marquee Sports Network &middot; SportsNet Pittsburgh </div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 104.3 The Score &middot; Sports Radio 93.7 KDKA The Fan</div>
         
       </div></div>
@@ -560,7 +575,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Friendly Confines Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/08/26 11:48 CT</span>
+  <span>Filed 04/08/26 12:02 CT</span>
 </footer>
 
 <script>
