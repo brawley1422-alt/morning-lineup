@@ -487,6 +487,45 @@ body {
   stroke-width: 1;
 }
 
+/* Filled diamond for scored runs */
+.diamond-scored {
+  fill: rgba(201, 162, 74, 0.15);
+  stroke: none;
+}
+
+/* Dashed advancement lines */
+.basepath.advance { stroke-dasharray: 4 3; stroke-width: 2; }
+.basepath.advance.hit { stroke: var(--gold-dim); }
+.basepath.advance.walk { stroke: var(--bb-accent); opacity: 0.7; }
+.basepath.advance.sb { stroke: var(--win); }
+.basepath.advance.cs { stroke: var(--cubs-red); opacity: 0.6; }
+
+/* Advancement cause labels */
+.advance-label {
+  font-family: var(--mono);
+  font-size: 7px;
+  fill: var(--paper-mute);
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+body.embed-mode .advance-label { display: none; }
+@media (max-width: 600px) { .advance-label { display: none; } }
+
+/* Journey tooltip section */
+.tip-journey {
+  margin-top: 6px;
+  border-top: 1px dashed var(--rule);
+  padding-top: 6px;
+}
+.tip-journey-step {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--paper-dim);
+  margin: 2px 0;
+}
+.tip-journey-arrow { color: var(--gold-dim); }
+
 /* ── Tooltip ── */
 .tooltip {
   display: none;

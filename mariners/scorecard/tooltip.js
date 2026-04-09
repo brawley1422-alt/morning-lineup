@@ -59,6 +59,24 @@
       html += '</div>';
     }
 
+    // Journey narrative
+    var journeyJSON = cell.getAttribute("data-journey") || "";
+    if (journeyJSON) {
+      var segs = [];
+      try { segs = JSON.parse(journeyJSON); } catch (e) {}
+      if (segs.length > 1) {
+        html += '<div class="tip-journey">';
+        for (var si = 0; si < segs.length; si++) {
+          var seg = segs[si];
+          if (seg.how === "initial") continue;
+          var arrow = '<span class="tip-journey-arrow">\u2192</span>';
+          var label = (seg.to === "score" ? "Scored" : seg.to) + " on " + (seg.cause || seg.how);
+          html += '<div class="tip-journey-step">' + arrow + ' ' + escHTML(label) + '</div>';
+        }
+        html += '</div>';
+      }
+    }
+
     tipEl.innerHTML = html;
     tipEl.classList.add("visible");
 

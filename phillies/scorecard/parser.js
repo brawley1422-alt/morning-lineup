@@ -256,6 +256,124 @@
     return pitchers;
   }
 
+  // ── Runner Journey Tracking ──
+
+  var BASE_ORDER = { "1B": 1, "2B": 2, "3B": 3, "score": 4 };
+
+  function classifyAdvanceHow(play) {
+    var et = play.result.eventType || "";
+    if (et === "stolen_base") return "SB";
+    if (et === "caught_stealing") return "CS";
+    if (et === "wild_pitch") return "WP";
+    if (et === "passed_ball") return "PB";
+    if (et === "balk") return "BK";
+    if (et === "pickoff") return "PO";
+    return "advance";
+  }
+
+  function buildRunnerJourneys(allPlays, batterMap, awayLineup, homeLineup) {
+    // journeyKey → journey object
+    var journeys = {};
+    // Track active runners by base position: "away-1B" → journeyKey
+    var baseState = {};
+
+    for (var i = 0; i < allPlays.length; i++) {
+      var play = allPlays[i];
+      if (play.result.type !== "atBat") continue;
+      var runners = play.runners || [];
+      var half = play.about.halfInning;
+      var inning = play.about.inning;
+      var how = classifyAdvanceHow(play);
+
+      // Find the driving batter's lineup slot for "advance" cause labels
+      var drivingSlot = "";
+      if (how === "advance") {
+        var driverId = play.matchup.batter.id;
+        var driverLoc = batterMap[driverId];
+        if (driverLoc) drivingSlot = "#" + (driverLoc.slot + 1);
+      }
+
+      for (var j = 0; j < runners.length; j++) {
+        var r = runners[j];
+        var mov = r.movement || {};
+        var runnerId = (r.details && r.details.runner && r.details.runner.id) || 0;
+        var runnerName = (r.details && r.details.runner && r.details.runner.fullName) || "";
+        var start = mov.start || null;
+        var end = mov.end || null;
+        var isOut = mov.isOut || false;
+
+        if (start == null || start === "") {
+          // This is the batter — create a new journey if they reach base
+          if (end && end !== "" && !isOut) {
+            var key = runnerId + "-" + inning + "-" + half + "-" + play.about.atBatIndex;
+            journeys[key] = {
+              runnerId: runnerId,
+              runnerName: runnerName,
+              inning: inning,
+              halfInning: half,
+              originAtBatIndex: play.about.atBatIndex,
+              batterId: play.matchup.batter.id,
+              initialEnd: end,
+              segments: [{ from: null, to: end, how: "initial", cause: "" }],
+              finalEnd: end,
+              scored: end === "score",
+              out: false
+            };
+            // Register on base
+            var bk = half + "-" + end;
+            baseState[bk] = key;
+          }
+        } else {
+          // Baserunner movement — find their existing journey
+          var bsKey = half + "-" + start;
+          var jKey = baseState[bsKey];
+          if (jKey && journeys[jKey]) {
+            var journey = journeys[jKey];
+            var cause = how === "advance" ? drivingSlot : how;
+            journey.segments.push({
+              from: start,
+              to: end,
+              how: how,
+              cause: cause
+            });
+            // Clear old base position
+            delete baseState[bsKey];
+
+            if (isOut) {
+              journey.out = true;
+              journey.finalEnd = end;
+            } else if (end === "score") {
+              journey.scored = true;
+              journey.finalEnd = "score";
+            } else if (end) {
+              journey.finalEnd = end;
+              baseState[half + "-" + end] = jKey;
+            }
+          }
+        }
+      }
+    }
+    return journeys;
+  }
+
+  function attachJourneysToAtBats(lineup, journeys) {
+    for (var i = 0; i < lineup.length; i++) {
+      var slot = lineup[i];
+      for (var j = 0; j < slot.batters.length; j++) {
+        var batter = slot.batters[j];
+        for (var a = 0; a < batter.atBats.length; a++) {
+          var ab = batter.atBats[a];
+          // Find matching journey
+          var key = ab.batterId + "-" + ab.inning + "-" + ab.halfInning + "-" + ab.atBatIndex;
+          if (journeys[key]) {
+            ab.journey = journeys[key];
+            if (journeys[key].scored) ab.runScored = true;
+          }
+        }
+      }
+    }
+  }
+
   SC.parser = {
     parse: function (feed) {
       var gd = feed.gameData;
@@ -291,6 +409,11 @@
         var lineup = loc.side === "away" ? awayLineup : homeLineup;
         lineup[loc.slot].batters[loc.batter].atBats.push(ab);
       }
+
+      // Build runner journeys and attach to at-bats
+      var journeys = buildRunnerJourneys(allPlays, batterMap, awayLineup, homeLineup);
+      attachJourneysToAtBats(awayLineup, journeys);
+      attachJourneysToAtBats(homeLineup, journeys);
 
       // Linescore arrays
       var innings = ls.innings || [];

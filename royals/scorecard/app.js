@@ -133,6 +133,19 @@
             } else if (cell && !cell.querySelector(".diamond-cell")) {
               // Cell exists but empty — fill it
               cell.innerHTML = SC.diamond.render(ab);
+            } else if (cell && ab.journey) {
+              // Re-render if runner journey has new segments
+              var oldBatter2 = (oldLineup[slot] && oldLineup[slot].batters[bi]) || null;
+              var oldAb = oldBatter2 && oldBatter2.atBats[a];
+              var oldSegs = (oldAb && oldAb.journey) ? oldAb.journey.segments.length : 0;
+              var newSegs = ab.journey.segments.length;
+              if (newSegs > oldSegs) {
+                cell.innerHTML = SC.diamond.render(ab);
+                cell.classList.add("diamond-new");
+                setTimeout((function (c) {
+                  return function () { c.classList.remove("diamond-new"); };
+                })(cell), 600);
+              }
             }
           }
 
