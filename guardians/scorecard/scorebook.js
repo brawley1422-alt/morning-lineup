@@ -101,17 +101,17 @@
     }
 
     // Totals row
-    html += '<tr class="slot-first"><td class="player-cell" style="font-weight:700">Totals</td>';
+    html += '<tr class="slot-first totals-row"><td class="player-cell">Totals</td>';
     for (var ti = 1; ti <= totalInnings; ti++) {
       var innRuns = teamData.linescore[ti - 1];
-      html += '<td class="diamond-td" id="inn-' + side + '-' + ti + '" style="font-family:var(--mono);font-size:14px;color:var(--gold);font-weight:700">' +
+      html += '<td class="diamond-td inning-total" id="inn-' + side + '-' + ti + '">' +
               (innRuns != null ? innRuns : "") + '</td>';
     }
     // Total stats for team
     var teamTotals = computeTeamTotals(lineup);
     var tVals = [teamTotals.ab, teamTotals.r, teamTotals.h, teamTotals.rbi, teamTotals.bb, teamTotals.k];
     for (var tt = 0; tt < tVals.length; tt++) {
-      html += '<td class="stat-cell" style="font-weight:700;color:var(--gold)">' + tVals[tt] + '</td>';
+      html += '<td class="stat-cell total-stat">' + tVals[tt] + '</td>';
     }
     html += '</tr>';
 

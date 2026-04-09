@@ -21,6 +21,20 @@
   --cond: "Oswald", "Bebas Neue", Impact, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --maxw: 1180px;
+  /* Press Box Scorecard — paper artifact tokens */
+  --sc-paper: #f5f0e6;
+  --sc-paper-aged: #ede5d3;
+  --sc-paper-edge: #e0d5bf;
+  --sc-graphite: #2d2926;
+  --sc-graphite-light: rgba(45, 41, 38, 0.55);
+  --sc-grid-blue: #c5d5e8;
+  --sc-grid-blue-faint: rgba(197, 213, 232, 0.45);
+  --sc-border-heavy: #1a1a1a;
+  --sc-border-medium: #3a3a3a;
+  --sc-red-pencil: #c0392b;
+  --sc-green-pencil: #4a7c59;
+  --sc-handwriting: "Caveat", cursive;
+  --sc-typewriter: "Special Elite", "Courier New", monospace;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -219,10 +233,19 @@ body {
 }
 
 /* ── Game Header ── */
+/* ── Game Header — Paper Treatment ── */
 .game-header {
-  margin-bottom: 24px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid var(--rule);
+  background: var(--sc-paper);
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+    linear-gradient(135deg, var(--sc-paper) 0%, var(--sc-paper-aged) 100%);
+  margin-bottom: 0;
+  padding: 20px 16px;
+  border-bottom: 2px solid var(--sc-border-heavy);
+  border-radius: 2px 2px 0 0;
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.12),
+    0 4px 12px rgba(0,0,0,0.08);
 }
 .game-header .title-row {
   display: flex;
@@ -237,44 +260,46 @@ body {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  color: var(--sc-graphite);
 }
 .game-header .final-score {
-  font-family: var(--mono);
-  font-size: clamp(24px, 5vw, 40px);
+  font-family: var(--sc-handwriting);
+  font-size: clamp(28px, 5vw, 48px);
   font-weight: 700;
-  color: var(--gold);
+  color: var(--sc-graphite);
 }
-.game-header .vs { color: var(--paper-mute); font-size: 14px; }
+.game-header .vs { color: var(--sc-graphite-light); font-size: 14px; }
 
 .game-header .details-row {
   text-align: center;
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--paper-mute);
+  font-family: var(--sc-handwriting);
+  font-size: 14px;
+  color: var(--sc-graphite-light);
   margin-bottom: 12px;
 }
 
-/* Line score table */
+/* Line score table — on paper */
 .line-score {
   width: 100%;
   max-width: 700px;
   margin: 0 auto 12px;
   border-collapse: collapse;
-  font-family: var(--mono);
+  font-family: var(--sc-handwriting);
+  font-size: 16px;
 }
 .line-score th,
 .line-score td {
   padding: 6px 8px;
   text-align: center;
-  font-size: 13px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 14px;
+  border-bottom: 1px solid var(--sc-grid-blue);
 }
 .line-score th {
   font-family: var(--cond);
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--paper-mute);
+  color: var(--sc-border-medium);
   font-weight: 400;
 }
 .line-score td.team-col {
@@ -283,70 +308,115 @@ body {
   font-size: 14px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--paper);
+  color: var(--sc-graphite);
   font-weight: 600;
   width: 60px;
 }
 .line-score td.rhe {
   font-weight: 700;
-  color: var(--gold);
-  font-size: 14px;
+  color: var(--sc-graphite);
+  font-size: 16px;
 }
 
 .game-header .decisions {
   text-align: center;
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--paper-dim);
+  font-family: var(--sc-handwriting);
+  font-size: 14px;
+  color: var(--sc-graphite);
 }
 .game-header .decisions .label {
-  color: var(--paper-mute);
+  font-family: var(--cond);
+  font-size: 10px;
+  color: var(--sc-border-medium);
   margin-right: 2px;
 }
 .game-header .decisions span + span { margin-left: 16px; }
 
-/* ── Scorebook Spread ── */
+/* ── Scorebook Spread — Paper Artifact ── */
 .scorebook-spread {
   display: flex;
   gap: 24px;
-  margin-top: 8px;
+  margin-top: 0;
+  background: var(--sc-paper);
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+    linear-gradient(135deg, var(--sc-paper) 0%, var(--sc-paper-aged) 50%, var(--sc-paper-edge) 100%);
+  border-radius: 0 0 2px 2px;
+  padding: 20px 16px;
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.12),
+    0 4px 12px rgba(0,0,0,0.08),
+    inset 0 0 60px rgba(0,0,0,0.03);
+  position: relative;
+}
+.scorebook-spread::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(
+    to right,
+    rgba(180, 160, 110, 0.08) 0%,
+    transparent 3%,
+    transparent 97%,
+    rgba(180, 160, 110, 0.08) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+.scorebook-spread::after {
+  content: "";
+  position: absolute;
+  bottom: 30px;
+  right: 40px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid rgba(139, 109, 63, 0.06);
+  box-shadow: inset 0 0 8px rgba(139, 109, 63, 0.04);
+  pointer-events: none;
+  z-index: 0;
 }
 .scorebook-page {
   flex: 1;
   min-width: 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  position: relative;
+  z-index: 1;
 }
 .scorebook-page .page-label {
-  font-family: var(--cond);
-  font-size: 13px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
+  font-family: var(--sc-handwriting);
+  font-size: 18px;
+  color: var(--sc-graphite);
   margin-bottom: 8px;
   padding-left: 4px;
+  letter-spacing: 0;
 }
 
 .scorebook-grid {
   border-collapse: collapse;
-  font-family: var(--mono);
+  font-family: var(--sc-typewriter);
   font-size: 12px;
   width: 100%;
   min-width: max-content;
+  position: relative;
+  z-index: 1;
+  border: 2px solid var(--sc-border-heavy);
 }
 .scorebook-grid th {
   font-family: var(--cond);
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--paper-mute);
+  color: var(--sc-border-medium);
   font-weight: 400;
   padding: 4px 6px;
-  border-bottom: 2px solid var(--rule-hi);
+  border-bottom: 2px solid var(--sc-border-heavy);
   white-space: nowrap;
   position: sticky;
   top: 0;
-  background: var(--ink);
+  background: var(--sc-paper);
   z-index: 2;
 }
 .scorebook-grid th.player-header {
@@ -355,63 +425,71 @@ body {
   position: sticky;
   left: 0;
   z-index: 3;
+  background: var(--sc-paper);
+  border-right: 2px solid var(--sc-border-heavy);
 }
 .scorebook-grid th.inning-header { min-width: 64px; }
 .scorebook-grid th.stat-header {
   min-width: 36px;
-  color: var(--paper-mute);
+  color: var(--sc-border-medium);
   font-size: 10px;
+  border-left: 1px solid var(--sc-grid-blue);
 }
 
 .scorebook-grid td {
   padding: 2px;
   text-align: center;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--sc-grid-blue);
+  border-right: 1px solid var(--sc-grid-blue-faint);
   vertical-align: middle;
+  background: transparent;
 }
 .scorebook-grid td.player-cell {
   text-align: left;
   padding: 4px 8px;
-  font-family: var(--body);
+  font-family: var(--sc-typewriter);
   font-size: 12px;
-  color: var(--paper);
+  color: var(--sc-graphite);
   white-space: nowrap;
   position: sticky;
   left: 0;
-  background: var(--ink);
+  background: var(--sc-paper);
   z-index: 1;
-  border-right: 2px solid var(--rule-hi);
+  border-right: 2px solid var(--sc-border-heavy);
 }
 .scorebook-grid td.player-cell .name {
-  font-weight: 500;
+  font-weight: 400;
+  color: var(--sc-graphite);
 }
 .scorebook-grid td.player-cell .pos {
-  font-family: var(--cond);
-  font-size: 10px;
-  letter-spacing: 0.06em;
-  color: var(--paper-mute);
+  font-family: var(--sc-handwriting);
+  font-size: 13px;
+  letter-spacing: 0;
+  color: var(--sc-graphite-light);
   margin-left: 6px;
   text-transform: uppercase;
 }
 .scorebook-grid td.player-cell .sub-label {
-  font-family: var(--cond);
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  color: var(--cubs-red-hi);
+  font-family: var(--sc-handwriting);
+  font-size: 13px;
+  letter-spacing: 0;
+  color: var(--sc-red-pencil);
   text-transform: uppercase;
   margin-left: 4px;
 }
 .scorebook-grid td.player-cell.sub-row {
   padding-left: 16px;
-  border-top: 1px dashed var(--rule);
-  border-bottom: 1px solid var(--rule);
+  border-top: 1px dashed var(--sc-grid-blue);
+  border-bottom: 1px solid var(--sc-grid-blue);
 }
 
 .scorebook-grid td.stat-cell {
-  font-size: 12px;
-  color: var(--paper-dim);
+  font-family: var(--sc-handwriting);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--sc-graphite);
   min-width: 36px;
-  border-left: 1px solid var(--rule);
+  border-left: 1px solid var(--sc-grid-blue);
 }
 
 .scorebook-grid td.diamond-td {
@@ -419,92 +497,121 @@ body {
   min-width: 64px;
 }
 .scorebook-grid td.diamond-td.pitching-change {
-  border-left: 2px dashed var(--cubs-red);
+  border-left: 2px solid var(--sc-red-pencil);
 }
 
-/* Slot grouping */
-.scorebook-grid tr.slot-first td { border-top: 1px solid var(--rule-hi); }
+/* Slot grouping — heavy rules between lineup spots */
+.scorebook-grid tr.slot-first td { border-top: 2px solid var(--sc-border-medium); }
 
-/* ── Diamond Cell ── */
+/* Totals row */
+.scorebook-grid tr.totals-row td { border-top: 2px solid var(--sc-border-heavy); }
+.scorebook-grid .inning-total,
+.scorebook-grid .total-stat {
+  font-family: var(--sc-handwriting);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sc-graphite);
+}
+
+/* ── Diamond Cell — Pencil on Paper ── */
 .diamond-cell {
   display: inline-block;
   cursor: pointer;
   position: relative;
 }
-.diamond-cell svg { display: block; }
+.diamond-cell svg {
+  display: block;
+  filter: url(#pencil);
+}
 
 .diamond-outline {
   fill: none;
-  stroke: var(--rule-hi);
-  stroke-width: 1.2;
+  stroke: var(--sc-graphite-light);
+  stroke-width: 1;
 }
+
+/* Basepaths — graphite pencil */
 .basepath {
-  stroke: var(--rule);
+  stroke: var(--sc-grid-blue-faint);
   stroke-width: 0;
   stroke-linecap: round;
 }
 .basepath.active {
   stroke-width: 2.5;
+  filter: url(#pencil-heavy);
 }
-.basepath.hit { stroke: var(--gold); }
-.basepath.walk { stroke: var(--bb-accent); }
-.basepath.error { stroke: var(--cubs-red-hi); }
-.basepath.fc { stroke: var(--paper-mute); }
+.basepath.hit { stroke: var(--sc-graphite); }
+.basepath.walk { stroke: var(--sc-green-pencil); opacity: 0.8; }
+.basepath.error { stroke: var(--sc-red-pencil); opacity: 0.8; }
+.basepath.fc { stroke: var(--sc-graphite-light); }
 
+/* Base dots */
 .base-dot {
-  fill: var(--rule);
+  fill: var(--sc-grid-blue);
   r: 2.5;
 }
-.base-dot.reached { fill: var(--gold); }
-.base-dot.walk-reached { fill: var(--bb-accent); }
-.base-dot.error-reached { fill: var(--cubs-red-hi); }
+.base-dot.reached { fill: var(--sc-graphite); }
+.base-dot.walk-reached { fill: var(--sc-green-pencil); }
+.base-dot.error-reached { fill: var(--sc-red-pencil); }
 
+/* Notation text — handwriting */
 .hit-type {
-  font-family: var(--cond);
-  font-size: 10px;
-  font-weight: 600;
-  fill: var(--paper-dim);
+  font-family: var(--sc-handwriting);
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--sc-graphite);
   text-anchor: middle;
   dominant-baseline: central;
 }
-.hit-type.hit-text { fill: var(--gold); }
-.hit-type.out-text { fill: var(--paper-mute); }
-.hit-type.walk-text { fill: var(--bb-accent); }
-.hit-type.error-text { fill: var(--cubs-red-hi); }
-.hit-type.hr-text { fill: var(--gold); font-size: 11px; }
+.hit-type.hit-text { fill: var(--sc-graphite); }
+.hit-type.out-text { fill: var(--sc-graphite-light); }
+.hit-type.walk-text { fill: var(--sc-green-pencil); }
+.hit-type.error-text { fill: var(--sc-red-pencil); }
+.hit-type.hr-text { fill: var(--sc-graphite); font-size: 13px; }
 
+/* Out numbers — circled, traditional */
 .out-num {
-  font-family: var(--mono);
-  font-size: 9px;
+  font-family: var(--sc-handwriting);
+  font-size: 11px;
   font-weight: 700;
-  fill: var(--cubs-red);
+  fill: var(--sc-graphite);
   text-anchor: middle;
+  dominant-baseline: central;
 }
-.rbi-dot { fill: var(--gold); }
+.out-circle {
+  fill: none;
+  stroke: var(--sc-graphite);
+  stroke-width: 1;
+}
+
+/* RBI dots — pencil */
+.rbi-dot { fill: var(--sc-graphite); }
+
+/* Run scored — graphite fill */
 .run-scored {
-  fill: var(--gold);
-  stroke: var(--gold);
+  fill: var(--sc-graphite);
+  stroke: var(--sc-graphite);
   stroke-width: 1;
 }
 
 /* Filled diamond for scored runs */
 .diamond-scored {
-  fill: rgba(201, 162, 74, 0.15);
+  fill: rgba(45, 41, 38, 0.12);
   stroke: none;
 }
 
-/* Dashed advancement lines */
+/* Dashed advancement lines — pencil */
 .basepath.advance { stroke-dasharray: 4 3; stroke-width: 2; }
-.basepath.advance.hit { stroke: var(--gold-dim); }
-.basepath.advance.walk { stroke: var(--bb-accent); opacity: 0.7; }
-.basepath.advance.sb { stroke: var(--win); }
-.basepath.advance.cs { stroke: var(--cubs-red); opacity: 0.6; }
+.basepath.advance.hit { stroke: var(--sc-graphite-light); }
+.basepath.advance.walk { stroke: var(--sc-green-pencil); opacity: 0.6; }
+.basepath.advance.sb { stroke: var(--sc-graphite); }
+.basepath.advance.cs { stroke: var(--sc-red-pencil); opacity: 0.6; }
 
 /* Advancement cause labels */
 .advance-label {
-  font-family: var(--mono);
-  font-size: 7px;
-  fill: var(--paper-mute);
+  font-family: var(--sc-handwriting);
+  font-size: 8px;
+  fill: var(--sc-graphite-light);
   text-anchor: middle;
   dominant-baseline: central;
   pointer-events: none;
@@ -579,6 +686,18 @@ body.embed-mode .advance-label { display: none; }
 .tooltip .pitch-chip.inplay { color: var(--gold); }
 
 /* ── Responsive ── */
+@media (max-width: 600px) {
+  .scorebook-spread { padding: 12px 8px; }
+  .scorebook-grid td.player-cell {
+    font-size: 11px;
+    min-width: 110px;
+    padding: 3px 6px;
+    background: var(--sc-paper);
+  }
+  .scorebook-grid th { background: var(--sc-paper); }
+  .scorebook-grid th.player-header { background: var(--sc-paper); }
+  .game-header { padding: 14px 12px; }
+}
 @media (max-width: 900px) {
   .scorebook-spread {
     flex-direction: column;
@@ -916,10 +1035,10 @@ body.embed-mode #app { padding: 0; max-width: none; }
   border-bottom: none;
 }
 .sb-tab.active {
-  background: var(--ink);
-  color: var(--gold);
-  border-color: var(--rule-hi);
-  border-bottom: 2px solid var(--ink);
+  background: var(--sc-paper);
+  color: var(--sc-graphite);
+  border-color: var(--sc-border-medium);
+  border-bottom: 2px solid var(--sc-paper);
   margin-bottom: -1px;
   position: relative;
   z-index: 1;
@@ -937,7 +1056,9 @@ body.embed-mode .scorebook-grid th.inning-header { min-width: 0; width: 44px; }
 body.embed-mode .scorebook-grid th.stat-header { min-width: 0; width: 28px; }
 body.embed-mode .scorebook-grid td.stat-cell { min-width: 0; }
 body.embed-mode .scorebook-grid th.player-header { min-width: 0; width: 100px; }
-body.embed-mode .scorebook-grid td.player-cell { min-width: 0; font-size: 11px; }
+body.embed-mode .scorebook-grid td.player-cell { min-width: 0; font-size: 11px; background: var(--sc-paper); }
+body.embed-mode .scorebook-grid th { background: var(--sc-paper); }
+body.embed-mode .scorebook-grid th.player-header { background: var(--sc-paper); }
 body.embed-mode .scorebook-grid td.diamond-td { min-width: 0; padding: 1px; }
 body.embed-mode .scorebook-grid td.diamond-td svg { width: 40px; height: 40px; }
 body.embed-mode .scorebook-page { overflow-x: auto; }
