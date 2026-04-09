@@ -246,6 +246,8 @@
     var html = '';
     if (!SC.app.embed) {
       html += '<button class="back-btn" onclick="Scorecard.app.showFinder()">&larr; Back to games</button>';
+      html += '<button class="theme-toggle" onclick="Scorecard.app.toggleTheme()">' +
+              (SC.app._darkMode ? 'Paper Mode' : 'Dark Mode') + '</button>';
     }
     if (isLive(model)) {
       html += '<div class="live-badge"><span class="dot"></span> LIVE</div>';
@@ -344,10 +346,32 @@
   SC.app = {
     view: "finder",
     embed: false,
+    _darkMode: false,
+
+    toggleTheme: function () {
+      this._darkMode = !this._darkMode;
+      var wrapper = document.getElementById("app");
+      if (this._darkMode) {
+        wrapper.classList.add("sc-dark");
+      } else {
+        wrapper.classList.remove("sc-dark");
+      }
+      try { localStorage.setItem("sc-theme", this._darkMode ? "dark" : "paper"); } catch (e) {}
+      var btn = document.querySelector(".theme-toggle");
+      if (btn) btn.textContent = this._darkMode ? "Paper Mode" : "Dark Mode";
+    },
 
     init: function () {
       mainEl = document.getElementById("main");
       SC.tooltip.init();
+
+      // Restore saved theme preference
+      try {
+        if (localStorage.getItem("sc-theme") === "dark") {
+          this._darkMode = true;
+          document.getElementById("app").classList.add("sc-dark");
+        }
+      } catch (e) {}
 
       var params = getParams();
       this.embed = params.embed === "1";
