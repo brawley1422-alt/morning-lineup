@@ -204,7 +204,9 @@
       if (p.pX == null || p.pZ == null) continue;
       var cx = mapX(p.pX);
       var cy = mapZ(p.pZ);
-      var color = PITCH_COLORS[p.type] || DEFAULT_PITCH_COLOR;
+      var color = p.call === "B" ? "#5b8dd9"
+                : (p.call === "X" || p.call === "E" || p.call === "D") ? "#c9a24a"
+                : "#e8544f";
       var r = 8;
 
       svg += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r +
@@ -216,16 +218,11 @@
     svg += '</svg>';
 
     // Legend
-    var legend = '<div class="zone-legend">';
-    var seen = {};
-    for (var m = 0; m < pitches.length; m++) {
-      var pt = pitches[m].type || "?";
-      if (seen[pt]) continue;
-      seen[pt] = true;
-      var col = PITCH_COLORS[pt] || DEFAULT_PITCH_COLOR;
-      legend += '<span class="zone-leg-item"><span class="zone-leg-dot" style="background:' + col + '"></span>' + escHTML(pt) + '</span>';
-    }
-    legend += '</div>';
+    var legend = '<div class="zone-legend">' +
+      '<span class="zone-leg-item"><span class="zone-leg-dot" style="background:#e8544f"></span>Strike</span>' +
+      '<span class="zone-leg-item"><span class="zone-leg-dot" style="background:#5b8dd9"></span>Ball</span>' +
+      '<span class="zone-leg-item"><span class="zone-leg-dot" style="background:#c9a24a"></span>In Play</span>' +
+      '</div>';
 
     // Pitch sequence detail
     var seq = '<div class="zone-seq">';
