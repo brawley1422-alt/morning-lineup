@@ -141,14 +141,14 @@
       }
 
       // Hit type text (center)
-      var fontSize = notation.length > 3 ? 10 : (notation.length > 2 ? 11 : 12);
+      var fontSize = notation === "HR" ? 14 : (notation.length > 3 ? 10 : (notation.length > 2 ? 11 : 12));
       svg += '<text x="30" y="31" class="hit-type ' + textClass + '" ' +
              'style="font-size:' + fontSize + 'px">' + esc(notation) + '</text>';
 
       // Out number (bottom-right) — circled, traditional convention
       if (atBat.isOut && atBat.outNumber > 0) {
-        svg += '<circle cx="50" cy="52" r="6" class="out-circle"/>';
-        svg += '<text x="50" y="53" class="out-num">' + atBat.outNumber + '</text>';
+        svg += '<circle cx="50" cy="50" r="6" class="out-circle"/>';
+        svg += '<text x="50" y="51" class="out-num">' + atBat.outNumber + '</text>';
       }
 
       // RBI dots (top-left area)
