@@ -1704,6 +1704,9 @@ def page(data):
 <body>
 
 <header class="masthead">
+  <a href="../" class="home-btn" aria-label="Back to all teams" title="All teams">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2 L22 12 L22 22 L2 22 L2 12 Z"/></svg>
+  </a>
   <div class="kicker">
     <span>Vol. {t.year - 2023} &middot; <span class="vol">No. {vol_no:03d}</span></span>
     <span>{CFG['branding']['tagline']}</span>
