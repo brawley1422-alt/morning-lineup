@@ -34,6 +34,8 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
 a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
 a:hover{color:var(--paper);border-bottom-color:var(--paper)}
 a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:3px}
+.home-btn{position:absolute;top:12px;right:16px;color:var(--gold);border:1px solid var(--gold-dim);background:var(--ink-2);border-radius:3px;padding:8px 10px;line-height:0;transition:color .15s,border-color .15s,background .15s;z-index:10;text-decoration:none}
+.home-btn:hover{color:var(--paper);border-color:var(--gold);background:var(--ink-3)}
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
 .masthead .kicker .vol{color:var(--gold)}
@@ -314,6 +316,9 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <body>
 
 <header class="masthead">
+  <a href="../" class="home-btn" aria-label="Back to all teams" title="All teams">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2 L22 12 L22 22 L2 22 L2 12 Z"/></svg>
+  </a>
   <div class="kicker">
     <span>Vol. 3 &middot; <span class="vol">No. 099</span></span>
     <span>A Daily Dispatch from The Park & Beyond</span>
@@ -655,7 +660,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Petco Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/09/26 07:48 CT</span>
+  <span>Filed 04/09/26 08:53 CT</span>
 </footer>
 
 <script>

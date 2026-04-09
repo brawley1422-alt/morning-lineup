@@ -34,6 +34,8 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
 a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
 a:hover{color:var(--paper);border-bottom-color:var(--paper)}
 a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:3px}
+.home-btn{position:absolute;top:12px;right:16px;color:var(--gold);border:1px solid var(--gold-dim);background:var(--ink-2);border-radius:3px;padding:8px 10px;line-height:0;transition:color .15s,border-color .15s,background .15s;z-index:10;text-decoration:none}
+.home-btn:hover{color:var(--paper);border-color:var(--gold);background:var(--ink-3)}
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
 .masthead .kicker .vol{color:var(--gold)}
@@ -314,6 +316,9 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <body>
 
 <header class="masthead">
+  <a href="../" class="home-btn" aria-label="Back to all teams" title="All teams">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2 L22 12 L22 22 L2 22 L2 12 Z"/></svg>
+  </a>
   <div class="kicker">
     <span>Vol. 3 &middot; <span class="vol">No. 099</span></span>
     <span>A Daily Dispatch from The Target & Beyond</span>
@@ -329,7 +334,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-
+<div class="lede">The Twins’ 8-6 loss to the Tigers wasn’t just another stumble—it was a reminder</div>
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -405,9 +410,9 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-venue">Target Field </div>
         <div class="nx-meta"><span class="nx-opp-rec">DET: 4-8, 4th AL Central (L4)</span> &middot; <span class="nx-series">Season series: 3-0</span></div>
         <div class="nx-pitcher"><span class="nx-side">Twins</span> Mick Abel<div class="nx-pline">11.05 ERA &middot; 0-2 &middot; 7.1 IP &middot; 7 K &middot; 2.86 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">DET</span> Jack Flaherty<div class="nx-pline">7.56 ERA &middot; 0-1 &middot; 8.1 IP &middot; 8 K &middot; 1.80 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">CF</span> Buxton</span><span class="lu-slot"><span class="lu-pos">RF</span> Larnach</span><span class="lu-slot"><span class="lu-pos">1B</span> Bell</span><span class="lu-slot"><span class="lu-pos">RF</span> Wallner</span><span class="lu-slot"><span class="lu-pos">C</span> Caratini</span><span class="lu-slot"><span class="lu-pos">2B</span> Clemens</span><span class="lu-slot"><span class="lu-pos">3B</span> Lewis</span><span class="lu-slot"><span class="lu-pos">3B</span> Gray</span><span class="lu-slot"><span class="lu-pos">CF</span> Outman</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Detroit SportsNet &middot; Twins.TV Presented by Progressive</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> TIBN &middot; WCCO 830 &middot; WXYT 97.1 FM &middot; The Wolf 102.9 FM &middot; Audacy App</div>
-        <div class="nx-wx">35°F &middot; Overcast &middot; 9 mph W</div>
+        <div class="nx-wx">36°F &middot; Clear &middot; 11 mph W</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Fri, Apr 10 &middot; at TOR</div>
@@ -659,7 +664,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Target Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/09/26 07:50 CT</span>
+  <span>Filed 04/09/26 08:55 CT</span>
 </footer>
 
 <script>
