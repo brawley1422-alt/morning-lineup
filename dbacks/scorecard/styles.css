@@ -447,8 +447,8 @@ body {
 .scorebook-grid td.player-cell {
   text-align: left;
   padding: 4px 8px;
-  font-family: var(--sc-typewriter);
-  font-size: 12px;
+  font-family: var(--sc-handwriting);
+  font-size: 15px;
   color: var(--sc-graphite);
   white-space: nowrap;
   position: sticky;
@@ -458,7 +458,7 @@ body {
   border-right: 2px solid var(--sc-border-heavy);
 }
 .scorebook-grid td.player-cell .name {
-  font-weight: 400;
+  font-weight: 700;
   color: var(--sc-graphite);
 }
 .scorebook-grid td.player-cell .pos {
