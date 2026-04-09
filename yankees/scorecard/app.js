@@ -346,7 +346,7 @@
   SC.app = {
     view: "finder",
     embed: false,
-    _darkMode: false,
+    _darkMode: true,
 
     toggleTheme: function () {
       this._darkMode = !this._darkMode;
@@ -365,13 +365,17 @@
       mainEl = document.getElementById("main");
       SC.tooltip.init();
 
-      // Restore saved theme preference
+      // Restore saved theme preference (dark is default)
       try {
-        if (localStorage.getItem("sc-theme") === "dark") {
-          this._darkMode = true;
+        var saved = localStorage.getItem("sc-theme");
+        if (saved === "paper") {
+          this._darkMode = false;
+        } else {
           document.getElementById("app").classList.add("sc-dark");
         }
-      } catch (e) {}
+      } catch (e) {
+        document.getElementById("app").classList.add("sc-dark");
+      }
 
       var params = getParams();
       this.embed = params.embed === "1";
