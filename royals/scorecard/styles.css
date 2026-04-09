@@ -33,8 +33,12 @@
   --sc-border-medium: #3a3a3a;
   --sc-red-pencil: #c0392b;
   --sc-green-pencil: #4a7c59;
-  --sc-handwriting: "Caveat", cursive;
+  --sc-handwriting: "Kalam", "Caveat", cursive;
+  --sc-handwriting-num: "Caveat", "Kalam", cursive;
   --sc-typewriter: "Special Elite", "Courier New", monospace;
+  --sc-pencil-shadow: 0.5px 0.5px 0px rgba(45, 41, 38, 0.3), -0.3px 0px 0px rgba(45, 41, 38, 0.08);
+  --sc-pencil-shadow-light: 0.3px 0.3px 0px rgba(45, 41, 38, 0.15);
+  --sc-pencil-shadow-heavy: 0.6px 0.6px 0.5px rgba(45, 41, 38, 0.4), -0.3px 0.2px 0px rgba(45, 41, 38, 0.12);
   --sc-noise: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
 }
 
@@ -51,8 +55,9 @@
   --sc-border-medium: var(--rule);
   --sc-red-pencil: var(--cubs-red-hi);
   --sc-green-pencil: var(--win);
-  --sc-handwriting: var(--mono);
-  --sc-typewriter: var(--body);
+  --sc-pencil-shadow: 0.5px 0.5px 0px rgba(236, 228, 208, 0.15), -0.3px 0px 0px rgba(236, 228, 208, 0.05);
+  --sc-pencil-shadow-light: 0.3px 0.3px 0px rgba(236, 228, 208, 0.08);
+  --sc-pencil-shadow-heavy: 0.6px 0.6px 0.5px rgba(236, 228, 208, 0.2), -0.3px 0.2px 0px rgba(236, 228, 208, 0.06);
   --sc-noise: none;
 }
 .sc-dark .game-header::before { display: none; }
@@ -63,7 +68,7 @@
 .sc-dark .scorebook-grid tbody tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
 .sc-dark .scorebook-grid tbody tr:nth-child(even) td.player-cell { background: var(--ink); }
 .sc-dark .scorebook-grid tr.totals-row td { background: var(--ink-2); }
-.sc-dark .diamond-cell svg { filter: none; }
+.sc-dark .diamond-cell svg { filter: url(#sc-pencil); }
 .sc-dark .basepath.hit { stroke: var(--gold); }
 .sc-dark .basepath.walk { stroke: var(--bb-accent); }
 .sc-dark .basepath.error { stroke: var(--cubs-red-hi); }
@@ -81,6 +86,87 @@
 .sc-dark .line-score td.rhe { color: var(--gold); }
 .sc-dark .game-header { box-shadow: none; }
 .sc-dark .scorebook-spread { box-shadow: none; }
+
+/* ── Pencil Handwriting Treatment ── */
+/* Disable subpixel rendering on handwriting text for raw graphite grain */
+.game-header .final-score,
+.game-header .details-row,
+.game-header .decisions,
+.line-score td:not(.team-col):not(.rhe),
+.page-label,
+.scorebook-grid td.player-cell,
+.scorebook-grid td.stat-cell,
+.scorebook-grid .inning-total,
+.scorebook-grid .total-stat {
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  text-rendering: geometricPrecision;
+}
+
+/* Graphite pencil shadow — simulates lead deposit shimmer */
+.game-header .final-score,
+.game-header .decisions,
+.page-label {
+  text-shadow: var(--sc-pencil-shadow);
+}
+.scorebook-grid td.player-cell .name {
+  text-shadow: var(--sc-pencil-shadow-heavy);
+}
+.game-header .details-row,
+.scorebook-grid td.player-cell .pos,
+.scorebook-grid td.player-cell .sub-label {
+  text-shadow: var(--sc-pencil-shadow);
+}
+.scorebook-grid td.stat-cell,
+.scorebook-grid .inning-total,
+.scorebook-grid .total-stat,
+.line-score td:not(.team-col) {
+  text-shadow: var(--sc-pencil-shadow);
+}
+.line-score td.rhe {
+  text-shadow: var(--sc-pencil-shadow-heavy);
+}
+
+/* SVG displacement filter on HTML text for subtle wobble */
+.scorebook-grid td.player-cell,
+.scorebook-grid td.stat-cell {
+  filter: url(#sc-pencil-text);
+}
+
+/* Baseline wobble — real handwriting is never perfectly level */
+/* Player names get more wobble — scorer writing fast between pitches */
+.scorebook-grid tbody tr:nth-child(7n) td.player-cell { transform: rotate(0.6deg) translateY(0.4px); }
+.scorebook-grid tbody tr:nth-child(7n+1) td.player-cell { transform: rotate(-0.35deg) translateY(-0.3px); }
+.scorebook-grid tbody tr:nth-child(7n+2) td.player-cell { transform: rotate(0.25deg) translateY(0.5px); }
+.scorebook-grid tbody tr:nth-child(7n+3) td.player-cell { transform: rotate(-0.5deg) translateY(-0.2px); }
+.scorebook-grid tbody tr:nth-child(7n+4) td.player-cell { transform: rotate(0.4deg) translateY(0.3px); }
+.scorebook-grid tbody tr:nth-child(7n+5) td.player-cell { transform: rotate(-0.2deg) translateY(-0.5px); }
+.scorebook-grid tbody tr:nth-child(7n+6) td.player-cell { transform: rotate(0.45deg) translateY(0.2px); }
+/* Stat cells — smaller wobble */
+.scorebook-grid tbody tr:nth-child(5n) td.stat-cell { transform: rotate(-0.4deg) translateY(0.3px); }
+.scorebook-grid tbody tr:nth-child(5n+2) td.stat-cell { transform: rotate(0.3deg) translateY(-0.2px); }
+.scorebook-grid tbody tr:nth-child(5n+4) td.stat-cell { transform: rotate(-0.2deg) translateY(0.4px); }
+
+/* Pressure variation — pencil pressure changes as scorer writes through the lineup */
+.scorebook-grid tbody tr:nth-child(4n) td.player-cell .name { opacity: 0.88; }
+.scorebook-grid tbody tr:nth-child(4n+1) td.player-cell .name { opacity: 0.96; }
+.scorebook-grid tbody tr:nth-child(4n+2) td.player-cell .name { opacity: 0.92; }
+.scorebook-grid tbody tr:nth-child(4n+3) td.player-cell .name { opacity: 1; }
+/* Positions lighter — written smaller and faster */
+.scorebook-grid tbody tr:nth-child(3n) td.player-cell .pos { opacity: 0.7; }
+.scorebook-grid tbody tr:nth-child(3n+1) td.player-cell .pos { opacity: 0.82; }
+.scorebook-grid tbody tr:nth-child(3n+2) td.player-cell .pos { opacity: 0.75; }
+/* Stat number pressure variation */
+.scorebook-grid tbody tr:nth-child(7n) td.stat-cell { opacity: 0.85; }
+.scorebook-grid tbody tr:nth-child(7n+3) td.stat-cell { opacity: 0.93; }
+.scorebook-grid tbody tr:nth-child(7n+5) td.stat-cell { opacity: 0.88; }
+
+/* Letter-spacing micro-variation on names — no two entries look identical */
+.scorebook-grid tbody tr:nth-child(5n) td.player-cell .name { letter-spacing: -0.02em; }
+.scorebook-grid tbody tr:nth-child(5n+1) td.player-cell .name { letter-spacing: 0.01em; }
+.scorebook-grid tbody tr:nth-child(5n+2) td.player-cell .name { letter-spacing: -0.005em; }
+.scorebook-grid tbody tr:nth-child(5n+3) td.player-cell .name { letter-spacing: 0.015em; }
+.scorebook-grid tbody tr:nth-child(5n+4) td.player-cell .name { letter-spacing: -0.01em; }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -346,15 +432,20 @@ body {
   font-size: clamp(28px, 5vw, 48px);
   font-weight: 700;
   color: var(--sc-graphite);
+  filter: url(#sc-pencil-heavy);
+  letter-spacing: -0.02em;
 }
 .game-header .vs { color: var(--sc-graphite-light); font-size: 14px; }
 
 .game-header .details-row {
   text-align: center;
   font-family: var(--sc-handwriting);
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 300;
   color: var(--sc-graphite-light);
   margin-bottom: 12px;
+  letter-spacing: 0.01em;
+  filter: url(#sc-pencil-text);
 }
 
 /* Line score table — on paper */
@@ -363,14 +454,15 @@ body {
   max-width: 700px;
   margin: 0 auto 12px;
   border-collapse: collapse;
-  font-family: var(--sc-handwriting);
-  font-size: 16px;
+  font-family: var(--sc-handwriting-num);
+  font-size: 17px;
+  filter: url(#sc-pencil-text);
 }
 .line-score th,
 .line-score td {
   padding: 6px 8px;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   border-bottom: 1px solid var(--sc-grid-blue);
 }
 .line-score th {
@@ -394,7 +486,7 @@ body {
 .line-score td.rhe {
   font-weight: 700;
   color: var(--sc-graphite);
-  font-size: 16px;
+  font-size: 18px;
   border-left: 2px solid var(--sc-border-medium);
 }
 .line-score td.rhe:first-of-type {
@@ -404,8 +496,11 @@ body {
 .game-header .decisions {
   text-align: center;
   font-family: var(--sc-handwriting);
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 400;
   color: var(--sc-graphite);
+  filter: url(#sc-pencil-text);
+  letter-spacing: 0.01em;
 }
 .game-header .decisions .label {
   font-family: var(--cond);
@@ -493,14 +588,16 @@ body {
 }
 .scorebook-page .page-label {
   font-family: var(--sc-handwriting);
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--sc-graphite);
   margin-bottom: 10px;
   padding: 0 4px 4px;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
   border-bottom: 2px solid var(--sc-graphite-light);
   display: inline-block;
+  filter: url(#sc-pencil-heavy);
+  transform: rotate(-0.3deg);
 }
 
 .scorebook-grid {
@@ -555,9 +652,9 @@ body {
 }
 .scorebook-grid td.player-cell {
   text-align: left;
-  padding: 4px 8px;
+  padding: 5px 8px;
   font-family: var(--sc-handwriting);
-  font-size: 15px;
+  font-size: 17px;
   color: var(--sc-graphite);
   white-space: nowrap;
   position: sticky;
@@ -569,22 +666,32 @@ body {
 .scorebook-grid td.player-cell .name {
   font-weight: 700;
   color: var(--sc-graphite);
+  letter-spacing: -0.01em;
+  font-style: italic;
+  display: inline-block;
+  transform: skewX(-3deg);
 }
 .scorebook-grid td.player-cell .pos {
   font-family: var(--sc-handwriting);
-  font-size: 13px;
-  letter-spacing: 0;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   color: var(--sc-graphite-light);
-  margin-left: 6px;
+  margin-left: 5px;
   text-transform: uppercase;
+  display: inline-block;
+  transform: skewX(-2deg);
 }
 .scorebook-grid td.player-cell .sub-label {
   font-family: var(--sc-handwriting);
-  font-size: 13px;
-  letter-spacing: 0;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   color: var(--sc-red-pencil);
   text-transform: uppercase;
   margin-left: 4px;
+  display: inline-block;
+  transform: skewX(-2deg);
 }
 .scorebook-grid td.player-cell.sub-row {
   padding-left: 16px;
@@ -593,8 +700,8 @@ body {
 }
 
 .scorebook-grid td.stat-cell {
-  font-family: var(--sc-handwriting);
-  font-size: 16px;
+  font-family: var(--sc-handwriting-num);
+  font-size: 17px;
   font-weight: 700;
   color: var(--sc-graphite);
   min-width: 36px;
@@ -616,8 +723,8 @@ body {
 .scorebook-grid tr.totals-row td { border-top: 2px solid var(--sc-border-heavy); background: var(--sc-paper-aged); }
 .scorebook-grid .inning-total,
 .scorebook-grid .total-stat {
-  font-family: var(--sc-handwriting);
-  font-size: 18px;
+  font-family: var(--sc-handwriting-num);
+  font-size: 19px;
   font-weight: 700;
   color: var(--sc-graphite);
 }
@@ -679,9 +786,9 @@ body {
 .base-dot.walk-reached { fill: var(--sc-green-pencil); }
 .base-dot.error-reached { fill: var(--sc-red-pencil); }
 
-/* Notation text — handwriting */
+/* Notation text — pencil handwriting */
 .hit-type {
-  font-family: var(--sc-handwriting);
+  font-family: var(--sc-handwriting-num);
   font-size: 12px;
   font-weight: 700;
   fill: var(--sc-graphite);
@@ -695,7 +802,7 @@ body {
 
 /* Out numbers — circled, traditional */
 .out-num {
-  font-family: var(--sc-handwriting);
+  font-family: var(--sc-handwriting-num);
   font-size: 11px;
   font-weight: 700;
   fill: var(--sc-graphite);
@@ -734,7 +841,8 @@ body {
 /* Advancement cause labels */
 .advance-label {
   font-family: var(--sc-handwriting);
-  font-size: 8px;
+  font-size: 9px;
+  font-weight: 300;
   fill: var(--sc-graphite-light);
   text-anchor: middle;
   dominant-baseline: central;
@@ -813,17 +921,33 @@ body.embed-mode .advance-label { display: none; }
 @media (max-width: 600px) {
   .scorebook-spread { padding: 12px 8px; }
   .scorebook-grid td.player-cell {
-    font-size: 11px;
+    font-size: 13px;
     min-width: 110px;
     padding: 3px 6px;
     background: var(--sc-paper);
+    filter: none;
+    transform: none !important;
   }
+  .scorebook-grid td.player-cell .name { transform: none; font-style: normal; }
+  .scorebook-grid td.player-cell .pos { transform: none; }
+  .scorebook-grid td.stat-cell { filter: none; transform: none; }
   .scorebook-grid th, .scorebook-grid th.player-header { background: var(--sc-paper); }
   .game-header { padding: 14px 12px; }
+  .game-header .final-score { filter: none; }
+  .game-header .details-row { filter: none; }
+  .game-header .decisions { filter: none; }
+  .page-label { filter: none; }
+  .line-score { filter: none; }
   .diamond-cell svg { filter: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .diamond-cell svg { filter: none; }
+  .scorebook-grid td.player-cell { filter: none; transform: none !important; }
+  .scorebook-grid td.player-cell .name { transform: none; }
+  .scorebook-grid td.player-cell .pos { transform: none; }
+  .scorebook-grid td.stat-cell { filter: none; transform: none !important; }
+  .game-header .final-score { filter: none; }
+  .page-label { filter: none; transform: none; }
 }
 @media (max-width: 900px) {
   .scorebook-spread {
