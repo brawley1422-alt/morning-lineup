@@ -38,48 +38,79 @@ def gh(method, path, body=None):
     with urllib.request.urlopen(req, timeout=25) as r:
         return json.loads(r.read())
 
-# 1) read live index.html → content + sha
-current = gh("GET", "/index.html")
+ROOT = Path(__file__).parent
+today_iso = datetime.now(tz=CT).date().isoformat()
 archive_name = (datetime.now(tz=CT).date() - timedelta(days=1)).isoformat()
 
-# 2) archive it (content is already base64 from GitHub)
-try:
-    gh("PUT", f"/archive/{archive_name}.html", {
-        "message": f"archive {archive_name} briefing",
-        "content": current["content"].replace("\n", ""),
-    })
-    print(f"archived → archive/{archive_name}.html")
-except urllib.error.HTTPError as e:
-    if e.code == 422:
-        print(f"archive/{archive_name}.html already exists; skipping")
-    else:
-        body = e.read().decode(errors="replace")
-        sys.exit(f"archive PUT failed: {e.code} {body}")
+# 1) deploy root index.html (landing page) if it exists
+local_root = ROOT / "index.html"
+if local_root.exists() and local_root.read_bytes():
+    try:
+        current = gh("GET", "/index.html")
+        root_sha = current["sha"]
+    except urllib.error.HTTPError:
+        root_sha = None
 
-# 3) read new local index.html, PUT with current sha
-local = Path(__file__).parent / "index.html"
-if not local.exists():
-    sys.exit(f"error: {local} not found — did build.py run?")
-html_bytes = local.read_bytes()
-if not html_bytes:
-    sys.exit(f"error: {local} is empty")
-new_b64 = base64.b64encode(html_bytes).decode()
+    body = {
+        "message": f"landing page {today_iso}",
+        "content": base64.b64encode(local_root.read_bytes()).decode(),
+    }
+    if root_sha:
+        body["sha"] = root_sha
+    try:
+        resp = gh("PUT", "/index.html", body)
+        print(f"landing   → {resp['commit']['sha'][:7]} ({resp['content']['size']:,} bytes)")
+    except urllib.error.HTTPError as e:
+        print(f"warning: landing page deploy failed: {e.code}")
 
-try:
-    resp = gh("PUT", "/index.html", {
-        "message": f"daily update {date.today().isoformat()}",
-        "content": new_b64,
-        "sha": current["sha"],
-    })
-except urllib.error.HTTPError as e:
-    body = e.read().decode(errors="replace")
-    sys.exit(f"index.html PUT failed: {e.code} {body}")
+# 2) deploy all team pages
+teams_dir = ROOT / "teams"
+if teams_dir.is_dir():
+    for cfg_file in sorted(teams_dir.glob("*.json")):
+        slug = cfg_file.stem
+        team_html = ROOT / slug / "index.html"
+        if not team_html.exists():
+            continue
 
-print(f"deployed  → {resp['commit']['sha'][:7]} ({resp['content']['size']:,} bytes)")
+        # get remote SHA if file already exists
+        try:
+            remote = gh("GET", f"/{slug}/index.html")
+            sha = remote["sha"]
+            # archive previous version
+            archive_b64 = remote["content"].replace("\n", "")
+            try:
+                gh("PUT", f"/archive/{slug}/{archive_name}.html", {
+                    "message": f"archive {slug} {archive_name}",
+                    "content": archive_b64,
+                })
+                print(f"archived  → archive/{slug}/{archive_name}.html")
+            except urllib.error.HTTPError as e:
+                if e.code == 422:
+                    print(f"archive/{slug}/{archive_name}.html already exists; skipping")
+                else:
+                    print(f"warning: archive {slug} failed: {e.code}")
+        except urllib.error.HTTPError as e:
+            if e.code == 404:
+                sha = None
+            else:
+                body = e.read().decode(errors="replace")
+                sys.exit(f"{slug}/index.html GET failed: {e.code} {body}")
 
-# 4) push data ledger JSON if it exists
-today_iso = date.today().isoformat()
-data_file = Path(__file__).parent / "data" / f"{today_iso}.json"
+        body = {
+            "message": f"daily update {slug} {today_iso}",
+            "content": base64.b64encode(team_html.read_bytes()).decode(),
+        }
+        if sha:
+            body["sha"] = sha
+        try:
+            resp = gh("PUT", f"/{slug}/index.html", body)
+            print(f"deployed  → {slug}/index.html ({resp['content']['size']:,} bytes)")
+        except urllib.error.HTTPError as e:
+            body = e.read().decode(errors="replace")
+            print(f"error: {slug}/index.html PUT failed: {e.code} {body}")
+
+# 3) push data ledger JSON if it exists
+data_file = ROOT / "data" / f"{today_iso}.json"
 if data_file.exists():
     data_b64 = base64.b64encode(data_file.read_bytes()).decode()
     data_path = f"/data/{today_iso}.json"
