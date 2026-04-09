@@ -123,11 +123,17 @@
       var pe = playEvents[i];
       if (pe.isPitch) {
         var d = pe.details || {};
+        var pd = pe.pitchData || {};
+        var coords = pd.coordinates || {};
         pitches.push({
           type: (d.type && d.type.code) || "",
           call: (d.call && d.call.code) || "",
           desc: (d.call && d.call.description) || "",
-          speed: pe.pitchData && pe.pitchData.startSpeed
+          speed: pd.startSpeed,
+          pX: coords.pX,
+          pZ: coords.pZ,
+          szTop: pd.strikeZoneTop,
+          szBot: pd.strikeZoneBottom
         });
       }
     }

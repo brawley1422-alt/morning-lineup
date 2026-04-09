@@ -903,9 +903,138 @@ body.embed-mode .scorebook-grid td.diamond-td { min-width: 0; padding: 1px; }
 body.embed-mode .scorebook-grid td.diamond-td svg { width: 40px; height: 40px; }
 body.embed-mode .scorebook-page { overflow-x: auto; }
 
+/* ── Strike Zone Overlay ── */
+.zone-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.zone-overlay.visible { display: flex; }
+
+.zone-card {
+  background: linear-gradient(180deg, var(--ink-2), var(--ink));
+  border: 1px solid var(--gold-dim);
+  border-radius: 6px;
+  box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(201, 162, 74, 0.1);
+  width: 100%;
+  max-width: 340px;
+  padding: 24px 24px 20px;
+  position: relative;
+  animation: card-enter 0.25s ease-out;
+}
+.zone-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--paper-mute);
+  font-size: 26px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+  transition: color 0.12s;
+}
+.zone-close:hover { color: var(--paper); }
+
+.zone-svg {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto 16px;
+}
+.zone-box {
+  fill: none;
+  stroke: var(--paper-mute);
+  stroke-width: 1.5;
+}
+.zone-grid {
+  stroke: var(--rule);
+  stroke-width: 0.7;
+  stroke-dasharray: 3 3;
+}
+.zone-plate {
+  fill: none;
+  stroke: var(--paper-mute);
+  stroke-width: 1;
+}
+.zone-pitch { cursor: default; }
+.zone-pitch-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  fill: #fff;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.zone-legend {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.zone-leg-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--paper-dim);
+}
+.zone-leg-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.zone-seq {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.zone-chip {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  background: var(--ink-3);
+  color: var(--paper-dim);
+}
+.zone-chip.ball { color: var(--bb-accent); }
+.zone-chip.strike { color: var(--cubs-red-hi); }
+.zone-chip.inplay { color: var(--gold); }
+.zone-chip-num {
+  font-size: 8px;
+  color: var(--paper-mute);
+  margin-right: 2px;
+}
+
+.zone-result {
+  text-align: center;
+  font-family: var(--body);
+  font-size: 13px;
+  color: var(--paper);
+  line-height: 1.4;
+  border-top: 1px solid var(--rule);
+  padding-top: 10px;
+}
+
 @media (max-width: 600px) {
   #app { padding: 12px; }
   .diamond-cell svg { width: 48px; height: 48px; }
   .scorebook-grid th.inning-header { min-width: 52px; }
   .scorebook-grid td.player-cell { font-size: 11px; min-width: 110px; padding: 3px 6px; }
+  .zone-card { max-width: 300px; padding: 16px; }
 }
