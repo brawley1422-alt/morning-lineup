@@ -254,12 +254,12 @@
     }
     html += SC.header.render(model);
     html += '<div id="panels-area"></div>';
-    html += SC.scorebook.render(model, self.embed);
+    html += SC.scorebook.render(model, SC.app.embed);
     mainEl.innerHTML = html;
     currentModel = model;
 
     // Bind tab switching in embed mode
-    if (self.embed) {
+    if (SC.app.embed) {
       var tabs = mainEl.querySelectorAll(".sb-tab");
       var panes = mainEl.querySelectorAll(".scorebook-tab-pane");
       for (var ti = 0; ti < tabs.length; ti++) {
@@ -310,15 +310,18 @@
     }
   }
 
+  var playerClickBound = false;
   function bindPlayerClicks(model) {
+    if (playerClickBound) return;
+    playerClickBound = true;
     document.addEventListener("click", function handler(e) {
       var nameEl = e.target.closest(".clickable-name");
       if (!nameEl) return;
       var pid = parseInt(nameEl.getAttribute("data-pid"), 10);
       var side = nameEl.getAttribute("data-side");
       var playerName = nameEl.textContent;
-      var opposingTeamId = side === "away" ? model.home.team.id : model.away.team.id;
-      SC.panels.togglePlayerPanel(pid, playerName, side, opposingTeamId, model);
+      var opposingTeamId = side === "away" ? currentModel.home.team.id : currentModel.away.team.id;
+      SC.panels.togglePlayerPanel(pid, playerName, side, opposingTeamId, currentModel);
     });
   }
 

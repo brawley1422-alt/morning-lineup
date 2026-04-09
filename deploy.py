@@ -6,7 +6,7 @@ then replace index.html with the freshly-built local index.html.
 Env: GITHUB_TOKEN (fine-grained PAT with Contents:RW on this repo).
 Run AFTER build.py, from the folder containing the built index.html.
 """
-import base64, json, os, sys, urllib.request, urllib.error
+import base64, json, os, sys, urllib.request, urllib.error, urllib.parse
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -94,7 +94,11 @@ if teams_dir.is_dir():
                 sha = None
             else:
                 body = e.read().decode(errors="replace")
-                sys.exit(f"{slug}/index.html GET failed: {e.code} {body}")
+                print(f"error: {slug}/index.html GET failed: {e.code} {body}")
+                continue
+        except urllib.error.URLError as e:
+            print(f"error: {slug}/index.html GET failed (network): {e.reason}")
+            continue
 
         body = {
             "message": f"daily update {slug} {today_iso}",

@@ -100,7 +100,16 @@ def main():
         print("(dry run — will not rebuild)", flush=True)
 
     # Check if Cubs have a game today
-    games = get_cubs_game_today()
+    try:
+        games = get_cubs_game_today()
+    except Exception as e:
+        print(f"  Startup fetch failed: {e} — retrying in {POLL_INTERVAL}s", flush=True)
+        time.sleep(POLL_INTERVAL)
+        try:
+            games = get_cubs_game_today()
+        except Exception as e2:
+            print(f"  Retry failed: {e2} — exiting", flush=True)
+            return
     if not games:
         print("No Cubs game today. Exiting.", flush=True)
         return

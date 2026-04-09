@@ -253,7 +253,6 @@
       .catch(done);
 
     // 2. Opponent record from standings
-    var leagueId = oppId < 200 ? "103,104" : "103,104";
     fetch(API + "/standings?leagueId=103,104&season=" + new Date().getFullYear() + "&standingsTypes=regularSeason")
       .then(function (r) { return r.json(); })
       .then(function (data) {

@@ -402,14 +402,11 @@ def fmt_time_ct(iso_z):
 def fmt_date(d):
     return d.strftime("%a, %b ") + str(d.day) + d.strftime(", %Y")
 
-def fmt_short_date(d):
-    return d.strftime("%a, %b ") + str(d.day)
-
 # ─── section renderers ──────────────────────────────────────────────────────
 
 def render_line_score(game, tmap, game_date=None, yest=None):
     if not game:
-        return ('<p class="slang"><em>No completed Cubs game in the last week.</em></p>', "&mdash;")
+        return (f'<p class="slang"><em>No completed {TEAM_NAME} game in the last week.</em></p>', "&mdash;")
     away_id = game["teams"]["away"]["team"]["id"]
     home_id = game["teams"]["home"]["team"]["id"]
     away_ab = abbr(tmap, away_id)
@@ -630,7 +627,7 @@ def fetch_pitcher_line(pid):
     """Fetch a pitcher's season stats. Returns formatted string or empty."""
     if not pid: return ""
     try:
-        data = fetch(f"/people/{pid}/stats", stats="season", season="2026", group="pitching")
+        data = fetch(f"/people/{pid}/stats", stats="season", season=str(datetime.now(tz=CT).date().year), group="pitching")
         for s in data.get("stats", []):
             for sp in s.get("splits", []):
                 st = sp.get("stat", {})
