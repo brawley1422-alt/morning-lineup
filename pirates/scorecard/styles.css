@@ -237,15 +237,29 @@ body {
 .game-header {
   background: var(--sc-paper);
   background-image:
-    url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
     linear-gradient(135deg, var(--sc-paper) 0%, var(--sc-paper-aged) 100%);
   margin-bottom: 0;
-  padding: 20px 16px;
+  padding: 24px 20px 18px;
   border-bottom: 2px solid var(--sc-border-heavy);
-  border-radius: 2px 2px 0 0;
+  border-radius: 3px 3px 0 0;
   box-shadow:
-    0 1px 3px rgba(0,0,0,0.12),
-    0 4px 12px rgba(0,0,0,0.08);
+    0 2px 4px rgba(0,0,0,0.15),
+    0 8px 24px rgba(0,0,0,0.12),
+    0 20px 40px -10px rgba(0,0,0,0.08);
+  position: relative;
+}
+/* Printed form border — thin decorative inner frame */
+.game-header::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  border: 1px solid rgba(45, 41, 38, 0.08);
+  border-bottom: none;
+  pointer-events: none;
 }
 .game-header .title-row {
   display: flex;
@@ -316,6 +330,10 @@ body {
   font-weight: 700;
   color: var(--sc-graphite);
   font-size: 16px;
+  border-left: 2px solid var(--sc-border-medium);
+}
+.line-score td.rhe:first-of-type {
+  border-left: 2px solid var(--sc-border-heavy);
 }
 
 .game-header .decisions {
@@ -339,41 +357,64 @@ body {
   margin-top: 0;
   background: var(--sc-paper);
   background-image:
-    url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
-    linear-gradient(135deg, var(--sc-paper) 0%, var(--sc-paper-aged) 50%, var(--sc-paper-edge) 100%);
-  border-radius: 0 0 2px 2px;
-  padding: 20px 16px;
+    url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
+    linear-gradient(135deg, var(--sc-paper) 0%, var(--sc-paper-aged) 40%, var(--sc-paper-edge) 100%);
+  border-radius: 0 0 3px 3px;
+  padding: 24px 20px 28px;
   box-shadow:
-    0 1px 3px rgba(0,0,0,0.12),
-    0 4px 12px rgba(0,0,0,0.08),
-    inset 0 0 60px rgba(0,0,0,0.03);
+    0 2px 4px rgba(0,0,0,0.15),
+    0 8px 24px rgba(0,0,0,0.12),
+    0 20px 40px -10px rgba(0,0,0,0.08),
+    inset 0 0 80px rgba(0,0,0,0.04);
   position: relative;
 }
+/* Edge yellowing + fold crease */
 .scorebook-spread::before {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 0 0 2px 2px;
-  background: linear-gradient(
-    to right,
-    rgba(180, 160, 110, 0.08) 0%,
-    transparent 3%,
-    transparent 97%,
-    rgba(180, 160, 110, 0.08) 100%
-  );
+  border-radius: 0 0 3px 3px;
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 48%,
+      rgba(160, 140, 100, 0.06) 49%,
+      rgba(160, 140, 100, 0.03) 50%,
+      rgba(160, 140, 100, 0.06) 51%,
+      transparent 52%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to right,
+      rgba(180, 160, 110, 0.12) 0%,
+      transparent 4%,
+      transparent 96%,
+      rgba(180, 160, 110, 0.12) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(180, 160, 110, 0.06) 0%,
+      transparent 3%,
+      transparent 97%,
+      rgba(180, 160, 110, 0.1) 100%
+    );
   pointer-events: none;
   z-index: 0;
 }
+/* Coffee ring stain */
 .scorebook-spread::after {
   content: "";
   position: absolute;
-  bottom: 30px;
-  right: 40px;
-  width: 80px;
-  height: 80px;
+  bottom: 35px;
+  right: 45px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
-  border: 2px solid rgba(139, 109, 63, 0.06);
-  box-shadow: inset 0 0 8px rgba(139, 109, 63, 0.04);
+  border: 3px solid rgba(139, 109, 63, 0.07);
+  box-shadow:
+    inset 0 0 12px rgba(139, 109, 63, 0.05),
+    0 0 6px rgba(139, 109, 63, 0.03);
   pointer-events: none;
   z-index: 0;
 }
@@ -387,11 +428,14 @@ body {
 }
 .scorebook-page .page-label {
   font-family: var(--sc-handwriting);
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: 700;
   color: var(--sc-graphite);
-  margin-bottom: 8px;
-  padding-left: 4px;
+  margin-bottom: 10px;
+  padding: 0 4px 4px;
   letter-spacing: 0;
+  border-bottom: 2px solid var(--sc-graphite-light);
+  display: inline-block;
 }
 
 .scorebook-grid {
@@ -410,13 +454,13 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--sc-border-medium);
-  font-weight: 400;
-  padding: 4px 6px;
+  font-weight: 600;
+  padding: 6px 6px;
   border-bottom: 2px solid var(--sc-border-heavy);
   white-space: nowrap;
   position: sticky;
   top: 0;
-  background: var(--sc-paper);
+  background: rgba(197, 213, 232, 0.18);
   z-index: 2;
 }
 .scorebook-grid th.player-header {
@@ -425,7 +469,7 @@ body {
   position: sticky;
   left: 0;
   z-index: 3;
-  background: var(--sc-paper);
+  background: rgba(197, 213, 232, 0.18);
   border-right: 2px solid var(--sc-border-heavy);
 }
 .scorebook-grid th.inning-header { min-width: 64px; }
@@ -511,6 +555,27 @@ body {
   font-size: 18px;
   font-weight: 700;
   color: var(--sc-graphite);
+}
+
+/* Alternating row tints — subtle aging variation */
+.scorebook-grid tbody tr:nth-child(even) td { background: rgba(180, 160, 110, 0.04); }
+.scorebook-grid tbody tr:nth-child(even) td.player-cell { background: rgba(237, 229, 211, 0.95); }
+
+/* Heavy separator between diamond area and stats */
+.scorebook-grid td.stat-cell:first-of-type,
+.scorebook-grid th.stat-header:first-of-type {
+  border-left: 2px solid var(--sc-border-heavy);
+}
+
+/* Diamond cell hover — warm glow */
+.scorebook-grid td.diamond-td:hover {
+  background: rgba(201, 180, 120, 0.1);
+}
+
+/* HR gets extra emphasis */
+.diamond-cell[data-notation="HR"] .hit-type {
+  font-size: 14px !important;
+  font-weight: 700;
 }
 
 /* ── Diamond Cell — Pencil on Paper ── */
