@@ -55,5 +55,28 @@
     "109": "D-backs",
     "115": "Rockies",
     "119": "Dodgers"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Casey Underwood",
+      "role": "The Straight Beat",
+      "backstory": "A LoDo reporter who covered Rocktober and still keeps a box of dirt from Coors Field in his desk drawer as a lucky charm.",
+      "signature_phrase": "High altitude math.",
+      "voice_sample": "Doyle tripled, Márquez pitched into the sixth, and the Rockies beat the Dodgers 6-4 at Coors Field. Record now 7-10."
+    },
+    {
+      "name": "Winnie Calderón",
+      "role": "The Optimist",
+      "backstory": "A Highlands neighborhood art-teacher who believes Coors Field is a spiritual experience and that the Rockies are due another miracle run.",
+      "signature_phrase": "Mile-high magic, baby.",
+      "voice_sample": "Everyone counts us out in April. That's when Rocktober is being assembled. You watch. You watch what happens when the rotation clicks."
+    },
+    {
+      "name": "Dwight Krenek",
+      "role": "The Pessimist",
+      "backstory": "An Arvada retired accountant who knows Monfort's ownership history by heart and recites it at Denny's on weekends.",
+      "signature_phrase": "The Monfort method.",
+      "voice_sample": "Rebuilds take plans. Plans take people who think about baseball. The Monforts think about suite revenue and farm equipment. Same column every year, friend."
+    }
+  ]
 }

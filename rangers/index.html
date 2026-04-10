@@ -321,6 +321,29 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .transac-badge.rcl{color:var(--team-primary-hi);border-color:var(--team-primary)}
 .transac-desc{font-family:var(--body);font-size:12px;color:var(--paper-dim);line-height:1.4}
 @media(max-width:640px){.transac-item{flex-direction:column;gap:4px}.transac-date{min-width:auto}}
+
+/* ===== Columnists — three personas per team ===== */
+.columnists{position:relative;z-index:2;max-width:var(--maxw);margin:14px auto 22px;padding:0 20px}
+.columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
+.columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
+.columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
+.columnists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.column{background:var(--ink-2);border:1px solid var(--rule);border-top:3px solid var(--team-primary);border-radius:3px;padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;min-height:260px}
+.column[data-role="straight_beat"]{border-top-color:var(--paper)}
+.column[data-role="optimist"]{border-top-color:var(--gold)}
+.column[data-role="pessimist"]{border-top-color:var(--team-accent)}
+.column-byline{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
+.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1}
+.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold)}
+.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim)}
+.column-body p{margin:0 0 10px}
+.column-body p:last-child{margin-bottom:0}
+.column-body .column-off{color:var(--paper-mute);font-size:13px}
+@media(max-width:900px){.columnists-grid{grid-template-columns:1fr;gap:14px}.column{min-height:auto}}
+body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
+body.theme-paper .column-name{color:var(--ink)}
+body.theme-paper .column-body{color:#3a3626}
+body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -351,7 +374,16 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><article class="column" data-role="straight_beat"><div class="column-byline"><span class="column-name">Clyde Orendorff</span><span class="column-role">The Straight Beat</span></div><div class="column-body"><p>The Rangers’ 3-0 shutout of the Mariners was a game of margins, a lesson in how small adjustments can tilt a season’s trajectory. I saw both lineups before the first pitch, and while the script wasn’t revolutionary—Luis Urías leading off, Marcus Semien batting third, the bullpen’s usual suspects on deck—the execution felt like a well-rehearsed play. The scorecard sealed itself in the fourth inning, when the offense woke up and the pitching staff stayed composed.</p><p>It’s easy to dissect the win in terms of stats: José Treviño’s two-run double, the bullpen’s 11th consecutive scoreless frame, or the way the defense turned two double plays. But what caught my eye wasn’t the numbers—it was the rhythm</p></div></article><article class="column" data-role="optimist"><div class="column-byline"><span class="column-name">Lacey-Jean Marcum</span><span class="column-role">The Optimist</span></div><div class="column-body"><p>The Mariners came to town yesterday, and the Rangers didn’t just beat them—they reminded us why we’re still here. A 3-0 shutout, a lineup that’s starting to smell like the kind of dominance that leaves opponents scratching their heads. Sure, the AL West is a beast, but this team? They’re not just surviving. They’re smelling the roses, y’all.</p><p>Let’s talk about the kids. That kid at third base, the one who looked like he’d just stepped out of a college film, he’s got a cannon for an arm and a heart full of grit. And the rookie catcher? He’s not just catching games—he’s catching fire. These young guns aren’t just filling seats; they’re filling the ballpark with the kind of energy that makes you forget about the standings.</p><p>Now, I know what you’re thinking: 7-5, -1 in the division. But let’s not forget, this is April. The calendar’s still flipping pages, and the Rangers are already in the habit of making noise. The front office didn’t just draft these players—they built a roster that’s built to outlast the winter.</p></div></article><article class="column" data-role="pessimist"><div class="column-byline"><span class="column-name">Buck Pierson</span><span class="column-role">The Pessimist</span></div><div class="column-body"><p>The Rangers won yesterday. That’s the first thing I’m going to say. Seattle’s pitching staff looked like a bunch of kids with a water gun, and our offense showed up with a .300 average and a couple of home runs. But here’s the thing: this team hasn’t won a playoff game since 2011, and I’ve seen this act before. The same script, the same cast of characters, the same promise of “turning the corner” that’s been dangled like a carrot in front of a horse for a decade.</p><p>Let’s talk about the pitching. You know the drill: a starting rotation that’s been hit-or-miss all season, with a few guys who looked like they were trying to pitch in a hurricane. The bullpen? Oh, that’s a masterpiece. They’ve held together with baling wire and a prayer, and I’m not sure which is more fragile. Last night’s win was a fluke, a combination of a few walks, a couple of defensive gems, and a Mariners pitcher who looked like he’d rather be somewhere else. This isn’t sustainability. This is a one-night stand.</p><p>And then there’s the offense. They’ve been clicking</p></div></article></div><script>(function(){
+  var grid = document.currentScript && document.currentScript.previousElementSibling;
+  if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
+  var kids = Array.prototype.slice.call(grid.children);
+  for (var i = kids.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = kids[i]; kids[i] = kids[j]; kids[j] = tmp;
+  }
+  kids.forEach(function(k){ grid.appendChild(k); });
+})();</script></section>
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -429,7 +461,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-pitcher"><span class="nx-side">Rangers</span> Kumar Rocker<div class="nx-pline">3.60 ERA &middot; 0-1 &middot; 5.0 IP &middot; 3 K &middot; 1.40 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">LAD</span> Tyler Glasnow<div class="nx-pline">3.00 ERA &middot; 1-0 &middot; 12.0 IP &middot; 15 K &middot; 0.92 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> SportsNet LA &middot; CW33</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> Dodgers Radio AM570 &middot; 105.3 The Fan</div>
-        <div class="nx-wx">67°F &middot; Overcast &middot; 4 mph SSE</div>
+        <div class="nx-wx">71°F &middot; Overcast &middot; 5 mph SW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sat, Apr 11 &middot; at LAD</div>
@@ -614,7 +646,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div><div class="g" data-gpk="823808">
         <div class="matchup">WSH @ MIL</div>
         <div class="time">6:40 CT</div>
-        <div class="probs">Irvin vs Patrick</div>
+        <div class="probs">Irvin vs Ashby</div>
         <div class="bc">Brewers.TV · Nationals.TV</div>
       </div><div class="g" data-gpk="823076">
         <div class="matchup">BOS @ STL</div>
@@ -720,7 +752,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Globe Life Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 13:20 CT</span>
+  <span>Filed 04/10/26 15:15 CT</span>
 </footer>
 
 <script>

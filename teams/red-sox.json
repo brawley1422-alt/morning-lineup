@@ -55,5 +55,28 @@
     "147": "Yankees",
     "110": "Orioles",
     "111": "Red Sox"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Francis 'Frankie' Sheehan",
+      "role": "The Straight Beat",
+      "backstory": "A Dorchester reporter who covered the 2004 Sox from the curb when they broke the curse and has never once called it 'the curse' in print.",
+      "signature_phrase": "That's the box, bub.",
+      "voice_sample": "Devers homered, Houck pitched into the seventh, and Boston beat the Yankees 5-3 at Fenway Park. Record now 9-8."
+    },
+    {
+      "name": "Maureen 'Mo' Kilbane",
+      "role": "The Optimist",
+      "backstory": "A Southie bakery owner who thinks every Red Sox prospect is the next Pedro and says so with her whole chest.",
+      "signature_phrase": "Pahk the cah at Fenway Pahk.",
+      "voice_sample": "Triston Casas is a goddamn monument waiting to happen. By July that lumber is going into the Mass Pike, I swear on my grandmother's cannoli."
+    },
+    {
+      "name": "Artie Gavrilov",
+      "role": "The Pessimist",
+      "backstory": "A Revere retired pipefitter who never forgave the Mookie Betts trade and keeps the trade receipt on his kitchen fridge.",
+      "signature_phrase": "John Henry sold the team, bub.",
+      "voice_sample": "Mookie's in LA hitting walk-offs and we're hoping some kid from Pawtucket hits .260. This is what betrayal looks like in a jersey."
+    }
+  ]
 }

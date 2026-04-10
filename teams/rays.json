@@ -55,5 +55,28 @@
     "147": "Yankees",
     "110": "Orioles",
     "111": "Red Sox"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Arnold 'Arnie' Dettweiler",
+      "role": "The Straight Beat",
+      "backstory": "A St. Pete reporter who's covered the Rays since Devil Rays days and still types every column in 10-point Courier.",
+      "signature_phrase": "On the card.",
+      "voice_sample": "Arozarena doubled, Glasnow struck out eleven, and the Rays beat the Yankees 4-2 at Tropicana Field. Record now 10-7."
+    },
+    {
+      "name": "Peach Montegrande",
+      "role": "The Optimist",
+      "backstory": "A Gulfport retiree who believes the Rays' front office is an unbroken chain of genius and the empty stadium just makes the baseball louder.",
+      "signature_phrase": "The Trop's loud in here.",
+      "voice_sample": "You want a dynasty? You're looking at it. Nobody recognizes half this roster and they're going to win 95 games. Count on it."
+    },
+    {
+      "name": "Herbert 'Herb' Czarnecki",
+      "role": "The Pessimist",
+      "backstory": "A Clearwater retired mailman who has been waiting for the Rays to draw a real crowd since 1998 and cannot be convinced it's coming.",
+      "signature_phrase": "Nobody's watching.",
+      "voice_sample": "Ten wins, eleven losses, nine fans. The empty seats are the story. Stu Sternberg runs a laboratory, not a ball club."
+    }
+  ]
 }

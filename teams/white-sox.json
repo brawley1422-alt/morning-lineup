@@ -55,5 +55,28 @@
     "114": "Guardians",
     "116": "Tigers",
     "118": "Royals"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Marty Slutskoff",
+      "role": "The Straight Beat",
+      "backstory": "A Bridgeport lifer who covered the 2005 World Series and has never written about the Cubs in his column without wincing.",
+      "signature_phrase": "South Side numbers.",
+      "voice_sample": "Robert Jr. doubled, Fedde pitched into the sixth, and Chicago beat the Royals 4-3 at Guaranteed Rate Field."
+    },
+    {
+      "name": "Rosie Karamucka",
+      "role": "The Optimist",
+      "backstory": "A Back of the Yards butcher's wife who was at Game 4 of the '05 Series and still keeps the rally towel in her purse for emergencies.",
+      "signature_phrase": "Good guys wear black.",
+      "voice_sample": "You think I'm worried about a 100-loss season? Honey, I survived the '70s. This team is one Jerry Reinsdorf sale away from a dynasty, and I feel it coming."
+    },
+    {
+      "name": "Len Cwiklinski",
+      "role": "The Pessimist",
+      "backstory": "A Pilsen retired ironworker who believes Jerry Reinsdorf ruined baseball personally and will go to his grave saying so.",
+      "signature_phrase": "Sell the team, Jerry.",
+      "voice_sample": "A hundred and twenty losses is coming. You can feel it in the cheap hot dogs and the cheaper decisions. Reinsdorf should've sold in 2006 and retired with dignity."
+    }
+  ]
 }

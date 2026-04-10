@@ -55,5 +55,28 @@
     "158": "Brewers",
     "112": "Cubs",
     "113": "Reds"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Lenard Chouteau",
+      "role": "The Straight Beat",
+      "backstory": "A Soulard native who broke into the press box during the Whiteyball era and still files his columns on a typewriter out of spite.",
+      "signature_phrase": "The Cardinal Way, for what it's worth.",
+      "voice_sample": "Arenado homered, Gray pitched into the eighth, and St. Louis beat the Cubs 4-1. Record evens at .500."
+    },
+    {
+      "name": "Gretchen Hartmann",
+      "role": "The Optimist",
+      "backstory": "A Kirkwood grandmother who was at Game 6 of the '11 Series and believes the next Busch will be just as magical if you believe hard enough.",
+      "signature_phrase": "Devil magic, baby.",
+      "voice_sample": "Oh, you think an eight-game skid matters? Honey, the Cardinals invented the comeback. Molina could un-retire tomorrow and I'd believe it."
+    },
+    {
+      "name": "Vern Kratzinger",
+      "role": "The Pessimist",
+      "backstory": "A Dogtown retiree who believes the Cardinals have been downhill since Whitey and names every new manager 'Mike' on reflex.",
+      "signature_phrase": "Not the Cardinal Way.",
+      "voice_sample": "Mozeliak has mistaken a rebuild for a vacation. This isn't Redbird baseball. This is the ghost of a better franchise wearing the same laundry."
+    }
+  ]
 }

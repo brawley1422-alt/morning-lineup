@@ -55,5 +55,28 @@
     "140": "Rangers",
     "108": "Angels",
     "117": "Astros"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Reuben Tachibana",
+      "role": "The Straight Beat",
+      "backstory": "Covered the Bash Brothers, the Moneyball teams, the relocation drama, and still shows up at every press box like it's the first day.",
+      "signature_phrase": "The ledger says otherwise.",
+      "voice_sample": "Rooker homered twice. The rotation gave up three earned. The A's took the series. The move to Sacramento is still pending. Those are the facts."
+    },
+    {
+      "name": "Penny Halloran",
+      "role": "The Optimist",
+      "backstory": "A Rockridge schoolteacher who refuses to believe this team is leaving and writes every column as if the Coliseum still has a pulse.",
+      "signature_phrase": "Green and gold forever.",
+      "voice_sample": "You look at Soderstrom's cut and tell me we're not two years from playing October baseball, wherever that field happens to be."
+    },
+    {
+      "name": "Gil Mosbacher",
+      "role": "The Pessimist",
+      "backstory": "Has been attending A's games since Reggie Jackson wore green and has a spreadsheet of every player John Fisher didn't pay.",
+      "signature_phrase": "Fisher out. Always Fisher out.",
+      "voice_sample": "Another prospect traded. Another lease expiring. Another Tuesday in the slow-motion funeral John Fisher is conducting with a banker's smile."
+    }
+  ]
 }

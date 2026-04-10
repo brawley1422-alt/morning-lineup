@@ -321,6 +321,29 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .transac-badge.rcl{color:var(--team-primary-hi);border-color:var(--team-primary)}
 .transac-desc{font-family:var(--body);font-size:12px;color:var(--paper-dim);line-height:1.4}
 @media(max-width:640px){.transac-item{flex-direction:column;gap:4px}.transac-date{min-width:auto}}
+
+/* ===== Columnists — three personas per team ===== */
+.columnists{position:relative;z-index:2;max-width:var(--maxw);margin:14px auto 22px;padding:0 20px}
+.columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
+.columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
+.columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
+.columnists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.column{background:var(--ink-2);border:1px solid var(--rule);border-top:3px solid var(--team-primary);border-radius:3px;padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;min-height:260px}
+.column[data-role="straight_beat"]{border-top-color:var(--paper)}
+.column[data-role="optimist"]{border-top-color:var(--gold)}
+.column[data-role="pessimist"]{border-top-color:var(--team-accent)}
+.column-byline{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
+.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1}
+.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold)}
+.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim)}
+.column-body p{margin:0 0 10px}
+.column-body p:last-child{margin-bottom:0}
+.column-body .column-off{color:var(--paper-mute);font-size:13px}
+@media(max-width:900px){.columnists-grid{grid-template-columns:1fr;gap:14px}.column{min-height:auto}}
+body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
+body.theme-paper .column-name{color:var(--ink)}
+body.theme-paper .column-body{color:#3a3626}
+body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -351,7 +374,16 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><article class="column" data-role="straight_beat"><div class="column-byline"><span class="column-name">Eduardo &#x27;Eddie&#x27; Solano</span><span class="column-role">The Straight Beat</span></div><div class="column-body"><p>The Dodgers lost yesterday, but not without a fight. Line by line, the game unfolded like a familiar script—clutch hits, shaky pitching, and a bullpen that couldn’t hold a lead. Toronto’s 4-3 win over LA felt like a déjà vu moment, a reminder that even in a 9-3 season, the West is a brutal division. Let’s break it down.</p><p>Starting with the pitching, Kershaw’s struggles continued. He’s been a workhorse for years, but yesterday’s performance—six innings, four runs, six strikeouts—felt like a step back. Not because he didn’t try, but because the Blue Jays’ bats found his rhythm. The first inning was a disaster, with two walks and a double that turned into a two-run tally. By the third, the Jays had a 3-0 lead, and Kershaw’s</p></div></article><article class="column" data-role="optimist"><div class="column-byline"><span class="column-name">Sunny Abramowitz</span><span class="column-role">The Optimist</span></div><div class="column-body"><p>The Dodgers lost yesterday, but let’s not dwell on the script twist. In a Dodger movie, every setback is just the director setting up the next act. This team isn’t just built to win; they’re built to break records in October. The 9-3 record, a -1 game in the NL West, feels like a screenplay draft—raw, promising, and ripe for rewriting.</p><p>Let’s talk about the rotation. Walker’s resurgence, Kershaw’s precision, and the young arms in the pen? They’re not just starters; they’re the lead actors in a thriller. A loss to the Blue Jays doesn’t erase the fact that this group has the chops to turn October into a blockbuster. The bullpen’s late-inning heroics? That’s the kind of plot twist that keeps fans glued. And don’t even get me started on the offense. The lineup’s got depth, and depth is the secret sauce of a championship team.</p></div></article><article class="column" data-role="pessimist"><div class="column-byline"><span class="column-name">Marv Tannenbaum</span><span class="column-role">The Pessimist</span></div><div class="column-body"><p class="column-off"><em>Marv Tannenbaum is off today.</em></p></div></article></div><script>(function(){
+  var grid = document.currentScript && document.currentScript.previousElementSibling;
+  if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
+  var kids = Array.prototype.slice.call(grid.children);
+  for (var i = kids.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = kids[i]; kids[i] = kids[j]; kids[j] = tmp;
+  }
+  kids.forEach(function(k){ grid.appendChild(k); });
+})();</script></section>
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -429,7 +461,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-pitcher"><span class="nx-side">Dodgers</span> Tyler Glasnow<div class="nx-pline">3.00 ERA &middot; 1-0 &middot; 12.0 IP &middot; 15 K &middot; 0.92 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">TEX</span> Kumar Rocker<div class="nx-pline">3.60 ERA &middot; 0-1 &middot; 5.0 IP &middot; 3 K &middot; 1.40 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> SportsNet LA &middot; CW33</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> Dodgers Radio AM570 &middot; 105.3 The Fan</div>
-        <div class="nx-wx">67°F &middot; Overcast &middot; 4 mph SSE</div>
+        <div class="nx-wx">71°F &middot; Overcast &middot; 4 mph SW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sat, Apr 11 &middot; vs TEX</div>
@@ -614,7 +646,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div><div class="g" data-gpk="823808">
         <div class="matchup">WSH @ MIL</div>
         <div class="time">6:40 CT</div>
-        <div class="probs">Irvin vs Patrick</div>
+        <div class="probs">Irvin vs Ashby</div>
         <div class="bc">Brewers.TV · Nationals.TV</div>
       </div><div class="g" data-gpk="823076">
         <div class="matchup">BOS @ STL</div>
@@ -723,7 +755,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Dodger Stadium Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 13:18 CT</span>
+  <span>Filed 04/10/26 14:55 CT</span>
 </footer>
 
 <script>

@@ -55,5 +55,28 @@
     "140": "Rangers",
     "108": "Angels",
     "117": "Astros"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Hal Cifuentes",
+      "role": "The Straight Beat",
+      "backstory": "Santa Ana lifer who's covered the Angels since the Jackie Autry era and still files every recap in longhand first.",
+      "signature_phrase": "Here's the box score talking.",
+      "voice_sample": "Ward went 2-for-4, the bullpen coughed up two in the eighth, and the Angels dropped their fifth straight at home."
+    },
+    {
+      "name": "Sunny Escalante",
+      "role": "The Optimist",
+      "backstory": "Grew up in a Garden Grove cul-de-sac believing the Rally Monkey was a real religion and has never been corrected.",
+      "signature_phrase": "Now we're cooking with gas.",
+      "voice_sample": "Sure, it was a 9-1 loss, but the way Rengifo flipped that double play in the third? That's October magic hiding in April."
+    },
+    {
+      "name": "Murray Doblinski",
+      "role": "The Pessimist",
+      "backstory": "Has been waiting for the Angels to be good since Nolan Ryan left and treats every Arte Moreno move as personal malice.",
+      "signature_phrase": "Same. Old. Halos.",
+      "voice_sample": "Nine runs. Nine. And somewhere Arte is laughing into a glass of Cabernet, counting the money Shohei isn't making him."
+    }
+  ]
 }

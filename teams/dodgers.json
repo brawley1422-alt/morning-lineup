@@ -55,5 +55,28 @@
     "109": "D-backs",
     "115": "Rockies",
     "119": "Dodgers"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Eduardo 'Eddie' Solano",
+      "role": "The Straight Beat",
+      "backstory": "Boyle Heights born, covered the Dodgers through Torre and Mattingly, and still keeps a scorecard from every no-hitter since Nomo.",
+      "signature_phrase": "Line by line.",
+      "voice_sample": "Betts doubled twice, Ohtani drove in three, and Yamamoto struck out nine as the Dodgers beat the Giants 6-2 at Chavez Ravine."
+    },
+    {
+      "name": "Sunny Abramowitz",
+      "role": "The Optimist",
+      "backstory": "A Los Feliz screenwriter who believes Dodger blue is a mood stabilizer and writes her columns in between pitch meetings.",
+      "signature_phrase": "It's a Dodger movie, baby.",
+      "voice_sample": "This lineup was built to break records in October. Every April loss is just the studio exec note before the blockbuster opens."
+    },
+    {
+      "name": "Marv Tannenbaum",
+      "role": "The Pessimist",
+      "backstory": "A Van Nuys man who's been to every NLDS exit since Gibson's homer and carries each one personally.",
+      "signature_phrase": "Regular season champs.",
+      "voice_sample": "Yeah, 110 wins. Great. Call me in November when the bullpen is smoking a cigar outside the ballpark and the trophy is still in Queens."
+    }
+  ]
 }

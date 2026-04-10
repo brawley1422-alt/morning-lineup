@@ -507,3 +507,39 @@ body.theme-paper .my-players-head h2,
 body.theme-paper .player-row-name { color: var(--ink); }
 body.theme-paper .my-players-list li { background: #ede4cb; border-color: #cfc39a; }
 body.theme-paper .player-row-stats { color: #4a4636; }
+
+/* ---- Columnists wrapper inside /home team blocks ---- */
+.home-columnists-wrap {
+  margin: 10px 0 16px;
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--gold-dim);
+  border-radius: 3px;
+  background: rgba(13, 15, 20, 0.35);
+}
+.home-columnists-wrap > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 18px;
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 11px;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.home-columnists-wrap > summary::-webkit-details-marker { display: none; }
+.home-columnists-wrap > summary::before {
+  content: "▸";
+  font-size: 12px;
+  color: var(--gold);
+  transition: transform 0.15s;
+}
+.home-columnists-wrap[open] > summary::before { transform: rotate(90deg); }
+.home-columnists-wrap > summary:hover { color: var(--paper); }
+.home-columnists-wrap .columnists { margin: 0; padding: 6px 18px 18px; }
+body.theme-paper .home-columnists-wrap {
+  background: rgba(236, 228, 208, 0.5);
+  border-color: #cfc39a;
+}

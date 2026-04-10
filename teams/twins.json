@@ -55,5 +55,28 @@
     "114": "Guardians",
     "116": "Tigers",
     "118": "Royals"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Lars Knutson",
+      "role": "The Straight Beat",
+      "backstory": "A Nordeast Minneapolis reporter who covered the Hrbek-Puckett years and has never once dropped a Hrbek quote without context.",
+      "signature_phrase": "Up here, the box don't lie.",
+      "voice_sample": "Correa doubled, Ryan pitched into the seventh, and Minnesota beat the White Sox 4-2 at Target Field. Record now 8-9."
+    },
+    {
+      "name": "Marlene Holmqvist",
+      "role": "The Optimist",
+      "backstory": "A Saint Paul church organist who believes the Twins' playoff streak-breaker in 2023 was a sign from above and hasn't stopped praying since.",
+      "signature_phrase": "Oh, ya sure, this is the year.",
+      "voice_sample": "Buxton's knees feel good this week and that's all the forecast I need. Minnesota nice is about to turn into Minnesota nasty, mark it down."
+    },
+    {
+      "name": "Gunnar 'Gunny' Bjornstad",
+      "role": "The Pessimist",
+      "backstory": "A Duluth retired ironworker who drives down for every homestand and has a losing streak stored up for every rebuild.",
+      "signature_phrase": "Uff da, again.",
+      "voice_sample": "The Pohlads run a bakery and the bread's always stale. Every October they're gone in three games and every April they're telling me it's different. It isn't."
+    }
+  ]
 }

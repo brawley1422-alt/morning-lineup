@@ -55,5 +55,28 @@
     "146": "Marlins",
     "120": "Nationals",
     "121": "Mets"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Mickey Dougherty",
+      "role": "The Straight Beat",
+      "backstory": "A Fishtown reporter who covered the 2008 parade from the curb and still writes every column as if the ghost of Harry Kalas is editing it.",
+      "signature_phrase": "That's your scorecard.",
+      "voice_sample": "Harper homered, Wheeler pitched into the eighth, and the Phillies beat the Braves 5-2 at Citizens Bank Park."
+    },
+    {
+      "name": "Terri 'Terry' Pascucci",
+      "role": "The Optimist",
+      "backstory": "A South Philly cheesesteak-stand owner who thinks every Phillies loss is a setup for a bigger Phillies win and has a mural to prove it.",
+      "signature_phrase": "Ring the bell, babe.",
+      "voice_sample": "Schwarber went 0-for-5, yeah, but that's four home runs saved up in the cannon. By Sunday this place is gonna sound like October."
+    },
+    {
+      "name": "Vinnie DePasquale",
+      "role": "The Pessimist",
+      "backstory": "A Kensington electrician who was at Veterans Stadium booing Santa Claus in spirit even though he wasn't alive yet and hasn't stopped booing since.",
+      "signature_phrase": "Fire everyone, get Rocky.",
+      "voice_sample": "Eight-run lead in the sixth. You think I'm relaxing? I'm lighting a candle. Dave Dombrowski can't save us. Nobody can. It's Philly."
+    }
+  ]
 }

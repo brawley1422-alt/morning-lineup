@@ -321,6 +321,29 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .transac-badge.rcl{color:var(--team-primary-hi);border-color:var(--team-primary)}
 .transac-desc{font-family:var(--body);font-size:12px;color:var(--paper-dim);line-height:1.4}
 @media(max-width:640px){.transac-item{flex-direction:column;gap:4px}.transac-date{min-width:auto}}
+
+/* ===== Columnists — three personas per team ===== */
+.columnists{position:relative;z-index:2;max-width:var(--maxw);margin:14px auto 22px;padding:0 20px}
+.columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
+.columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
+.columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
+.columnists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.column{background:var(--ink-2);border:1px solid var(--rule);border-top:3px solid var(--team-primary);border-radius:3px;padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;min-height:260px}
+.column[data-role="straight_beat"]{border-top-color:var(--paper)}
+.column[data-role="optimist"]{border-top-color:var(--gold)}
+.column[data-role="pessimist"]{border-top-color:var(--team-accent)}
+.column-byline{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
+.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1}
+.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold)}
+.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim)}
+.column-body p{margin:0 0 10px}
+.column-body p:last-child{margin-bottom:0}
+.column-body .column-off{color:var(--paper-mute);font-size:13px}
+@media(max-width:900px){.columnists-grid{grid-template-columns:1fr;gap:14px}.column{min-height:auto}}
+body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
+body.theme-paper .column-name{color:var(--ink)}
+body.theme-paper .column-body{color:#3a3626}
+body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -351,7 +374,16 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><article class="column" data-role="straight_beat"><div class="column-byline"><span class="column-name">Don Pellegrino</span><span class="column-role">The Straight Beat</span></div><div class="column-body"><p>The Mets’ loss to Arizona yesterday wasn’t just another blow to the record column—it was a textbook case of why the team’s offense continues to haunt its own prospects. You could argue the Diamondbacks’ 7-1 victory was a fluke, but that’s the Flushing ledger. The Mets didn’t just fail to score; they failed to *do* anything meaningful with the opportunities they had.</p><p>Start with the pitching. Noah Syndergaard, for all his recent struggles, looked like himself again—commanding, sharp, and willing to throw his fastball for strikes. He lasted six innings, allowing two runs, and didn’t walk a soul. That’s the kind of performance that should have buoyed the team. But here’s where the rot shows: the offense didn’t capitalize. The Mets didn’t string together hits, didn’t manufacture runs, and didn’t make the pitchers work. Syndergaard’s line—six innings, two runs, 10 strikeouts—was a masterclass in dominance, and the team’s inability to score felt like a betrayal of his effort.</p><p>The real issue isn’t the starters. It’s the middle relief. The Mets have a bullpen that’s supposed to be a strength, but yesterday’s game exposed it as a liability. The first two relievers—let’s name them for the sake of argument—allowed three runs in 2.1 innings, with zero urgency. The Mets’ strategy of letting the starter go deep and then relying on the pen to “protect the lead”</p></div></article><article class="column" data-role="optimist"><div class="column-byline"><span class="column-name">Sheila &#x27;Sheesh&#x27; Fortunato</span><span class="column-role">The Optimist</span></div><div class="column-body"><p>The Mets lost yesterday, but let’s not bury the lede in the loss. Let’s talk about the oven’s still hot, the dough’s still rising, and the fact that this team’s got more gas in the tank than a subway train during rush hour. You know what I mean?</p><p>So, Arizona smacked the Mets 7-1, and let’s be real—those D-backs have a way of making you feel like you’re eating</p></div></article><article class="column" data-role="pessimist"><div class="column-byline"><span class="column-name">Sal Marusiak</span><span class="column-role">The Pessimist</span></div><div class="column-body"><p>Another day, another loss. Arizona didn’t just beat the Mets—they embarrassed them, 7-1, in a game that felt like a preseason matchup. The Mets’ pitching staff, once a source of hope, looked like a group of kids playing street baseball. Zach Davies, for all his promise, looked like he’d been handed a baseball and a calculator and told to figure out gravity. He lasted three innings, gave up five runs, and somehow managed to look both confused and defeated. The bullpen? A revolving door of mediocrity. You’d think after a 100-loss season, they’d have learned how to close a game. Instead, they handed the Diamondbacks a walk-off homer in the ninth.</p><p>The record? 7-6. A .500 team in a division where the Braves and Phillies are already ahead of them. The Mets are 1.0 games back in the NL East, a number that feels like a taunt. You’d think a .500 record would be a reason to celebrate, but for the Mets, it’s just another reminder that they’re not</p></div></article></div><script>(function(){
+  var grid = document.currentScript && document.currentScript.previousElementSibling;
+  if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
+  var kids = Array.prototype.slice.call(grid.children);
+  for (var i = kids.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = kids[i]; kids[i] = kids[j]; kids[j] = tmp;
+  }
+  kids.forEach(function(k){ grid.appendChild(k); });
+})();</script></section>
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -427,9 +459,9 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-venue">Citi Field </div>
         <div class="nx-meta"><span class="nx-opp-rec">ATH: 5-7, 4th AL West (W2)</span></div>
         <div class="nx-pitcher"><span class="nx-side">Mets</span> Clay Holmes<div class="nx-pline">1.42 ERA &middot; 2-0 &middot; 12.2 IP &middot; 9 K &middot; 0.95 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">ATH</span> J.T. Ginn<div class="nx-pline">5.14 ERA &middot; 0-0 &middot; 7.0 IP &middot; 4 K &middot; 1.14 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> Lindor</span><span class="lu-slot"><span class="lu-pos">SS</span> Bichette</span><span class="lu-slot"><span class="lu-pos">LF</span> Young</span><span class="lu-slot"><span class="lu-pos">CF</span> Jr.</span><span class="lu-slot"><span class="lu-pos">3B</span> Baty</span><span class="lu-slot"><span class="lu-pos">2B</span> Semien</span><span class="lu-slot"><span class="lu-pos">3B</span> Mauricio</span><span class="lu-slot"><span class="lu-pos">C</span> Alvarez</span><span class="lu-slot"><span class="lu-pos">OF</span> Benge</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> NBCSCA &middot; WPIX</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> Talk 650 KSTE &middot; Audacy Mets Radio WHSQ 880AM &middot; A&#x27;s Cast</div>
-        <div class="nx-wx">60°F &middot; Clear &middot; 10 mph S</div>
+        <div class="nx-wx">57°F &middot; Clear &middot; 11 mph SSE</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sat, Apr 11 &middot; vs ATH</div>
@@ -614,7 +646,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div><div class="g" data-gpk="823808">
         <div class="matchup">WSH @ MIL</div>
         <div class="time">6:40 CT</div>
-        <div class="probs">Irvin vs Patrick</div>
+        <div class="probs">Irvin vs Ashby</div>
         <div class="bc">Brewers.TV · Nationals.TV</div>
       </div><div class="g" data-gpk="823076">
         <div class="matchup">BOS @ STL</div>
@@ -720,7 +752,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Citi Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 13:19 CT</span>
+  <span>Filed 04/10/26 15:00 CT</span>
 </footer>
 
 <script>

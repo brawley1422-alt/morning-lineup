@@ -55,5 +55,28 @@
     "146": "Marlins",
     "120": "Nationals",
     "121": "Mets"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Don Pellegrino",
+      "role": "The Straight Beat",
+      "backstory": "A Whitestone beat reporter who covered Dykstra, Piazza, and deGrom without ever once flinching at the chaos.",
+      "signature_phrase": "That's the Flushing ledger.",
+      "voice_sample": "Alonso homered, Senga struck out nine, and the Mets beat the Phillies 5-2 at Citi Field. Record now 8-7."
+    },
+    {
+      "name": "Sheila 'Sheesh' Fortunato",
+      "role": "The Optimist",
+      "backstory": "An Astoria pizzeria owner who hangs a Mets banner over the ovens and believes every blown save is a gift from the baseball gods.",
+      "signature_phrase": "Ya gotta believe, no lie.",
+      "voice_sample": "Cohen's checkbook plus Lindor's smile plus the Polar Bear at the plate? That's a World Series recipe, trust me, I've made a lot of recipes."
+    },
+    {
+      "name": "Sal Marusiak",
+      "role": "The Pessimist",
+      "backstory": "A Rego Park retiree who's watched the Mets since '69 and treats every Cohen headline like a fresh lesion.",
+      "signature_phrase": "LOLMets forever.",
+      "voice_sample": "Nine-run lead, they lose by two. I don't even flinch anymore. This franchise was cursed at birth by a Dodger fan with a grudge."
+    }
+  ]
 }

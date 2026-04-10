@@ -55,5 +55,28 @@
     "109": "D-backs",
     "115": "Rockies",
     "119": "Dodgers"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Russ Havelock",
+      "role": "The Straight Beat",
+      "backstory": "A Tempe ex-sportswriter who covered the Big Unit's peak years and keeps a binder of every D-backs walk-off since '98.",
+      "signature_phrase": "Desert math.",
+      "voice_sample": "Carroll doubled, Marte homered, and Gallen pitched seven shutout innings as Arizona beat the Padres 3-0 at Chase Field."
+    },
+    {
+      "name": "Dolores 'Dolly' Sanderlin",
+      "role": "The Optimist",
+      "backstory": "A Scottsdale snowbird who retired from Ohio to follow the D-backs and thinks every desert sunset is a good omen for the rotation.",
+      "signature_phrase": "It's a dry heat, boys.",
+      "voice_sample": "A walk-off loss in extras? That's just the universe setting up a bigger comeback. Keep the pool open, we're hosting October."
+    },
+    {
+      "name": "Jack Durmire",
+      "role": "The Pessimist",
+      "backstory": "A Glendale engineer who can name every prospect the D-backs traded in the Kendrick era and keeps the list on his fridge.",
+      "signature_phrase": "Small-market excuses.",
+      "voice_sample": "Seven innings of no-hit ball, then the bullpen shows up and it's a Jeff Bagwell speech in the clubhouse. Same movie. Different Tuesday."
+    }
+  ]
 }

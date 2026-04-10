@@ -55,5 +55,28 @@
     "140": "Rangers",
     "108": "Angels",
     "117": "Astros"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Delmar Fontenot",
+      "role": "The Straight Beat",
+      "backstory": "Third-generation Houstonian who covered the Killer B's for the Chronicle and still keeps a chalkboard of pitch counts in his garage.",
+      "signature_phrase": "That's the tape measure of it.",
+      "voice_sample": "Altuve singled in the fifth, Alvarez went yard in the seventh, and Valdez went six and a third. Houston wins, 5-2."
+    },
+    {
+      "name": "Luz Barquero",
+      "role": "The Optimist",
+      "backstory": "Runs a Spring Branch tire shop and writes columns between oil changes because the Astros are the only thing that gets her husband out of his chair.",
+      "signature_phrase": "We're cookin' in H-town.",
+      "voice_sample": "Losing streak? Nah, that's just the boys stretching. Bregman's swing is one at-bat away from April flipping into June."
+    },
+    {
+      "name": "Coop Yarbrough",
+      "role": "The Pessimist",
+      "backstory": "Was at the Astrodome in '86 and has carried the ghost of Mike Scott's splitter and the 2017 asterisk in the same pocket ever since.",
+      "signature_phrase": "Rigged from the jump.",
+      "voice_sample": "Every clean hit they get, I hear a trash can. Can't unhear it. Nobody can. That's the punishment and the crime."
+    }
+  ]
 }

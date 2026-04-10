@@ -321,6 +321,29 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .transac-badge.rcl{color:var(--team-primary-hi);border-color:var(--team-primary)}
 .transac-desc{font-family:var(--body);font-size:12px;color:var(--paper-dim);line-height:1.4}
 @media(max-width:640px){.transac-item{flex-direction:column;gap:4px}.transac-date{min-width:auto}}
+
+/* ===== Columnists — three personas per team ===== */
+.columnists{position:relative;z-index:2;max-width:var(--maxw);margin:14px auto 22px;padding:0 20px}
+.columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
+.columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
+.columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
+.columnists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.column{background:var(--ink-2);border:1px solid var(--rule);border-top:3px solid var(--team-primary);border-radius:3px;padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;min-height:260px}
+.column[data-role="straight_beat"]{border-top-color:var(--paper)}
+.column[data-role="optimist"]{border-top-color:var(--gold)}
+.column[data-role="pessimist"]{border-top-color:var(--team-accent)}
+.column-byline{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
+.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1}
+.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold)}
+.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim)}
+.column-body p{margin:0 0 10px}
+.column-body p:last-child{margin-bottom:0}
+.column-body .column-off{color:var(--paper-mute);font-size:13px}
+@media(max-width:900px){.columnists-grid{grid-template-columns:1fr;gap:14px}.column{min-height:auto}}
+body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
+body.theme-paper .column-name{color:var(--ink)}
+body.theme-paper .column-body{color:#3a3626}
+body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -351,7 +374,16 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-<div class="lede">The Marlins’ 8-5 loss to the Reds felt like a sloppy buffet—</div>
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><article class="column" data-role="straight_beat"><div class="column-byline"><span class="column-name">Horatio Ruiz</span><span class="column-role">The Straight Beat</span></div><div class="column-body"><p>The ledger, en blanco y negro, is a thing of beauty. It’s the quiet ledger, the one that doesn’t blink at the numbers, doesn’t flinch when the standings shift like a tide. Last night, the Marlins didn’t just beat the Reds—they carved their name into the ledger with the kind of grit that makes you forget the standings for a moment. Eight wins, five losses, and a four-game gap in the NL East. It’s not a season to savor, but it’s a season to grind through, and the Marlins are grinding.</p><p>You don’t need to be a fan to notice the way the team moves. They don’t dance around the truth. They don’t tiptoe past the empty seats. They walk through them, shoulders squared, hands in their pockets, eyes fixed on the next pitch. Last night, the Reds had a plan. They came in with the kind of confidence that comes from a .500 record and a manager who’s seen better days. The Marlins? They had a plan too. A plan that said, “We’re not here to be polite. We’re here to be loud.”</p><p>Arr</p></div></article><article class="column" data-role="optimist"><div class="column-byline"><span class="column-name">Lucinda &#x27;Lucy&#x27; Pérez-Alvarado</span><span class="column-role">The Optimist</span></div><div class="column-body"><p>So what if the stadium’s empty? That’s more room for the echo of Arráez’s next 2-strike line drive. This team is a storm gathering.</p><p>Yesterday’s 8-1 romp over the Reds wasn’t just a win—it was a statement. The Marlins didn’t just beat a team; they showed the world they’re still here, still hungry, still capable of turning the page. Eight runs, a reminder that this roster isn’t just stacked with potential. It’s stacked with *momentum*. You can’t teach a hitter to barrel a</p></div></article><article class="column" data-role="pessimist"><div class="column-byline"><span class="column-name">Tito Escalante</span><span class="column-role">The Pessimist</span></div><div class="column-body"><p>The Marlins lost again, but that’s not the worst part. The worst part is that they lost to a team that couldn’t hit the broad side of a barn, and yet the stands were filled with fans who’ve given up on waiting for something better. Empty seats, empty promises. You hear that phrase enough, you start to believe it.</p><p>Bruce Sherman bought a ball team and a museum of unsold tickets. Every spring is a fresh betrayal. I’m out of patience and I’m out of beer. The Marlins’ record is 8-5, but that’s not the stat that haunts me. It’s the way the team keeps pretending they’re a contender while the fans keep showing up to watch them fail. Last night’s game against the Reds was a comedy of errors—eight runs for the Marlins, one for the Reds, and a crowd that looked like it had been herded into the stadium by a pack of wolves. You’d think a team with that kind of offensive firepower would be drawing crowds, not leaving them half-empty.</p><p>The front office acts like they’re building a dynasty, but all they’re doing is building a checklist of regrets. They trade away prospects like they’re playing a game of hot potato, and when they finally decide to keep a player, they’re too late. Look at the lineup: a bunch of guys who showed up to spring training with the same attitude as the last group. No grit, no hustle, just a bunch of overpaid mercenaries who think they’re owed a championship.</p><p>And the ownership? They’re all smiles and empty seats. They promise a rebuild, then spend millions on luxury boxes and stadium upgrades that never happen. You can’t build a baseball palace in South Florida without a few thousand fans showing up to see it. But the Marlins’ stadium is a monument to bad decisions,</p></div></article></div><script>(function(){
+  var grid = document.currentScript && document.currentScript.previousElementSibling;
+  if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
+  var kids = Array.prototype.slice.call(grid.children);
+  for (var i = kids.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = kids[i]; kids[i] = kids[j]; kids[j] = tmp;
+  }
+  kids.forEach(function(k){ grid.appendChild(k); });
+})();</script></section>
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -427,7 +459,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-venue">Comerica Park <span class="nx-dome">Retractable Roof</span></div>
         <div class="nx-meta"><span class="nx-opp-rec">DET: 4-9, 5th AL Central (L5)</span></div>
         <div class="nx-pitcher"><span class="nx-side">Marlins</span> Chris Paddack<div class="nx-pline">8.31 ERA &middot; 0-1 &middot; 8.2 IP &middot; 10 K &middot; 1.73 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">DET</span> Keider Montero<div class="nx-pline">4.15 ERA &middot; 0-1 &middot; 4.1 IP &middot; 3 K &middot; 0.92 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">CF</span> Marsee</span><span class="lu-slot"><span class="lu-pos">SS</span> Edwards</span><span class="lu-slot"><span class="lu-pos">C</span> Ramírez</span><span class="lu-slot"><span class="lu-pos">C</span> Hicks</span><span class="lu-slot"><span class="lu-pos">2B</span> Lopez</span><span class="lu-slot"><span class="lu-pos">RF</span> Caissie</span><span class="lu-slot"><span class="lu-pos">3B</span> Norby</span><span class="lu-slot"><span class="lu-pos">3B</span> Pauley</span><span class="lu-slot"><span class="lu-pos">2B</span> Sanoja</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Marlins.TV &middot; Detroit SportsNet</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 560AM WQAM &middot; WXYT 97.1 FM</div>
         <div class="nx-wx">72°F &middot; Climate controlled</div>
       </div><div class="nx-card">
@@ -456,7 +488,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Edwards</span><span class="s">.385 / 1 HR / 1.121 OPS</span></li><li><span class="n">Lopez</span><span class="s">.370 / 1 HR / 1.026 OPS</span></li><li><span class="n">Conine</span><span class="s">.250 / 2 HR / .958 OPS</span></li><li><span class="n">Caissie</span><span class="s">.263 / 1 HR / .859 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Edwards</span><span class="s">.385 / 1 HR / 1.121 OPS</span></li><li><span class="n">Lopez</span><span class="s">.370 / 1 HR / 1.026 OPS</span></li><li><span class="n">Caissie</span><span class="s">.263 / 1 HR / .859 OPS</span></li><li><span class="n">Ramírez</span><span class="s">.286 / 0 HR / .804 OPS</span></li></ul></div>
       <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n">Slater</span><span class="s">.133 / 0 HR / .309 OPS</span></li><li><span class="n">Hernández</span><span class="s">.143 / 0 HR / .455 OPS</span></li><li><span class="n">Hicks</span><span class="s">.200 / 0 HR / .473 OPS</span></li></ul></div>
     </div>
     <div class="two">
@@ -525,7 +557,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-09</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Miami Marlins activated RHP Pete Fairbanks from the paternity list.</span></div><div class="transac-item"><span class="transac-date">04-09</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Miami Marlins optioned RHP Ryan Gusto to Jacksonville Jumbo Shrimp.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Miami Marlins placed RHP Pete Fairbanks on the paternity list.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Miami Marlins recalled RHP Ryan Gusto from Jacksonville Jumbo Shrimp.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>LF <strong>Christopher Morel</strong></dd><dd>LF <strong>Esteury Ruiz</strong></dd><dd>LF <strong>Kyle Stowers</strong></dd><dd>SS <strong>Maximo Acosta</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Adam Mazur</strong></dd><dd>P <strong>Ronny Henriquez</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Miami Marlins placed LF Griffin Conine on the 10-day injured list. Left hamstring strain.</span></div><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Miami Marlins recalled 3B Deyvison De Los Santos from Jacksonville Jumbo Shrimp.</span></div><div class="transac-item"><span class="transac-date">04-09</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Miami Marlins activated RHP Pete Fairbanks from the paternity list.</span></div><div class="transac-item"><span class="transac-date">04-09</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Miami Marlins optioned RHP Ryan Gusto to Jacksonville Jumbo Shrimp.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Miami Marlins placed RHP Pete Fairbanks on the paternity list.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Miami Marlins recalled RHP Ryan Gusto from Jacksonville Jumbo Shrimp.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>LF <strong>Christopher Morel</strong></dd><dd>LF <strong>Esteury Ruiz</strong></dd><dd>LF <strong>Griffin Conine</strong></dd><dd>LF <strong>Kyle Stowers</strong></dd><dd>SS <strong>Maximo Acosta</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Adam Mazur</strong></dd><dd>P <strong>Ronny Henriquez</strong></dd></dl></div></div>
   </section>
 
   <section id="farm" open>
@@ -614,7 +646,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div><div class="g" data-gpk="823808">
         <div class="matchup">WSH @ MIL</div>
         <div class="time">6:40 CT</div>
-        <div class="probs">Irvin vs Patrick</div>
+        <div class="probs">Irvin vs Ashby</div>
         <div class="bc">Brewers.TV · Nationals.TV</div>
       </div><div class="g" data-gpk="823076">
         <div class="matchup">BOS @ STL</div>
@@ -720,7 +752,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A loanDepot park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 13:19 CT</span>
+  <span>Filed 04/10/26 14:58 CT</span>
 </footer>
 
 <script>

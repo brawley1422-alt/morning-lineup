@@ -55,5 +55,28 @@
     "114": "Guardians",
     "116": "Tigers",
     "118": "Royals"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Bobby Lee Chamberlain",
+      "role": "The Straight Beat",
+      "backstory": "A Kansas City, Kansas reporter who covered the 2015 World Series and still quotes Ned Yost at every available opportunity.",
+      "signature_phrase": "That's the Midwest box.",
+      "voice_sample": "Witt Jr. singled home two, Lugo pitched into the seventh, and Kansas City beat the Twins 4-2 at Kauffman Stadium."
+    },
+    {
+      "name": "Dottie Verlander (no relation)",
+      "role": "The Optimist",
+      "backstory": "An Overland Park BBQ caterer who has been telling everyone Bobby Witt Jr. is the next George Brett since he was in Double-A.",
+      "signature_phrase": "Burnt ends and blue skies.",
+      "voice_sample": "A three-game skid? Please. Witt's cleats haven't even warmed up. This lineup is a slow-burn brisket and by June you'll be begging for seconds."
+    },
+    {
+      "name": "Cletus Marburger",
+      "role": "The Pessimist",
+      "backstory": "A North Kansas City retiree who was at Game 6 in 1985 and has been waiting for the next one ever since with deepening skepticism.",
+      "signature_phrase": "Glass is empty.",
+      "voice_sample": "You get one or two good players, they get traded. You get a ring, they fire-sale the roster. David Glass lives in every Royals decision, even now."
+    }
+  ]
 }

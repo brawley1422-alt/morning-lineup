@@ -321,6 +321,29 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .transac-badge.rcl{color:var(--team-primary-hi);border-color:var(--team-primary)}
 .transac-desc{font-family:var(--body);font-size:12px;color:var(--paper-dim);line-height:1.4}
 @media(max-width:640px){.transac-item{flex-direction:column;gap:4px}.transac-date{min-width:auto}}
+
+/* ===== Columnists — three personas per team ===== */
+.columnists{position:relative;z-index:2;max-width:var(--maxw);margin:14px auto 22px;padding:0 20px}
+.columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
+.columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
+.columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
+.columnists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.column{background:var(--ink-2);border:1px solid var(--rule);border-top:3px solid var(--team-primary);border-radius:3px;padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;min-height:260px}
+.column[data-role="straight_beat"]{border-top-color:var(--paper)}
+.column[data-role="optimist"]{border-top-color:var(--gold)}
+.column[data-role="pessimist"]{border-top-color:var(--team-accent)}
+.column-byline{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
+.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1}
+.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold)}
+.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim)}
+.column-body p{margin:0 0 10px}
+.column-body p:last-child{margin-bottom:0}
+.column-body .column-off{color:var(--paper-mute);font-size:13px}
+@media(max-width:900px){.columnists-grid{grid-template-columns:1fr;gap:14px}.column{min-height:auto}}
+body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
+body.theme-paper .column-name{color:var(--ink)}
+body.theme-paper .column-body{color:#3a3626}
+body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -351,7 +374,16 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><article class="column" data-role="straight_beat"><div class="column-byline"><span class="column-name">Winston Delacroix</span><span class="column-role">The Straight Beat</span></div><div class="column-body"><p>The Braves didn’t need a walk-off home run to secure the win yesterday. They didn’t need a last-inning rally or a bullpen meltdown to keep the game close. They just needed to play the way they’ve played all season: efficient, disciplined, and willing to let the numbers speak for themselves. Acuna went deep, Strider fanned eleven, and the Braves took the opener from the Phillies. Series continues Saturday.</p><p>The ledger isn’t filled with fluff. It’s filled with strikeouts, walks, and the occasional home run. Yesterday’s 8-2 win over the Angels was a study in balance—offense that didn’t overextend, pitching that didn’t overcompensate. Ozzie Albies and Riley Thomas kept the rallies short, while the bullpen, ever the unsung hero, kept the lead intact. The Angels’ bats, for all their reputation, couldn’t find the gaps. That’s how the ledger reads.</p><p>But let’s not mistake efficiency for complacency. The Braves are 8-5, four games behind the division lead</p></div></article><article class="column" data-role="optimist"><div class="column-byline"><span class="column-name">Caledonia &#x27;Callie&#x27; Peach</span><span class="column-role">The Optimist</span></div><div class="column-body"><p class="column-off"><em>Caledonia &#x27;Callie&#x27; Peach is off today.</em></p></div></article><article class="column" data-role="pessimist"><div class="column-byline"><span class="column-name">Earl Tidwell</span><span class="column-role">The Pessimist</span></div><div class="column-body"><p>The Braves won yesterday. That’s the first thing I’ll say. Eight runs, a dominant start from Max Fried, and a bullpen that finally looked like it remembered how to close a game. But here’s the thing: I’ve seen this exact scenario unfold before. The Braves build a mountain, and by the time the sun sets, it’s a molehill. They’ll find a way to lose it.</p><p>Let’s start with the obvious: the offense showed up. Fried was lights-out, scattering five hits and striking out six. Ozzie Albies and Austin Riley did their thing, and the middle of the order—those guys who’ve been struggling all season—finally clicked. But here’s where the pessimist starts sweating: this wasn’t a team effort. The bats were hot, sure, but the rest of the lineup? They stood around like they were waiting for a signal. And when the Angels started chipping away in the late innings, the bullpen didn’t have the presence of mind to shut them down.</p><p>Raisel Iglesias, for all his talk about being a closer, looked like a guy who’s been told he’s still relevant. He allowed two runs in the ninth, and</p></div></article></div><script>(function(){
+  var grid = document.currentScript && document.currentScript.previousElementSibling;
+  if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
+  var kids = Array.prototype.slice.call(grid.children);
+  for (var i = kids.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = kids[i]; kids[i] = kids[j]; kids[j] = tmp;
+  }
+  kids.forEach(function(k){ grid.appendChild(k); });
+})();</script></section>
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -427,9 +459,9 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-venue">Truist Park </div>
         <div class="nx-meta"><span class="nx-opp-rec">CLE: 8-5, 1st AL Central (W2)</span></div>
         <div class="nx-pitcher"><span class="nx-side">Braves</span> Bryce Elder<div class="nx-pline">0.00 ERA &middot; 1-1 &middot; 13.0 IP &middot; 13 K &middot; 0.85 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">CLE</span> Slade Cecconi<div class="nx-pline">5.23 ERA &middot; 0-1 &middot; 10.1 IP &middot; 11 K &middot; 1.06 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">RF</span> Jr.</span><span class="lu-slot"><span class="lu-pos">C</span> Baldwin</span><span class="lu-slot"><span class="lu-pos">1B</span> Olson</span><span class="lu-slot"><span class="lu-pos">3B</span> Riley</span><span class="lu-slot"><span class="lu-pos">RF</span> Yastrzemski</span><span class="lu-slot"><span class="lu-pos">2B</span> Albies</span><span class="lu-slot"><span class="lu-pos">1B</span> Smith</span><span class="lu-slot"><span class="lu-pos">CF</span> II</span><span class="lu-slot"><span class="lu-pos">2B</span> Dubón</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Guardians.TV Presented by Progressive &middot; BravesVision</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WTAM 1100 &middot; 680 AM/93.7 FM The Fan &middot; Guardians Radio Network</div>
-        <div class="nx-wx">74°F &middot; Clear &middot; Calm</div>
+        <div class="nx-wx">76°F &middot; Clear &middot; Calm</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sat, Apr 11 &middot; vs CLE</div>
@@ -614,7 +646,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div><div class="g" data-gpk="823808">
         <div class="matchup">WSH @ MIL</div>
         <div class="time">6:40 CT</div>
-        <div class="probs">Irvin vs Patrick</div>
+        <div class="probs">Irvin vs Ashby</div>
         <div class="bc">Brewers.TV · Nationals.TV</div>
       </div><div class="g" data-gpk="823076">
         <div class="matchup">BOS @ STL</div>
@@ -723,7 +755,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Truist Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 13:17 CT</span>
+  <span>Filed 04/10/26 14:52 CT</span>
 </footer>
 
 <script>

@@ -55,5 +55,28 @@
     "146": "Marlins",
     "120": "Nationals",
     "121": "Mets"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Horatio Ruiz",
+      "role": "The Straight Beat",
+      "backstory": "A Little Havana reporter who covered both Marlins World Series runs and never once let the empty seats change his column.",
+      "signature_phrase": "The ledger, en blanco y negro.",
+      "voice_sample": "Arráez went 3-for-4, Alcántara pitched into the seventh, and Miami beat the Braves 4-1 at loanDepot park."
+    },
+    {
+      "name": "Lucinda 'Lucy' Pérez-Alvarado",
+      "role": "The Optimist",
+      "backstory": "A Coral Gables dental hygienist who believes the Marlins are due for their third fire-sale dynasty and nobody can tell her otherwise.",
+      "signature_phrase": "Pez Gordo baseball.",
+      "voice_sample": "So what if the stadium's empty? That's more room for the echo of Arráez's next 2-strike line drive. This team is a storm gathering."
+    },
+    {
+      "name": "Tito Escalante",
+      "role": "The Pessimist",
+      "backstory": "A Hialeah retired bus driver who was at Pro Player for Game 7 in '97 and thinks every Marlins ownership group is personally trying to insult him.",
+      "signature_phrase": "Empty seats, empty promises.",
+      "voice_sample": "Bruce Sherman bought a ball team and a museum of unsold tickets. Every spring is a fresh betrayal. I'm out of patience and I'm out of beer."
+    }
+  ]
 }

@@ -18,10 +18,30 @@
     "nickname": "The Friendly Confines"
   },
   "affiliates": [
-    {"id": 451, "name": "Iowa Cubs", "level": "AAA", "sport_id": 11},
-    {"id": 553, "name": "Knoxville Smokies", "level": "AA", "sport_id": 12},
-    {"id": 550, "name": "South Bend Cubs", "level": "A+", "sport_id": 13},
-    {"id": 521, "name": "Myrtle Beach Pelicans", "level": "A", "sport_id": 14}
+    {
+      "id": 451,
+      "name": "Iowa Cubs",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 553,
+      "name": "Knoxville Smokies",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 550,
+      "name": "South Bend Cubs",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 521,
+      "name": "Myrtle Beach Pelicans",
+      "level": "A",
+      "sport_id": 14
+    }
   ],
   "branding": {
     "tagline": "A Daily Dispatch from the Friendly Confines & Beyond",
@@ -35,5 +55,28 @@
     "138": "Cardinals",
     "113": "Reds",
     "134": "Pirates"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Walt Kieniewicz",
+      "role": "The Straight Beat",
+      "backstory": "A Back of the Yards reporter who covered the Cubs from '84 through the curse-breaker and has never once written the word 'lovable.'",
+      "signature_phrase": "That's what the box score says.",
+      "voice_sample": "Swanson singled home two in the seventh, Imanaga went six clean innings, and the Cubs beat the Pirates 4-2 at Wrigley. Record stands at 7-5."
+    },
+    {
+      "name": "Beatrice 'Bee' Vittorini",
+      "role": "The Optimist",
+      "backstory": "A Lincoln Square florist who believes Wrigley's ivy is medicinal and writes her columns on the back of bouquet orders.",
+      "signature_phrase": "It's a Wrigley kind of day.",
+      "voice_sample": "Who cares if it's 4-12? The way Crow-Armstrong glided to that gap ball yesterday? That's the sound of October getting dressed."
+    },
+    {
+      "name": "Tony Gedeski",
+      "role": "The Pessimist",
+      "backstory": "A lifelong Bridgeport man who roots for the Cubs to spite his White Sox family and has never once been happy about it.",
+      "signature_phrase": "Ricketts gonna Ricketts.",
+      "voice_sample": "You spend a billion on the marquee and forget to build a bullpen. Every Cubs summer is the same jazz and the same hangover."
+    }
+  ]
 }

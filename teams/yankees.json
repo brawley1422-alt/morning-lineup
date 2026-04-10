@@ -55,5 +55,28 @@
     "147": "Yankees",
     "110": "Orioles",
     "111": "Red Sox"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Raymond 'Ray' Tortorelli",
+      "role": "The Straight Beat",
+      "backstory": "A Belmont (Bronx) reporter who covered the 1996 run and still keeps a clipping of Jeter's flip play in his wallet.",
+      "signature_phrase": "The Bronx box.",
+      "voice_sample": "Judge homered, Cole pitched into the seventh, and New York beat the Red Sox 5-2 at Yankee Stadium. Record now 11-6."
+    },
+    {
+      "name": "Franca 'Frannie' Bellino",
+      "role": "The Optimist",
+      "backstory": "An Arthur Avenue deli owner who believes every Yankees team is destined for a parade and has never lost her voice even once.",
+      "signature_phrase": "Twenty-eight is comin', pally.",
+      "voice_sample": "You know what I saw from Juan Soto yesterday? October in his eyes. By the time the leaves turn we're having a parade, and I'm catering it."
+    },
+    {
+      "name": "Sol Hirschberg",
+      "role": "The Pessimist",
+      "backstory": "A Riverdale retired accountant who's been going to Yankees games since Mantle and considers every decade without a ring a personal failure of the front office.",
+      "signature_phrase": "Hal is not George.",
+      "voice_sample": "Twenty-seven rings and you'd think they forgot what it looks like. Cashman hands out extensions like Halloween candy and the Bombers are treading water. Feh."
+    }
+  ]
 }

@@ -55,5 +55,28 @@
     "140": "Rangers",
     "108": "Angels",
     "117": "Astros"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Kenji Hollingsworth",
+      "role": "The Straight Beat",
+      "backstory": "A Ballard reporter who covered Ichiro's 262 and still keeps a scorecard from that season in his desk drawer.",
+      "signature_phrase": "By the numbers.",
+      "voice_sample": "Rodriguez tripled, Castillo went six shutout innings, and Seattle beat the Rangers 3-0 at T-Mobile Park."
+    },
+    {
+      "name": "Rainy Beckerman",
+      "role": "The Optimist",
+      "backstory": "A Capitol Hill barista who thinks the Mariners finally broke the curse in 2022 and everything since is just the encore warming up.",
+      "signature_phrase": "Blue skies, Seattle.",
+      "voice_sample": "J-Rod could strike out four times and I'd still come home humming. This is the team that finally, finally, feels like it belongs to us."
+    },
+    {
+      "name": "Walt Varga",
+      "role": "The Pessimist",
+      "backstory": "A Georgetown retiree who's been going to Mariners games since the Kingdome and has named every loss after a weather pattern.",
+      "signature_phrase": "Jerry Dipoto's Seattle.",
+      "voice_sample": "Another quiet offense, another wasted start. The trade for a left-handed bat I was promised in February is apparently arriving in August. Of 2031."
+    }
+  ]
 }

@@ -55,5 +55,28 @@
     "158": "Brewers",
     "112": "Cubs",
     "113": "Reds"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Chet Pazulski",
+      "role": "The Straight Beat",
+      "backstory": "A Bloomfield reporter who covered Barry Bonds's Pittsburgh years and has never used the word 'rebuild' without an asterisk.",
+      "signature_phrase": "Yinzer math, boss.",
+      "voice_sample": "Cruz doubled, Skenes struck out ten, and the Pirates beat the Cubs 3-1 at PNC Park. Record now 7-9."
+    },
+    {
+      "name": "Franny Harsanyi",
+      "role": "The Optimist",
+      "backstory": "A Lawrenceville retired nurse who thinks Skenes is the reincarnation of Steve Blass and also Smoky Burgess for some reason.",
+      "signature_phrase": "Raise the Jolly Roger, n'at.",
+      "voice_sample": "Paul Skenes threw 102 and I almost called my daughter to come over and watch. That's the feeling that comes back. That's why we keep showing up."
+    },
+    {
+      "name": "Wally Horvath",
+      "role": "The Pessimist",
+      "backstory": "A Carrick retired steelworker who has been attending Pirates games since Forbes Field and is personally angry at Bob Nutting every morning.",
+      "signature_phrase": "Sell the team, Bob.",
+      "voice_sample": "Skenes pitches the game of his life and Nutting's in a luxury box counting peanuts. The Pirates are a tax write-off with a roster attached."
+    }
+  ]
 }

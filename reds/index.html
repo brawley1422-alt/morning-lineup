@@ -321,6 +321,29 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .transac-badge.rcl{color:var(--team-primary-hi);border-color:var(--team-primary)}
 .transac-desc{font-family:var(--body);font-size:12px;color:var(--paper-dim);line-height:1.4}
 @media(max-width:640px){.transac-item{flex-direction:column;gap:4px}.transac-date{min-width:auto}}
+
+/* ===== Columnists — three personas per team ===== */
+.columnists{position:relative;z-index:2;max-width:var(--maxw);margin:14px auto 22px;padding:0 20px}
+.columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
+.columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
+.columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
+.columnists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.column{background:var(--ink-2);border:1px solid var(--rule);border-top:3px solid var(--team-primary);border-radius:3px;padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;min-height:260px}
+.column[data-role="straight_beat"]{border-top-color:var(--paper)}
+.column[data-role="optimist"]{border-top-color:var(--gold)}
+.column[data-role="pessimist"]{border-top-color:var(--team-accent)}
+.column-byline{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
+.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1}
+.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold)}
+.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim)}
+.column-body p{margin:0 0 10px}
+.column-body p:last-child{margin-bottom:0}
+.column-body .column-off{color:var(--paper-mute);font-size:13px}
+@media(max-width:900px){.columnists-grid{grid-template-columns:1fr;gap:14px}.column{min-height:auto}}
+body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
+body.theme-paper .column-name{color:var(--ink)}
+body.theme-paper .column-body{color:#3a3626}
+body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -351,7 +374,16 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><article class="column" data-role="straight_beat"><div class="column-byline"><span class="column-name">Harold &#x27;Hal&#x27; Zorich</span><span class="column-role">The Straight Beat</span></div><div class="column-body"><p>The Reds lost again. Not in a way that makes sense, not in a way that feels fair, but in the way that has defined this season — a team with enough talent to win, but not enough discipline to hold onto leads. Yesterday’s 8-1 drubbing of the Marlins wasn’t just another loss; it was a mirror held up to the bullpen, a reminder that the same old ghosts are haunting Great American Ball Park.</p><p>The offense, for once, didn’t let you down. De La Cruz homered, and the bats did their part to keep pace with the Marlins’ offensive surge. But here’s the rub: the Reds scored first, then watched the bullpen unravel like a poorly stitched quilt. The Marlins’ bullpen, for all its flaws, held the lead until the eighth. The Reds’ bullpen? It gave up the lead in the second. That’s the Queen City ledger.</p><p>Let’s talk about the arms. This team has spent the past two winters trying to fix the bullpen, trading for arms, drafting prospects, and hoping the rotation would stabilize. But the truth is, the bullpen has been the team’s Achilles’ heel since the 2022 season. You can’t blame the starters — they’ve pitched well enough to win 10</p></div></article><article class="column" data-role="optimist"><div class="column-byline"><span class="column-name">Candy Vanicek</span><span class="column-role">The Optimist</span></div><div class="column-body"><p>Elly De La Cruz is the reason I still believe in the Reds. Not because he’s a sure thing, not because he’s perfect, but because he’s *our* thing. The kid with the legs like lightning and the heart that don’t quit. Yesterday’s loss to Miami? A blip. A hiccup. A reminder that even the best machines need to hum a little louder. But listen—Elly’s got that spark, and that’s all you need to know.</p><p>The game was a mess, sure. A 1-8 drubbing. But here’s the thing: Elly didn’t flinch. He ran from first to third in a blink, and I swear I could hear Rose cussing from the beyond. That’s the kind of hustle that doesn’t die. You can’t teach that. You can’t manufacture that. You can only hope to find it in a kid who’s been told he’s too fast, too young, too… *Cincinnati*. And he’s proving them all</p></div></article><article class="column" data-role="pessimist"><div class="column-byline"><span class="column-name">Earl Huffnagle</span><span class="column-role">The Pessimist</span></div><div class="column-body"><p>The Reds lost again. Not in a dramatic way, not with a meltdown or a meltdown of the kind that makes you want to throw your TV out the window. No, they just lost to the Marlins, 8-1, in a game that felt like a reminder of how far they’ve fallen since the days when the team actually mattered. You know, back when the Reds were a team that played actual baseball instead of just showing up to take batting practice and then leaving the field with a head full of regrets.</p><p>The record is 8-5, which sounds okay on paper. A half-game behind in the Central. But let’s not fool ourselves—this isn’t a team that’s chasing a wild</p></div></article></div><script>(function(){
+  var grid = document.currentScript && document.currentScript.previousElementSibling;
+  if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
+  var kids = Array.prototype.slice.call(grid.children);
+  for (var i = kids.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = kids[i]; kids[i] = kids[j]; kids[j] = tmp;
+  }
+  kids.forEach(function(k){ grid.appendChild(k); });
+})();</script></section>
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -429,7 +461,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-pitcher"><span class="nx-side">Reds</span> Chase Burns<div class="nx-pline">0.82 ERA &middot; 1-0 &middot; 11.0 IP &middot; 16 K &middot; 0.91 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">LAA</span> Jack Kochanowicz<div class="nx-pline">4.66 ERA &middot; 1-0 &middot; 9.2 IP &middot; 10 K &middot; 1.55 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">CF</span> Friedl</span><span class="lu-slot"><span class="lu-pos">2B</span> McLain</span><span class="lu-slot"><span class="lu-pos">SS</span> Cruz</span><span class="lu-slot"><span class="lu-pos">3B</span> Stewart</span><span class="lu-slot"><span class="lu-pos">3B</span> Suárez</span><span class="lu-slot"><span class="lu-pos">1B</span> Steer</span><span class="lu-slot"><span class="lu-pos">LF</span> Benson</span><span class="lu-slot"><span class="lu-pos">C</span> Stephenson</span><span class="lu-slot"><span class="lu-pos">3B</span> Hayes</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Apple TV &middot; Apple TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KLAA 830 &middot; WLW 700</div>
-        <div class="nx-wx">75°F &middot; Overcast &middot; 12 mph WSW</div>
+        <div class="nx-wx">76°F &middot; Partly Cloudy &middot; 13 mph WSW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sat, Apr 11 &middot; vs LAA</div>
@@ -614,7 +646,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div><div class="g" data-gpk="823808">
         <div class="matchup">WSH @ MIL</div>
         <div class="time">6:40 CT</div>
-        <div class="probs">Irvin vs Patrick</div>
+        <div class="probs">Irvin vs Ashby</div>
         <div class="bc">Brewers.TV · Nationals.TV</div>
       </div><div class="g" data-gpk="823076">
         <div class="matchup">BOS @ STL</div>
@@ -717,7 +749,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Great American Ball Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 13:20 CT</span>
+  <span>Filed 04/10/26 15:21 CT</span>
 </footer>
 
 <script>

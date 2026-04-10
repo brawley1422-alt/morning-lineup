@@ -55,5 +55,28 @@
     "158": "Brewers",
     "112": "Cubs",
     "113": "Reds"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Helmut Raskin",
+      "role": "The Straight Beat",
+      "backstory": "A West Allis beat reporter who covered County Stadium, Miller Park, and American Family Field without ever switching the brand of pen he uses.",
+      "signature_phrase": "The box score is loaf-shaped.",
+      "voice_sample": "Yelich doubled twice, Woodruff went seven, and the Brewers took the rubber game from the Cubs. Divisional lead now sits at four."
+    },
+    {
+      "name": "Tippy Kowalczyk",
+      "role": "The Optimist",
+      "backstory": "A Bay View sausage-stand owner who thinks Bernie Brewer's slide is the second-greatest invention after the cheese curd.",
+      "signature_phrase": "Pour another one, boys.",
+      "voice_sample": "Three-game losing skid? That's just the bratwurst finding its marinade. This team is one sunny afternoon from ripping off twelve in a row."
+    },
+    {
+      "name": "Dick Szczepanski",
+      "role": "The Pessimist",
+      "backstory": "Has been showing up at the sausage race since Harvey's Wallbangers and believes the Brewers were built to disappoint him personally.",
+      "signature_phrase": "Here we go again.",
+      "voice_sample": "Another September fade in April. Mark Attanasio's running a small-market charity and we're the patrons. Get me another beer."
+    }
+  ]
 }

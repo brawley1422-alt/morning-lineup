@@ -14,6 +14,7 @@ from pathlib import Path
 from html import escape
 
 import sections.around_league
+import sections.columnists
 import sections.division
 import sections.farm
 import sections.headline
@@ -594,8 +595,8 @@ def page(briefing):
     pressbox_html = sections.pressbox.render(briefing)
     history_html = sections.history.render(briefing)
 
-    # Editorial lede
-    lede_html = sections.around_league.render_lede_block(briefing)
+    # Editorial: three columnist personas per team (replaces the old lede)
+    lede_html = sections.columnists.render(briefing)
 
     # Dynamic section numbering — skip sections with empty HTML (e.g. scout
     # on off-days). Each visible section gets the next zero-padded number.

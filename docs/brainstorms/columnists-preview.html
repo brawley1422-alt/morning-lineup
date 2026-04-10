@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Columnists — Draft Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d0f14;--ink-2:#141823;--ink-3:#1c2230;
+  --paper:#ece4d0;--paper-dim:#c9bfa6;--paper-mute:#8b836d;
+  --rule:#2a3142;--rule-hi:#3a4360;
+  --gold:#c9a24a;--gold-dim:#8a6f32;
+  --win:#6ea86a;--loss:#c0554f;
+  --serif:"Playfair Display",Georgia,serif;
+  --body:"Lora",Georgia,serif;
+  --cond:"Oswald",sans-serif;
+  --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ink);color:var(--paper);font-family:var(--body);font-size:15px;line-height:1.55}
+body{background:radial-gradient(1200px 600px at 10% -10%,rgba(14,51,134,.18),transparent 60%),linear-gradient(180deg,#0a0c12,#0d0f14 60%,#0b0d12)}
+header{max-width:1100px;margin:0 auto;padding:40px 24px 24px;border-bottom:3px double var(--paper);text-align:center}
+header .kicker{font-family:var(--cond);text-transform:uppercase;letter-spacing:.3em;font-size:11px;color:var(--gold);margin-bottom:10px}
+header h1{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(40px,7vw,72px);margin:0;line-height:.95}
+header .sub{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--paper-mute);margin-top:12px}
+.filter{max-width:1100px;margin:20px auto 0;padding:0 24px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.filter input{background:var(--ink-2);border:1px solid var(--rule);color:var(--paper);padding:10px 14px;border-radius:2px;font-family:var(--body);font-size:14px;min-width:240px}
+.filter input:focus{outline:none;border-color:var(--gold)}
+.filter button{background:none;border:1px solid var(--rule-hi);color:var(--paper-mute);font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:11px;padding:10px 14px;cursor:pointer;border-radius:2px}
+.filter button.on{border-color:var(--gold);color:var(--gold)}
+main{max-width:1100px;margin:0 auto;padding:30px 24px 60px}
+.team{margin-bottom:34px;border:1px solid var(--rule);background:var(--ink-2);border-radius:3px;overflow:hidden}
+.team-head{padding:14px 22px;border-bottom:1px solid var(--rule);background:linear-gradient(90deg,rgba(201,162,74,.06),transparent);display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.team-head h2{margin:0;font-family:var(--serif);font-style:italic;font-weight:900;font-size:26px;color:var(--paper);letter-spacing:.02em}
+.team-head .slug{font-family:var(--mono);font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:.14em}
+.writers{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0}
+.writer{padding:20px 22px;border-right:1px dashed var(--rule)}
+.writer:last-child{border-right:none}
+@media(max-width:900px){.writer{border-right:none;border-bottom:1px dashed var(--rule)}.writer:last-child{border-bottom:none}}
+.role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold);margin-bottom:4px}
+.name{font-family:var(--serif);font-weight:900;font-size:20px;margin:0 0 10px;color:var(--paper);line-height:1.15}
+.field{margin-top:12px}
+.label{font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;font-size:9px;color:var(--paper-mute);margin-bottom:3px}
+.value{font-size:13.5px;color:var(--paper-dim);line-height:1.5}
+.phrase .value{font-style:italic;color:var(--gold)}
+.voice .value{border-left:2px solid var(--gold-dim);padding-left:10px;color:var(--paper)}
+.hide{display:none !important}
+footer{max-width:1100px;margin:0 auto;padding:20px 24px 40px;text-align:center;font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--paper-mute)}
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker">The Morning Lineup · Draft Board</div>
+  <h1>The Columnists</h1>
+  <div class="sub">90 bylines · 30 clubs · first draft for review</div>
+</header>
+
+<div class="filter">
+  <input id="search" type="text" placeholder="Filter by team, name, phrase…">
+  <button id="filter-beat" class="on" data-role="straight_beat">Straight Beat</button>
+  <button id="filter-opt" class="on" data-role="optimist">Optimist</button>
+  <button id="filter-pess" class="on" data-role="pessimist">Pessimist</button>
+</div>
+
+<main id="board"></main>
+<footer>Veto or rewrite anything. Tell Claude which team + role. When approved, these merge into teams/&lcub;slug&rcub;.json</footer>
+
+<script>
+const ROLES = [
+  ["straight_beat","Straight Beat"],
+  ["optimist","Optimist"],
+  ["pessimist","Pessimist"],
+];
+const TEAM_NAMES = {
+  "angels":"Los Angeles Angels","astros":"Houston Astros","athletics":"Athletics",
+  "blue-jays":"Toronto Blue Jays","braves":"Atlanta Braves","brewers":"Milwaukee Brewers",
+  "cardinals":"St. Louis Cardinals","cubs":"Chicago Cubs","dbacks":"Arizona Diamondbacks",
+  "dodgers":"Los Angeles Dodgers","giants":"San Francisco Giants","guardians":"Cleveland Guardians",
+  "mariners":"Seattle Mariners","marlins":"Miami Marlins","mets":"New York Mets",
+  "nationals":"Washington Nationals","orioles":"Baltimore Orioles","padres":"San Diego Padres",
+  "phillies":"Philadelphia Phillies","pirates":"Pittsburgh Pirates","rangers":"Texas Rangers",
+  "rays":"Tampa Bay Rays","reds":"Cincinnati Reds","red-sox":"Boston Red Sox",
+  "rockies":"Colorado Rockies","royals":"Kansas City Royals","tigers":"Detroit Tigers",
+  "twins":"Minnesota Twins","white-sox":"Chicago White Sox","yankees":"New York Yankees",
+};
+
+const board = document.getElementById("board");
+const search = document.getElementById("search");
+const filters = document.querySelectorAll(".filter button[data-role]");
+
+let data = {};
+let activeRoles = new Set(["straight_beat","optimist","pessimist"]);
+
+fetch("./2026-04-10-columnist-personas-draft.json").then(r => r.json()).then(j => {
+  data = j;
+  render();
+});
+
+function render() {
+  board.innerHTML = "";
+  const q = search.value.trim().toLowerCase();
+  for (const [slug, writers] of Object.entries(data)) {
+    if (slug.startsWith("_")) continue;
+    const teamBlock = document.createElement("section");
+    teamBlock.className = "team";
+    teamBlock.innerHTML = `
+      <div class="team-head">
+        <h2>${TEAM_NAMES[slug] || slug}</h2>
+        <span class="slug">${slug}</span>
+      </div>
+      <div class="writers"></div>
+    `;
+    const writerGrid = teamBlock.querySelector(".writers");
+    let visibleCount = 0;
+    for (const [roleKey, _roleLabel] of ROLES) {
+      if (!activeRoles.has(roleKey)) continue;
+      const w = writers[roleKey];
+      if (!w) continue;
+      const matchText = [w.name, w.backstory, w.signature_phrase, w.voice_sample, slug, TEAM_NAMES[slug] || ""].join(" ").toLowerCase();
+      if (q && !matchText.includes(q)) continue;
+      const div = document.createElement("div");
+      div.className = "writer";
+      div.innerHTML = `
+        <div class="role">${w.role}</div>
+        <h3 class="name">${escapeHTML(w.name)}</h3>
+        <div class="field"><div class="label">Backstory</div><div class="value">${escapeHTML(w.backstory)}</div></div>
+        <div class="field phrase"><div class="label">Signature phrase</div><div class="value">"${escapeHTML(w.signature_phrase)}"</div></div>
+        <div class="field voice"><div class="label">Voice sample</div><div class="value">${escapeHTML(w.voice_sample)}</div></div>
+      `;
+      writerGrid.appendChild(div);
+      visibleCount++;
+    }
+    if (visibleCount > 0) board.appendChild(teamBlock);
+  }
+}
+
+function escapeHTML(s) {
+  return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+search.addEventListener("input", render);
+filters.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const role = btn.dataset.role;
+    if (activeRoles.has(role)) { activeRoles.delete(role); btn.classList.remove("on"); }
+    else { activeRoles.add(role); btn.classList.add("on"); }
+    render();
+  });
+});
+</script>
+</body>
+</html>

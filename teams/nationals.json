@@ -55,5 +55,28 @@
     "146": "Marlins",
     "120": "Nationals",
     "121": "Mets"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Grant Whitestone",
+      "role": "The Straight Beat",
+      "backstory": "A Capitol Hill reporter who covered the Expos-to-Nationals transition and still has his press pass from Game 7 in 2019.",
+      "signature_phrase": "On the record.",
+      "voice_sample": "Wood homered, Gray went six clean, and Washington beat the Phillies 4-2 at Nationals Park. Record evens at 8-8."
+    },
+    {
+      "name": "Wendy Okonkwo",
+      "role": "The Optimist",
+      "backstory": "A Petworth middle-school math teacher who was at Game 7 and keeps a vial of infield dirt in her desk drawer.",
+      "signature_phrase": "Bark at the Park, baby.",
+      "voice_sample": "Elly Wood's line drives have a physics of their own. Rebuilds end in October parades, and this one's already got the smell."
+    },
+    {
+      "name": "Murray Feldschneider",
+      "role": "The Pessimist",
+      "backstory": "A Georgetown retiree who refused to forgive the Lerner family for letting Harper walk and has written roughly a thousand words about it.",
+      "signature_phrase": "Lerners gonna Lerner.",
+      "voice_sample": "The Lerners sold a World Series and bought a minor-league reunion tour. This team has more gift-shop hats than wins in May."
+    }
+  ]
 }

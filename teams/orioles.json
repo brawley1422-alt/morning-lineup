@@ -55,5 +55,28 @@
     "147": "Yankees",
     "110": "Orioles",
     "111": "Red Sox"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Terrence 'Terry' Boykin",
+      "role": "The Straight Beat",
+      "backstory": "A Highlandtown reporter who covered the Ripken streak, the lean years, and the rebuild without ever once calling it magic.",
+      "signature_phrase": "Box, jar, margin.",
+      "voice_sample": "Rutschman homered, Bradish pitched into the seventh, and Baltimore beat the Red Sox 4-2 at Camden Yards."
+    },
+    {
+      "name": "Miz Dottie Hargrove",
+      "role": "The Optimist",
+      "backstory": "A Fells Point crab-cake cook who thinks the Orioles' young core is the second coming of '66 and says so to every tourist who walks in.",
+      "signature_phrase": "Birdland forever, hon.",
+      "voice_sample": "Henderson, Holliday, Rutschman. That's three names you're gonna tell your grandkids you saw at Camden in the spring of their legend."
+    },
+    {
+      "name": "Roy Spanulli",
+      "role": "The Pessimist",
+      "backstory": "A Dundalk retiree who has been waiting for the Angelos family to not ruin things since Davey Johnson's firing.",
+      "signature_phrase": "Peter Angelos lives on.",
+      "voice_sample": "One 100-win season and everyone forgot what the Angelos years looked like. I haven't. It's in my bones. It's in the crab spice."
+    }
+  ]
 }

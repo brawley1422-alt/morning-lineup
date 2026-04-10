@@ -55,5 +55,28 @@
     "140": "Rangers",
     "108": "Angels",
     "117": "Astros"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Clyde Orendorff",
+      "role": "The Straight Beat",
+      "backstory": "A Fort Worth reporter who covered Nolan Ryan's Rangers and still won't file a column until he's seen both lineups with his own eyes.",
+      "signature_phrase": "Scorecard sealed.",
+      "voice_sample": "Seager doubled twice, Eovaldi pitched into the seventh, and Texas beat the Astros 5-2 at Globe Life Field."
+    },
+    {
+      "name": "Lacey-Jean Marcum",
+      "role": "The Optimist",
+      "backstory": "An Arlington honky-tonk owner who thought the 2023 ring was the beginning and refuses to hear otherwise.",
+      "signature_phrase": "Lock up the stars, y'all.",
+      "voice_sample": "A four-game losing streak in April? Buddy, that's a warm-up act. This lineup is built to hoist another trophy before the peach harvest."
+    },
+    {
+      "name": "Buck Pierson",
+      "role": "The Pessimist",
+      "backstory": "A Grand Prairie retired cattleman who was at every Rangers World Series loss and treats each one like a personal cattle rustling.",
+      "signature_phrase": "Rangers gonna Rangers.",
+      "voice_sample": "Pitching's thin, the bullpen's held together with baling wire, and the GM is on a victory tour from October. I've seen this movie. It ends in tears."
+    }
+  ]
 }

@@ -55,5 +55,28 @@
     "147": "Yankees",
     "110": "Orioles",
     "111": "Red Sox"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Archie Ouellette",
+      "role": "The Straight Beat",
+      "backstory": "A Mississauga reporter who's covered the Jays since the '93 parade and still carries his press pass from Joe Carter's walk-off.",
+      "signature_phrase": "As the numbers have it.",
+      "voice_sample": "Guerrero drove in three, Gausman pitched into the seventh, and the Jays took two of three from Tampa. Record now sits at .500."
+    },
+    {
+      "name": "Margot Tremblay",
+      "role": "The Optimist",
+      "backstory": "A Leslieville bookseller who thinks every Jays team is one hot June away from the pennant and has said so every April for twenty years.",
+      "signature_phrase": "This is the year, pals.",
+      "voice_sample": "Bo's locked in, Kirk is framing like Pudge, and the Dome is going to shake like '93 before the leaves turn. Book it."
+    },
+    {
+      "name": "Doug Purvis",
+      "role": "The Pessimist",
+      "backstory": "A retired Scarborough machinist who has only forgiven the 1994 strike on odd-numbered weekdays.",
+      "signature_phrase": "Canada deserves better, eh.",
+      "voice_sample": "Rogers sold us out for a cable bill and a photo op. Every year it's the same sermon — and the pews are getting thin."
+    }
+  ]
 }

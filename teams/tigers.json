@@ -18,10 +18,30 @@
     "nickname": "The Corner"
   },
   "affiliates": [
-    {"id": 512, "name": "Toledo Mud Hens", "level": "AAA", "sport_id": 11},
-    {"id": 106, "name": "Erie SeaWolves", "level": "AA", "sport_id": 12},
-    {"id": 582, "name": "West Michigan Whitecaps", "level": "A+", "sport_id": 13},
-    {"id": 570, "name": "Lakeland Flying Tigers", "level": "A", "sport_id": 14}
+    {
+      "id": 512,
+      "name": "Toledo Mud Hens",
+      "level": "AAA",
+      "sport_id": 11
+    },
+    {
+      "id": 106,
+      "name": "Erie SeaWolves",
+      "level": "AA",
+      "sport_id": 12
+    },
+    {
+      "id": 582,
+      "name": "West Michigan Whitecaps",
+      "level": "A+",
+      "sport_id": 13
+    },
+    {
+      "id": 570,
+      "name": "Lakeland Flying Tigers",
+      "level": "A",
+      "sport_id": 14
+    }
   ],
   "branding": {
     "tagline": "A Daily Dispatch from The Corner & Beyond",
@@ -35,5 +55,28 @@
     "118": "Royals",
     "142": "Twins",
     "145": "White Sox"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Walt Brzezinski",
+      "role": "The Straight Beat",
+      "backstory": "A Corktown reporter who covered Verlander's prime and still keeps a scorecard from Galarraga's 28-out perfect game.",
+      "signature_phrase": "Put it in the ledger.",
+      "voice_sample": "Torkelson homered, Skubal struck out twelve, and Detroit beat the White Sox 5-1 at Comerica Park. Record now 10-7."
+    },
+    {
+      "name": "Patsy Kwiatkowski",
+      "role": "The Optimist",
+      "backstory": "A Hamtramck paczki-baker who thinks Tarik Skubal is going to win four Cy Youngs and has already picked out her parade outfit.",
+      "signature_phrase": "Detroit's back, jack.",
+      "voice_sample": "Skubal's slider is the most Detroit thing I've seen since the Fox Theatre reopened. This city is three Julys away from a parade, you mark it."
+    },
+    {
+      "name": "Nick Arbogast",
+      "role": "The Pessimist",
+      "backstory": "A Grosse Pointe Park retiree who has been attending Tigers games since Tiger Stadium and carries the 2003 team's record like a tattoo.",
+      "signature_phrase": "Rebuild year seventeen.",
+      "voice_sample": "Every spring they say the kids are coming. Every October the kids are gone or hurt or traded for more kids. The Tigers are a time loop."
+    }
+  ]
 }

@@ -321,6 +321,29 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .transac-badge.rcl{color:var(--team-primary-hi);border-color:var(--team-primary)}
 .transac-desc{font-family:var(--body);font-size:12px;color:var(--paper-dim);line-height:1.4}
 @media(max-width:640px){.transac-item{flex-direction:column;gap:4px}.transac-date{min-width:auto}}
+
+/* ===== Columnists — three personas per team ===== */
+.columnists{position:relative;z-index:2;max-width:var(--maxw);margin:14px auto 22px;padding:0 20px}
+.columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
+.columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
+.columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
+.columnists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.column{background:var(--ink-2);border:1px solid var(--rule);border-top:3px solid var(--team-primary);border-radius:3px;padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;min-height:260px}
+.column[data-role="straight_beat"]{border-top-color:var(--paper)}
+.column[data-role="optimist"]{border-top-color:var(--gold)}
+.column[data-role="pessimist"]{border-top-color:var(--team-accent)}
+.column-byline{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
+.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1}
+.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold)}
+.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim)}
+.column-body p{margin:0 0 10px}
+.column-body p:last-child{margin-bottom:0}
+.column-body .column-off{color:var(--paper-mute);font-size:13px}
+@media(max-width:900px){.columnists-grid{grid-template-columns:1fr;gap:14px}.column{min-height:auto}}
+body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
+body.theme-paper .column-name{color:var(--ink)}
+body.theme-paper .column-body{color:#3a3626}
+body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -351,7 +374,16 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><article class="column" data-role="straight_beat"><div class="column-byline"><span class="column-name">Walt Kieniewicz</span><span class="column-role">The Straight Beat</span></div><div class="column-body"><p>The Cubs won again. That’s what the box score says. Six runs, two innings, a bullpen that held its ground, and a lineup that finally found its rhythm. The Rays didn’t stand a chance. But here’s the thing: this isn’t the first time this season they’ve done that. It’s just the third game in a row they’ve done it. And yet, the record stands at 6-6, two games behind the Brewers in the NL Central. That’s what the box score says.</p><p>The script was familiar. Swanson singled home two in the seventh, Imanaga went six clean innings, and the Cubs beat the Rays 4-2 at Wrigley. Record stands at 7-5. Wait, no—wait, no. The record is 6-6. The 4-2 game was yesterday. The 7-5 was last week. This is a team that wins games like this, only to lose them the next day. Or the day after. Or the day after that. It’s not a matter of if they can win; it’s a matter of if they can keep winning.</p><p>Imanaga, for all his struggles, pitched six innings, allowed two runs, and struck out seven. That’s a line</p></div></article><article class="column" data-role="optimist"><div class="column-byline"><span class="column-name">Beatrice &#x27;Bee&#x27; Vittorini</span><span class="column-role">The Optimist</span></div><div class="column-body"><p>The Cubs didn’t just beat the Rays yesterday—they danced through the rain with a swagger that made the ivy on Wrigley’s walls blush. Six runs, two innings, and a reminder that even in the middle of a six-game losing streak, there’s magic in the way the ball carves through the air. Crow-Armstrong’s arm? A pendulum swinging between strikeout and salvation. And let’s not forget the way those fans in the bleachers, drenched and determined, chanted the same old rhymes like they’re rehearsing a Broadway show. It’s a Wrigley kind of day when the scoreboard’s a distraction and the game’s a symphony.</p><p>Now, I know what you’re thinking: 6-6, 2.0 games back. But here’s the thing about Cubs baseball—it’s not about the numbers on the wall, it’s about the way the players keep showing up, boots muddy and hearts full. Look at that kid, Nick Madson, with his sinker that’s got more zip than a Chicago summer. He’s the kind of pitcher who makes you believe in the old adage about “grinding through the grind.” And don’t</p></div></article><article class="column" data-role="pessimist"><div class="column-byline"><span class="column-name">Tony Gedeski</span><span class="column-role">The Pessimist</span></div><div class="column-body"><p>The Cubs won again. That’s the only thing that matters. Six runs, two from Tampa. A win, sure, but it feels like the same old story. You spend a billion on the marquee and forget to build a bullpen. Every Cubs summer is the same jazz and the same hangover.</p><p>Here’s the thing: You can’t win a playoff race with a bullpen that looks like it’s been assembled by a kid with a glue stick and a dream. The Rays, for all their mediocrity, have a closer who’s been aces. The Cubs? Their closer’s been a question mark since 2021. Maybe it’s not the players’ fault. Maybe it’s the system. Or maybe it’s Ricketts gonna Ricketts.</p><p>Look, I get it. You’re supposed to spend money on stars. You’re supposed to chase the big names, the ones who can draw crowds and fill the seats. But when you do that, you ignore the fundamentals. You ignore the fact that a bullpen is a team’s backbone. You ignore the fact that a pitcher who can’t close a game is a liability. And you ignore the fact that the Cubs have been doing this for decades.</p><p>The Cubs have a .500 record.</p></div></article></div><script>(function(){
+  var grid = document.currentScript && document.currentScript.previousElementSibling;
+  if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
+  var kids = Array.prototype.slice.call(grid.children);
+  for (var i = kids.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = kids[i]; kids[i] = kids[j]; kids[j] = tmp;
+  }
+  kids.forEach(function(k){ grid.appendChild(k); });
+})();</script></section>
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -417,7 +449,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <h3>Cubs Leaders</h3>
     <div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>AVG</td><td class="name">Hoerner <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.333</td></tr><tr><td>OBP</td><td class="name">Hoerner <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.453</td></tr><tr><td>HR</td><td class="name">Happ <span style="color:var(--paper-mute);font-size:10px">LF</span></td><td class="num">4</td></tr><tr><td>RBI</td><td class="name">Hoerner <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">9</td></tr><tr><td>SB</td><td class="name">Hoerner <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">5</td></tr></tbody></table></div>
+    <tbody><tr><td>AVG</td><td class="name">Hoerner <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.333</td></tr><tr><td>OBP</td><td class="name">Hoerner <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.446</td></tr><tr><td>HR</td><td class="name">Happ <span style="color:var(--paper-mute);font-size:10px">LF</span></td><td class="num">4</td></tr><tr><td>RBI</td><td class="name">Hoerner <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">9</td></tr><tr><td>SB</td><td class="name">Hoerner <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">5</td></tr></tbody></table></div>
     <h3>Next Games</h3>
     <div class="next-games"><div class="nx-card nx-today">
         <div class="nx-head">
@@ -426,7 +458,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         </div>
         <div class="nx-venue">Wrigley Field </div>
         <div class="nx-meta"><span class="nx-opp-rec">PIT: 7-5, 3rd NL Central (L1)</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Cubs</span> Shota Imanaga<div class="nx-pline">4.50 ERA &middot; 0-1 &middot; 10.0 IP &middot; 11 K &middot; 1.20 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">PIT</span> Carmen Mlodzinski<div class="nx-pline">4.00 ERA &middot; 0-0 &middot; 9.0 IP &middot; 13 K &middot; 1.56 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">Cubs</span> Shota Imanaga<div class="nx-pline">2.93 ERA &middot; 0-1 &middot; 15.1 IP &middot; 19 K &middot; 0.85 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">PIT</span> Carmen Mlodzinski<div class="nx-pline">2.57 ERA &middot; 0-0 &middot; 14.0 IP &middot; 14 K &middot; 1.50 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">2B</span> Hoerner</span><span class="lu-slot"><span class="lu-pos">1B</span> Busch</span><span class="lu-slot"><span class="lu-pos">3B</span> Bregman</span><span class="lu-slot"><span class="lu-pos">LF</span> Happ</span><span class="lu-slot"><span class="lu-pos">RF</span> Suzuki</span><span class="lu-slot"><span class="lu-pos">CF</span> Crow-Armstrong</span><span class="lu-slot"><span class="lu-pos">C</span> Kelly</span><span class="lu-slot"><span class="lu-pos">C</span> Ballesteros</span><span class="lu-slot"><span class="lu-pos">SS</span> Swanson</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> SportsNet Pittsburgh &middot; Marquee Sports Network</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 104.3 The Score &middot; 100.1 FM/KDKA-AM 1020</div>
         <div class="nx-wx">46°F &middot; Overcast &middot; 6 mph NNE <span class="nx-wrigley">&mdash; Blowing in</span></div>
@@ -456,8 +488,8 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Hoerner</span><span class="s">.400 / 1 HR / 1.211 OPS</span></li><li><span class="n">Shaw</span><span class="s">.292 / 2 HR / .929 OPS</span></li><li><span class="n">Amaya</span><span class="s">.294 / 1 HR / .929 OPS</span></li><li><span class="n">Ballesteros</span><span class="s">.294 / 1 HR / .821 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n">Busch</span><span class="s">.080 / 0 HR / .252 OPS</span></li><li><span class="n">Swanson</span><span class="s">.115 / 1 HR / .441 OPS</span></li><li><span class="n">Bregman</span><span class="s">.185 / 0 HR / .512 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Hoerner</span><span class="s">.348 / 1 HR / 1.065 OPS</span></li><li><span class="n">Shaw</span><span class="s">.292 / 2 HR / .929 OPS</span></li><li><span class="n">Amaya</span><span class="s">.294 / 1 HR / .929 OPS</span></li><li><span class="n">Kelly</span><span class="s">.364 / 0 HR / .895 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n">Busch</span><span class="s">.000 / 0 HR / .071 OPS</span></li><li><span class="n">Bregman</span><span class="s">.154 / 0 HR / .406 OPS</span></li><li><span class="n">Swanson</span><span class="s">.125 / 1 HR / .514 OPS</span></li></ul></div>
     </div>
     <div class="two">
       <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n">Thielbar</span><span class="s">3.2 IP &middot; 0.00 ERA &middot; 3 K</span></li><li><span class="n">Palencia</span><span class="s">3.0 IP &middot; 0.00 ERA &middot; 3 K</span></li><li><span class="n">Cabrera</span><span class="s">11.2 IP &middot; 0.00 ERA &middot; 9 K</span></li></ul></div>
@@ -478,19 +510,19 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="sp-card">
         <div class="sp-side">Cubs</div>
         <div class="sp-name">Shota Imanaga</div>
-        <div class="sp-season">4.50 ERA &middot; 0-1 &middot; 10.0 IP &middot; 11 K &middot; 1.20 WHIP</div>
-        <h4>Last 2 Starts</h4><table class="data sp-log">
+        <div class="sp-season">2.93 ERA &middot; 0-1 &middot; 15.1 IP &middot; 19 K &middot; 0.85 WHIP</div>
+        <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>03-29</td><td class="opp">vs Washington Nationals</td><td class="num">5.0</td><td class="num">4</td><td class="num">7</td><td class="num">6</td><td class="num">2</td></tr><tr><td>04-05</td><td class="opp">vs Cleveland Guardians</td><td class="num">5.0</td><td class="num">1</td><td class="num">4</td><td class="num">3</td><td class="num">1</td></tr></tbody></table>
+            <tbody><tr><td>03-29</td><td class="opp">vs Washington Nationals</td><td class="num">5.0</td><td class="num">4</td><td class="num">7</td><td class="num">6</td><td class="num">2</td></tr><tr><td>04-05</td><td class="opp">vs Cleveland Guardians</td><td class="num">5.0</td><td class="num">1</td><td class="num">4</td><td class="num">3</td><td class="num">1</td></tr><tr><td>04-10</td><td class="opp">vs Pittsburgh Pirates</td><td class="num">5.0</td><td class="num">0</td><td class="num">7</td><td class="num">0</td><td class="num">1</td></tr></tbody></table>
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
         <div class="sp-side">PIT</div>
         <div class="sp-name">Carmen Mlodzinski</div>
-        <div class="sp-season">4.00 ERA &middot; 0-0 &middot; 9.0 IP &middot; 13 K &middot; 1.56 WHIP</div>
-        <h4>Last 2 Starts</h4><table class="data sp-log">
+        <div class="sp-season">2.57 ERA &middot; 0-0 &middot; 14.0 IP &middot; 14 K &middot; 1.50 WHIP</div>
+        <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>03-29</td><td class="opp">vs New York Mets</td><td class="num">4.1</td><td class="num">2</td><td class="num">8</td><td class="num">6</td><td class="num">0</td></tr><tr><td>04-04</td><td class="opp">vs Baltimore Orioles</td><td class="num">4.2</td><td class="num">2</td><td class="num">5</td><td class="num">5</td><td class="num">3</td></tr></tbody></table>
+            <tbody><tr><td>03-29</td><td class="opp">vs New York Mets</td><td class="num">4.1</td><td class="num">2</td><td class="num">8</td><td class="num">6</td><td class="num">0</td></tr><tr><td>04-04</td><td class="opp">vs Baltimore Orioles</td><td class="num">4.2</td><td class="num">2</td><td class="num">5</td><td class="num">5</td><td class="num">3</td></tr><tr><td>04-10</td><td class="opp">vs Chicago Cubs</td><td class="num">5.0</td><td class="num">0</td><td class="num">1</td><td class="num">4</td><td class="num">3</td></tr></tbody></table>
         </div>
     </div>
   </section>
@@ -614,7 +646,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div><div class="g" data-gpk="823808">
         <div class="matchup">WSH @ MIL</div>
         <div class="time">6:40 CT</div>
-        <div class="probs">Irvin vs Patrick</div>
+        <div class="probs">Irvin vs Ashby</div>
         <div class="bc">Brewers.TV · Nationals.TV</div>
       </div><div class="g" data-gpk="823076">
         <div class="matchup">BOS @ STL</div>
@@ -720,7 +752,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Friendly Confines Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 13:18 CT</span>
+  <span>Filed 04/10/26 14:48 CT</span>
 </footer>
 
 <script>

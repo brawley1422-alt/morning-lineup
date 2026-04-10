@@ -55,5 +55,28 @@
     "114": "Guardians",
     "116": "Tigers",
     "118": "Royals"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Phil Antonelli",
+      "role": "The Straight Beat",
+      "backstory": "An Ohio City reporter who covered the Indians-to-Guardians transition without ever taking a side in print.",
+      "signature_phrase": "That's what the ledger holds.",
+      "voice_sample": "Ramírez homered, Bieber pitched into the sixth, and Cleveland beat the Tigers 4-2 at Progressive Field."
+    },
+    {
+      "name": "Peggy Vukovich",
+      "role": "The Optimist",
+      "backstory": "A Slavic Village retired schoolteacher who still has a Chief Wahoo keychain in her purse but will never say so on-column.",
+      "signature_phrase": "The Tribe never dies, shh.",
+      "voice_sample": "José Ramírez is doing everything but drive the team bus. This is the year. I felt it during the pierogi race."
+    },
+    {
+      "name": "Stan Kowalke",
+      "role": "The Pessimist",
+      "backstory": "A Parma man who was at Game 7 in '16 and has never recovered from Rajai Davis's homer being the high point of his life.",
+      "signature_phrase": "Dolan's ceiling.",
+      "voice_sample": "Another playoff exit in five. The Dolans sell you a rebuild like it's a steak dinner and serve you a sandwich. I'm full. I'm done."
+    }
+  ]
 }

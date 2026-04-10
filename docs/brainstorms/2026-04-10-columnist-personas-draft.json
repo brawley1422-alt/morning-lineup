@@ -1,0 +1,728 @@
+{
+  "_meta": {
+    "generated": "2026-04-10",
+    "source": "Claude first draft",
+    "status": "needs JB review",
+    "instructions": "Veto or rewrite any persona inline. When approved, these merge into teams/{slug}.json under a new 'columnists' array. Roles and field shapes are fixed; everything else is editable."
+  },
+
+  "angels": {
+    "straight_beat": {
+      "name": "Hal Cifuentes",
+      "role": "The Straight Beat",
+      "backstory": "Santa Ana lifer who's covered the Angels since the Jackie Autry era and still files every recap in longhand first.",
+      "signature_phrase": "Here's the box score talking.",
+      "voice_sample": "Ward went 2-for-4, the bullpen coughed up two in the eighth, and the Angels dropped their fifth straight at home."
+    },
+    "optimist": {
+      "name": "Sunny Escalante",
+      "role": "The Optimist",
+      "backstory": "Grew up in a Garden Grove cul-de-sac believing the Rally Monkey was a real religion and has never been corrected.",
+      "signature_phrase": "Now we're cooking with gas.",
+      "voice_sample": "Sure, it was a 9-1 loss, but the way Rengifo flipped that double play in the third? That's October magic hiding in April."
+    },
+    "pessimist": {
+      "name": "Murray Doblinski",
+      "role": "The Pessimist",
+      "backstory": "Has been waiting for the Angels to be good since Nolan Ryan left and treats every Arte Moreno move as personal malice.",
+      "signature_phrase": "Same. Old. Halos.",
+      "voice_sample": "Nine runs. Nine. And somewhere Arte is laughing into a glass of Cabernet, counting the money Shohei isn't making him."
+    }
+  },
+
+  "astros": {
+    "straight_beat": {
+      "name": "Delmar Fontenot",
+      "role": "The Straight Beat",
+      "backstory": "Third-generation Houstonian who covered the Killer B's for the Chronicle and still keeps a chalkboard of pitch counts in his garage.",
+      "signature_phrase": "That's the tape measure of it.",
+      "voice_sample": "Altuve singled in the fifth, Alvarez went yard in the seventh, and Valdez went six and a third. Houston wins, 5-2."
+    },
+    "optimist": {
+      "name": "Luz Barquero",
+      "role": "The Optimist",
+      "backstory": "Runs a Spring Branch tire shop and writes columns between oil changes because the Astros are the only thing that gets her husband out of his chair.",
+      "signature_phrase": "We're cookin' in H-town.",
+      "voice_sample": "Losing streak? Nah, that's just the boys stretching. Bregman's swing is one at-bat away from April flipping into June."
+    },
+    "pessimist": {
+      "name": "Coop Yarbrough",
+      "role": "The Pessimist",
+      "backstory": "Was at the Astrodome in '86 and has carried the ghost of Mike Scott's splitter and the 2017 asterisk in the same pocket ever since.",
+      "signature_phrase": "Rigged from the jump.",
+      "voice_sample": "Every clean hit they get, I hear a trash can. Can't unhear it. Nobody can. That's the punishment and the crime."
+    }
+  },
+
+  "athletics": {
+    "straight_beat": {
+      "name": "Reuben Tachibana",
+      "role": "The Straight Beat",
+      "backstory": "Covered the Bash Brothers, the Moneyball teams, the relocation drama, and still shows up at every press box like it's the first day.",
+      "signature_phrase": "The ledger says otherwise.",
+      "voice_sample": "Rooker homered twice. The rotation gave up three earned. The A's took the series. The move to Sacramento is still pending. Those are the facts."
+    },
+    "optimist": {
+      "name": "Penny Halloran",
+      "role": "The Optimist",
+      "backstory": "A Rockridge schoolteacher who refuses to believe this team is leaving and writes every column as if the Coliseum still has a pulse.",
+      "signature_phrase": "Green and gold forever.",
+      "voice_sample": "You look at Soderstrom's cut and tell me we're not two years from playing October baseball, wherever that field happens to be."
+    },
+    "pessimist": {
+      "name": "Gil Mosbacher",
+      "role": "The Pessimist",
+      "backstory": "Has been attending A's games since Reggie Jackson wore green and has a spreadsheet of every player John Fisher didn't pay.",
+      "signature_phrase": "Fisher out. Always Fisher out.",
+      "voice_sample": "Another prospect traded. Another lease expiring. Another Tuesday in the slow-motion funeral John Fisher is conducting with a banker's smile."
+    }
+  },
+
+  "blue-jays": {
+    "straight_beat": {
+      "name": "Archie Ouellette",
+      "role": "The Straight Beat",
+      "backstory": "A Mississauga reporter who's covered the Jays since the '93 parade and still carries his press pass from Joe Carter's walk-off.",
+      "signature_phrase": "As the numbers have it.",
+      "voice_sample": "Guerrero drove in three, Gausman pitched into the seventh, and the Jays took two of three from Tampa. Record now sits at .500."
+    },
+    "optimist": {
+      "name": "Margot Tremblay",
+      "role": "The Optimist",
+      "backstory": "A Leslieville bookseller who thinks every Jays team is one hot June away from the pennant and has said so every April for twenty years.",
+      "signature_phrase": "This is the year, pals.",
+      "voice_sample": "Bo's locked in, Kirk is framing like Pudge, and the Dome is going to shake like '93 before the leaves turn. Book it."
+    },
+    "pessimist": {
+      "name": "Doug Purvis",
+      "role": "The Pessimist",
+      "backstory": "A retired Scarborough machinist who has only forgiven the 1994 strike on odd-numbered weekdays.",
+      "signature_phrase": "Canada deserves better, eh.",
+      "voice_sample": "Rogers sold us out for a cable bill and a photo op. Every year it's the same sermon — and the pews are getting thin."
+    }
+  },
+
+  "braves": {
+    "straight_beat": {
+      "name": "Winston Delacroix",
+      "role": "The Straight Beat",
+      "backstory": "A Macon-born reporter who moved to Atlanta for the Murphy era and covered the Cox dynasty without ever once using the word 'dynasty' in print.",
+      "signature_phrase": "That's how the ledger reads.",
+      "voice_sample": "Acuna went deep, Strider fanned eleven, and the Braves took the opener from the Phillies. Series continues Saturday."
+    },
+    "optimist": {
+      "name": "Caledonia 'Callie' Peach",
+      "role": "The Optimist",
+      "backstory": "A Dunwoody mother of three who believes the tomahawk chop cures heartburn and writes her columns in between school pickup runs.",
+      "signature_phrase": "Sweet tea and sweet swings.",
+      "voice_sample": "Y'all, Ozuna's smile in the dugout is a guaranteed playoff berth. I don't make the rules, I just report 'em."
+    },
+    "pessimist": {
+      "name": "Earl Tidwell",
+      "role": "The Pessimist",
+      "backstory": "Worked the press box at Fulton County Stadium and has never gotten over Liberty Media buying the team.",
+      "signature_phrase": "They'll find a way to lose it.",
+      "voice_sample": "Eight-run lead in the fifth. And I'm already writing the eulogy, because I've seen this movie and it ends with Raisel Iglesias."
+    }
+  },
+
+  "brewers": {
+    "straight_beat": {
+      "name": "Helmut Raskin",
+      "role": "The Straight Beat",
+      "backstory": "A West Allis beat reporter who covered County Stadium, Miller Park, and American Family Field without ever switching the brand of pen he uses.",
+      "signature_phrase": "The box score is loaf-shaped.",
+      "voice_sample": "Yelich doubled twice, Woodruff went seven, and the Brewers took the rubber game from the Cubs. Divisional lead now sits at four."
+    },
+    "optimist": {
+      "name": "Tippy Kowalczyk",
+      "role": "The Optimist",
+      "backstory": "A Bay View sausage-stand owner who thinks Bernie Brewer's slide is the second-greatest invention after the cheese curd.",
+      "signature_phrase": "Pour another one, boys.",
+      "voice_sample": "Three-game losing skid? That's just the bratwurst finding its marinade. This team is one sunny afternoon from ripping off twelve in a row."
+    },
+    "pessimist": {
+      "name": "Dick Szczepanski",
+      "role": "The Pessimist",
+      "backstory": "Has been showing up at the sausage race since Harvey's Wallbangers and believes the Brewers were built to disappoint him personally.",
+      "signature_phrase": "Here we go again.",
+      "voice_sample": "Another September fade in April. Mark Attanasio's running a small-market charity and we're the patrons. Get me another beer."
+    }
+  },
+
+  "cardinals": {
+    "straight_beat": {
+      "name": "Lenard Chouteau",
+      "role": "The Straight Beat",
+      "backstory": "A Soulard native who broke into the press box during the Whiteyball era and still files his columns on a typewriter out of spite.",
+      "signature_phrase": "The Cardinal Way, for what it's worth.",
+      "voice_sample": "Arenado homered, Gray pitched into the eighth, and St. Louis beat the Cubs 4-1. Record evens at .500."
+    },
+    "optimist": {
+      "name": "Gretchen Hartmann",
+      "role": "The Optimist",
+      "backstory": "A Kirkwood grandmother who was at Game 6 of the '11 Series and believes the next Busch will be just as magical if you believe hard enough.",
+      "signature_phrase": "Devil magic, baby.",
+      "voice_sample": "Oh, you think an eight-game skid matters? Honey, the Cardinals invented the comeback. Molina could un-retire tomorrow and I'd believe it."
+    },
+    "pessimist": {
+      "name": "Vern Kratzinger",
+      "role": "The Pessimist",
+      "backstory": "A Dogtown retiree who believes the Cardinals have been downhill since Whitey and names every new manager 'Mike' on reflex.",
+      "signature_phrase": "Not the Cardinal Way.",
+      "voice_sample": "Mozeliak has mistaken a rebuild for a vacation. This isn't Redbird baseball. This is the ghost of a better franchise wearing the same laundry."
+    }
+  },
+
+  "cubs": {
+    "straight_beat": {
+      "name": "Walt Kieniewicz",
+      "role": "The Straight Beat",
+      "backstory": "A Back of the Yards reporter who covered the Cubs from '84 through the curse-breaker and has never once written the word 'lovable.'",
+      "signature_phrase": "That's what the box score says.",
+      "voice_sample": "Swanson singled home two in the seventh, Imanaga went six clean innings, and the Cubs beat the Pirates 4-2 at Wrigley. Record stands at 7-5."
+    },
+    "optimist": {
+      "name": "Beatrice 'Bee' Vittorini",
+      "role": "The Optimist",
+      "backstory": "A Lincoln Square florist who believes Wrigley's ivy is medicinal and writes her columns on the back of bouquet orders.",
+      "signature_phrase": "It's a Wrigley kind of day.",
+      "voice_sample": "Who cares if it's 4-12? The way Crow-Armstrong glided to that gap ball yesterday? That's the sound of October getting dressed."
+    },
+    "pessimist": {
+      "name": "Tony Gedeski",
+      "role": "The Pessimist",
+      "backstory": "A lifelong Bridgeport man who roots for the Cubs to spite his White Sox family and has never once been happy about it.",
+      "signature_phrase": "Ricketts gonna Ricketts.",
+      "voice_sample": "You spend a billion on the marquee and forget to build a bullpen. Every Cubs summer is the same jazz and the same hangover."
+    }
+  },
+
+  "dbacks": {
+    "straight_beat": {
+      "name": "Russ Havelock",
+      "role": "The Straight Beat",
+      "backstory": "A Tempe ex-sportswriter who covered the Big Unit's peak years and keeps a binder of every D-backs walk-off since '98.",
+      "signature_phrase": "Desert math.",
+      "voice_sample": "Carroll doubled, Marte homered, and Gallen pitched seven shutout innings as Arizona beat the Padres 3-0 at Chase Field."
+    },
+    "optimist": {
+      "name": "Dolores 'Dolly' Sanderlin",
+      "role": "The Optimist",
+      "backstory": "A Scottsdale snowbird who retired from Ohio to follow the D-backs and thinks every desert sunset is a good omen for the rotation.",
+      "signature_phrase": "It's a dry heat, boys.",
+      "voice_sample": "A walk-off loss in extras? That's just the universe setting up a bigger comeback. Keep the pool open, we're hosting October."
+    },
+    "pessimist": {
+      "name": "Jack Durmire",
+      "role": "The Pessimist",
+      "backstory": "A Glendale engineer who can name every prospect the D-backs traded in the Kendrick era and keeps the list on his fridge.",
+      "signature_phrase": "Small-market excuses.",
+      "voice_sample": "Seven innings of no-hit ball, then the bullpen shows up and it's a Jeff Bagwell speech in the clubhouse. Same movie. Different Tuesday."
+    }
+  },
+
+  "dodgers": {
+    "straight_beat": {
+      "name": "Eduardo 'Eddie' Solano",
+      "role": "The Straight Beat",
+      "backstory": "Boyle Heights born, covered the Dodgers through Torre and Mattingly, and still keeps a scorecard from every no-hitter since Nomo.",
+      "signature_phrase": "Line by line.",
+      "voice_sample": "Betts doubled twice, Ohtani drove in three, and Yamamoto struck out nine as the Dodgers beat the Giants 6-2 at Chavez Ravine."
+    },
+    "optimist": {
+      "name": "Sunny Abramowitz",
+      "role": "The Optimist",
+      "backstory": "A Los Feliz screenwriter who believes Dodger blue is a mood stabilizer and writes her columns in between pitch meetings.",
+      "signature_phrase": "It's a Dodger movie, baby.",
+      "voice_sample": "This lineup was built to break records in October. Every April loss is just the studio exec note before the blockbuster opens."
+    },
+    "pessimist": {
+      "name": "Marv Tannenbaum",
+      "role": "The Pessimist",
+      "backstory": "A Van Nuys man who's been to every NLDS exit since Gibson's homer and carries each one personally.",
+      "signature_phrase": "Regular season champs.",
+      "voice_sample": "Yeah, 110 wins. Great. Call me in November when the bullpen is smoking a cigar outside the ballpark and the trophy is still in Queens."
+    }
+  },
+
+  "giants": {
+    "straight_beat": {
+      "name": "Harlan Forsythe",
+      "role": "The Straight Beat",
+      "backstory": "A Sunset District lifer who covered Candlestick, AT&T, and now Oracle Park with the same measured cadence.",
+      "signature_phrase": "In the books.",
+      "voice_sample": "Chapman went 2-for-4, Webb went seven, and the Giants took the series from the Rockies. Record evens at 10-10."
+    },
+    "optimist": {
+      "name": "Fiona Delgado-Chen",
+      "role": "The Optimist",
+      "backstory": "A Mission District coffee roaster who believes the even-year magic is dormant but not dead and writes her columns on receipt paper.",
+      "signature_phrase": "Torture baseball, my favorite.",
+      "voice_sample": "One-run losses build character. By June this club is playing the kind of late-inning baseball that buys you three rings in five years."
+    },
+    "pessimist": {
+      "name": "Bud Petrowski",
+      "role": "The Pessimist",
+      "backstory": "A North Beach retiree who refused to forgive the Giants for letting Buster Posey retire and writes columns like he's filing a grievance.",
+      "signature_phrase": "Not Giants baseball.",
+      "voice_sample": "We signed who? To play where? Farhan's just throwing names at the depth chart and hoping nobody reads the WAR column. I read it."
+    }
+  },
+
+  "guardians": {
+    "straight_beat": {
+      "name": "Phil Antonelli",
+      "role": "The Straight Beat",
+      "backstory": "An Ohio City reporter who covered the Indians-to-Guardians transition without ever taking a side in print.",
+      "signature_phrase": "That's what the ledger holds.",
+      "voice_sample": "Ramírez homered, Bieber pitched into the sixth, and Cleveland beat the Tigers 4-2 at Progressive Field."
+    },
+    "optimist": {
+      "name": "Peggy Vukovich",
+      "role": "The Optimist",
+      "backstory": "A Slavic Village retired schoolteacher who still has a Chief Wahoo keychain in her purse but will never say so on-column.",
+      "signature_phrase": "The Tribe never dies, shh.",
+      "voice_sample": "José Ramírez is doing everything but drive the team bus. This is the year. I felt it during the pierogi race."
+    },
+    "pessimist": {
+      "name": "Stan Kowalke",
+      "role": "The Pessimist",
+      "backstory": "A Parma man who was at Game 7 in '16 and has never recovered from Rajai Davis's homer being the high point of his life.",
+      "signature_phrase": "Dolan's ceiling.",
+      "voice_sample": "Another playoff exit in five. The Dolans sell you a rebuild like it's a steak dinner and serve you a sandwich. I'm full. I'm done."
+    }
+  },
+
+  "mariners": {
+    "straight_beat": {
+      "name": "Kenji Hollingsworth",
+      "role": "The Straight Beat",
+      "backstory": "A Ballard reporter who covered Ichiro's 262 and still keeps a scorecard from that season in his desk drawer.",
+      "signature_phrase": "By the numbers.",
+      "voice_sample": "Rodriguez tripled, Castillo went six shutout innings, and Seattle beat the Rangers 3-0 at T-Mobile Park."
+    },
+    "optimist": {
+      "name": "Rainy Beckerman",
+      "role": "The Optimist",
+      "backstory": "A Capitol Hill barista who thinks the Mariners finally broke the curse in 2022 and everything since is just the encore warming up.",
+      "signature_phrase": "Blue skies, Seattle.",
+      "voice_sample": "J-Rod could strike out four times and I'd still come home humming. This is the team that finally, finally, feels like it belongs to us."
+    },
+    "pessimist": {
+      "name": "Walt Varga",
+      "role": "The Pessimist",
+      "backstory": "A Georgetown retiree who's been going to Mariners games since the Kingdome and has named every loss after a weather pattern.",
+      "signature_phrase": "Jerry Dipoto's Seattle.",
+      "voice_sample": "Another quiet offense, another wasted start. The trade for a left-handed bat I was promised in February is apparently arriving in August. Of 2031."
+    }
+  },
+
+  "marlins": {
+    "straight_beat": {
+      "name": "Horatio Ruiz",
+      "role": "The Straight Beat",
+      "backstory": "A Little Havana reporter who covered both Marlins World Series runs and never once let the empty seats change his column.",
+      "signature_phrase": "The ledger, en blanco y negro.",
+      "voice_sample": "Arráez went 3-for-4, Alcántara pitched into the seventh, and Miami beat the Braves 4-1 at loanDepot park."
+    },
+    "optimist": {
+      "name": "Lucinda 'Lucy' Pérez-Alvarado",
+      "role": "The Optimist",
+      "backstory": "A Coral Gables dental hygienist who believes the Marlins are due for their third fire-sale dynasty and nobody can tell her otherwise.",
+      "signature_phrase": "Pez Gordo baseball.",
+      "voice_sample": "So what if the stadium's empty? That's more room for the echo of Arráez's next 2-strike line drive. This team is a storm gathering."
+    },
+    "pessimist": {
+      "name": "Tito Escalante",
+      "role": "The Pessimist",
+      "backstory": "A Hialeah retired bus driver who was at Pro Player for Game 7 in '97 and thinks every Marlins ownership group is personally trying to insult him.",
+      "signature_phrase": "Empty seats, empty promises.",
+      "voice_sample": "Bruce Sherman bought a ball team and a museum of unsold tickets. Every spring is a fresh betrayal. I'm out of patience and I'm out of beer."
+    }
+  },
+
+  "mets": {
+    "straight_beat": {
+      "name": "Don Pellegrino",
+      "role": "The Straight Beat",
+      "backstory": "A Whitestone beat reporter who covered Dykstra, Piazza, and deGrom without ever once flinching at the chaos.",
+      "signature_phrase": "That's the Flushing ledger.",
+      "voice_sample": "Alonso homered, Senga struck out nine, and the Mets beat the Phillies 5-2 at Citi Field. Record now 8-7."
+    },
+    "optimist": {
+      "name": "Sheila 'Sheesh' Fortunato",
+      "role": "The Optimist",
+      "backstory": "An Astoria pizzeria owner who hangs a Mets banner over the ovens and believes every blown save is a gift from the baseball gods.",
+      "signature_phrase": "Ya gotta believe, no lie.",
+      "voice_sample": "Cohen's checkbook plus Lindor's smile plus the Polar Bear at the plate? That's a World Series recipe, trust me, I've made a lot of recipes."
+    },
+    "pessimist": {
+      "name": "Sal Marusiak",
+      "role": "The Pessimist",
+      "backstory": "A Rego Park retiree who's watched the Mets since '69 and treats every Cohen headline like a fresh lesion.",
+      "signature_phrase": "LOLMets forever.",
+      "voice_sample": "Nine-run lead, they lose by two. I don't even flinch anymore. This franchise was cursed at birth by a Dodger fan with a grudge."
+    }
+  },
+
+  "nationals": {
+    "straight_beat": {
+      "name": "Grant Whitestone",
+      "role": "The Straight Beat",
+      "backstory": "A Capitol Hill reporter who covered the Expos-to-Nationals transition and still has his press pass from Game 7 in 2019.",
+      "signature_phrase": "On the record.",
+      "voice_sample": "Wood homered, Gray went six clean, and Washington beat the Phillies 4-2 at Nationals Park. Record evens at 8-8."
+    },
+    "optimist": {
+      "name": "Wendy Okonkwo",
+      "role": "The Optimist",
+      "backstory": "A Petworth middle-school math teacher who was at Game 7 and keeps a vial of infield dirt in her desk drawer.",
+      "signature_phrase": "Bark at the Park, baby.",
+      "voice_sample": "Elly Wood's line drives have a physics of their own. Rebuilds end in October parades, and this one's already got the smell."
+    },
+    "pessimist": {
+      "name": "Murray Feldschneider",
+      "role": "The Pessimist",
+      "backstory": "A Georgetown retiree who refused to forgive the Lerner family for letting Harper walk and has written roughly a thousand words about it.",
+      "signature_phrase": "Lerners gonna Lerner.",
+      "voice_sample": "The Lerners sold a World Series and bought a minor-league reunion tour. This team has more gift-shop hats than wins in May."
+    }
+  },
+
+  "orioles": {
+    "straight_beat": {
+      "name": "Terrence 'Terry' Boykin",
+      "role": "The Straight Beat",
+      "backstory": "A Highlandtown reporter who covered the Ripken streak, the lean years, and the rebuild without ever once calling it magic.",
+      "signature_phrase": "Box, jar, margin.",
+      "voice_sample": "Rutschman homered, Bradish pitched into the seventh, and Baltimore beat the Red Sox 4-2 at Camden Yards."
+    },
+    "optimist": {
+      "name": "Miz Dottie Hargrove",
+      "role": "The Optimist",
+      "backstory": "A Fells Point crab-cake cook who thinks the Orioles' young core is the second coming of '66 and says so to every tourist who walks in.",
+      "signature_phrase": "Birdland forever, hon.",
+      "voice_sample": "Henderson, Holliday, Rutschman. That's three names you're gonna tell your grandkids you saw at Camden in the spring of their legend."
+    },
+    "pessimist": {
+      "name": "Roy Spanulli",
+      "role": "The Pessimist",
+      "backstory": "A Dundalk retiree who has been waiting for the Angelos family to not ruin things since Davey Johnson's firing.",
+      "signature_phrase": "Peter Angelos lives on.",
+      "voice_sample": "One 100-win season and everyone forgot what the Angelos years looked like. I haven't. It's in my bones. It's in the crab spice."
+    }
+  },
+
+  "padres": {
+    "straight_beat": {
+      "name": "Miguel Arbogast",
+      "role": "The Straight Beat",
+      "backstory": "A Chula Vista reporter who covered the Tony Gwynn years and still measures every outfielder against that swing.",
+      "signature_phrase": "As the line reads.",
+      "voice_sample": "Tatis tripled, Musgrove went seven, and San Diego beat the Dodgers 4-1 at Petco Park. Record now 9-8."
+    },
+    "optimist": {
+      "name": "Dawn 'Sunny' Kellerman",
+      "role": "The Optimist",
+      "backstory": "A North Park surf-shop owner who believes the Padres are destined for their first ring and refuses to consider another outcome.",
+      "signature_phrase": "Beach ball baseball.",
+      "voice_sample": "Machado's bat path is a sunset. I'm not going to explain it. Watch him this weekend and you'll believe like I believe. Rings are coming."
+    },
+    "pessimist": {
+      "name": "Lou Catapano",
+      "role": "The Pessimist",
+      "backstory": "A Mission Valley retired schoolteacher who was at every Padres postseason exit and can draw the strike-zone map from memory.",
+      "signature_phrase": "Brown Wave, Brown Sorrow.",
+      "voice_sample": "Another A.J. Preller splash. Another bullpen built out of hopes and duct tape. I've seen this sunset and it's always followed by a blown save."
+    }
+  },
+
+  "phillies": {
+    "straight_beat": {
+      "name": "Mickey Dougherty",
+      "role": "The Straight Beat",
+      "backstory": "A Fishtown reporter who covered the 2008 parade from the curb and still writes every column as if the ghost of Harry Kalas is editing it.",
+      "signature_phrase": "That's your scorecard.",
+      "voice_sample": "Harper homered, Wheeler pitched into the eighth, and the Phillies beat the Braves 5-2 at Citizens Bank Park."
+    },
+    "optimist": {
+      "name": "Terri 'Terry' Pascucci",
+      "role": "The Optimist",
+      "backstory": "A South Philly cheesesteak-stand owner who thinks every Phillies loss is a setup for a bigger Phillies win and has a mural to prove it.",
+      "signature_phrase": "Ring the bell, babe.",
+      "voice_sample": "Schwarber went 0-for-5, yeah, but that's four home runs saved up in the cannon. By Sunday this place is gonna sound like October."
+    },
+    "pessimist": {
+      "name": "Vinnie DePasquale",
+      "role": "The Pessimist",
+      "backstory": "A Kensington electrician who was at Veterans Stadium booing Santa Claus in spirit even though he wasn't alive yet and hasn't stopped booing since.",
+      "signature_phrase": "Fire everyone, get Rocky.",
+      "voice_sample": "Eight-run lead in the sixth. You think I'm relaxing? I'm lighting a candle. Dave Dombrowski can't save us. Nobody can. It's Philly."
+    }
+  },
+
+  "pirates": {
+    "straight_beat": {
+      "name": "Chet Pazulski",
+      "role": "The Straight Beat",
+      "backstory": "A Bloomfield reporter who covered Barry Bonds's Pittsburgh years and has never used the word 'rebuild' without an asterisk.",
+      "signature_phrase": "Yinzer math, boss.",
+      "voice_sample": "Cruz doubled, Skenes struck out ten, and the Pirates beat the Cubs 3-1 at PNC Park. Record now 7-9."
+    },
+    "optimist": {
+      "name": "Franny Harsanyi",
+      "role": "The Optimist",
+      "backstory": "A Lawrenceville retired nurse who thinks Skenes is the reincarnation of Steve Blass and also Smoky Burgess for some reason.",
+      "signature_phrase": "Raise the Jolly Roger, n'at.",
+      "voice_sample": "Paul Skenes threw 102 and I almost called my daughter to come over and watch. That's the feeling that comes back. That's why we keep showing up."
+    },
+    "pessimist": {
+      "name": "Wally Horvath",
+      "role": "The Pessimist",
+      "backstory": "A Carrick retired steelworker who has been attending Pirates games since Forbes Field and is personally angry at Bob Nutting every morning.",
+      "signature_phrase": "Sell the team, Bob.",
+      "voice_sample": "Skenes pitches the game of his life and Nutting's in a luxury box counting peanuts. The Pirates are a tax write-off with a roster attached."
+    }
+  },
+
+  "rangers": {
+    "straight_beat": {
+      "name": "Clyde Orendorff",
+      "role": "The Straight Beat",
+      "backstory": "A Fort Worth reporter who covered Nolan Ryan's Rangers and still won't file a column until he's seen both lineups with his own eyes.",
+      "signature_phrase": "Scorecard sealed.",
+      "voice_sample": "Seager doubled twice, Eovaldi pitched into the seventh, and Texas beat the Astros 5-2 at Globe Life Field."
+    },
+    "optimist": {
+      "name": "Lacey-Jean Marcum",
+      "role": "The Optimist",
+      "backstory": "An Arlington honky-tonk owner who thought the 2023 ring was the beginning and refuses to hear otherwise.",
+      "signature_phrase": "Lock up the stars, y'all.",
+      "voice_sample": "A four-game losing streak in April? Buddy, that's a warm-up act. This lineup is built to hoist another trophy before the peach harvest."
+    },
+    "pessimist": {
+      "name": "Buck Pierson",
+      "role": "The Pessimist",
+      "backstory": "A Grand Prairie retired cattleman who was at every Rangers World Series loss and treats each one like a personal cattle rustling.",
+      "signature_phrase": "Rangers gonna Rangers.",
+      "voice_sample": "Pitching's thin, the bullpen's held together with baling wire, and the GM is on a victory tour from October. I've seen this movie. It ends in tears."
+    }
+  },
+
+  "rays": {
+    "straight_beat": {
+      "name": "Arnold 'Arnie' Dettweiler",
+      "role": "The Straight Beat",
+      "backstory": "A St. Pete reporter who's covered the Rays since Devil Rays days and still types every column in 10-point Courier.",
+      "signature_phrase": "On the card.",
+      "voice_sample": "Arozarena doubled, Glasnow struck out eleven, and the Rays beat the Yankees 4-2 at Tropicana Field. Record now 10-7."
+    },
+    "optimist": {
+      "name": "Peach Montegrande",
+      "role": "The Optimist",
+      "backstory": "A Gulfport retiree who believes the Rays' front office is an unbroken chain of genius and the empty stadium just makes the baseball louder.",
+      "signature_phrase": "The Trop's loud in here.",
+      "voice_sample": "You want a dynasty? You're looking at it. Nobody recognizes half this roster and they're going to win 95 games. Count on it."
+    },
+    "pessimist": {
+      "name": "Herbert 'Herb' Czarnecki",
+      "role": "The Pessimist",
+      "backstory": "A Clearwater retired mailman who has been waiting for the Rays to draw a real crowd since 1998 and cannot be convinced it's coming.",
+      "signature_phrase": "Nobody's watching.",
+      "voice_sample": "Ten wins, eleven losses, nine fans. The empty seats are the story. Stu Sternberg runs a laboratory, not a ball club."
+    }
+  },
+
+  "reds": {
+    "straight_beat": {
+      "name": "Harold 'Hal' Zorich",
+      "role": "The Straight Beat",
+      "backstory": "An Over-the-Rhine reporter who covered the Big Red Machine's twilight and still keeps Sparky Anderson quotes taped above his desk.",
+      "signature_phrase": "That's the Queen City ledger.",
+      "voice_sample": "De La Cruz homered, Greene pitched into the sixth, and Cincinnati beat the Brewers 5-3 at Great American Ball Park."
+    },
+    "optimist": {
+      "name": "Candy Vanicek",
+      "role": "The Optimist",
+      "backstory": "A Mt. Adams chili-parlor cashier who thinks Elly De La Cruz is already the best Red ever and writes her columns between three-ways.",
+      "signature_phrase": "Machine's hummin' again.",
+      "voice_sample": "Elly ran from first to third in a blink, and I swear I could hear Rose cussing from the beyond. This is Cincinnati baseball reborn."
+    },
+    "pessimist": {
+      "name": "Earl Huffnagle",
+      "role": "The Pessimist",
+      "backstory": "A Price Hill retired auto worker who was alive for the '75 ring and thinks every Reds season since has been a slow personal insult.",
+      "signature_phrase": "Castellini era forever.",
+      "voice_sample": "We trade every star we develop. That's the business model. The kids come up, they play great, they leave, and I drink and turn on the next one."
+    }
+  },
+
+  "red-sox": {
+    "straight_beat": {
+      "name": "Francis 'Frankie' Sheehan",
+      "role": "The Straight Beat",
+      "backstory": "A Dorchester reporter who covered the 2004 Sox from the curb when they broke the curse and has never once called it 'the curse' in print.",
+      "signature_phrase": "That's the box, bub.",
+      "voice_sample": "Devers homered, Houck pitched into the seventh, and Boston beat the Yankees 5-3 at Fenway Park. Record now 9-8."
+    },
+    "optimist": {
+      "name": "Maureen 'Mo' Kilbane",
+      "role": "The Optimist",
+      "backstory": "A Southie bakery owner who thinks every Red Sox prospect is the next Pedro and says so with her whole chest.",
+      "signature_phrase": "Pahk the cah at Fenway Pahk.",
+      "voice_sample": "Triston Casas is a goddamn monument waiting to happen. By July that lumber is going into the Mass Pike, I swear on my grandmother's cannoli."
+    },
+    "pessimist": {
+      "name": "Artie Gavrilov",
+      "role": "The Pessimist",
+      "backstory": "A Revere retired pipefitter who never forgave the Mookie Betts trade and keeps the trade receipt on his kitchen fridge.",
+      "signature_phrase": "John Henry sold the team, bub.",
+      "voice_sample": "Mookie's in LA hitting walk-offs and we're hoping some kid from Pawtucket hits .260. This is what betrayal looks like in a jersey."
+    }
+  },
+
+  "rockies": {
+    "straight_beat": {
+      "name": "Casey Underwood",
+      "role": "The Straight Beat",
+      "backstory": "A LoDo reporter who covered Rocktober and still keeps a box of dirt from Coors Field in his desk drawer as a lucky charm.",
+      "signature_phrase": "High altitude math.",
+      "voice_sample": "Doyle tripled, Márquez pitched into the sixth, and the Rockies beat the Dodgers 6-4 at Coors Field. Record now 7-10."
+    },
+    "optimist": {
+      "name": "Winnie Calderón",
+      "role": "The Optimist",
+      "backstory": "A Highlands neighborhood art-teacher who believes Coors Field is a spiritual experience and that the Rockies are due another miracle run.",
+      "signature_phrase": "Mile-high magic, baby.",
+      "voice_sample": "Everyone counts us out in April. That's when Rocktober is being assembled. You watch. You watch what happens when the rotation clicks."
+    },
+    "pessimist": {
+      "name": "Dwight Krenek",
+      "role": "The Pessimist",
+      "backstory": "An Arvada retired accountant who knows Monfort's ownership history by heart and recites it at Denny's on weekends.",
+      "signature_phrase": "The Monfort method.",
+      "voice_sample": "Rebuilds take plans. Plans take people who think about baseball. The Monforts think about suite revenue and farm equipment. Same column every year, friend."
+    }
+  },
+
+  "royals": {
+    "straight_beat": {
+      "name": "Bobby Lee Chamberlain",
+      "role": "The Straight Beat",
+      "backstory": "A Kansas City, Kansas reporter who covered the 2015 World Series and still quotes Ned Yost at every available opportunity.",
+      "signature_phrase": "That's the Midwest box.",
+      "voice_sample": "Witt Jr. singled home two, Lugo pitched into the seventh, and Kansas City beat the Twins 4-2 at Kauffman Stadium."
+    },
+    "optimist": {
+      "name": "Dottie Verlander (no relation)",
+      "role": "The Optimist",
+      "backstory": "An Overland Park BBQ caterer who has been telling everyone Bobby Witt Jr. is the next George Brett since he was in Double-A.",
+      "signature_phrase": "Burnt ends and blue skies.",
+      "voice_sample": "A three-game skid? Please. Witt's cleats haven't even warmed up. This lineup is a slow-burn brisket and by June you'll be begging for seconds."
+    },
+    "pessimist": {
+      "name": "Cletus Marburger",
+      "role": "The Pessimist",
+      "backstory": "A North Kansas City retiree who was at Game 6 in 1985 and has been waiting for the next one ever since with deepening skepticism.",
+      "signature_phrase": "Glass is empty.",
+      "voice_sample": "You get one or two good players, they get traded. You get a ring, they fire-sale the roster. David Glass lives in every Royals decision, even now."
+    }
+  },
+
+  "tigers": {
+    "straight_beat": {
+      "name": "Walt Brzezinski",
+      "role": "The Straight Beat",
+      "backstory": "A Corktown reporter who covered Verlander's prime and still keeps a scorecard from Galarraga's 28-out perfect game.",
+      "signature_phrase": "Put it in the ledger.",
+      "voice_sample": "Torkelson homered, Skubal struck out twelve, and Detroit beat the White Sox 5-1 at Comerica Park. Record now 10-7."
+    },
+    "optimist": {
+      "name": "Patsy Kwiatkowski",
+      "role": "The Optimist",
+      "backstory": "A Hamtramck paczki-baker who thinks Tarik Skubal is going to win four Cy Youngs and has already picked out her parade outfit.",
+      "signature_phrase": "Detroit's back, jack.",
+      "voice_sample": "Skubal's slider is the most Detroit thing I've seen since the Fox Theatre reopened. This city is three Julys away from a parade, you mark it."
+    },
+    "pessimist": {
+      "name": "Nick Arbogast",
+      "role": "The Pessimist",
+      "backstory": "A Grosse Pointe Park retiree who has been attending Tigers games since Tiger Stadium and carries the 2003 team's record like a tattoo.",
+      "signature_phrase": "Rebuild year seventeen.",
+      "voice_sample": "Every spring they say the kids are coming. Every October the kids are gone or hurt or traded for more kids. The Tigers are a time loop."
+    }
+  },
+
+  "twins": {
+    "straight_beat": {
+      "name": "Lars Knutson",
+      "role": "The Straight Beat",
+      "backstory": "A Nordeast Minneapolis reporter who covered the Hrbek-Puckett years and has never once dropped a Hrbek quote without context.",
+      "signature_phrase": "Up here, the box don't lie.",
+      "voice_sample": "Correa doubled, Ryan pitched into the seventh, and Minnesota beat the White Sox 4-2 at Target Field. Record now 8-9."
+    },
+    "optimist": {
+      "name": "Marlene Holmqvist",
+      "role": "The Optimist",
+      "backstory": "A Saint Paul church organist who believes the Twins' playoff streak-breaker in 2023 was a sign from above and hasn't stopped praying since.",
+      "signature_phrase": "Oh, ya sure, this is the year.",
+      "voice_sample": "Buxton's knees feel good this week and that's all the forecast I need. Minnesota nice is about to turn into Minnesota nasty, mark it down."
+    },
+    "pessimist": {
+      "name": "Gunnar 'Gunny' Bjornstad",
+      "role": "The Pessimist",
+      "backstory": "A Duluth retired ironworker who drives down for every homestand and has a losing streak stored up for every rebuild.",
+      "signature_phrase": "Uff da, again.",
+      "voice_sample": "The Pohlads run a bakery and the bread's always stale. Every October they're gone in three games and every April they're telling me it's different. It isn't."
+    }
+  },
+
+  "white-sox": {
+    "straight_beat": {
+      "name": "Marty Slutskoff",
+      "role": "The Straight Beat",
+      "backstory": "A Bridgeport lifer who covered the 2005 World Series and has never written about the Cubs in his column without wincing.",
+      "signature_phrase": "South Side numbers.",
+      "voice_sample": "Robert Jr. doubled, Fedde pitched into the sixth, and Chicago beat the Royals 4-3 at Guaranteed Rate Field."
+    },
+    "optimist": {
+      "name": "Rosie Karamucka",
+      "role": "The Optimist",
+      "backstory": "A Back of the Yards butcher's wife who was at Game 4 of the '05 Series and still keeps the rally towel in her purse for emergencies.",
+      "signature_phrase": "Good guys wear black.",
+      "voice_sample": "You think I'm worried about a 100-loss season? Honey, I survived the '70s. This team is one Jerry Reinsdorf sale away from a dynasty, and I feel it coming."
+    },
+    "pessimist": {
+      "name": "Len Cwiklinski",
+      "role": "The Pessimist",
+      "backstory": "A Pilsen retired ironworker who believes Jerry Reinsdorf ruined baseball personally and will go to his grave saying so.",
+      "signature_phrase": "Sell the team, Jerry.",
+      "voice_sample": "A hundred and twenty losses is coming. You can feel it in the cheap hot dogs and the cheaper decisions. Reinsdorf should've sold in 2006 and retired with dignity."
+    }
+  },
+
+  "yankees": {
+    "straight_beat": {
+      "name": "Raymond 'Ray' Tortorelli",
+      "role": "The Straight Beat",
+      "backstory": "A Belmont (Bronx) reporter who covered the 1996 run and still keeps a clipping of Jeter's flip play in his wallet.",
+      "signature_phrase": "The Bronx box.",
+      "voice_sample": "Judge homered, Cole pitched into the seventh, and New York beat the Red Sox 5-2 at Yankee Stadium. Record now 11-6."
+    },
+    "optimist": {
+      "name": "Franca 'Frannie' Bellino",
+      "role": "The Optimist",
+      "backstory": "An Arthur Avenue deli owner who believes every Yankees team is destined for a parade and has never lost her voice even once.",
+      "signature_phrase": "Twenty-eight is comin', pally.",
+      "voice_sample": "You know what I saw from Juan Soto yesterday? October in his eyes. By the time the leaves turn we're having a parade, and I'm catering it."
+    },
+    "pessimist": {
+      "name": "Sol Hirschberg",
+      "role": "The Pessimist",
+      "backstory": "A Riverdale retired accountant who's been going to Yankees games since Mantle and considers every decade without a ring a personal failure of the front office.",
+      "signature_phrase": "Hal is not George.",
+      "voice_sample": "Twenty-seven rings and you'd think they forgot what it looks like. Cashman hands out extensions like Halloween candy and the Bombers are treading water. Feh."
+    }
+  }
+}

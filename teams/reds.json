@@ -55,5 +55,28 @@
     "158": "Brewers",
     "112": "Cubs",
     "113": "Reds"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Harold 'Hal' Zorich",
+      "role": "The Straight Beat",
+      "backstory": "An Over-the-Rhine reporter who covered the Big Red Machine's twilight and still keeps Sparky Anderson quotes taped above his desk.",
+      "signature_phrase": "That's the Queen City ledger.",
+      "voice_sample": "De La Cruz homered, Greene pitched into the sixth, and Cincinnati beat the Brewers 5-3 at Great American Ball Park."
+    },
+    {
+      "name": "Candy Vanicek",
+      "role": "The Optimist",
+      "backstory": "A Mt. Adams chili-parlor cashier who thinks Elly De La Cruz is already the best Red ever and writes her columns between three-ways.",
+      "signature_phrase": "Machine's hummin' again.",
+      "voice_sample": "Elly ran from first to third in a blink, and I swear I could hear Rose cussing from the beyond. This is Cincinnati baseball reborn."
+    },
+    {
+      "name": "Earl Huffnagle",
+      "role": "The Pessimist",
+      "backstory": "A Price Hill retired auto worker who was alive for the '75 ring and thinks every Reds season since has been a slow personal insult.",
+      "signature_phrase": "Castellini era forever.",
+      "voice_sample": "We trade every star we develop. That's the business model. The kids come up, they play great, they leave, and I drink and turn on the next one."
+    }
+  ]
 }

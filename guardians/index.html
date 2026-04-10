@@ -321,6 +321,29 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .transac-badge.rcl{color:var(--team-primary-hi);border-color:var(--team-primary)}
 .transac-desc{font-family:var(--body);font-size:12px;color:var(--paper-dim);line-height:1.4}
 @media(max-width:640px){.transac-item{flex-direction:column;gap:4px}.transac-date{min-width:auto}}
+
+/* ===== Columnists — three personas per team ===== */
+.columnists{position:relative;z-index:2;max-width:var(--maxw);margin:14px auto 22px;padding:0 20px}
+.columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
+.columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
+.columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
+.columnists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.column{background:var(--ink-2);border:1px solid var(--rule);border-top:3px solid var(--team-primary);border-radius:3px;padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;min-height:260px}
+.column[data-role="straight_beat"]{border-top-color:var(--paper)}
+.column[data-role="optimist"]{border-top-color:var(--gold)}
+.column[data-role="pessimist"]{border-top-color:var(--team-accent)}
+.column-byline{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
+.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1}
+.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold)}
+.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim)}
+.column-body p{margin:0 0 10px}
+.column-body p:last-child{margin-bottom:0}
+.column-body .column-off{color:var(--paper-mute);font-size:13px}
+@media(max-width:900px){.columnists-grid{grid-template-columns:1fr;gap:14px}.column{min-height:auto}}
+body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
+body.theme-paper .column-name{color:var(--ink)}
+body.theme-paper .column-body{color:#3a3626}
+body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -351,7 +374,16 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><article class="column" data-role="straight_beat"><div class="column-byline"><span class="column-name">Phil Antonelli</span><span class="column-role">The Straight Beat</span></div><div class="column-body"><p class="column-off"><em>Phil Antonelli is off today.</em></p></div></article><article class="column" data-role="optimist"><div class="column-byline"><span class="column-name">Peggy Vukovich</span><span class="column-role">The Optimist</span></div><div class="column-body"><p>The Guardians lost yesterday, but let’s not pretend that loss is the end of the story. No, the Tribe never dies, shh. Not when there’s still 100 games left, not when the heart of this team is still beating louder than the Royals’ drum. You saw it in the way José Ramírez chased every pitch, the way his bat stayed hot even when the scoreboard said otherwise. This is the year. I felt it during the pierogi race.</p><p>Sure, the Royals handed them a 10-2 drubbing, but let’s not forget what happened in the seventh inning. That solo home run by Owen Miller? That</p></div></article><article class="column" data-role="pessimist"><div class="column-byline"><span class="column-name">Stan Kowalke</span><span class="column-role">The Pessimist</span></div><div class="column-body"><p>The Guardians lost again. Not just lost, but lost in a way that makes you want to throw your coffee across the room. Kansas City, of all teams, handed us our eighth straight defeat, and now we’re 8-5, clinging to the AL Central like a lifeline we’re not sure we want to hold onto. Dolan’s ceiling? Let’s not talk about that. Let’s talk about how we’re still in this race, and how that’s a damn miracle.</p><p>The Royals didn’t just beat us; they exposed us. Their pitching staff, which looked like it might implode last season, has found its groove. Meanwhile, our own hurlers? They’re either injured, struggling, or both. The bullpen, that supposed fortress, looked like a sieve. You know what’s funny? We’ve had the same bullpen issues for years, and yet Dolan keeps signing free agents who can’t throw a strike. Maybe the ceiling is just a fancy word for “disaster in disguise.”</p><p>Let’s pivot to the manager. Is there a reason why we’re still in this race? Because the front office is too busy drafting prospects to realize we’re already in a hole? Greg Budzinski’s lineup yesterday was a masterclass in “let’s just hit the ball into the gap.” We had runners in scoring position, and we couldn’t capitalize. It’s not just the bats; it’s the way we’re managing the game. You can’t win a playoff race by playing .500 ball. You</p></div></article></div><script>(function(){
+  var grid = document.currentScript && document.currentScript.previousElementSibling;
+  if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
+  var kids = Array.prototype.slice.call(grid.children);
+  for (var i = kids.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = kids[i]; kids[i] = kids[j]; kids[j] = tmp;
+  }
+  kids.forEach(function(k){ grid.appendChild(k); });
+})();</script></section>
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -427,9 +459,9 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-venue">Truist Park </div>
         <div class="nx-meta"><span class="nx-opp-rec">ATL: 8-5, 2nd NL East (W2)</span></div>
         <div class="nx-pitcher"><span class="nx-side">Guardians</span> Slade Cecconi<div class="nx-pline">5.23 ERA &middot; 0-1 &middot; 10.1 IP &middot; 11 K &middot; 1.06 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">ATL</span> Bryce Elder<div class="nx-pline">0.00 ERA &middot; 1-1 &middot; 13.0 IP &middot; 13 K &middot; 0.85 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">LF</span> Kwan</span><span class="lu-slot"><span class="lu-pos">RF</span> DeLauter</span><span class="lu-slot"><span class="lu-pos">3B</span> Ramírez</span><span class="lu-slot"><span class="lu-pos">1B</span> Manzardo</span><span class="lu-slot"><span class="lu-pos">1B</span> Hoskins</span><span class="lu-slot"><span class="lu-pos">SS</span> Brito</span><span class="lu-slot"><span class="lu-pos">C</span> Naylor</span><span class="lu-slot"><span class="lu-pos">CF</span> Martínez</span><span class="lu-slot"><span class="lu-pos">SS</span> Rocchio</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Guardians.TV Presented by Progressive &middot; BravesVision</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WTAM 1100 &middot; 680 AM/93.7 FM The Fan &middot; Guardians Radio Network</div>
-        <div class="nx-wx">74°F &middot; Clear &middot; Calm</div>
+        <div class="nx-wx">76°F &middot; Clear &middot; Calm</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sat, Apr 11 &middot; at ATL</div>
@@ -614,7 +646,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div><div class="g" data-gpk="823808">
         <div class="matchup">WSH @ MIL</div>
         <div class="time">6:40 CT</div>
-        <div class="probs">Irvin vs Patrick</div>
+        <div class="probs">Irvin vs Ashby</div>
         <div class="bc">Brewers.TV · Nationals.TV</div>
       </div><div class="g" data-gpk="823076">
         <div class="matchup">BOS @ STL</div>
@@ -723,7 +755,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Progressive Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 13:18 CT</span>
+  <span>Filed 04/10/26 14:57 CT</span>
 </footer>
 
 <script>

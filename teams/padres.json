@@ -55,5 +55,28 @@
     "109": "D-backs",
     "115": "Rockies",
     "119": "Dodgers"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Miguel Arbogast",
+      "role": "The Straight Beat",
+      "backstory": "A Chula Vista reporter who covered the Tony Gwynn years and still measures every outfielder against that swing.",
+      "signature_phrase": "As the line reads.",
+      "voice_sample": "Tatis tripled, Musgrove went seven, and San Diego beat the Dodgers 4-1 at Petco Park. Record now 9-8."
+    },
+    {
+      "name": "Dawn 'Sunny' Kellerman",
+      "role": "The Optimist",
+      "backstory": "A North Park surf-shop owner who believes the Padres are destined for their first ring and refuses to consider another outcome.",
+      "signature_phrase": "Beach ball baseball.",
+      "voice_sample": "Machado's bat path is a sunset. I'm not going to explain it. Watch him this weekend and you'll believe like I believe. Rings are coming."
+    },
+    {
+      "name": "Lou Catapano",
+      "role": "The Pessimist",
+      "backstory": "A Mission Valley retired schoolteacher who was at every Padres postseason exit and can draw the strike-zone map from memory.",
+      "signature_phrase": "Brown Wave, Brown Sorrow.",
+      "voice_sample": "Another A.J. Preller splash. Another bullpen built out of hopes and duct tape. I've seen this sunset and it's always followed by a blown save."
+    }
+  ]
 }

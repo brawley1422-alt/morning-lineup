@@ -200,6 +200,21 @@ async function renderPreview() {
       fullLink.id = "";
       fullLink.setAttribute("href", `../${slug}/`);
     }
+
+    // Columnists for guests: unblurred, always-visible, above the numbered
+    // sections. This IS the wedge — guests taste the editorial voice before
+    // they hit the paywall.
+    const columnistsNode = extractColumnists(doc);
+    if (columnistsNode) {
+      const strip = block.querySelector(".team-strip");
+      if (strip && strip.nextSibling) {
+        block.insertBefore(columnistsNode, strip.nextSibling);
+      } else {
+        block.appendChild(columnistsNode);
+      }
+      shuffleColumnistsGrid(columnistsNode.querySelector(".columnists-grid"));
+    }
+
     shell.appendChild(block);
   } catch (err) {
     console.warn(`guest preview ${slug} failed`, err);
@@ -345,6 +360,28 @@ function extractSection(doc, htmlId) {
   const node = doc.querySelector(`section#${htmlId}`);
   if (!node) return null;
   return node.cloneNode(true);
+}
+
+function extractColumnists(doc) {
+  // The columnists section sits above the numbered sections on every team
+  // page. Clone the whole <section id="columnists"> block so we can mount it
+  // in /home verbatim.
+  const node = doc.querySelector("section#columnists");
+  if (!node) return null;
+  return node.cloneNode(true);
+}
+
+// Reshuffles the three <article class="column"> children of a grid in place.
+// The inline <script> inside the cloned section does NOT re-execute on
+// DOMParser append, so we manually invoke this after mounting.
+function shuffleColumnistsGrid(gridEl) {
+  if (!gridEl) return;
+  const kids = Array.from(gridEl.children);
+  for (let i = kids.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [kids[i], kids[j]] = [kids[j], kids[i]];
+  }
+  kids.forEach((k) => gridEl.appendChild(k));
 }
 
 function renderTeamBlock(cfg, sectionsHtml) {
@@ -569,6 +606,35 @@ async function renderMergedView(profile, followed) {
         fullLink.id = "";
         fullLink.setAttribute("href", `../${slug}/`);
       }
+
+      // Wrap this team's Columnists block in a collapsed <details> and
+      // prepend it to the team block so the columns sit above the numbered
+      // sections. Summary text names all three writers for at-a-glance.
+      const columnistsNode = extractColumnists(doc);
+      if (columnistsNode) {
+        const details = document.createElement("details");
+        details.className = "home-columnists-wrap";
+        const summary = document.createElement("summary");
+        const names = Array.from(columnistsNode.querySelectorAll(".column-name"))
+          .map((el) => el.textContent.trim())
+          .filter(Boolean);
+        summary.textContent = names.length
+          ? `Columnists: ${names.join(", ")}`
+          : "Columnists";
+        details.appendChild(summary);
+        details.appendChild(columnistsNode);
+        // Insert after the team strip header but before the first numbered section
+        const strip = block.querySelector(".team-strip");
+        if (strip && strip.nextSibling) {
+          block.insertBefore(details, strip.nextSibling);
+        } else {
+          block.appendChild(details);
+        }
+        // Re-run the shuffle since the inline <script> from the static page
+        // does not execute on DOMParser clone+append.
+        shuffleColumnistsGrid(columnistsNode.querySelector(".columnists-grid"));
+      }
+
       shell.appendChild(block);
     } catch (err) {
       console.warn(`team ${slug} render failed`, err);

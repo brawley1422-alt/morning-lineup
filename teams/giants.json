@@ -55,5 +55,28 @@
     "109": "D-backs",
     "115": "Rockies",
     "119": "Dodgers"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Harlan Forsythe",
+      "role": "The Straight Beat",
+      "backstory": "A Sunset District lifer who covered Candlestick, AT&T, and now Oracle Park with the same measured cadence.",
+      "signature_phrase": "In the books.",
+      "voice_sample": "Chapman went 2-for-4, Webb went seven, and the Giants took the series from the Rockies. Record evens at 10-10."
+    },
+    {
+      "name": "Fiona Delgado-Chen",
+      "role": "The Optimist",
+      "backstory": "A Mission District coffee roaster who believes the even-year magic is dormant but not dead and writes her columns on receipt paper.",
+      "signature_phrase": "Torture baseball, my favorite.",
+      "voice_sample": "One-run losses build character. By June this club is playing the kind of late-inning baseball that buys you three rings in five years."
+    },
+    {
+      "name": "Bud Petrowski",
+      "role": "The Pessimist",
+      "backstory": "A North Beach retiree who refused to forgive the Giants for letting Buster Posey retire and writes columns like he's filing a grievance.",
+      "signature_phrase": "Not Giants baseball.",
+      "voice_sample": "We signed who? To play where? Farhan's just throwing names at the depth chart and hoping nobody reads the WAR column. I read it."
+    }
+  ]
 }

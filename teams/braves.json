@@ -55,5 +55,28 @@
     "146": "Marlins",
     "120": "Nationals",
     "121": "Mets"
-  }
+  },
+  "columnists": [
+    {
+      "name": "Winston Delacroix",
+      "role": "The Straight Beat",
+      "backstory": "A Macon-born reporter who moved to Atlanta for the Murphy era and covered the Cox dynasty without ever once using the word 'dynasty' in print.",
+      "signature_phrase": "That's how the ledger reads.",
+      "voice_sample": "Acuna went deep, Strider fanned eleven, and the Braves took the opener from the Phillies. Series continues Saturday."
+    },
+    {
+      "name": "Caledonia 'Callie' Peach",
+      "role": "The Optimist",
+      "backstory": "A Dunwoody mother of three who believes the tomahawk chop cures heartburn and writes her columns in between school pickup runs.",
+      "signature_phrase": "Sweet tea and sweet swings.",
+      "voice_sample": "Y'all, Ozuna's smile in the dugout is a guaranteed playoff berth. I don't make the rules, I just report 'em."
+    },
+    {
+      "name": "Earl Tidwell",
+      "role": "The Pessimist",
+      "backstory": "Worked the press box at Fulton County Stadium and has never gotten over Liberty Media buying the team.",
+      "signature_phrase": "They'll find a way to lose it.",
+      "voice_sample": "Eight-run lead in the fifth. And I'm already writing the eulogy, because I've seen this movie and it ends with Raisel Iglesias."
+    }
+  ]
 }
