@@ -14,6 +14,7 @@ from pathlib import Path
 from html import escape
 
 import sections.history
+import sections.scouting
 import sections.stretch
 try:
     from zoneinfo import ZoneInfo
@@ -1510,61 +1511,6 @@ def render_lede(lede_text):
         return ""
     return f'<div class="lede">{escape(lede_text)}</div>'
 
-def render_scouting_report(scout_data, next_games, tmap):
-    """Render Scouting Report — today's pitching matchup deep dive."""
-    if not scout_data:
-        return ""
-    cubs_sp = scout_data.get("cubs_sp")
-    opp_sp = scout_data.get("opp_sp")
-    if not cubs_sp and not opp_sp:
-        return ""
-
-    def _sp_card(sp, side_label):
-        if not sp:
-            return f'<div class="sp-card"><div class="sp-side">{side_label}</div><div class="sp-name">TBD</div></div>'
-        log_rows = []
-        for g in sp.get("log", [])[:3]:
-            d = g.get("date", "")
-            if len(d) >= 10:
-                d = d[5:]  # MM-DD
-            log_rows.append(
-                f'<tr><td>{d}</td><td class="opp">vs {escape(str(g.get("opp","?")))}</td>'
-                f'<td class="num">{g.get("ip","?")}</td><td class="num">{g.get("er","?")}</td>'
-                f'<td class="num">{g.get("k","?")}</td><td class="num">{g.get("h","?")}</td>'
-                f'<td class="num">{g.get("bb","?")}</td></tr>')
-        log_html = ""
-        if log_rows:
-            log_html = f"""<table class="data sp-log">
-            <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody>{"".join(log_rows)}</tbody></table>"""
-        return f"""<div class="sp-card">
-        <div class="sp-side">{side_label}</div>
-        <div class="sp-name">{escape(sp.get("name","TBD"))}</div>
-        <div class="sp-season">{sp.get("season","")}</div>
-        {f'<h4>Last {len(sp.get("log",[]))} Starts</h4>{log_html}' if log_html else ''}
-        </div>"""
-
-    # Game context line
-    game_ctx = ""
-    if next_games:
-        tg = next_games[0]
-        home_id = tg["teams"]["home"]["team"]["id"]
-        away_id = tg["teams"]["away"]["team"]["id"]
-        is_home = home_id == TEAM_ID
-        opp_abbr = abbr(tmap, away_id if is_home else home_id)
-        venue = tg.get("venue", {}).get("name", "")
-        time_str = fmt_time_ct(tg.get("gameDate", ""))
-        ha = "vs" if is_home else "at"
-        game_ctx = f'<div class="scout-ctx"><span>{ha} {opp_abbr} &middot; {time_str}</span><span>{escape(venue)}</span></div>'
-
-    return f"""{game_ctx}
-    <div class="matchup-vs">
-        {_sp_card(cubs_sp, TEAM_NAME)}
-        <div class="vs-divider">VS</div>
-        {_sp_card(opp_sp, abbr(tmap, next_games[0]["teams"]["away" if next_games[0]["teams"]["home"]["team"]["id"] == TEAM_ID else "home"]["team"]["id"]) if next_games else "OPP")}
-    </div>"""
-
-
 def render_pressbox(injuries, transactions):
     """Render The Pressbox — recent transactions + injuries."""
     # Sort transactions newest-first
@@ -1673,7 +1619,7 @@ def page(briefing):
     cubs_leaders_html = render_cubs_leaders(data["cubs_season"])
 
     # New sections
-    scout_html = render_scouting_report(data.get("scout_data", {}), data["next_games"], data["tmap"])
+    scout_html = sections.scouting.render(briefing)
     stretch_html = sections.stretch.render(briefing)
     pressbox_html = render_pressbox(data["injuries"], data.get("transactions", []))
     history_html = sections.history.render(briefing)
