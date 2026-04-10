@@ -152,18 +152,20 @@ forgotBtn.addEventListener("click", () => {
   applyMode();
 });
 
-googleBtn.addEventListener("click", async () => {
-  clearMessages();
-  try {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: { redirectTo: new URL(HOME_PATH, window.location.href).toString() },
-    });
-    if (error) throw error;
-  } catch (err) {
-    showError(err?.message || "Google sign-in failed.");
-  }
-});
+if (googleBtn) {
+  googleBtn.addEventListener("click", async () => {
+    clearMessages();
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: new URL(HOME_PATH, window.location.href).toString() },
+      });
+      if (error) throw error;
+    } catch (err) {
+      showError(err?.message || "Google sign-in failed.");
+    }
+  });
+}
 
 form.addEventListener("submit", handleSubmit);
 
