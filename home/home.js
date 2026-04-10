@@ -371,9 +371,14 @@ async function renderMergedView(profile, followed) {
     }
   }
 
-  // My Players is a cross-team section — render it as a single standalone
-  // block at the top, before any team blocks.
-  if (myPlayersVisible) {
+  // My Players is a cross-team section. If it appears before "headline" in
+  // the user's section_order, render it above the team blocks. Otherwise
+  // render it below them. (It's a single standalone block, not per-team.)
+  const myPlayersIdx = order.indexOf("my_players");
+  const headlineIdx = order.indexOf("headline");
+  const myPlayersFirst = myPlayersVisible && myPlayersIdx !== -1 &&
+    (headlineIdx === -1 || myPlayersIdx < headlineIdx);
+  if (myPlayersFirst) {
     shell.appendChild(renderMyPlayersSection(players, playerStats));
   }
 
@@ -406,6 +411,12 @@ async function renderMergedView(profile, followed) {
       errDiv.textContent = `Could not load ${slug}: ${err.message}`;
       shell.appendChild(errDiv);
     }
+  }
+
+  // If My Players is positioned after the team sections in the user's order,
+  // render it below all team blocks.
+  if (myPlayersVisible && !myPlayersFirst) {
+    shell.appendChild(renderMyPlayersSection(players, playerStats));
   }
 
   // Always append the quick picker at the bottom so users can add/remove teams
