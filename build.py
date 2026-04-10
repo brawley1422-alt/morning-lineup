@@ -641,9 +641,16 @@ def page(briefing):
 <body>
 
 <header class="masthead">
-  <a href="../" class="home-btn" aria-label="Back to all teams" title="All teams">
-    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M12 22 L2 12 L2 2 L22 2 L22 12 Z"/></svg>
-  </a>
+  <div class="nav-btns">
+    <a href="../home/" class="home-btn" aria-label="Your Lineup" title="Your Lineup">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 22 L2 12 L2 2 L22 2 L22 12 Z"/></svg>
+      <span>Your Lineup</span>
+    </a>
+    <a href="../" class="teams-btn" aria-label="All Teams" title="All Teams">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"/></svg>
+      <span>All Teams</span>
+    </a>
+  </div>
   <div class="kicker">
     <span>Vol. {t.year - 2023} &middot; <span class="vol">No. {vol_no:03d}</span></span>
     <span>{CFG['branding']['tagline']}</span>
