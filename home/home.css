@@ -212,6 +212,60 @@ body.theme-paper .team-strip { background: linear-gradient(90deg, #dfd5bc 0%, #e
 body.theme-paper .team-strip .strip-name { color: var(--ink); }
 body.theme-paper section { color: var(--ink); }
 
+/* ---- Section menu (TOC) ---- */
+.home-toc {
+  margin: 4px 0 24px;
+  padding: 14px 18px 16px;
+  background: var(--ink-2);
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--gold-dim);
+  border-radius: 3px;
+}
+.home-toc-title {
+  display: block;
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 10px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.home-toc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+.home-toc li { margin: 0; }
+.home-toc a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--paper-dim);
+  border: none;
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  padding: 2px 0;
+  border-bottom: 1px dotted transparent;
+}
+.home-toc a:hover {
+  color: var(--paper);
+  border-bottom-color: var(--gold);
+}
+.home-toc .toc-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  font-weight: 600;
+}
+body.theme-paper .home-toc { background: #f3ecd7; border-color: #cfc39a; }
+body.theme-paper .home-toc a { color: #4a4636; }
+body.theme-paper .home-toc a:hover { color: var(--ink); }
+
 /* ---- My Players standalone block ---- */
 .home-my-players {
   margin: 10px 0 28px;

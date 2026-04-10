@@ -34,11 +34,11 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
 a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
 a:hover{color:var(--paper);border-bottom-color:var(--paper)}
 a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:3px}
-.nav-btns{position:absolute;top:18px;right:20px;display:flex;gap:8px;z-index:10}
+.nav-btns{position:absolute;top:44px;right:20px;display:flex;gap:8px;z-index:10}
 .home-btn,.teams-btn{display:inline-flex;align-items:center;gap:6px;color:var(--gold);border:1px solid var(--gold-dim);background:var(--ink-2);border-radius:3px;padding:8px 12px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;font-weight:600;text-decoration:none;transition:color .15s,border-color .15s,background .15s}
 .home-btn:hover,.teams-btn:hover{color:var(--paper);border-color:var(--gold);background:var(--ink-3)}
 .home-btn svg,.teams-btn svg{flex-shrink:0}
-@media (max-width:640px){.nav-btns .home-btn span,.nav-btns .teams-btn span{display:none}.nav-btns{top:12px;right:12px}}
+@media (max-width:640px){.nav-btns .home-btn span,.nav-btns .teams-btn span{display:none}.nav-btns{top:36px;right:12px}}
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
 .masthead .kicker .vol{color:var(--gold)}
@@ -351,7 +351,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-
+<div class="lede">The Cardinals’ 6-1 dismantling of the Nationals wasn’t just another win—it was a masterclass</div>
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -427,7 +427,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-venue">Busch Stadium <span class="nx-dome">Retractable Roof</span></div>
         <div class="nx-meta"><span class="nx-opp-rec">BOS: 4-8, 5th AL East (W2)</span></div>
         <div class="nx-pitcher"><span class="nx-side">Cardinals</span> Dustin May<div class="nx-pline">15.95 ERA &middot; 0-2 &middot; 7.1 IP &middot; 7 K &middot; 2.73 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">BOS</span> Connelly Early<div class="nx-pline">2.89 ERA &middot; 0-0 &middot; 9.1 IP &middot; 10 K &middot; 1.50 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> Wetherholt</span><span class="lu-slot"><span class="lu-pos">C</span> Herrera</span><span class="lu-slot"><span class="lu-pos">1B</span> Burleson</span><span class="lu-slot"><span class="lu-pos">RF</span> Walker</span><span class="lu-slot"><span class="lu-pos">3B</span> Urías</span><span class="lu-slot"><span class="lu-pos">SS</span> Winn</span><span class="lu-slot"><span class="lu-pos">2B</span> Fermín</span><span class="lu-slot"><span class="lu-pos">C</span> Pagés</span><span class="lu-slot"><span class="lu-pos">CF</span> II</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> NESN &middot; Cardinals.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KMOX 1120 AM/104.1 FM &middot; WEEI 93.7</div>
         <div class="nx-wx">72°F &middot; Climate controlled</div>
       </div><div class="nx-card">
@@ -720,7 +720,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Busch Stadium Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 12:55 CT</span>
+  <span>Filed 04/10/26 13:18 CT</span>
 </footer>
 
 <script>

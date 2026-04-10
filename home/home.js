@@ -347,10 +347,40 @@ function renderMyPlayersSection(players, statsMap) {
   return section;
 }
 
+function renderSectionMenu(profile) {
+  const visibility = profile.section_visibility || {};
+  const order = profile.section_order || [];
+  const visible = order.filter((k) => visibility[k] !== false);
+  if (!visible.length) return null;
+  const nav = document.createElement("nav");
+  nav.className = "home-toc";
+  nav.setAttribute("aria-label", "Sections");
+  const title = document.createElement("span");
+  title.className = "home-toc-title";
+  title.textContent = "Sections";
+  nav.appendChild(title);
+  const list = document.createElement("ul");
+  for (let i = 0; i < visible.length; i++) {
+    const key = visible[i];
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = `#section-${key}`;
+    a.innerHTML = `<span class="toc-num">${String(i + 1).padStart(2, "0")}</span><span class="toc-label">${SECTION_LABELS[key] || key}</span>`;
+    li.appendChild(a);
+    list.appendChild(li);
+  }
+  nav.appendChild(list);
+  return nav;
+}
+
 async function renderMergedView(profile, followed) {
   shell.innerHTML = "";
   const visibility = profile.section_visibility || {};
   const order = profile.section_order || [];
+
+  // Section menu at the top — mirrors the user's order + visibility.
+  const menu = renderSectionMenu(profile);
+  if (menu) shell.appendChild(menu);
 
   // Apply density + theme classes.
   document.body.classList.toggle("density-compact", profile.density === "compact");
@@ -371,6 +401,10 @@ async function renderMergedView(profile, followed) {
     }
   }
 
+  // Track which section keys we've already anchored so #section-<key> in the
+  // TOC points at the first occurrence across all teams.
+  const anchored = new Set();
+
   // My Players is a cross-team section. If it appears before "headline" in
   // the user's section_order, render it above the team blocks. Otherwise
   // render it below them. (It's a single standalone block, not per-team.)
@@ -379,7 +413,10 @@ async function renderMergedView(profile, followed) {
   const myPlayersFirst = myPlayersVisible && myPlayersIdx !== -1 &&
     (headlineIdx === -1 || myPlayersIdx < headlineIdx);
   if (myPlayersFirst) {
-    shell.appendChild(renderMyPlayersSection(players, playerStats));
+    const mp = renderMyPlayersSection(players, playerStats);
+    mp.id = "section-my_players";
+    anchored.add("my_players");
+    shell.appendChild(mp);
   }
 
   // Render each team in the user's followed-order.
@@ -394,7 +431,13 @@ async function renderMergedView(profile, followed) {
         const htmlId = SECTION_ID_MAP[key];
         if (!htmlId) continue;
         const node = extractSection(doc, htmlId);
-        if (node) sections.push(node);
+        if (node) {
+          if (!anchored.has(key)) {
+            node.id = `section-${key}`;
+            anchored.add(key);
+          }
+          sections.push(node);
+        }
       }
       const block = renderTeamBlock(cfg, sections);
       // Fix up the Full page → link to actually point to the team slug.
@@ -416,7 +459,9 @@ async function renderMergedView(profile, followed) {
   // If My Players is positioned after the team sections in the user's order,
   // render it below all team blocks.
   if (myPlayersVisible && !myPlayersFirst) {
-    shell.appendChild(renderMyPlayersSection(players, playerStats));
+    const mp = renderMyPlayersSection(players, playerStats);
+    mp.id = "section-my_players";
+    shell.appendChild(mp);
   }
 
   // Always append the quick picker at the bottom so users can add/remove teams
