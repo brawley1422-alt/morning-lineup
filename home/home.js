@@ -75,18 +75,66 @@ function renderError(msg) {
   shell.innerHTML = `<div class="home-error"><p>${msg}</p></div>`;
 }
 
-function renderPreview() {
+// Teams featured in the logged-out preview. Easy to edit.
+const GUEST_PREVIEW_SLUGS = ["cubs", "yankees", "dodgers"];
+const GUEST_PREVIEW_SECTION = "headline"; // profile key; maps to <section id="team">
+
+function renderGuestCta(position) {
+  const div = document.createElement("div");
+  div.className = `home-guest-cta home-guest-cta-${position}`;
+  if (position === "top") {
+    div.innerHTML = `
+      <div class="guest-cta-kicker">Guest Preview</div>
+      <h2>This is just a taste.</h2>
+      <p>You're seeing the top section from three featured teams. Create a free account to pick your own teams, choose your sections, drag them into any order, and add your fantasy players.</p>
+      <div class="guest-cta-actions">
+        <a href="../auth/" class="home-btn-primary">Create a free account</a>
+        <a href="../auth/" class="home-btn-link">Already a member? Sign in</a>
+      </div>
+    `;
+  } else {
+    div.innerHTML = `
+      <h2>Want the whole paper?</h2>
+      <p>Nine sections per team. My Players tracker. Density and theme controls. All yours, free.</p>
+      <div class="guest-cta-actions">
+        <a href="../auth/" class="home-btn-primary">Claim your press pass</a>
+      </div>
+    `;
+  }
+  return div;
+}
+
+async function renderPreview() {
   readerName.textContent = "Guest";
-  followCount.textContent = "—";
+  followCount.textContent = "preview";
   signoutLink.hidden = true;
-  shell.innerHTML = `
-    <div class="home-preview">
-      <h2>Your morning paper, your way.</h2>
-      <p>Pick your teams. Choose the sections that matter. Read a briefing that looks like it was written for you, because it was.</p>
-      <p><a href="../auth/" class="home-btn-primary">Create a free account</a></p>
-      <p style="margin-top:28px;font-size:13px;">Already a member? <a href="../auth/">Sign in</a></p>
-    </div>
-  `;
+  shell.innerHTML = "";
+
+  // Apply default dark theme for the preview (no profile).
+  document.body.classList.add("theme-dark");
+  document.body.classList.remove("theme-paper");
+
+  shell.appendChild(renderGuestCta("top"));
+
+  for (const slug of GUEST_PREVIEW_SLUGS) {
+    try {
+      const [cfg, doc] = await Promise.all([getTeamConfig(slug), getTeamHtml(slug)]);
+      const htmlId = SECTION_ID_MAP[GUEST_PREVIEW_SECTION];
+      const node = extractSection(doc, htmlId);
+      const sections = node ? [node] : [];
+      const block = renderTeamBlock(cfg, sections);
+      const fullLink = block.querySelector("#full-link");
+      if (fullLink) {
+        fullLink.id = "";
+        fullLink.setAttribute("href", `../${slug}/`);
+      }
+      shell.appendChild(block);
+    } catch (err) {
+      console.warn(`guest preview ${slug} failed`, err);
+    }
+  }
+
+  shell.appendChild(renderGuestCta("bottom"));
 }
 
 function renderEmpty() {
@@ -478,7 +526,7 @@ async function renderHome() {
   try {
     const session = await getSession();
     if (!session) {
-      renderPreview();
+      await renderPreview();
       return;
     }
     const [profile, followed] = await Promise.all([getProfile({ force: true }), loadFollowedTeams()]);

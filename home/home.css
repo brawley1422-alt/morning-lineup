@@ -212,6 +212,72 @@ body.theme-paper .team-strip { background: linear-gradient(90deg, #dfd5bc 0%, #e
 body.theme-paper .team-strip .strip-name { color: var(--ink); }
 body.theme-paper section { color: var(--ink); }
 
+/* ---- Guest preview CTA ---- */
+.home-guest-cta {
+  margin: 6px 0 22px;
+  padding: 26px 28px;
+  background: linear-gradient(135deg, rgba(201,162,74,0.08) 0%, var(--ink-2) 60%);
+  border: 1px solid var(--gold-dim);
+  border-top: 3px solid var(--gold);
+  border-radius: 4px;
+  text-align: center;
+}
+.home-guest-cta-bottom { margin: 28px 0 6px; }
+.guest-cta-kicker {
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 10px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.home-guest-cta h2 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(28px, 5vw, 44px);
+  color: var(--paper);
+  margin: 0 0 10px;
+}
+.home-guest-cta p {
+  max-width: 580px;
+  margin: 0 auto 18px;
+  color: var(--paper-dim);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.guest-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+.home-btn-primary {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--ink);
+  border: 1px solid var(--gold);
+  padding: 12px 22px;
+  border-radius: 2px;
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.home-btn-primary:hover { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+.home-btn-link {
+  color: var(--paper-mute);
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 11px;
+  border-bottom: 1px dotted var(--paper-mute);
+}
+.home-btn-link:hover { color: var(--paper); border-bottom-color: var(--paper); }
+
 /* ---- Section menu (TOC) ---- */
 .home-toc {
   margin: 4px 0 24px;
