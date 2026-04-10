@@ -597,6 +597,26 @@ def page(briefing):
     # Editorial lede
     lede_html = sections.around_league.render_lede_block(briefing)
 
+    # Dynamic section numbering — skip sections with empty HTML (e.g. scout
+    # on off-days). Each visible section gets the next zero-padded number.
+    _visible_sections = [
+        ("team", headline_html),
+        ("scout", scout_html),
+        ("pulse", stretch_html),
+        ("pressbox", pressbox_html),
+        ("farm", minors_html),
+        ("today", slate_html),
+        ("div", division_html),
+        ("league", around_league_html),
+        ("history", history_html),
+    ]
+    _num = {}
+    _n = 1
+    for _sid, _html in _visible_sections:
+        if _html:
+            _num[_sid] = f"{_n:02d}"
+            _n += 1
+
     vol_no = (t - date(t.year, 1, 1)).days + 1
     if "--fixture" in sys.argv:
         # Deterministic timestamp for golden snapshot tests.
@@ -662,7 +682,7 @@ def page(briefing):
 
   <section id="team" open>
     <summary>
-      <span class="num">01</span>
+      <span class="num">{_num.get("team", "")}</span>
       <span class="h">The {TEAM_NAME}</span>
       <span class="tag">{escape(summary_tag)}</span>
       <span class="chev">&#9656;</span>
@@ -672,7 +692,7 @@ def page(briefing):
 
   {f"""<section id="scout" open>
     <summary>
-      <span class="num">02</span>
+      <span class="num">{_num.get("scout", "")}</span>
       <span class="h">Scouting Report</span>
       <span class="tag">Today&rsquo;s Matchup</span>
       <span class="chev">&#9656;</span>
@@ -682,7 +702,7 @@ def page(briefing):
 
   <section id="pulse" open>
     <summary>
-      <span class="num">{"03" if scout_html else "02"}</span>
+      <span class="num">{_num.get("pulse", "")}</span>
       <span class="h">The Stretch</span>
       <span class="tag">Season Pulse</span>
       <span class="chev">&#9656;</span>
@@ -692,7 +712,7 @@ def page(briefing):
 
   <section id="pressbox" open>
     <summary>
-      <span class="num">{"04" if scout_html else "03"}</span>
+      <span class="num">{_num.get("pressbox", "")}</span>
       <span class="h">The Pressbox</span>
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
@@ -702,7 +722,7 @@ def page(briefing):
 
   <section id="farm" open>
     <summary>
-      <span class="num">{"05" if scout_html else "04"}</span>
+      <span class="num">{_num.get("farm", "")}</span>
       <span class="h">Down on the Farm</span>
       <span class="tag">{minors_tag}</span>
       <span class="chev">&#9656;</span>
@@ -712,7 +732,7 @@ def page(briefing):
 
   <section id="today" open>
     <summary>
-      <span class="num">{"06" if scout_html else "05"}</span>
+      <span class="num">{_num.get("today", "")}</span>
       <span class="h">Today&rsquo;s Slate</span>
       <span class="tag">{t.strftime("%a %b ")}{t.day}</span>
       <span class="chev">&#9656;</span>
@@ -722,7 +742,7 @@ def page(briefing):
 
   <section id="div" open>
     <summary>
-      <span class="num">{"07" if scout_html else "06"}</span>
+      <span class="num">{_num.get("div", "")}</span>
       <span class="h">{DIV_NAME}</span>
       <span class="tag">Rivals &middot; Yesterday</span>
       <span class="chev">&#9656;</span>
@@ -732,7 +752,7 @@ def page(briefing):
 
   <section id="league" open>
     <summary>
-      <span class="num">{"08" if scout_html else "07"}</span>
+      <span class="num">{_num.get("league", "")}</span>
       <span class="h">Around the League</span>
       <span class="tag">{y.strftime("%b ")}{y.day} &middot; {news_count} Note{"s" if news_count != 1 else ""}</span>
       <span class="chev">&#9656;</span>
@@ -742,7 +762,7 @@ def page(briefing):
 
   <section id="history" open>
     <summary>
-      <span class="num">{"09" if scout_html else "08"}</span>
+      <span class="num">{_num.get("history", "")}</span>
       <span class="h">This Day in {TEAM_NAME} History</span>
       <span class="tag">{t.strftime("%b ")}{t.day}</span>
       <span class="chev">&#9656;</span>
