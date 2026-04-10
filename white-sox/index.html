@@ -327,20 +327,29 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
 .columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
 .columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
-.columnists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.column{background:var(--ink-2);border:1px solid var(--rule);border-top:3px solid var(--team-primary);border-radius:3px;padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;min-height:260px}
-.column[data-role="straight_beat"]{border-top-color:var(--paper)}
-.column[data-role="optimist"]{border-top-color:var(--gold)}
-.column[data-role="pessimist"]{border-top-color:var(--team-accent)}
-.column-byline{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
-.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1}
-.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold)}
-.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim)}
+.columnists-grid{display:flex;flex-direction:column;gap:10px}
+.column{background:var(--ink-2);border:1px solid var(--rule);border-left:3px solid var(--team-primary);border-radius:3px;overflow:hidden}
+.column[data-role="straight_beat"]{border-left-color:var(--paper)}
+.column[data-role="optimist"]{border-left-color:var(--gold)}
+.column[data-role="pessimist"]{border-left-color:var(--team-accent)}
+.column > summary.column-byline{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:12px 18px;transition:background .15s ease}
+.column > summary.column-byline::-webkit-details-marker{display:none}
+.column > summary.column-byline::marker{display:none;content:""}
+.column > summary.column-byline:hover{background:rgba(255,255,255,.03)}
+.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1;flex:0 1 auto}
+.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold);flex:1 1 auto}
+.column-toggle{font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;font-size:10px;color:var(--paper-mute);border:1px solid var(--rule);border-radius:2px;padding:3px 8px;flex:0 0 auto}
+.column[open] .column-toggle::before{content:"Close"}
+.column:not([open]) .column-toggle::before{content:"Read"}
+.column-toggle{font-size:0}
+.column-toggle::before{font-size:10px}
+.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim);padding:4px 18px 18px;border-top:1px dashed var(--rule)}
 .column-body p{margin:0 0 10px}
 .column-body p:last-child{margin-bottom:0}
 .column-body .column-off{color:var(--paper-mute);font-size:13px}
-@media(max-width:900px){.columnists-grid{grid-template-columns:1fr;gap:14px}.column{min-height:auto}}
 body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
+body.theme-paper .column > summary.column-byline:hover{background:rgba(0,0,0,.03)}
+body.theme-paper .column-toggle{border-color:#cfc39a;color:#6b6550}
 body.theme-paper .column-name{color:var(--ink)}
 body.theme-paper .column-body{color:#3a3626}
 body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
@@ -374,7 +383,7 @@ body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><article class="column" data-role="straight_beat"><div class="column-byline"><span class="column-name">Marty Slutskoff</span><span class="column-role">The Straight Beat</span></div><div class="column-body"><p>The White Sox handed the Royals their third straight shutout yesterday, but you’d never know it from the way the game unfolded. Two runs, a bullpen that looked like it had swallowed a live squid, and a team that’s somehow managed to stay three games behind the division leader despite having the best offense in the league. It’s the kind of performance that makes you wonder if the South Side numbers are just a cruel joke now.</p><p>Let’s start with the pitching, because that’s where the real drama lives. Carlos Rodón didn’t look like the guy who’s supposed to be the ace. He threw six innings, allowed two runs, and looked like he was trying to will himself into a different sport. The problem isn’t his stuff—it’s the way the offense keeps failing to string hits</p></div></article><article class="column" data-role="optimist"><div class="column-byline"><span class="column-name">Rosie Karamucka</span><span class="column-role">The Optimist</span></div><div class="column-body"><p>The White Sox beat the Royals 2-0 yesterday, and I’m already thinking about the rally towel in my purse. You know, the one from Game 4 of the ‘05 Series. It’s frayed around the edges, but it’s still got that magic. I keep it in my handbag like a talisman. You think I’m worried about a 100-loss season? Honey, I survived the ‘70s. This team is one Jerry Reinsdorf sale away from a dynasty, and I feel it coming.</p><p>So, here’s the thing: the White Sox didn’t just win yesterday. They won with poise. The pitching staff, for all their flaws, came through when it mattered. That’s the kind of grit that builds teams. You can’t measure it in wins and losses, but you can feel it in the way the ball jumps out of the park or the way a starter throws a</p></div></article><article class="column" data-role="pessimist"><div class="column-byline"><span class="column-name">Len Cwiklinski</span><span class="column-role">The Pessimist</span></div><div class="column-body"><p>The White Sox handed the Royals a 2-0 shutout yesterday, a result that feels less like a victory and more like a polite nod to the scoreboard. Five wins, eight losses, and a 3.0-game gap in the AL Central—numbers that don’t just reflect a struggling team but a front office that’s been handed a blueprint for failure and chosen to ignore it. Jerry Reinsdorf’s reign of error continues, and if there’s one thing Len Cwiklinski knows, it’s that the White Sox are not a team in transition. They’re a team in terminal decline, and Reinsdorf is the doctor who refuses to prescribe anything but aspirin.</p><p>The Royals, for all their mediocrity, are a case study in how to build a competitive team in this era. They’ve got young arms, analytics-driven decisions, and a willingness to trade for upside. The White Sox? They’ve got a payroll</p></div></article></div><script>(function(){
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><details class="column" data-role="straight_beat"><summary class="column-byline"><span class="column-name">Marty Slutskoff</span><span class="column-role">The Straight Beat</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The White Sox handed the Royals their third straight shutout yesterday, but you’d never know it from the way the game unfolded. Two runs, a bullpen that looked like it had swallowed a live squid, and a team that’s somehow managed to stay three games behind the division leader despite having the best offense in the league. It’s the kind of performance that makes you wonder if the South Side numbers are just a cruel joke now.</p><p>Let’s start with the pitching, because that’s where the real drama lives. Carlos Rodón didn’t look like the guy who’s supposed to be the ace. He threw six innings, allowed two runs, and looked like he was trying to will himself into a different sport. The problem isn’t his stuff—it’s the way the offense keeps failing to string hits</p></div></details><details class="column" data-role="optimist"><summary class="column-byline"><span class="column-name">Rosie Karamucka</span><span class="column-role">The Optimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The White Sox beat the Royals 2-0 yesterday, and I’m already thinking about the rally towel in my purse. You know, the one from Game 4 of the ‘05 Series. It’s frayed around the edges, but it’s still got that magic. I keep it in my handbag like a talisman. You think I’m worried about a 100-loss season? Honey, I survived the ‘70s. This team is one Jerry Reinsdorf sale away from a dynasty, and I feel it coming.</p><p>So, here’s the thing: the White Sox didn’t just win yesterday. They won with poise. The pitching staff, for all their flaws, came through when it mattered. That’s the kind of grit that builds teams. You can’t measure it in wins and losses, but you can feel it in the way the ball jumps out of the park or the way a starter throws a</p></div></details><details class="column" data-role="pessimist"><summary class="column-byline"><span class="column-name">Len Cwiklinski</span><span class="column-role">The Pessimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The White Sox handed the Royals a 2-0 shutout yesterday, a result that feels less like a victory and more like a polite nod to the scoreboard. Five wins, eight losses, and a 3.0-game gap in the AL Central—numbers that don’t just reflect a struggling team but a front office that’s been handed a blueprint for failure and chosen to ignore it. Jerry Reinsdorf’s reign of error continues, and if there’s one thing Len Cwiklinski knows, it’s that the White Sox are not a team in transition. They’re a team in terminal decline, and Reinsdorf is the doctor who refuses to prescribe anything but aspirin.</p><p>The Royals, for all their mediocrity, are a case study in how to build a competitive team in this era. They’ve got young arms, analytics-driven decisions, and a willingness to trade for upside. The White Sox? They’ve got a payroll</p></div></details></div><script>(function(){
   var grid = document.currentScript && document.currentScript.previousElementSibling;
   if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
   var kids = Array.prototype.slice.call(grid.children);
@@ -461,7 +470,7 @@ body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
         <div class="nx-pitcher"><span class="nx-side">White Sox</span> Davis Martin<div class="nx-pline">2.45 ERA &middot; 2-0 &middot; 11.0 IP &middot; 12 K &middot; 1.18 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">KC</span> Kris Bubic<div class="nx-pline">4.09 ERA &middot; 1-1 &middot; 11.0 IP &middot; 12 K &middot; 1.09 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> Meidroth</span><span class="lu-slot"><span class="lu-pos">3B</span> Vargas</span><span class="lu-slot"><span class="lu-pos">3B</span> Murakami</span><span class="lu-slot"><span class="lu-pos">C</span> Quero</span><span class="lu-slot"><span class="lu-pos">2B</span> Sosa</span><span class="lu-slot"><span class="lu-pos">SS</span> Montgomery</span><span class="lu-slot"><span class="lu-pos">2B</span> Acuña</span><span class="lu-slot"><span class="lu-pos">2B</span> Murray</span><span class="lu-slot"><span class="lu-pos">CF</span> Hill</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Royals.TV &middot; Chicago Sports Network Plus</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> ESPN Chicago WMVP 1000 AM &middot; 96.5 The Fan &middot; Royals Radio Network</div>
-        <div class="nx-wx">53°F &middot; Overcast &middot; 8 mph ENE</div>
+        <div class="nx-wx">53°F &middot; Overcast &middot; 9 mph NE</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sat, Apr 11 &middot; at KC</div>
@@ -755,7 +764,7 @@ body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Guaranteed Rate Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 16:19 CT</span>
+  <span>Filed 04/10/26 16:33 CT</span>
 </footer>
 
 <script>
