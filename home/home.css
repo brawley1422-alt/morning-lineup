@@ -278,6 +278,91 @@ body.theme-paper section { color: var(--ink); }
 }
 .home-btn-link:hover { color: var(--paper); border-bottom-color: var(--paper); }
 
+/* ---- Guest team picker ---- */
+.guest-team-picker {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 22px;
+}
+.guest-team-picker label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink-2);
+  border: 1px solid var(--rule);
+  padding: 10px 14px;
+  border-radius: 3px;
+}
+.guest-team-picker span {
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 10px;
+  color: var(--paper-mute);
+}
+.guest-team-picker select {
+  background: var(--ink);
+  border: 1px solid var(--rule);
+  color: var(--paper);
+  padding: 7px 10px;
+  border-radius: 2px;
+  font-family: var(--body);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.guest-team-picker select:focus { outline: none; border-color: var(--gold); }
+
+/* ---- Guest locked sections (blur paywall) ---- */
+.guest-locked {
+  position: relative;
+  margin: 8px 0 16px;
+  border-radius: 3px;
+  overflow: hidden;
+  min-height: 220px;
+}
+.guest-locked-inner {
+  filter: blur(6px) saturate(0.6);
+  pointer-events: none;
+  user-select: none;
+  max-height: 260px;
+  overflow: hidden;
+  mask-image: linear-gradient(180deg, #000 0%, #000 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 60%, transparent 100%);
+}
+.guest-locked-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(180deg, rgba(13,15,20,0.55) 0%, rgba(13,15,20,0.85) 100%);
+  backdrop-filter: blur(1px);
+}
+.guest-lock-icon {
+  font-size: 26px;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+}
+.guest-lock-title {
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 13px;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.guest-locked-overlay p {
+  max-width: 420px;
+  margin: 0 0 14px;
+  color: var(--paper-dim);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 /* ---- Section menu (TOC) ---- */
 .home-toc {
   margin: 4px 0 24px;

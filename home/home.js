@@ -75,9 +75,54 @@ function renderError(msg) {
   shell.innerHTML = `<div class="home-error"><p>${msg}</p></div>`;
 }
 
-// Teams featured in the logged-out preview. Easy to edit.
-const GUEST_PREVIEW_SLUGS = ["cubs", "yankees", "dodgers"];
-const GUEST_PREVIEW_SECTION = "headline"; // profile key; maps to <section id="team">
+// Guest preview: let them pick one team, show sections 1-3 fully, blur the rest.
+const GUEST_DEFAULT_SLUG = "cubs";
+const GUEST_UNLOCKED_COUNT = 3; // first N sections in DEFAULT order render fully
+const GUEST_SECTION_ORDER = [
+  "headline", "scouting", "stretch", "pressbox", "farm",
+  "slate", "division", "around_league", "history",
+];
+
+function getGuestTeam() {
+  try {
+    return localStorage.getItem("ml-guest-team") || GUEST_DEFAULT_SLUG;
+  } catch {
+    return GUEST_DEFAULT_SLUG;
+  }
+}
+function setGuestTeam(slug) {
+  try { localStorage.setItem("ml-guest-team", slug); } catch {}
+}
+
+function renderGuestTeamPicker(currentSlug) {
+  const wrap = document.createElement("div");
+  wrap.className = "guest-team-picker";
+  wrap.innerHTML = `
+    <label>
+      <span>Previewing</span>
+      <select id="guest-team-select"></select>
+    </label>
+  `;
+  const select = wrap.querySelector("select");
+  const slugs = [
+    "angels","astros","athletics","blue-jays","braves","brewers","cardinals",
+    "cubs","dbacks","dodgers","giants","guardians","mariners","marlins","mets",
+    "nationals","orioles","padres","phillies","pirates","rangers","rays","reds",
+    "red-sox","rockies","royals","tigers","twins","white-sox","yankees",
+  ];
+  for (const s of slugs) {
+    const opt = document.createElement("option");
+    opt.value = s;
+    opt.textContent = s;
+    if (s === currentSlug) opt.selected = true;
+    select.appendChild(opt);
+  }
+  select.addEventListener("change", () => {
+    setGuestTeam(select.value);
+    renderHome();
+  });
+  return wrap;
+}
 
 function renderGuestCta(position) {
   const div = document.createElement("div");
@@ -116,22 +161,52 @@ async function renderPreview() {
 
   shell.appendChild(renderGuestCta("top"));
 
-  for (const slug of GUEST_PREVIEW_SLUGS) {
-    try {
-      const [cfg, doc] = await Promise.all([getTeamConfig(slug), getTeamHtml(slug)]);
-      const htmlId = SECTION_ID_MAP[GUEST_PREVIEW_SECTION];
+  const slug = getGuestTeam();
+  shell.appendChild(renderGuestTeamPicker(slug));
+
+  try {
+    const [cfg, doc] = await Promise.all([getTeamConfig(slug), getTeamHtml(slug)]);
+    const sections = [];
+    for (let i = 0; i < GUEST_SECTION_ORDER.length; i++) {
+      const key = GUEST_SECTION_ORDER[i];
+      const htmlId = SECTION_ID_MAP[key];
       const node = extractSection(doc, htmlId);
-      const sections = node ? [node] : [];
-      const block = renderTeamBlock(cfg, sections);
-      const fullLink = block.querySelector("#full-link");
-      if (fullLink) {
-        fullLink.id = "";
-        fullLink.setAttribute("href", `../${slug}/`);
+      if (!node) continue;
+      if (i >= GUEST_UNLOCKED_COUNT) {
+        // Wrap locked sections in a blur shell with an unlock overlay.
+        const locked = document.createElement("div");
+        locked.className = "guest-locked";
+        const inner = document.createElement("div");
+        inner.className = "guest-locked-inner";
+        inner.appendChild(node);
+        locked.appendChild(inner);
+        const overlay = document.createElement("div");
+        overlay.className = "guest-locked-overlay";
+        overlay.innerHTML = `
+          <div class="guest-lock-icon">🔒</div>
+          <div class="guest-lock-title">${SECTION_LABELS[key] || key}</div>
+          <p>Sign up to unlock this section — and all nine, for every team.</p>
+          <a href="../auth/" class="home-btn-primary">Claim your press pass</a>
+        `;
+        locked.appendChild(overlay);
+        sections.push(locked);
+      } else {
+        sections.push(node);
       }
-      shell.appendChild(block);
-    } catch (err) {
-      console.warn(`guest preview ${slug} failed`, err);
     }
+    const block = renderTeamBlock(cfg, sections);
+    const fullLink = block.querySelector("#full-link");
+    if (fullLink) {
+      fullLink.id = "";
+      fullLink.setAttribute("href", `../${slug}/`);
+    }
+    shell.appendChild(block);
+  } catch (err) {
+    console.warn(`guest preview ${slug} failed`, err);
+    const errDiv = document.createElement("div");
+    errDiv.className = "team-block-error";
+    errDiv.textContent = `Could not load ${slug}: ${err.message}`;
+    shell.appendChild(errDiv);
   }
 
   shell.appendChild(renderGuestCta("bottom"));
