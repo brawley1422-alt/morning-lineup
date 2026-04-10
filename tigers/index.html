@@ -321,6 +321,29 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .transac-badge.rcl{color:var(--team-primary-hi);border-color:var(--team-primary)}
 .transac-desc{font-family:var(--body);font-size:12px;color:var(--paper-dim);line-height:1.4}
 @media(max-width:640px){.transac-item{flex-direction:column;gap:4px}.transac-date{min-width:auto}}
+
+/* ===== Columnists — three personas per team ===== */
+.columnists{position:relative;z-index:2;max-width:var(--maxw);margin:14px auto 22px;padding:0 20px}
+.columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
+.columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
+.columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
+.columnists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.column{background:var(--ink-2);border:1px solid var(--rule);border-top:3px solid var(--team-primary);border-radius:3px;padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;min-height:260px}
+.column[data-role="straight_beat"]{border-top-color:var(--paper)}
+.column[data-role="optimist"]{border-top-color:var(--gold)}
+.column[data-role="pessimist"]{border-top-color:var(--team-accent)}
+.column-byline{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
+.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1}
+.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold)}
+.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim)}
+.column-body p{margin:0 0 10px}
+.column-body p:last-child{margin-bottom:0}
+.column-body .column-off{color:var(--paper-mute);font-size:13px}
+@media(max-width:900px){.columnists-grid{grid-template-columns:1fr;gap:14px}.column{min-height:auto}}
+body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
+body.theme-paper .column-name{color:var(--ink)}
+body.theme-paper .column-body{color:#3a3626}
+body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -351,7 +374,16 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><article class="column" data-role="straight_beat"><div class="column-byline"><span class="column-name">Walt Brzezinski</span><span class="column-role">The Straight Beat</span></div><div class="column-body"><p>The Tigers lost again. Another game, another loss, another step deeper into the abyss. The scoreboard reads 1-3, but the ledger is already thick with red ink. This isn’t just about the numbers—it’s about the rhythm of the season, the way the team’s pulse has slowed to a crawl. Four wins in nine games? That’s not a trend; it’s a warning sign.</p><p>The pitching staff, once a cornerstone of this franchise, has become a liability. Skubal’s 12 strikeouts yesterday were a momentary bright spot, but the rest of the rotation? A collection of hiccups and missed opportunities. Verlander’s been a shadow of himself, and the backups—well, they’re not exactly backups anymore. They’re just placeholders. The bullpen, too, has turned into a minefield. A</p></div></article><article class="column" data-role="optimist"><div class="column-byline"><span class="column-name">Patsy Kwiatkowski</span><span class="column-role">The Optimist</span></div><div class="column-body"><p>The Tigers lost again, but let’s not dwell on the scoreboard. Let’s talk about the slider, the bullpen, and the fact that Tarik Skubal is still a human highlight reel. Yes, he didn’t dominate yesterday, but that’s the thing about a pitcher who’s about to win four Cy Youngs—sometimes you’ve got to wait for the magic. Skubal’s slider is the most Detroit thing I’ve seen since the Fox Theatre reopened. It’s got that old-school grit, that “we’re gonna grind it out” kind of spin. You know the type—like a paczki with a sprinkle of hope.</p><p>The front office has been busy, and let’s be real, they’re not just stacking the roster. They’re stacking it with the kind of talent that makes you believe in the underdog. Sure, the record stinks, but 4-9 isn’t a death sentence. It’s a warning sign, sure, but also a call to arms. The Tigers have always been a team that rises when it matters most. Think back to last year’s playoff run—this team has the heart of a champion. The question isn’t whether they can turn it around; it’s when.</p><p>And let’s not forget the bullpen. Those guys</p></div></article><article class="column" data-role="pessimist"><div class="column-byline"><span class="column-name">Nick Arbogast</span><span class="column-role">The Pessimist</span></div><div class="column-body"><p>The Tigers lost again. Another loss. Another step closer to the abyss. Yesterday’s 1-3 defeat to the Twins wasn’t just another blip on the radar—it was a reminder that the rebuild, the so-called “plan,” the endless promises of a “new era” are all just words. Words that have been repeated for 17 years, maybe more. Rebuild year seventeen. You know the script: a few young arms, a few draft picks, a few trades for “prospects,” and then… nothing. The same old loop, the same old results.</p><p>The 2003 team? That was a different kind of magic. A team that played with heart, grit, and a little bit of luck. They didn’t have the payroll or the star power, but they had something the modern Tigers lack: a sense of purpose. Now? The Tigers have a payroll that’s more than a few million dollars over the league average, and they’re still stuck in the basement. How does that work? How do you spend</p></div></article></div><script>(function(){
+  var grid = document.currentScript && document.currentScript.previousElementSibling;
+  if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
+  var kids = Array.prototype.slice.call(grid.children);
+  for (var i = kids.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = kids[i]; kids[i] = kids[j]; kids[j] = tmp;
+  }
+  kids.forEach(function(k){ grid.appendChild(k); });
+})();</script></section>
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -417,7 +449,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <h3>Tigers Leaders</h3>
     <div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>AVG</td><td class="name">Keith <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.350</td></tr><tr><td>OBP</td><td class="name">Keith <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.395</td></tr><tr><td>HR</td><td class="name">Dingler <span style="color:var(--paper-mute);font-size:10px">C</span></td><td class="num">2</td></tr><tr><td>RBI</td><td class="name">Dingler <span style="color:var(--paper-mute);font-size:10px">C</span></td><td class="num">8</td></tr><tr><td>SB</td><td class="name">Meadows <span style="color:var(--paper-mute);font-size:10px">CF</span></td><td class="num">3</td></tr></tbody></table></div>
+    <tbody><tr><td>AVG</td><td class="name">Keith <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.350</td></tr><tr><td>OBP</td><td class="name">Keith <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.395</td></tr><tr><td>HR</td><td class="name">Dingler <span style="color:var(--paper-mute);font-size:10px">C</span></td><td class="num">2</td></tr><tr><td>RBI</td><td class="name">Dingler <span style="color:var(--paper-mute);font-size:10px">C</span></td><td class="num">8</td></tr><tr><td>SB</td><td class="name">Báez <span style="color:var(--paper-mute);font-size:10px">CF</span></td><td class="num">1</td></tr></tbody></table></div>
     <h3>Next Games</h3>
     <div class="next-games"><div class="nx-card nx-today">
         <div class="nx-head">
@@ -427,7 +459,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-venue">Comerica Park <span class="nx-dome">Retractable Roof</span></div>
         <div class="nx-meta"><span class="nx-opp-rec">MIA: 8-5, 1st NL East (W2)</span></div>
         <div class="nx-pitcher"><span class="nx-side">Tigers</span> Keider Montero<div class="nx-pline">4.15 ERA &middot; 0-1 &middot; 4.1 IP &middot; 3 K &middot; 0.92 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">MIA</span> Chris Paddack<div class="nx-pline">8.31 ERA &middot; 0-1 &middot; 8.2 IP &middot; 10 K &middot; 1.73 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> McGonigle</span><span class="lu-slot"><span class="lu-pos">2B</span> Torres</span><span class="lu-slot"><span class="lu-pos">2B</span> Keith</span><span class="lu-slot"><span class="lu-pos">LF</span> Greene</span><span class="lu-slot"><span class="lu-pos">C</span> Dingler</span><span class="lu-slot"><span class="lu-pos">RF</span> Carpenter</span><span class="lu-slot"><span class="lu-pos">1B</span> Torkelson</span><span class="lu-slot"><span class="lu-pos">RF</span> Pérez</span><span class="lu-slot"><span class="lu-pos">CF</span> Báez</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Marlins.TV &middot; Detroit SportsNet</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 560AM WQAM &middot; WXYT 97.1 FM</div>
         <div class="nx-wx">72°F &middot; Climate controlled</div>
       </div><div class="nx-card">
@@ -525,7 +557,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-07</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Detroit Tigers sent LHP Bailey Horn on a rehab assignment to Lakeland Flying Tigers.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Detroit Tigers activated RHP Sawyer Gipson-Long from the 15-day injured list.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Detroit Tigers optioned RHP Sawyer Gipson-Long to Toledo Mud Hens.</span></div><div class="transac-item"><span class="transac-date">04-04</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Detroit Tigers recalled RHP Keider Montero from Toledo Mud Hens.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Detroit Tigers sent RHP Sawyer Gipson-Long on a rehab assignment to Lakeland Flying Tigers.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Detroit Tigers sent RHP Sawyer Gipson-Long on a rehab assignment to Lakeland Flying Tigers.</span></div><div class="transac-item"><span class="transac-date">04-01</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Detroit Tigers placed RHP Justin Verlander on the 15-day injured list retroactive to April 1, 2026. Left hip inflammation.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>SS <strong>Trey Sweeney</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Bailey Horn</strong></dd><dd>P <strong>Justin Verlander</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Beau Brieske</strong></dd><dd>P <strong>Jackson Jobe</strong></dd><dd>P <strong>Reese Olson</strong></dd><dd>P <strong>Troy Melton</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Detroit Tigers placed CF Parker Meadows on the 10-day injured list. Left radius fracture.</span></div><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Detroit Tigers recalled RF Wenceel Pérez from Toledo Mud Hens.</span></div><div class="transac-item"><span class="transac-date">04-07</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Detroit Tigers sent LHP Bailey Horn on a rehab assignment to Lakeland Flying Tigers.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Detroit Tigers activated RHP Sawyer Gipson-Long from the 15-day injured list.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Detroit Tigers optioned RHP Sawyer Gipson-Long to Toledo Mud Hens.</span></div><div class="transac-item"><span class="transac-date">04-04</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Detroit Tigers recalled RHP Keider Montero from Toledo Mud Hens.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Detroit Tigers sent RHP Sawyer Gipson-Long on a rehab assignment to Lakeland Flying Tigers.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Detroit Tigers sent RHP Sawyer Gipson-Long on a rehab assignment to Lakeland Flying Tigers.</span></div><div class="transac-item"><span class="transac-date">04-01</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Detroit Tigers placed RHP Justin Verlander on the 15-day injured list retroactive to April 1, 2026. Left hip inflammation.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>CF <strong>Parker Meadows</strong></dd><dd>SS <strong>Trey Sweeney</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Bailey Horn</strong></dd><dd>P <strong>Justin Verlander</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Beau Brieske</strong></dd><dd>P <strong>Jackson Jobe</strong></dd><dd>P <strong>Reese Olson</strong></dd><dd>P <strong>Troy Melton</strong></dd></dl></div></div>
   </section>
 
   <section id="farm" open>
@@ -614,7 +646,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div><div class="g" data-gpk="823808">
         <div class="matchup">WSH @ MIL</div>
         <div class="time">6:40 CT</div>
-        <div class="probs">Irvin vs Patrick</div>
+        <div class="probs">Irvin vs Ashby</div>
         <div class="bc">Brewers.TV · Nationals.TV</div>
       </div><div class="g" data-gpk="823076">
         <div class="matchup">BOS @ STL</div>
@@ -692,7 +724,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <tbody><tr><td class="team">Marlins</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Braves</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Mets</td><td class="num">7</td><td class="num">6</td><td class="num">1.0</td></tr><tr><td class="team">Phillies</td><td class="num">6</td><td class="num">6</td><td class="num">1.5</td></tr><tr><td class="team">Nationals</td><td class="num">4</td><td class="num">8</td><td class="num">3.5</td></tr></tbody></table></div><h4>NL Central</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Brewers</td><td class="num">8</td><td class="num">4</td><td class="num">&mdash;</td></tr><tr><td class="team">Reds</td><td class="num">8</td><td class="num">5</td><td class="num">0.5</td></tr><tr><td class="team">Pirates</td><td class="num">7</td><td class="num">5</td><td class="num">1.0</td></tr><tr><td class="team">Cardinals</td><td class="num">7</td><td class="num">5</td><td class="num">1.0</td></tr><tr><td class="team">Cubs</td><td class="num">6</td><td class="num">6</td><td class="num">2.0</td></tr></tbody></table></div><h4>NL West</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team">Brewers</td><td class="num">8</td><td class="num">4</td><td class="num">&mdash;</td></tr><tr><td class="team">Pirates</td><td class="num">8</td><td class="num">5</td><td class="num">0.5</td></tr><tr><td class="team">Reds</td><td class="num">8</td><td class="num">5</td><td class="num">0.5</td></tr><tr><td class="team">Cardinals</td><td class="num">7</td><td class="num">5</td><td class="num">1.0</td></tr><tr><td class="team">Cubs</td><td class="num">6</td><td class="num">7</td><td class="num">2.5</td></tr></tbody></table></div><h4>NL West</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
         <tbody><tr><td class="team">Dodgers</td><td class="num">9</td><td class="num">3</td><td class="num">&mdash;</td></tr><tr><td class="team">Padres</td><td class="num">7</td><td class="num">6</td><td class="num">2.5</td></tr><tr><td class="team">D-backs</td><td class="num">7</td><td class="num">6</td><td class="num">2.5</td></tr><tr><td class="team">Rockies</td><td class="num">6</td><td class="num">7</td><td class="num">3.5</td></tr><tr><td class="team">Giants</td><td class="num">5</td><td class="num">8</td><td class="num">4.5</td></tr></tbody></table></div></div></div>
@@ -723,7 +755,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Comerica Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 13:21 CT</span>
+  <span>Filed 04/10/26 16:17 CT</span>
 </footer>
 
 <script>
