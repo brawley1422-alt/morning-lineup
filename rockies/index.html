@@ -321,6 +321,29 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .transac-badge.rcl{color:var(--team-primary-hi);border-color:var(--team-primary)}
 .transac-desc{font-family:var(--body);font-size:12px;color:var(--paper-dim);line-height:1.4}
 @media(max-width:640px){.transac-item{flex-direction:column;gap:4px}.transac-date{min-width:auto}}
+
+/* ===== Columnists — three personas per team ===== */
+.columnists{position:relative;z-index:2;max-width:var(--maxw);margin:14px auto 22px;padding:0 20px}
+.columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
+.columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
+.columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
+.columnists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.column{background:var(--ink-2);border:1px solid var(--rule);border-top:3px solid var(--team-primary);border-radius:3px;padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;min-height:260px}
+.column[data-role="straight_beat"]{border-top-color:var(--paper)}
+.column[data-role="optimist"]{border-top-color:var(--gold)}
+.column[data-role="pessimist"]{border-top-color:var(--team-accent)}
+.column-byline{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
+.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1}
+.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold)}
+.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim)}
+.column-body p{margin:0 0 10px}
+.column-body p:last-child{margin-bottom:0}
+.column-body .column-off{color:var(--paper-mute);font-size:13px}
+@media(max-width:900px){.columnists-grid{grid-template-columns:1fr;gap:14px}.column{min-height:auto}}
+body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
+body.theme-paper .column-name{color:var(--ink)}
+body.theme-paper .column-body{color:#3a3626}
+body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -351,7 +374,16 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><article class="column" data-role="straight_beat"><div class="column-byline"><span class="column-name">Casey Underwood</span><span class="column-role">The Straight Beat</span></div><div class="column-body"><p>The Rockies lost again. Another game, another 3-7 drubbing. The scoreboard reads like a bad joke—Coors Field, the place where the thin air is supposed to turn fly balls into home runs, now feels more like a graveyard for the team’s fading hopes. High altitude math isn’t just about batting averages or pitch trajectories; it’s about the arithmetic of expectations. You’d think, with the sun beating down on this place, the Rockies would be doing more than just scratching out runs. But here we are, 6-7, 3.5 games behind, and the math isn’t adding up.</p><p>The offense, that supposed strength, has been a sieve. Yesterday’s game was a textbook example: Rockies’ hitters couldn’t capitalize on opportunities. The Padres’ pitching staff, for all its flaws, was just too effective. You can’t blame the weather for that. You can</p></div></article><article class="column" data-role="optimist"><div class="column-byline"><span class="column-name">Winnie Calderón</span><span class="column-role">The Optimist</span></div><div class="column-body"><p>The Rockies lost yesterday, but that’s not the story I’m telling. The story is about the flicker of hope that lingers in the air at Coors Field, the way the sun hits the scoreboard just so, and the stubborn belief that this team is still building something special. You see, every season is a canvas, and the Rockies are just getting their brushes wet.</p><p>Let’s not mince words: the 6-7 record feels like a punch to the gut. But here’s the thing—this team isn’t built on April stats. They’re built on May magic. The Padres’ win? A reminder that baseball is a long, winding road, and every loss is just a detour. The Rockies have the kind of roster that thrives in the second half. You think they’re struggling now? Wait till the sun starts climbing higher in the sky and the nights get cooler. That’s when the real magic happens.</p><p>Look at the rotation. They’ve got pieces that can click into</p></div></article><article class="column" data-role="pessimist"><div class="column-byline"><span class="column-name">Dwight Krenek</span><span class="column-role">The Pessimist</span></div><div class="column-body"><p>The Rockies lost again. Another loss. Another step closer to the end of another rebuild. You’d think after seven years of this, the team would have a plan. Instead, they’ve got the Monfort method: a strategy that’s less about baseball and more about how many suites can be filled before the season ends.</p><p>The Padres swept them yesterday, 7-3. Not a crushing defeat, but a reminder that the Rockies are still stuck in the same place they were in 2016. Back then, the team was a mess, but at least there was a glimmer of hope. Now? Hope is a luxury the Rockies can’t afford. They’re</p></div></article></div><script>(function(){
+  var grid = document.currentScript && document.currentScript.previousElementSibling;
+  if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
+  var kids = Array.prototype.slice.call(grid.children);
+  for (var i = kids.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = kids[i]; kids[i] = kids[j]; kids[j] = tmp;
+  }
+  kids.forEach(function(k){ grid.appendChild(k); });
+})();</script></section>
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -429,7 +461,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-pitcher"><span class="nx-side">Rockies</span> Tomoyuki Sugano<div class="nx-pline">1.69 ERA &middot; 1-0 &middot; 10.2 IP &middot; 9 K &middot; 0.84 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">SD</span> Walker Buehler<div class="nx-pline">9.45 ERA &middot; 0-1 &middot; 6.2 IP &middot; 7 K &middot; 1.95 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Padres.TV Presented by UC San Diego Health &middot; Rockies.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KWFN 97.3 &middot; KOA 850 AM/94.1 FM </div>
-        <div class="nx-wx">72°F &middot; Mostly Clear &middot; 6 mph WSW</div>
+        <div class="nx-wx">72°F &middot; Clear &middot; 10 mph W</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sat, Apr 11 &middot; at SD</div>
@@ -614,7 +646,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div><div class="g" data-gpk="823808">
         <div class="matchup">WSH @ MIL</div>
         <div class="time">6:40 CT</div>
-        <div class="probs">Irvin vs Patrick</div>
+        <div class="probs">Irvin vs Ashby</div>
         <div class="bc">Brewers.TV · Nationals.TV</div>
       </div><div class="g" data-gpk="823076">
         <div class="matchup">BOS @ STL</div>
@@ -692,7 +724,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <tbody><tr><td class="team">Marlins</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Braves</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Mets</td><td class="num">7</td><td class="num">6</td><td class="num">1.0</td></tr><tr><td class="team">Phillies</td><td class="num">6</td><td class="num">6</td><td class="num">1.5</td></tr><tr><td class="team">Nationals</td><td class="num">4</td><td class="num">8</td><td class="num">3.5</td></tr></tbody></table></div><h4>NL Central</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Brewers</td><td class="num">8</td><td class="num">4</td><td class="num">&mdash;</td></tr><tr><td class="team">Reds</td><td class="num">8</td><td class="num">5</td><td class="num">0.5</td></tr><tr><td class="team">Pirates</td><td class="num">7</td><td class="num">5</td><td class="num">1.0</td></tr><tr><td class="team">Cardinals</td><td class="num">7</td><td class="num">5</td><td class="num">1.0</td></tr><tr><td class="team">Cubs</td><td class="num">6</td><td class="num">6</td><td class="num">2.0</td></tr></tbody></table></div><h4>NL West</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team">Brewers</td><td class="num">8</td><td class="num">4</td><td class="num">&mdash;</td></tr><tr><td class="team">Pirates</td><td class="num">8</td><td class="num">5</td><td class="num">0.5</td></tr><tr><td class="team">Reds</td><td class="num">8</td><td class="num">5</td><td class="num">0.5</td></tr><tr><td class="team">Cardinals</td><td class="num">7</td><td class="num">5</td><td class="num">1.0</td></tr><tr><td class="team">Cubs</td><td class="num">6</td><td class="num">7</td><td class="num">2.5</td></tr></tbody></table></div><h4>NL West</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
         <tbody><tr><td class="team">Dodgers</td><td class="num">9</td><td class="num">3</td><td class="num">&mdash;</td></tr><tr><td class="team">Padres</td><td class="num">7</td><td class="num">6</td><td class="num">2.5</td></tr><tr><td class="team">D-backs</td><td class="num">7</td><td class="num">6</td><td class="num">2.5</td></tr><tr class="my-team"><td class="team">Rockies</td><td class="num">6</td><td class="num">7</td><td class="num">3.5</td></tr><tr><td class="team">Giants</td><td class="num">5</td><td class="num">8</td><td class="num">4.5</td></tr></tbody></table></div></div></div>
@@ -723,7 +755,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Coors Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 13:20 CT</span>
+  <span>Filed 04/10/26 16:15 CT</span>
 </footer>
 
 <script>
