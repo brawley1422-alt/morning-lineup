@@ -133,6 +133,7 @@ if data_file.exists():
 # 4) push static asset files (auth UI + config). These rarely change so we
 #    GET current SHA first to allow in-place updates without 422 conflicts.
 STATIC_ASSETS = [
+    "sw.js",
     "config/supabase.js",
     "auth/index.html",
     "auth/reset.html",
