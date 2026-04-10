@@ -365,12 +365,17 @@ body.theme-paper section { color: var(--ink); }
 
 /* ---- Section menu (TOC) ---- */
 .home-toc {
-  margin: 4px 0 24px;
-  padding: 14px 18px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin: 4px -20px 24px;
+  padding: 10px 20px 12px;
   background: var(--ink-2);
   border: 1px solid var(--rule);
   border-top: 2px solid var(--gold-dim);
-  border-radius: 3px;
+  border-radius: 0;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
 }
 .home-toc-title {
   display: block;
