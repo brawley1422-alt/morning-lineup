@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0d0f14">
 <title>The Morning Lineup</title>
+<script type="module">
+// If a session token exists in localStorage (ml-auth key), skip the redirect.
+// Otherwise bounce to /home which shows the signup CTA. Cheap check — avoids
+// loading the full Supabase client just to decide.
+try {
+  const raw = localStorage.getItem("ml-auth");
+  if (!raw) window.location.replace("home/");
+  else {
+    const parsed = JSON.parse(raw);
+    const expiresAt = parsed?.expires_at || 0;
+    if (!parsed?.access_token || expiresAt * 1000 < Date.now()) {
+      window.location.replace("home/");
+    }
+  }
+} catch { window.location.replace("home/"); }
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,800;0,900;1,700&family=Oswald:wght@400;500;600;700&family=Lora:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">

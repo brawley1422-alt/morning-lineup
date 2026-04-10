@@ -95,7 +95,8 @@ python3 build.py --team cubs
 python3 build.py --landing
 
 # Deploy all 30 teams + landing to GitHub Pages
-export GITHUB_TOKEN="github_pat_..."
+# PAT is stored at ~/.secrets/morning-lineup.env (chmod 600, outside repo)
+source ~/.secrets/morning-lineup.env
 python3 deploy.py
 
 # Evening edition — watches for game Final, rebuilds + deploys
