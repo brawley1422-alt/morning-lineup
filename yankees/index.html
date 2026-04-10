@@ -321,6 +321,29 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .transac-badge.rcl{color:var(--team-primary-hi);border-color:var(--team-primary)}
 .transac-desc{font-family:var(--body);font-size:12px;color:var(--paper-dim);line-height:1.4}
 @media(max-width:640px){.transac-item{flex-direction:column;gap:4px}.transac-date{min-width:auto}}
+
+/* ===== Columnists — three personas per team ===== */
+.columnists{position:relative;z-index:2;max-width:var(--maxw);margin:14px auto 22px;padding:0 20px}
+.columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
+.columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
+.columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
+.columnists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.column{background:var(--ink-2);border:1px solid var(--rule);border-top:3px solid var(--team-primary);border-radius:3px;padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;min-height:260px}
+.column[data-role="straight_beat"]{border-top-color:var(--paper)}
+.column[data-role="optimist"]{border-top-color:var(--gold)}
+.column[data-role="pessimist"]{border-top-color:var(--team-accent)}
+.column-byline{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
+.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1}
+.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold)}
+.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim)}
+.column-body p{margin:0 0 10px}
+.column-body p:last-child{margin-bottom:0}
+.column-body .column-off{color:var(--paper-mute);font-size:13px}
+@media(max-width:900px){.columnists-grid{grid-template-columns:1fr;gap:14px}.column{min-height:auto}}
+body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
+body.theme-paper .column-name{color:var(--ink)}
+body.theme-paper .column-body{color:#3a3626}
+body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -351,7 +374,16 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><article class="column" data-role="straight_beat"><div class="column-byline"><span class="column-name">Raymond &#x27;Ray&#x27; Tortorelli</span><span class="column-role">The Straight Beat</span></div><div class="column-body"><p>The Yankees lost again. Not in a way that makes sense, not in a way that feels fair, but in the way that has become all too familiar this season. A 1-0 defeat to the A’s, a team that plays the game like it’s the final out of a World Series. The Bronx box, which has held so many triumphs over the years, now feels like a cage.</p><p>The bullpen, that fragile line of defense, continues to haunt us. Cole pitched into the seventh, as if he were trying to make up for the innings he missed last season. But even a seven-inning performance isn’t enough when the offense can’t find the barrel. The Yankees have the talent, the payroll, the history — but tonight, they looked like a team that’s lost its rhythm. The A’s, for all their mediocrity, played with urgency. They didn’t take the game for granted. That’s the difference.</p><p>I’ve covered this team for decades, seen them rise from the ashes of the 1994 strike, rebuild in the ’90s, and finally break through in ’96. Back then, the Bronx box was a place of destiny. Now,</p></div></article><article class="column" data-role="optimist"><div class="column-byline"><span class="column-name">Franca &#x27;Frannie&#x27; Bellino</span><span class="column-role">The Optimist</span></div><div class="column-body"><p>The Yankees lost yesterday, but let’s not let that sour the day. A 1-0 decision? That’s the kind of game that makes you grab a pastrami sandwich and say, “Ah, but the season’s still young, pally.” You know what I saw from Juan Soto yesterday? October in his eyes. By the time the leaves turn we’re having a parade, and I’m catering it.</p><p>Now, I’ll be the first to admit, a loss stings. Especially when you’re looking at that standings board and see the Yankees in the hole. But here’s the thing—this team isn’t just about the old guard. Look at the kids in the rotation, the bullpen, the farm system. They’re not just prospects; they’re the future. And the future? That’s where the parade starts.</p><p>Take the young arms, the ones with fire in their veins and a fastball that</p></div></article><article class="column" data-role="pessimist"><div class="column-byline"><span class="column-name">Sol Hirschberg</span><span class="column-role">The Pessimist</span></div><div class="column-body"><p>The Yankees lost again. Not in a dramatic way, not with a meltdown or a meltdown of the bullpen, but in the most frustrating, insipid manner possible: 1-0 to the Athletics. A team that’s not even in the playoffs. A team that’s been out of the playoffs for five years. A team that’s been out of the playoffs for five years. And here we are, 8-4, two games behind in the AL East, with the same old excuses. Hal is not George, but that doesn’t mean Cashman should be handing out contracts like it’s 1998.</p><p>Let’s talk about the game. The Yankees didn’t hit. They didn’t field. They didn’t even make a decent play. The Athletics, for all their mediocrity, managed to string together a few hits and a couple of runs. Meanwhile, the Yankees’ offense looked like a team that’s been told they’re good enough to win but not good enough to actually win. The pitching? Well, the starters were okay, but the bullpen? The bullpen is the same as it’s been for years. A bunch of guys who can get out of jams but can’t close them. And when they’re down a run in the ninth, you know what happens? You know what happens because</p></div></article></div><script>(function(){
+  var grid = document.currentScript && document.currentScript.previousElementSibling;
+  if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
+  var kids = Array.prototype.slice.call(grid.children);
+  for (var i = kids.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = kids[i]; kids[i] = kids[j]; kids[j] = tmp;
+  }
+  kids.forEach(function(k){ grid.appendChild(k); });
+})();</script></section>
 <div class="wrap">
   <nav class="toc" aria-label="Sections">
     <div class="title">Sections</div>
@@ -427,7 +459,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-venue">Tropicana Field <span class="nx-dome">Dome</span></div>
         <div class="nx-meta"><span class="nx-opp-rec">TB: 5-7, 3rd AL East (L2)</span></div>
         <div class="nx-pitcher"><span class="nx-side">Yankees</span> Luis Gil</div><div class="nx-pitcher"><span class="nx-side">TB</span> Steven Matz<div class="nx-pline">4.09 ERA &middot; 2-0 &middot; 11.0 IP &middot; 10 K &middot; 1.00 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">1B</span> Goldschmidt</span><span class="lu-slot"><span class="lu-pos">RF</span> Judge</span><span class="lu-slot"><span class="lu-pos">LF</span> Bellinger</span><span class="lu-slot"><span class="lu-pos">DH</span> Stanton</span><span class="lu-slot"><span class="lu-pos">3B</span> Rosario</span><span class="lu-slot"><span class="lu-pos">2B</span> Jr.</span><span class="lu-slot"><span class="lu-pos">RF</span> Grichuk</span><span class="lu-slot"><span class="lu-pos">SS</span> Caballero</span><span class="lu-slot"><span class="lu-pos">C</span> Wells</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> YES &middot; Rays.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WDAE 95.7 FM &middot; WFAN 660/101.9 FM</div>
         <div class="nx-wx">72°F &middot; Climate controlled</div>
       </div><div class="nx-card">
@@ -523,7 +555,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><p><em class="slang">No roster moves in the last 7 days.</em></p></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>SS <strong>Anthony Volpe</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Carlos Rodón</strong></dd><dd>P <strong>Gerrit Cole</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Clarke Schmidt</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge ">Designated f</span><span class="transac-desc">New York Yankees designated RHP Cade Winquest for assignment.</span></div><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge ">Recalled</span><span class="transac-desc">New York Yankees recalled RHP Luis Gil from Scranton/Wilkes-Barre RailRiders.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>SS <strong>Anthony Volpe</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Carlos Rodón</strong></dd><dd>P <strong>Gerrit Cole</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Clarke Schmidt</strong></dd></dl></div></div>
   </section>
 
   <section id="farm" open>
@@ -612,7 +644,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       </div><div class="g" data-gpk="823808">
         <div class="matchup">WSH @ MIL</div>
         <div class="time">6:40 CT</div>
-        <div class="probs">Irvin vs Patrick</div>
+        <div class="probs">Irvin vs Ashby</div>
         <div class="bc">Brewers.TV · Nationals.TV</div>
       </div><div class="g" data-gpk="823076">
         <div class="matchup">BOS @ STL</div>
@@ -684,7 +716,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <tbody><tr><td class="team">Marlins</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Braves</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Mets</td><td class="num">7</td><td class="num">6</td><td class="num">1.0</td></tr><tr><td class="team">Phillies</td><td class="num">6</td><td class="num">6</td><td class="num">1.5</td></tr><tr><td class="team">Nationals</td><td class="num">4</td><td class="num">8</td><td class="num">3.5</td></tr></tbody></table></div><h4>NL Central</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Brewers</td><td class="num">8</td><td class="num">4</td><td class="num">&mdash;</td></tr><tr><td class="team">Reds</td><td class="num">8</td><td class="num">5</td><td class="num">0.5</td></tr><tr><td class="team">Pirates</td><td class="num">7</td><td class="num">5</td><td class="num">1.0</td></tr><tr><td class="team">Cardinals</td><td class="num">7</td><td class="num">5</td><td class="num">1.0</td></tr><tr><td class="team">Cubs</td><td class="num">6</td><td class="num">6</td><td class="num">2.0</td></tr></tbody></table></div><h4>NL West</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team">Brewers</td><td class="num">8</td><td class="num">4</td><td class="num">&mdash;</td></tr><tr><td class="team">Pirates</td><td class="num">8</td><td class="num">5</td><td class="num">0.5</td></tr><tr><td class="team">Reds</td><td class="num">8</td><td class="num">5</td><td class="num">0.5</td></tr><tr><td class="team">Cardinals</td><td class="num">7</td><td class="num">5</td><td class="num">1.0</td></tr><tr><td class="team">Cubs</td><td class="num">6</td><td class="num">7</td><td class="num">2.5</td></tr></tbody></table></div><h4>NL West</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
         <tbody><tr><td class="team">Dodgers</td><td class="num">9</td><td class="num">3</td><td class="num">&mdash;</td></tr><tr><td class="team">Padres</td><td class="num">7</td><td class="num">6</td><td class="num">2.5</td></tr><tr><td class="team">D-backs</td><td class="num">7</td><td class="num">6</td><td class="num">2.5</td></tr><tr><td class="team">Rockies</td><td class="num">6</td><td class="num">7</td><td class="num">3.5</td></tr><tr><td class="team">Giants</td><td class="num">5</td><td class="num">8</td><td class="num">4.5</td></tr></tbody></table></div></div></div>
@@ -715,7 +747,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Yankee Stadium Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 13:21 CT</span>
+  <span>Filed 04/10/26 16:21 CT</span>
 </footer>
 
 <script>
