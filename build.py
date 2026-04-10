@@ -13,6 +13,7 @@ from datetime import date, timedelta, datetime, timezone
 from pathlib import Path
 from html import escape
 
+import sections.division
 import sections.farm
 import sections.headline
 import sections.history
@@ -457,30 +458,6 @@ def fmt_date(d):
 
 
 
-def render_nlc_standings(standings_data, tmap):
-    recs = []
-    for rec in standings_data["records"]:
-        if rec["division"]["id"] == DIV_ID:
-            recs = rec["teamRecords"]
-            break
-    rows = []
-    for tr in recs:
-        tid = tr["team"]["id"]
-        cls = ' class="my-team"' if tid == TEAM_ID else ''
-        name = team_name(tmap, tid)
-        l10 = next((s for s in tr["records"]["splitRecords"] if s["type"]=="lastTen"), {})
-        l10_str = f'{l10.get("wins",0)}-{l10.get("losses",0)}' if l10 else "–"
-        gb = tr.get("gamesBack", "-")
-        if gb in ("-", "0.0"): gb = "&mdash;"
-        rows.append(f'<tr{cls}><td class="team">{escape(name)}</td>'
-                    f'<td class="num">{tr["wins"]}</td><td class="num">{tr["losses"]}</td>'
-                    f'<td class="num pct">{tr["winningPercentage"]}</td>'
-                    f'<td class="num">{gb}</td><td class="num">{l10_str}</td></tr>')
-    return f"""<div class="tblwrap"><table class="data standings">
-    <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
-    <th style="text-align:right">PCT</th><th style="text-align:right">GB</th>
-    <th style="text-align:right">L10</th></tr></thead>
-    <tbody>{"".join(rows)}</tbody></table></div>"""
 
 DOME_VENUES = {12: "Dome", 32: "Retractable Roof", 680: "Retractable Roof",
                2889: "Retractable Roof", 14: "Retractable Roof",
@@ -669,33 +646,6 @@ def render_slate_today(games_t, tmap):
       </div>""")
     return f'<div class="slate">{"".join(cards)}</div>'
 
-def render_nlc_rivals(games_y, tmap):
-    NLC = {int(k): v for k, v in CFG["rivals"].items()}
-    cards = []
-    for g in games_y:
-        aid = g["teams"]["away"]["team"]["id"]; hid = g["teams"]["home"]["team"]["id"]
-        tid = None
-        if aid in NLC and aid != TEAM_ID: tid = aid
-        elif hid in NLC and hid != TEAM_ID: tid = hid
-        else: continue
-        name = NLC[tid]
-        is_away = tid == aid
-        opp_id = hid if is_away else aid
-        opp_ab = abbr(tmap, opp_id)
-        my_score = g["teams"]["away" if is_away else "home"].get("score",0)
-        opp_score = g["teams"]["home" if is_away else "away"].get("score",0)
-        won = my_score > opp_score
-        result = f'{"W" if won else "L"} {my_score}-{opp_score} {"at" if is_away else "vs"} {opp_ab}'
-        wp = g.get("decisions",{}).get("winner",{}).get("fullName","") if g.get("decisions") else ""
-        lp = g.get("decisions",{}).get("loser",{}).get("fullName","") if g.get("decisions") else ""
-        blurb = f'WP: {wp}' + (f' · LP: {lp}' if lp else '')
-        cards.append(f"""<div class="rival">
-        <h4>{escape(name)} <span class="score">{result}</span></h4>
-        <p>{escape(blurb)}</p>
-      </div>""")
-    if not cards:
-        cards.append(f'<div class="rival"><h4>{DIV_NAME} Rivals</h4><p>All off yesterday.</p></div>')
-    return f'<div class="rivals">{"".join(cards)}</div>'
 
 def detect_league_news(games_y, standings_data, tmap):
     """Scan yesterday's games and standings for notable events."""
@@ -930,12 +880,11 @@ def page(briefing):
 
     headline_html, summary_tag = sections.headline.render(briefing)
 
-    nlc_stand = render_nlc_standings(data["standings"], data["tmap"])
+    division_html = sections.division.render(briefing)
     scoreboard_yest = render_scoreboard_yest(data["games_y"], data["tmap"])
     all_div = render_all_divisions(data["standings"], data["tmap"])
     leaders_html = render_leaders(data["leaders_hit"], data["leaders_pit"], data["tmap"])
     slate_html = render_slate_today(data["games_t"], data["tmap"])
-    rivals_html = render_nlc_rivals(data["games_y"], data["tmap"])
     news_items = detect_league_news(data["games_y"], data["standings"], data["tmap"])
     news_count = len(news_items)
     league_news_html = render_league_news_from_items(news_items)
@@ -1083,10 +1032,7 @@ def page(briefing):
       <span class="tag">Rivals &middot; Yesterday</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <h3>Standings</h3>
-    {nlc_stand}
-    <h3>Rivals &middot; Yesterday</h3>
-    {rivals_html}
+    {division_html}
   </section>
 
   <section id="league" open>
