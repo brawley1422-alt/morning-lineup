@@ -8,6 +8,7 @@ import json
 import sys
 import urllib.request
 import urllib.parse
+from dataclasses import dataclass, field
 from datetime import date, timedelta, datetime, timezone
 from pathlib import Path
 from html import escape
@@ -384,6 +385,48 @@ def load_all():
         "minors": minors, "prospects": prospects, "history": history,
         "transactions": transactions, "scout_data": scout_data,
     }
+
+# ─── briefing dataclass ─────────────────────────────────────────────────────
+
+@dataclass
+class TeamBriefing:
+    """Per-team build payload passed to section render functions.
+
+    Holds the raw per-team config, the raw load_all() data dict, and a handful
+    of direct config aliases that section files read frequently. No computed
+    convenience fields — aliases only. Introduced in the sectioned-build
+    refactor (see docs/plans/2026-04-10-001-refactor-sectioned-build-plan.md)
+    so section files can avoid reaching into build.py module-level globals.
+    """
+    config: dict
+    data: dict
+    team_id: int
+    team_name: str
+    div_id: int
+    div_name: str
+    affiliates: list = field(default_factory=list)
+
+
+def build_briefing(team_slug):
+    """Construct a TeamBriefing for the given team slug.
+
+    Caveat: load_all() reads TEAM_ID, AFFILIATES, and DIV_ID from module
+    globals set at import time from --team. Calling build_briefing with a
+    different slug than the one passed via --team will return mismatched data.
+    Only safe to call with the same slug that initialized the module globals
+    (i.e. the current _team_slug).
+    """
+    cfg = load_team_config(team_slug)
+    data = load_all()
+    return TeamBriefing(
+        config=cfg,
+        data=data,
+        team_id=cfg["id"],
+        team_name=cfg["name"],
+        div_id=cfg["division_id"],
+        div_name=cfg["division_name"],
+        affiliates=cfg["affiliates"],
+    )
 
 # ─── rendering helpers ───────────────────────────────────────────────────────
 
