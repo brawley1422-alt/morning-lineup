@@ -7,77 +7,109 @@
 <link rel="icon" href="/morning-lineup/icons/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,900&family=Oswald:wght@400;600&family=Lora:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="auth.css">
 </head>
 <body>
+
 <header class="masthead auth-masthead">
-  <div class="kicker">
-    <span>Morning Lineup</span>
-    <span class="vol">Vol. I</span>
+  <div class="mast-kicker-l">
+    <div class="row"><span>Edition</span><span class="val">Subscriber</span></div>
+    <div class="row"><span>Vol.</span><span class="val">I</span></div>
   </div>
-  <h1>
-    <span>
-      <span class="the">The</span>
-      <span class="lineup">Lineup</span>
-    </span>
-  </h1>
-  <div class="dek">
-    <span class="item"><span class="label">Edition</span><span class="val">Subscriber</span></span>
-    <span class="item"><span class="label">Access</span><span class="val">Members Only</span></span>
+  <div class="mast-center">
+    <h1><span class="the">The</span><span class="lineup">Morning <em>Lineup</em></span></h1>
+  </div>
+  <div class="mast-kicker-r">
+    <div class="row"><span>Access</span><span class="val gold">Members Only</span></div>
+    <div class="row"><span>Desk</span><span class="val">Credentials</span></div>
   </div>
 </header>
 
 <main class="auth-wrap">
-  <section class="auth-card">
-    <div class="sechead">
-      <span class="num" id="mode-num">01</span>
-      <span class="h" id="mode-title">Sign In</span>
-      <span class="tag" id="mode-tag">Members Desk</span>
-    </div>
 
-    <p class="auth-lede" id="mode-lede">
-      Welcome back. Your personalized briefing awaits.
+  <section class="auth-hero">
+    <p class="auth-hero-mark"><span class="dot"></span>Members Desk · Press Credentials</p>
+
+    <h2 class="auth-hero-quote">
+      &ldquo;The press box is quiet<br>
+      before first pitch.<br>
+      <span class="accent">Take your seat.</span>&rdquo;
+    </h2>
+
+    <p class="auth-hero-byline">
+      <strong>&mdash; The Lineup Desk</strong> &nbsp;&middot;&nbsp; Daily since Opening Day
     </p>
 
-    <form id="auth-form" method="post" action="#" novalidate>
-      <label class="field" id="name-field" hidden>
-        <span>Display Name</span>
-        <input type="text" name="display_name" autocomplete="name" placeholder="How you'll be credited">
-      </label>
+    <div class="auth-hero-rule"><span class="diamond"></span></div>
 
-      <label class="field">
-        <span>Email</span>
-        <input type="email" name="email" autocomplete="email" required placeholder="you@ballpark.com">
-      </label>
-
-      <label class="field" id="password-field">
-        <span>Password</span>
-        <input type="password" name="password" autocomplete="current-password" required minlength="6" placeholder="At least 6 characters">
-      </label>
-
-      <div class="auth-error" id="auth-error" role="alert" hidden></div>
-      <div class="auth-notice" id="auth-notice" role="status" hidden></div>
-
-      <button type="submit" class="auth-submit" id="auth-submit">Sign In</button>
-    </form>
-
-    <div class="auth-footer">
-      <button type="button" class="link-btn" id="toggle-mode">Need an account? Sign up</button>
-      <button type="button" class="link-btn" id="forgot-link">Forgot password</button>
-    </div>
-
-    <p class="auth-fineprint">
-      Accounts are free. By signing up you accept that this is a baseball newspaper, not a legal document.
-    </p>
+    <ul class="auth-hero-list">
+      <li><span class="n">01</span><span>Daily Briefings &middot; All 30 Teams</span><span class="x">ACCESS</span></li>
+      <li><span class="n">02</span><span>The Scorecard Book</span><span class="x">ACCESS</span></li>
+      <li><span class="n">03</span><span>Farm Report &amp; Prospect Tracker</span><span class="x">ACCESS</span></li>
+      <li class="restricted"><span class="n">04</span><span>Evening Edition &amp; Wire</span><span class="x">MEMBERS</span></li>
+      <li class="restricted"><span class="n">05</span><span>Archive &middot; Every Box Score</span><span class="x">MEMBERS</span></li>
+    </ul>
   </section>
+
+  <div class="auth-card-wrap">
+    <section class="auth-card">
+      <div class="sechead">
+        <span class="num" id="mode-num">01</span>
+        <span class="h" id="mode-title">Sign In</span>
+        <span class="tag" id="mode-tag">Members Desk</span>
+      </div>
+
+      <p class="auth-lede" id="mode-lede">
+        Welcome back. Your personalized briefing awaits.
+      </p>
+
+      <form id="auth-form" method="post" action="#" novalidate>
+        <label class="field" id="name-field" hidden>
+          <span>Display Name</span>
+          <input type="text" name="display_name" autocomplete="name" placeholder="How you'll be credited">
+        </label>
+
+        <label class="field">
+          <span>Email</span>
+          <input type="email" name="email" autocomplete="email" required placeholder="you@ballpark.com">
+        </label>
+
+        <label class="field" id="password-field">
+          <span>Password</span>
+          <input type="password" name="password" autocomplete="current-password" required minlength="6" placeholder="At least 6 characters">
+        </label>
+
+        <div class="auth-error" id="auth-error" role="alert" hidden></div>
+        <div class="auth-notice" id="auth-notice" role="status" hidden></div>
+
+        <button type="submit" class="auth-submit" id="auth-submit">Sign In</button>
+      </form>
+
+      <div class="auth-footer">
+        <button type="button" class="link-btn" id="toggle-mode">Need an account? Sign up</button>
+        <button type="button" class="link-btn" id="forgot-link">Forgot password</button>
+      </div>
+
+      <div class="auth-barcode">
+        <div class="bars"></div>
+        <div class="code">ML &middot; 2026 &middot; MEMBERS</div>
+      </div>
+
+      <p class="auth-fineprint">
+        Accounts are free. By signing up you accept that this is a baseball newspaper, not a legal document.
+      </p>
+    </section>
+  </div>
+
 </main>
 
 <footer class="auth-foot">
-  <a href="../">← Back to Morning Lineup</a>
+  <a href="/morning-lineup/home/">&larr; Preview a team first &middot; No account needed</a>
+  <span class="tick">FIRST PITCH <span class="g">&middot;</span> 0700 CT <span class="g">&middot;</span> 162 GAMES TO GO</span>
 </footer>
 
-<script type="module" src="auth.js?v=2"></script>
+<script type="module" src="auth.js?v=3"></script>
 </body>
 </html>

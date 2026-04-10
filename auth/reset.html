@@ -7,61 +7,100 @@
 <link rel="icon" href="/morning-lineup/icons/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,900&family=Oswald:wght@400;600&family=Lora:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="auth.css">
 </head>
 <body>
+
 <header class="masthead auth-masthead">
-  <div class="kicker">
-    <span>Morning Lineup</span>
-    <span class="vol">Vol. I</span>
+  <div class="mast-kicker-l">
+    <div class="row"><span>Edition</span><span class="val">Locker Room</span></div>
+    <div class="row"><span>Vol.</span><span class="val">I</span></div>
   </div>
-  <h1>
-    <span>
-      <span class="the">The</span>
-      <span class="lineup">Lineup</span>
-    </span>
-  </h1>
+  <div class="mast-center">
+    <h1><span class="the">The</span><span class="lineup">Morning <em>Lineup</em></span></h1>
+  </div>
+  <div class="mast-kicker-r">
+    <div class="row"><span>Access</span><span class="val gold">New Credentials</span></div>
+    <div class="row"><span>Desk</span><span class="val">Reset</span></div>
+  </div>
 </header>
 
 <main class="auth-wrap">
-  <section class="auth-card">
-    <div class="sechead">
-      <span class="num">02</span>
-      <span class="h">Reset Password</span>
-      <span class="tag">Locker Room</span>
-    </div>
 
-    <p class="auth-lede" id="reset-lede">
-      Choose a new password to get back in the press box.
+  <section class="auth-hero">
+    <p class="auth-hero-mark"><span class="dot"></span>Members Desk · Password Reset</p>
+
+    <h2 class="auth-hero-quote">
+      &ldquo;Almost back in<br>
+      the press box.<br>
+      <span class="accent">Pick a new key.</span>&rdquo;
+    </h2>
+
+    <p class="auth-hero-byline">
+      <strong>&mdash; Security Desk</strong> &nbsp;&middot;&nbsp; Single-use reset link
     </p>
 
-    <form id="reset-form" novalidate>
-      <label class="field">
-        <span>New Password</span>
-        <input type="password" name="password" autocomplete="new-password" required minlength="6" placeholder="At least 6 characters">
-      </label>
+    <div class="auth-hero-rule"><span class="diamond"></span></div>
 
-      <label class="field">
-        <span>Confirm Password</span>
-        <input type="password" name="confirm" autocomplete="new-password" required minlength="6">
-      </label>
-
-      <div class="auth-error" id="reset-error" role="alert" hidden></div>
-      <div class="auth-notice" id="reset-notice" role="status" hidden></div>
-
-      <button type="submit" class="auth-submit" id="reset-submit">Update Password</button>
-    </form>
-
-    <div class="auth-footer">
-      <a href="index.html" class="link-btn">← Back to sign in</a>
-    </div>
+    <ul class="auth-hero-list">
+      <li><span class="n">01</span><span>Clicked the reset link from your email</span><span class="x">DONE</span></li>
+      <li><span class="n">02</span><span>Pick a new password (6+ characters)</span><span class="x">NOW</span></li>
+      <li><span class="n">03</span><span>Confirm it on the second line</span><span class="x">NEXT</span></li>
+      <li class="restricted"><span class="n">04</span><span>Sign back in &amp; claim today's briefing</span><span class="x">HOME</span></li>
+    </ul>
   </section>
+
+  <div class="auth-card-wrap">
+    <section class="auth-card">
+      <div class="sechead">
+        <span class="num">SOS</span>
+        <span class="h">Reset Password</span>
+        <span class="tag">New Credentials</span>
+      </div>
+
+      <p class="auth-lede" id="reset-lede">
+        Choose a new password to get back in the press box. At least six characters &mdash; make it one you can remember on a Monday morning.
+      </p>
+
+      <form id="reset-form" novalidate>
+        <label class="field">
+          <span>New Password</span>
+          <input type="password" name="password" autocomplete="new-password" required minlength="6" placeholder="At least 6 characters">
+        </label>
+
+        <label class="field">
+          <span>Confirm Password</span>
+          <input type="password" name="confirm" autocomplete="new-password" required minlength="6" placeholder="Type it again">
+        </label>
+
+        <div class="auth-error" id="reset-error" role="alert" hidden></div>
+        <div class="auth-notice" id="reset-notice" role="status" hidden></div>
+
+        <button type="submit" class="auth-submit" id="reset-submit">Update Password</button>
+      </form>
+
+      <div class="auth-footer">
+        <a href="index.html" class="link-btn">&larr; Back to sign in</a>
+      </div>
+
+      <div class="auth-barcode">
+        <div class="bars"></div>
+        <div class="code">ML &middot; RESET &middot; 2026</div>
+      </div>
+
+      <p class="auth-fineprint">
+        Reset links expire after 20 minutes. If yours stopped working, request a new one from the sign-in page.
+      </p>
+    </section>
+  </div>
+
 </main>
 
 <footer class="auth-foot">
-  <a href="../">← Back to Morning Lineup</a>
+  <a href="/morning-lineup/">&larr; Back to Morning Lineup</a>
+  <span class="tick">ML <span class="g">&middot;</span> SECURITY <span class="g">&middot;</span> RESET</span>
 </footer>
 
 <script type="module" src="reset.js"></script>
