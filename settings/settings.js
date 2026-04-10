@@ -16,6 +16,7 @@ const SECTION_LABELS = {
   division: "Division",
   around_league: "Around the League",
   history: "This Day in History",
+  my_players: "My Players",
 };
 
 const ALL_TEAM_SLUGS = [
@@ -36,11 +37,15 @@ const densityRow = document.getElementById("density-row");
 const themeRow = document.getElementById("theme-row");
 const errorBox = document.getElementById("settings-error");
 const signoutLink = document.getElementById("signout-link");
+const playerSearchInput = document.getElementById("player-search-input");
+const playerResults = document.getElementById("player-results");
+const playersList = document.getElementById("players-list");
 
 let state = {
   userId: null,
   profile: null,
   followed: [],
+  players: [],
   teamConfigs: new Map(),
 };
 
@@ -273,6 +278,161 @@ function renderDisplayName() {
   });
 }
 
+// ---------- player tracker ----------
+async function loadFollowedPlayers() {
+  const { data, error } = await supabase
+    .from("followed_players")
+    .select("mlbam_id, full_name, primary_position, mlb_team_abbr, position")
+    .order("position", { ascending: true });
+  if (error) throw error;
+  return data || [];
+}
+
+let searchTimer = null;
+function handlePlayerSearchInput() {
+  const q = playerSearchInput.value.trim();
+  if (searchTimer) clearTimeout(searchTimer);
+  if (q.length < 2) {
+    playerResults.innerHTML = "";
+    return;
+  }
+  searchTimer = setTimeout(() => runPlayerSearch(q), 250);
+}
+
+async function runPlayerSearch(q) {
+  try {
+    // MLB Stats API person search. Active players only; current year.
+    const url = `https://statsapi.mlb.com/api/v1/people/search?names=${encodeURIComponent(q)}&active=true`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`search ${res.status}`);
+    const json = await res.json();
+    const people = json.people || [];
+    const followedSet = new Set(state.players.map((p) => p.mlbam_id));
+    playerResults.innerHTML = "";
+    for (const p of people.slice(0, 8)) {
+      if (followedSet.has(p.id)) continue;
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span class="player-name">${p.fullName}</span>
+        <span class="player-meta">${p.primaryPosition?.abbreviation || ""} · ${p.currentTeam?.name || "—"}</span>
+        <button type="button" class="player-add">Add</button>
+      `;
+      li.querySelector(".player-add").addEventListener("click", () => addPlayer(p));
+      playerResults.appendChild(li);
+    }
+    if (playerResults.children.length === 0) {
+      playerResults.innerHTML = `<li class="player-empty">No matches.</li>`;
+    }
+  } catch (err) {
+    playerResults.innerHTML = `<li class="player-empty">Search failed: ${err.message}</li>`;
+  }
+}
+
+async function addPlayer(p) {
+  setSaveState("saving");
+  clearError();
+  const nextPos = state.players.length;
+  const row = {
+    user_id: state.userId,
+    mlbam_id: p.id,
+    full_name: p.fullName,
+    primary_position: p.primaryPosition?.abbreviation || null,
+    mlb_team_id: p.currentTeam?.id || null,
+    mlb_team_abbr: p.currentTeam?.abbreviation || p.currentTeam?.teamCode || null,
+    position: nextPos,
+  };
+  const { error } = await supabase.from("followed_players").insert(row);
+  if (error) {
+    showError(`Could not add ${p.fullName}: ${error.message}`);
+    return;
+  }
+  state.players.push({
+    mlbam_id: row.mlbam_id,
+    full_name: row.full_name,
+    primary_position: row.primary_position,
+    mlb_team_abbr: row.mlb_team_abbr,
+    position: row.position,
+  });
+  setSaveState("saved");
+  broadcastChange();
+  playerSearchInput.value = "";
+  playerResults.innerHTML = "";
+  renderPlayersList();
+}
+
+async function removePlayer(mlbamId) {
+  setSaveState("saving");
+  clearError();
+  const { error } = await supabase
+    .from("followed_players")
+    .delete()
+    .eq("user_id", state.userId)
+    .eq("mlbam_id", mlbamId);
+  if (error) {
+    showError(`Could not remove player: ${error.message}`);
+    return;
+  }
+  state.players = state.players.filter((p) => p.mlbam_id !== mlbamId);
+  setSaveState("saved");
+  broadcastChange();
+  renderPlayersList();
+}
+
+function renderPlayersList() {
+  playersList.innerHTML = "";
+  if (state.players.length === 0) {
+    playersList.innerHTML = `<li class="player-empty">No players followed yet. Search above.</li>`;
+    return;
+  }
+  for (const p of state.players) {
+    const li = document.createElement("li");
+    li.dataset.mlbamId = String(p.mlbam_id);
+    const posTeam = [p.primary_position, p.mlb_team_abbr].filter(Boolean).join(" · ");
+    li.innerHTML = `
+      <span class="drag-handle">⋮⋮</span>
+      <span class="team-name">${p.full_name}${posTeam ? ` <span class="player-meta">${posTeam}</span>` : ""}</span>
+      <button type="button" class="unfollow-btn" title="Remove">×</button>
+    `;
+    li.querySelector(".unfollow-btn").addEventListener("click", () => removePlayer(p.mlbam_id));
+    playersList.appendChild(li);
+  }
+  Sortable.create(playersList, {
+    animation: 140,
+    handle: ".drag-handle",
+    ghostClass: "sortable-ghost",
+    chosenClass: "sortable-chosen",
+    onEnd: savePlayerOrder,
+  });
+}
+
+async function savePlayerOrder() {
+  const ids = Array.from(playersList.querySelectorAll("li[data-mlbam-id]")).map((el) => Number(el.dataset.mlbamId));
+  setSaveState("saving");
+  clearError();
+  const rows = ids.map((mlbam_id, i) => {
+    const existing = state.players.find((p) => p.mlbam_id === mlbam_id);
+    return {
+      user_id: state.userId,
+      mlbam_id,
+      full_name: existing?.full_name || "",
+      primary_position: existing?.primary_position || null,
+      mlb_team_abbr: existing?.mlb_team_abbr || null,
+      position: i,
+    };
+  });
+  const { error } = await supabase.from("followed_players").upsert(rows, { onConflict: "user_id,mlbam_id" });
+  if (error) {
+    showError(`Reorder failed: ${error.message}`);
+    return;
+  }
+  state.players = ids.map((mlbam_id, i) => {
+    const existing = state.players.find((p) => p.mlbam_id === mlbam_id);
+    return { ...existing, position: i };
+  });
+  setSaveState("saved");
+  broadcastChange();
+}
+
 // ---------- bootstrap ----------
 async function loadFollowed() {
   const { data, error } = await supabase
@@ -299,10 +459,13 @@ async function init() {
   document.body.classList.toggle("theme-dark", state.profile.theme !== "paper");
 
   state.followed = await loadFollowed();
+  state.players = await loadFollowedPlayers();
 
   renderDisplayName();
   renderSectionsList();
   await renderTeamsList();
+  renderPlayersList();
+  playerSearchInput.addEventListener("input", handlePlayerSearchInput);
   renderRadios();
   setSaveState("idle");
 

@@ -45,11 +45,25 @@ const DEFAULT_SECTION_VISIBILITY = {
   division: true,
   around_league: true,
   history: true,
+  my_players: true,
 };
 const DEFAULT_SECTION_ORDER = [
   "headline", "scouting", "stretch", "pressbox", "farm",
-  "slate", "division", "around_league", "history",
+  "slate", "division", "around_league", "history", "my_players",
 ];
+
+// Merge any missing default keys into an existing profile so new sections
+// appear automatically for users who signed up before the section existed.
+function backfillDefaults(profile) {
+  const vis = { ...DEFAULT_SECTION_VISIBILITY, ...(profile.section_visibility || {}) };
+  const order = Array.isArray(profile.section_order) ? [...profile.section_order] : [];
+  for (const key of DEFAULT_SECTION_ORDER) {
+    if (!order.includes(key)) order.push(key);
+  }
+  profile.section_visibility = vis;
+  profile.section_order = order;
+  return profile;
+}
 
 export async function getProfile({ force = false } = {}) {
   const session = await getSession();
@@ -74,6 +88,7 @@ export async function getProfile({ force = false } = {}) {
   }
 
   if (data) {
+    backfillDefaults(data);
     _profileCache = data;
     _profileUserId = session.user.id;
     return data;

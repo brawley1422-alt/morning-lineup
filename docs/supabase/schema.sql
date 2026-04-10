@@ -19,10 +19,11 @@ create table if not exists public.profiles (
     "slate": true,
     "division": true,
     "around_league": true,
-    "history": true
+    "history": true,
+    "my_players": true
   }'::jsonb,
   section_order jsonb not null default '[
-    "headline","scouting","stretch","pressbox","farm","slate","division","around_league","history"
+    "headline","scouting","stretch","pressbox","farm","slate","division","around_league","history","my_players"
   ]'::jsonb,
   density text not null default 'full' check (density in ('compact','full')),
   theme text not null default 'dark' check (theme in ('paper','dark')),

@@ -45,6 +45,7 @@ const SECTION_LABELS = {
   division: "Division",
   around_league: "Around the League",
   history: "History",
+  my_players: "My Players",
 };
 
 const shell = document.getElementById("home-shell");
@@ -256,6 +257,96 @@ function renderTeamBlock(cfg, sectionsHtml) {
   return block;
 }
 
+async function loadFollowedPlayers() {
+  const { data, error } = await supabase
+    .from("followed_players")
+    .select("mlbam_id, full_name, primary_position, mlb_team_abbr, position")
+    .order("position", { ascending: true });
+  if (error) {
+    console.warn("loadFollowedPlayers failed", error);
+    return [];
+  }
+  return data || [];
+}
+
+// Fetch this season's hitting + pitching stats for a list of MLB player ids.
+// Uses the MLB Stats API in one batched call.
+async function fetchPlayerStats(mlbamIds) {
+  if (!mlbamIds.length) return {};
+  const ids = mlbamIds.join(",");
+  const year = new Date().getFullYear();
+  const url = `https://statsapi.mlb.com/api/v1/people?personIds=${ids}&hydrate=stats(group=[hitting,pitching],type=[season],season=${year})`;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`stats ${res.status}`);
+    const json = await res.json();
+    const out = {};
+    for (const person of json.people || []) {
+      const hitting = {}; const pitching = {};
+      for (const group of person.stats || []) {
+        const stat = group.splits?.[0]?.stat || {};
+        if (group.group?.displayName === "hitting") Object.assign(hitting, stat);
+        if (group.group?.displayName === "pitching") Object.assign(pitching, stat);
+      }
+      out[person.id] = { hitting, pitching };
+    }
+    return out;
+  } catch (err) {
+    console.warn("fetchPlayerStats failed", err);
+    return {};
+  }
+}
+
+function formatPlayerLine(player, stats) {
+  const isPitcher = player.primary_position === "P" || player.primary_position === "TWP";
+  if (isPitcher && stats?.pitching && Object.keys(stats.pitching).length) {
+    const p = stats.pitching;
+    return `${p.wins ?? 0}-${p.losses ?? 0} · ${p.era ?? "—"} ERA · ${p.strikeOuts ?? 0} K · ${p.inningsPitched ?? "0.0"} IP`;
+  }
+  if (stats?.hitting && Object.keys(stats.hitting).length) {
+    const h = stats.hitting;
+    return `${h.avg ?? "—"} / ${h.obp ?? "—"} / ${h.slg ?? "—"} · ${h.homeRuns ?? 0} HR · ${h.rbi ?? 0} RBI`;
+  }
+  return "No stats yet this season.";
+}
+
+function renderMyPlayersSection(players, statsMap) {
+  const section = document.createElement("section");
+  section.id = "my-players";
+  section.className = "home-my-players";
+  section.setAttribute("open", "");
+  const heading = document.createElement("div");
+  heading.className = "my-players-head";
+  heading.innerHTML = `<h2>My Players</h2><span class="my-players-sub">Your fantasy roster</span>`;
+  section.appendChild(heading);
+
+  if (!players.length) {
+    const empty = document.createElement("p");
+    empty.className = "my-players-empty";
+    empty.innerHTML = `No players followed yet. <a href="../settings/">Add some</a> in settings.`;
+    section.appendChild(empty);
+    return section;
+  }
+
+  const list = document.createElement("ul");
+  list.className = "my-players-list";
+  for (const p of players) {
+    const li = document.createElement("li");
+    const stats = statsMap[p.mlbam_id];
+    const posTeam = [p.primary_position, p.mlb_team_abbr].filter(Boolean).join(" · ") || "—";
+    li.innerHTML = `
+      <div class="player-row-head">
+        <span class="player-row-name">${p.full_name}</span>
+        <span class="player-row-meta">${posTeam}</span>
+      </div>
+      <div class="player-row-stats">${formatPlayerLine(p, stats)}</div>
+    `;
+    list.appendChild(li);
+  }
+  section.appendChild(list);
+  return section;
+}
+
 async function renderMergedView(profile, followed) {
   shell.innerHTML = "";
   const visibility = profile.section_visibility || {};
@@ -267,6 +358,25 @@ async function renderMergedView(profile, followed) {
   document.body.classList.toggle("theme-paper", profile.theme === "paper");
   document.body.classList.toggle("theme-dark", profile.theme === "dark");
 
+  // Load followed players and their stats up front (parallel with team HTML).
+  // The "my_players" section renders client-side; all others come from static
+  // team pages via DOMParser.
+  const myPlayersVisible = visibility.my_players !== false && order.includes("my_players");
+  let players = [];
+  let playerStats = {};
+  if (myPlayersVisible) {
+    players = await loadFollowedPlayers();
+    if (players.length) {
+      playerStats = await fetchPlayerStats(players.map((p) => p.mlbam_id));
+    }
+  }
+
+  // My Players is a cross-team section — render it as a single standalone
+  // block at the top, before any team blocks.
+  if (myPlayersVisible) {
+    shell.appendChild(renderMyPlayersSection(players, playerStats));
+  }
+
   // Render each team in the user's followed-order.
   for (const fol of followed) {
     const slug = fol.team_slug;
@@ -275,6 +385,7 @@ async function renderMergedView(profile, followed) {
       const sections = [];
       for (const key of order) {
         if (visibility[key] === false) continue;
+        if (key === "my_players") continue; // rendered above, not per-team
         const htmlId = SECTION_ID_MAP[key];
         if (!htmlId) continue;
         const node = extractSection(doc, htmlId);

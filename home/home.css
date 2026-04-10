@@ -211,3 +211,94 @@ body.theme-paper .masthead h1 .lineup { color: var(--ink); -webkit-text-fill-col
 body.theme-paper .team-strip { background: linear-gradient(90deg, #dfd5bc 0%, #ece4d0 100%); }
 body.theme-paper .team-strip .strip-name { color: var(--ink); }
 body.theme-paper section { color: var(--ink); }
+
+/* ---- My Players standalone block ---- */
+.home-my-players {
+  margin: 10px 0 28px;
+  padding: 18px 22px 20px;
+  background: var(--ink-2);
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--gold);
+  border-radius: 3px;
+}
+.my-players-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px dashed var(--rule);
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+.my-players-head h2 {
+  font-family: var(--serif);
+  font-size: clamp(24px, 4vw, 34px);
+  margin: 0;
+  color: var(--paper);
+  letter-spacing: 0.01em;
+}
+.my-players-sub {
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 10px;
+  color: var(--gold);
+}
+.my-players-empty {
+  color: var(--paper-mute);
+  font-style: italic;
+  font-size: 13px;
+  margin: 0;
+}
+.my-players-empty a { color: var(--gold); border-bottom: 1px dotted var(--gold-dim); }
+
+.my-players-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+.my-players-list li {
+  background: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.player-row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.player-row-name {
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--paper);
+}
+.player-row-meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--paper-mute);
+}
+.player-row-stats {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--paper-dim);
+}
+
+body.theme-paper .home-my-players {
+  background: #f3ecd7;
+  border-color: #cfc39a;
+}
+body.theme-paper .my-players-head h2,
+body.theme-paper .player-row-name { color: var(--ink); }
+body.theme-paper .my-players-list li { background: #ede4cb; border-color: #cfc39a; }
+body.theme-paper .player-row-stats { color: #4a4636; }
