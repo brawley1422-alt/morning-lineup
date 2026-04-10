@@ -1,0 +1,1 @@
+Frozen fixture lede for Yankees — committed to bypass Ollama/Anthropic during the golden snapshot test. Do not regenerate; this file pins determinism for tests/snapshot_test.py.

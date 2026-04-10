@@ -626,6 +626,10 @@ DOME_VENUES = {12: "Dome", 32: "Retractable Roof", 680: "Retractable Roof",
 def fetch_pitcher_line(pid):
     """Fetch a pitcher's season stats. Returns formatted string or empty."""
     if not pid: return ""
+    if "--fixture" in sys.argv:
+        # Deterministic stub for golden snapshot tests — avoids the live MLB
+        # season-stats fetch which updates daily as games are played.
+        return "0.00 ERA &middot; 0-0 &middot; 0.0 IP &middot; 0 K &middot; 0.00 WHIP"
     try:
         data = fetch(f"/people/{pid}/stats", stats="season", season=str(datetime.now(tz=CT).date().year), group="pitching")
         for s in data.get("stats", []):
@@ -647,6 +651,10 @@ def fetch_weather_for_venue(venue):
     if not venue: return None
     vid = venue.get("id")
     if vid in DOME_VENUES: return None
+    if "--fixture" in sys.argv:
+        # Deterministic stub for golden snapshot tests — avoids the live
+        # open-meteo API call and the MLB venues hydrate fetch above it.
+        return (70, "Clear", "5 mph N", "")
     try:
         vdata = fetch(f"/venues/{vid}", hydrate="location")
         v = vdata.get("venues", [{}])[0]
@@ -1707,7 +1715,11 @@ def page(data):
     lede_html = render_lede(lede_text)
 
     vol_no = (t - date(t.year, 1, 1)).days + 1
-    filed = datetime.now(tz=CT).strftime("%m/%d/%y %H:%M CT")
+    if "--fixture" in sys.argv:
+        # Deterministic timestamp for golden snapshot tests.
+        filed = t.strftime("%m/%d/%y") + " 00:00 CT"
+    else:
+        filed = datetime.now(tz=CT).strftime("%m/%d/%y %H:%M CT")
 
     return f"""<!doctype html>
 <html lang="en">
@@ -1938,6 +1950,29 @@ def save_data_ledger(data):
     out.write_text(json.dumps(data, default=_json_default, ensure_ascii=False), encoding="utf-8")
     print(f"Saved data ledger → {out.name} ({out.stat().st_size:,} bytes)")
 
+def load_data_from_fixture(path):
+    """Load a frozen load_all() snapshot from JSON and rehydrate date fields.
+
+    Inverse of _json_default: json.loads leaves date keys as ISO strings, but
+    downstream renderers (e.g. build.py:1709 `(t - date(t.year, 1, 1)).days`)
+    require real `date` objects. Rehydrates `today`, `yest`, and
+    `cubs_game_date` when present.
+    """
+    data = json.loads(Path(path).read_text(encoding="utf-8"))
+    data["today"] = date.fromisoformat(data["today"])
+    data["yest"] = date.fromisoformat(data["yest"])
+    if data.get("cubs_game_date"):
+        data["cubs_game_date"] = date.fromisoformat(data["cubs_game_date"])
+    return data
+
+def _argv_value(flag):
+    """Return the value following `flag` in sys.argv, or None if absent."""
+    if flag in sys.argv:
+        i = sys.argv.index(flag)
+        if i + 1 < len(sys.argv):
+            return sys.argv[i + 1]
+    return None
+
 def build_landing():
     """Generate landing page from all team configs."""
     teams_dir = ROOT / "teams"
@@ -1961,12 +1996,35 @@ def build_landing():
 if __name__ == "__main__":
     if "--landing" in sys.argv:
         build_landing()
-    else:
-        print("Fetching MLB data …", flush=True)
+    elif "--capture-fixture" in sys.argv:
+        # Capture the current load_all() output to a JSON fixture and exit.
+        # No rendering, no data ledger write. Used by the snapshot test
+        # bootstrap to freeze a canonical data snapshot.
+        capture_path = _argv_value("--capture-fixture")
+        print("Fetching MLB data for fixture capture …", flush=True)
         data = load_all()
-        save_data_ledger(data)
+        Path(capture_path).parent.mkdir(parents=True, exist_ok=True)
+        Path(capture_path).write_text(
+            json.dumps(data, default=_json_default, ensure_ascii=False),
+            encoding="utf-8",
+        )
+        print(f"Captured fixture → {capture_path} ({Path(capture_path).stat().st_size:,} bytes)")
+    else:
+        fixture_path = _argv_value("--fixture")
+        if fixture_path:
+            print(f"Loading data from fixture {fixture_path} …", flush=True)
+            data = load_data_from_fixture(fixture_path)
+        else:
+            print("Fetching MLB data …", flush=True)
+            data = load_all()
+            save_data_ledger(data)
         print("Rendering page …", flush=True)
         html = page(data)
-        OUT.parent.mkdir(parents=True, exist_ok=True)
-        OUT.write_text(html, encoding="utf-8")
-        print(f"Wrote {OUT} ({len(html):,} bytes)")
+        out_dir_override = _argv_value("--out-dir")
+        if out_dir_override:
+            out_path = Path(out_dir_override) / _team_slug / "index.html"
+        else:
+            out_path = OUT
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(html, encoding="utf-8")
+        print(f"Wrote {out_path} ({len(html):,} bytes)")
