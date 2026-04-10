@@ -18,7 +18,8 @@ Multi-team static site generator that produces daily MLB briefings for all 30 te
 
 | File | Purpose |
 |------|---------|
-| `build.py` | Main script — fetches MLB Stats API data, renders full HTML. `--team {slug}` for any team, `--landing` for landing page |
+| `build.py` | Orchestrator — fetches MLB Stats API data via `load_all()`, constructs a `TeamBriefing`, delegates section rendering to `sections/*.py`, assembles the page envelope. `--team {slug}` for any team, `--landing` for landing page. Test flags: `--fixture <path>`, `--out-dir <path>`, `--capture-fixture <path>` |
+| `sections/` | One file per visible page section — each exports `render(briefing)` and reads everything from `briefing.data` / `briefing.team_name` / etc. No module-global reads, no imports from `build.py` at module top (deferred imports inside functions are OK) |
 | `deploy.py` | Archives previous day's pages, deploys all 30 teams + landing to GitHub via Contents API |
 | `evening.py` | Post-game watcher — polls for Cubs Final, triggers rebuild + deploy |
 | `live.js` | Client-side polling for live game scores + full slate updates (team-agnostic via `window.TEAM_ID`) |
@@ -32,8 +33,40 @@ Multi-team static site generator that produces daily MLB briefings for all 30 te
 | `{slug}/` | Per-team output directory (index.html, live.js, scorecard/, icons/, etc.) |
 | `data/` | Daily JSON data ledger + LLM-generated lede cache (`lede-{slug}-YYYY-MM-DD.txt`) |
 | `archive/` | Daily snapshots of previous team pages |
+| `tests/` | Golden snapshot harness — `python3 tests/snapshot_test.py` renders frozen Cubs + Yankees fixtures and diffs byte-identically against committed expected HTML. Re-bless procedure in `tests/README.md` |
 | `docs/plans/` | Feature plans (living documents) |
 | `docs/solutions/` | Documented solutions and best practices |
+
+## Section files
+
+Each file under `sections/` maps 1:1 to a visible page section and exports a `render(briefing)` function. `briefing` is a `TeamBriefing` dataclass (defined in `build.py`) with fields `config`, `data`, `team_id`, `team_name`, `div_id`, `div_name`, `affiliates`.
+
+| File | Section | Returns |
+|------|---------|---------|
+| `sections/headline.py` | The {Team} — line score, three stars, key plays, scorecard embed, leaders, next games, form guide | `(inner_html, summary_tag)` |
+| `sections/scouting.py` | Scouting Report (conditional — empty on off-days) | `inner_html` |
+| `sections/stretch.py` | The Stretch — record, Pythagorean W-L, splits | `inner_html` |
+| `sections/pressbox.py` | The Pressbox — transactions + injured list | `inner_html` |
+| `sections/farm.py` | Down on the Farm — MiLB affiliates + prospect tracker | `(inner_html, minors_tag)` |
+| `sections/slate.py` | Today's Slate | `inner_html` |
+| `sections/division.py` | {Division} — standings + rivals | `inner_html` |
+| `sections/around_league.py` | Around the League — news wire, scoreboard, all 6 divisions, league leaders. Also exports `render_lede_block(briefing)` for the page-top editorial lede | `(inner_html, news_count)` |
+| `sections/history.py` | This Day in {Team} History | `inner_html` |
+
+**Section file rules:**
+- Import only stdlib and the local helpers each section needs. **Never `from build import ...` at module top** — `build.py` runs as `__main__`, and a top-level import would trigger a second full re-execution under the name `build`. Use deferred imports inside function bodies if you need `fetch_pitcher_line`, `fetch_weather_for_venue`, or other `build.py` helpers (see `sections/headline.py` for the pattern).
+- Read per-team state exclusively through `briefing.*`. No module-global reads (`TEAM_ID`, `DIV_NAME`, etc.) — those are bound at import time in `build.py` and don't exist in section files.
+- Small helpers (`_abbr`, `_fmt_time_ct`, `_ordinal`) are inlined per section file. Scope boundary: no shared `sections/_helpers.py` module yet.
+
+## Adding or reordering sections
+
+1. Create `sections/<new>.py` with a `render(briefing)` function.
+2. Add `import sections.<new>` near the top of `build.py` (alphabetical).
+3. Inside `page(briefing)`, call `new_html = sections.<new>.render(briefing)`.
+4. Add a tuple to `_visible_sections` in `page()` — the numbering reshuffles automatically via the `_num` dict.
+5. Add a `<section id="<new>">` block to the page envelope f-string with `<span class="num">{_num.get("<new>", "")}</span>`.
+6. Add a `<li>` entry to the TOC.
+7. Run `python3 tests/snapshot_test.py` — expect a diff (new content is intentional). Re-bless per `tests/README.md`.
 
 ## Scorecard modules
 
