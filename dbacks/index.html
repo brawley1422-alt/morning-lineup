@@ -34,8 +34,11 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
 a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
 a:hover{color:var(--paper);border-bottom-color:var(--paper)}
 a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:3px}
-.home-btn{position:absolute;top:50%;right:24px;transform:translateY(-50%);color:var(--gold);border:1px solid var(--gold-dim);background:var(--ink-2);border-radius:3px;padding:10px 12px;line-height:0;transition:color .15s,border-color .15s,background .15s;z-index:10;text-decoration:none}
-.home-btn:hover{color:var(--paper);border-color:var(--gold);background:var(--ink-3)}
+.nav-btns{position:absolute;top:18px;right:20px;display:flex;gap:8px;z-index:10}
+.home-btn,.teams-btn{display:inline-flex;align-items:center;gap:6px;color:var(--gold);border:1px solid var(--gold-dim);background:var(--ink-2);border-radius:3px;padding:8px 12px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;font-weight:600;text-decoration:none;transition:color .15s,border-color .15s,background .15s}
+.home-btn:hover,.teams-btn:hover{color:var(--paper);border-color:var(--gold);background:var(--ink-3)}
+.home-btn svg,.teams-btn svg{flex-shrink:0}
+@media (max-width:640px){.nav-btns .home-btn span,.nav-btns .teams-btn span{display:none}.nav-btns{top:12px;right:12px}}
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
 .masthead .kicker .vol{color:var(--gold)}
@@ -323,9 +326,16 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <body>
 
 <header class="masthead">
-  <a href="../" class="home-btn" aria-label="Back to all teams" title="All teams">
-    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M12 22 L2 12 L2 2 L22 2 L22 12 Z"/></svg>
-  </a>
+  <div class="nav-btns">
+    <a href="../home/" class="home-btn" aria-label="Your Lineup" title="Your Lineup">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 22 L2 12 L2 2 L22 2 L22 12 Z"/></svg>
+      <span>Your Lineup</span>
+    </a>
+    <a href="../" class="teams-btn" aria-label="All Teams" title="All Teams">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"/></svg>
+      <span>All Teams</span>
+    </a>
+  </div>
   <div class="kicker">
     <span>Vol. 3 &middot; <span class="vol">No. 100</span></span>
     <span>A Daily Dispatch from The Pool & Beyond</span>
@@ -417,9 +427,9 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
         <div class="nx-venue">Citizens Bank Park </div>
         <div class="nx-meta"><span class="nx-opp-rec">PHI: 6-6, 4th NL East (L2)</span></div>
         <div class="nx-pitcher"><span class="nx-side">D-backs</span> Michael Soroka<div class="nx-pline">0.90 ERA &middot; 2-0 &middot; 10.0 IP &middot; 13 K &middot; 1.20 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">PHI</span> Jesús Luzardo<div class="nx-pline">4.97 ERA &middot; 1-1 &middot; 12.2 IP &middot; 18 K &middot; 0.95 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">2B</span> Marte</span><span class="lu-slot"><span class="lu-pos">2B</span> Vargas</span><span class="lu-slot"><span class="lu-pos">SS</span> Perdomo</span><span class="lu-slot"><span class="lu-pos">C</span> Moreno</span><span class="lu-slot"><span class="lu-pos">3B</span> Arenado</span><span class="lu-slot"><span class="lu-pos">SS</span> Fernandez</span><span class="lu-slot"><span class="lu-pos">2B</span> Tawa</span><span class="lu-slot"><span class="lu-pos">CF</span> Thomas</span><span class="lu-slot"><span class="lu-pos">LF</span> Barrosa</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> NBCSP+ &middot; Dbacks.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> ESPN Phoenix 620 &middot; 94 WIP</div>
-        <div class="nx-wx">53°F &middot; Mostly Clear &middot; 6 mph S</div>
+        <div class="nx-wx">65°F &middot; Clear &middot; 9 mph SSW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sat, Apr 11 &middot; at PHI</div>
@@ -515,7 +525,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-07</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Arizona Diamondbacks transferred SS Jordan Lawlar from the 10-day injured list to the 60-day injured list. Right wrist fracture.</span></div><div class="transac-item"><span class="transac-date">04-07</span><span class="transac-badge ">Selected</span><span class="transac-desc">Arizona Diamondbacks selected the contract of 1B Luken Baker from Reno Aces.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Arizona Diamondbacks placed 1B Carlos Santana on the 10-day injured list retroactive to April 6, 2026. Strained right adductor.</span></div><div class="transac-item"><span class="transac-date">04-05</span><span class="transac-badge opt">Outrighted</span><span class="transac-desc">Arizona Diamondbacks sent RHP Joe Ross outright to Reno Aces.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Arizona Diamondbacks placed SS Jordan Lawlar on the 10-day injured list. Right wrist fracture.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Arizona Diamondbacks activated C Adrian Del Castillo.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Arizona Diamondbacks sent RHP Merrill Kelly on a rehab assignment to Reno Aces.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge ">Designated f</span><span class="transac-desc">Arizona Diamondbacks designated RHP Joe Ross for assignment.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge ">Selected</span><span class="transac-desc">Arizona Diamondbacks selected the contract of RHP Taylor Rashi from Reno Aces.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>1B <strong>Carlos Santana</strong></dd><dd>LF <strong>Lourdes Gurriel Jr.</strong></dd><dd>1B <strong>Pavin Smith</strong></dd><dd>1B <strong>Tyler Locklear</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Merrill Kelly</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>A.J. Puk</strong></dd><dd>P <strong>Andrew Saalfrank</strong></dd><dd>P <strong>Blake Walston</strong></dd><dd>P <strong>Corbin Burnes</strong></dd><dd>P <strong>Cristian Mena</strong></dd><dd>SS <strong>Jordan Lawlar</strong></dd><dd>P <strong>Justin Martinez</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-07</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Arizona Diamondbacks transferred SS Jordan Lawlar from the 10-day injured list to the 60-day injured list. Right wrist fracture.</span></div><div class="transac-item"><span class="transac-date">04-07</span><span class="transac-badge ">Selected</span><span class="transac-desc">Arizona Diamondbacks selected the contract of 1B Luken Baker from Reno Aces.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Arizona Diamondbacks placed 1B Carlos Santana on the 10-day injured list retroactive to April 6, 2026. Strained right adductor.</span></div><div class="transac-item"><span class="transac-date">04-05</span><span class="transac-badge opt">Outrighted</span><span class="transac-desc">Arizona Diamondbacks sent RHP Joe Ross outright to Reno Aces.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Arizona Diamondbacks sent RHP Merrill Kelly on a rehab assignment to Reno Aces.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Arizona Diamondbacks activated C Adrian Del Castillo.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Arizona Diamondbacks placed SS Jordan Lawlar on the 10-day injured list. Right wrist fracture.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge ">Designated f</span><span class="transac-desc">Arizona Diamondbacks designated RHP Joe Ross for assignment.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge ">Selected</span><span class="transac-desc">Arizona Diamondbacks selected the contract of RHP Taylor Rashi from Reno Aces.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>1B <strong>Carlos Santana</strong></dd><dd>LF <strong>Lourdes Gurriel Jr.</strong></dd><dd>1B <strong>Pavin Smith</strong></dd><dd>1B <strong>Tyler Locklear</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Merrill Kelly</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>A.J. Puk</strong></dd><dd>P <strong>Andrew Saalfrank</strong></dd><dd>P <strong>Blake Walston</strong></dd><dd>P <strong>Corbin Burnes</strong></dd><dd>P <strong>Cristian Mena</strong></dd><dd>SS <strong>Jordan Lawlar</strong></dd><dd>P <strong>Justin Martinez</strong></dd></dl></div></div>
   </section>
 
   <section id="farm" open>
@@ -710,7 +720,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Chase Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 10:04 CT</span>
+  <span>Filed 04/10/26 12:56 CT</span>
 </footer>
 
 <script>
