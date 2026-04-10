@@ -12,6 +12,8 @@ from dataclasses import dataclass, field
 from datetime import date, timedelta, datetime, timezone
 from pathlib import Path
 from html import escape
+
+import sections.history
 try:
     from zoneinfo import ZoneInfo
     CT = ZoneInfo("America/Chicago")
@@ -1672,16 +1674,6 @@ def render_pressbox(injuries, transactions):
     return f'<div class="two"><div>{tx_html}</div><div><h3>Injured List</h3>{inj_html}</div></div>'
 
 
-def render_history(history_items):
-    """Render This Day in Cubs History."""
-    if not history_items:
-        return '<p class="idle-msg">No historical entries for today&rsquo;s date.</p>'
-    items = []
-    for h in history_items[:5]:
-        items.append(f'<li><span class="inn">{h["year"]}</span><span class="txt">{escape(h["text"])}</span></li>')
-    return f'<ul class="plays">{"".join(items)}</ul>'
-
-
 # ─── page assembly ──────────────────────────────────────────────────────────
 
 _css_raw = STYLE_FILE.read_text(encoding="utf-8")
@@ -1695,7 +1687,8 @@ CSS = _css_raw.replace("--team-primary:#0E3386;--team-primary-hi:#2a56c4;", f"--
 CSS = CSS.replace("--team-accent:#CC3433;--team-accent-hi:#e8544f;", f"--team-accent:{_colors['accent']};--team-accent-hi:{_colors['accent_hi']};")
 
 
-def page(data):
+def page(briefing):
+    data = briefing.data
     t = data["today"]; y = data["yest"]
     cr = data["cubs_rec"]
     cubs_record_str = ""
@@ -1751,7 +1744,7 @@ def page(data):
     scout_html = render_scouting_report(data.get("scout_data", {}), data["next_games"], data["tmap"])
     stretch_html = render_stretch(data["cubs_rec"])
     pressbox_html = render_pressbox(data["injuries"], data.get("transactions", []))
-    history_html = render_history(data["history"])
+    history_html = sections.history.render(briefing)
 
     # Editorial lede
     lede_text = generate_lede(data)
@@ -2057,12 +2050,18 @@ if __name__ == "__main__":
         if fixture_path:
             print(f"Loading data from fixture {fixture_path} …", flush=True)
             data = load_data_from_fixture(fixture_path)
+            briefing = TeamBriefing(
+                config=CFG, data=data,
+                team_id=TEAM_ID, team_name=TEAM_NAME,
+                div_id=DIV_ID, div_name=DIV_NAME,
+                affiliates=AFFILIATES,
+            )
         else:
             print("Fetching MLB data …", flush=True)
-            data = load_all()
-            save_data_ledger(data)
+            briefing = build_briefing(_team_slug)
+            save_data_ledger(briefing.data)
         print("Rendering page …", flush=True)
-        html = page(data)
+        html = page(briefing)
         out_dir_override = _argv_value("--out-dir")
         if out_dir_override:
             out_path = Path(out_dir_override) / _team_slug / "index.html"
