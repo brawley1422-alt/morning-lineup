@@ -1292,6 +1292,11 @@ def render_minors(minors_data, prospects=None):
                     if has_bat or has_pitch:
                         found[player_id] = (bs, ps, aff["level"])
 
+        def lvl_class(level):
+            return {"AAA": "aaa", "AA": "aa", "A+": "aplus", "A": "a"}.get(level, "")
+
+        played_rows = []
+        dnp_rows = []
         for pid, pr in sorted(prospects.items(), key=lambda x: x[1]["rank"]):
             rank = pr["rank"]
             name = escape(pr["name"])
@@ -1300,8 +1305,10 @@ def render_minors(minors_data, prospects=None):
             if pid in found:
                 bs, ps, game_level = found[pid]
                 stat_parts = []
+                is_hot = False
                 if bs and bs.get("atBats", 0) > 0:
-                    line = f'{bs.get("hits",0)}-{bs.get("atBats",0)}'
+                    h, ab = bs.get("hits", 0), bs.get("atBats", 0)
+                    line = f'{h}-{ab}'
                     extras = []
                     if bs.get("runs", 0): extras.append(f'{bs["runs"]} R')
                     if bs.get("homeRuns", 0): extras.append(f'{bs["homeRuns"]} HR')
@@ -1310,30 +1317,48 @@ def render_minors(minors_data, prospects=None):
                     if bs.get("strikeOuts", 0): extras.append(f'{bs["strikeOuts"]} K')
                     if extras: line += ", " + ", ".join(extras)
                     stat_parts.append(line)
+                    if bs.get("homeRuns", 0) or (h >= 3 and ab >= 3):
+                        is_hot = True
                 if ps and ps.get("inningsPitched") not in (None, "0.0", 0):
-                    stat_parts.append(f'{ps.get("inningsPitched","?")} IP, {ps.get("earnedRuns",0)} ER, {ps.get("strikeOuts",0)} K')
+                    ip = ps.get("inningsPitched", "?")
+                    er = ps.get("earnedRuns", 0)
+                    k = ps.get("strikeOuts", 0)
+                    stat_parts.append(f'{ip} IP, {er} ER, {k} K')
+                    try:
+                        ip_f = float(str(ip).replace(".", "")) if "." not in str(ip) else float(ip)
+                        if ip_f >= 5.0 and er <= 1 and k >= 5:
+                            is_hot = True
+                    except (ValueError, TypeError):
+                        pass
                 stat_str = " &middot; ".join(stat_parts) if stat_parts else "In lineup, no AB"
-                prospect_rows.append(
-                    f'<div class="prosp-row played">'
+                hot_cls = " hot" if is_hot else ""
+                played_rows.append(
+                    f'<div class="prosp-row played{hot_cls}">'
                     f'<span class="prosp-rank">#{rank}</span>'
                     f'<span class="prosp-name">{name}</span>'
                     f'<span class="prosp-pos">{pos}</span>'
-                    f'<span class="prosp-lvl">{game_level}</span>'
+                    f'<span class="prosp-lvl {lvl_class(game_level)}">{game_level}</span>'
                     f'<span class="prosp-stat">{stat_str}</span>'
                     f'</div>')
             else:
-                prospect_rows.append(
+                dnp_rows.append(
                     f'<div class="prosp-row dnp">'
                     f'<span class="prosp-rank">#{rank}</span>'
                     f'<span class="prosp-name">{name}</span>'
                     f'<span class="prosp-pos">{pos}</span>'
-                    f'<span class="prosp-lvl">{level}</span>'
+                    f'<span class="prosp-lvl {lvl_class(level)}">{level}</span>'
                     f'<span class="prosp-stat">DNP</span>'
                     f'</div>')
+        # Played first, then divider, then DNP
+        prospect_rows = played_rows
+        if played_rows and dnp_rows:
+            prospect_rows.append('<div class="prosp-divider"></div>')
+        prospect_rows.extend(dnp_rows)
 
     prospect_html = ""
     if prospect_rows:
-        prospect_html = f'<h3 class="prosp-header">Prospect Watch</h3><div class="prosp-tracker">{"".join(prospect_rows)}</div>'
+        col_hdr = '<div class="prosp-cols"><span>#</span><span>Name</span><span>Pos</span><span>Lvl</span><span>Line</span></div>'
+        prospect_html = f'<h3 class="prosp-header">Prospect Watch</h3><div class="prosp-tracker">{col_hdr}{"".join(prospect_rows)}</div>'
 
     return f'<div class="minors">{"".join(cards)}</div>{prospect_html}', tag
 

@@ -1,0 +1,8747 @@
+{
+  "rankings": {
+    "angels": [
+      {
+        "id": 803285,
+        "rank": 1,
+        "position": "RHP",
+        "name": "Tyler Bremner"
+      },
+      {
+        "id": 703185,
+        "rank": 2,
+        "position": "CF",
+        "name": "Nelson Rada"
+      },
+      {
+        "id": 828989,
+        "rank": 3,
+        "position": "LHP",
+        "name": "Johnny Slawinski"
+      },
+      {
+        "id": 691946,
+        "rank": 4,
+        "position": "RHP",
+        "name": "George Klassen"
+      },
+      {
+        "id": 829058,
+        "rank": 5,
+        "position": "C/3B",
+        "name": "Gabriel Davalillo"
+      },
+      {
+        "id": 815915,
+        "rank": 6,
+        "position": "SS",
+        "name": "Joswa Lugo"
+      },
+      {
+        "id": 694203,
+        "rank": 7,
+        "position": "SS",
+        "name": "Denzer Guzman"
+      },
+      {
+        "id": 702274,
+        "rank": 8,
+        "position": "RHP",
+        "name": "Chase Shores"
+      },
+      {
+        "id": 807281,
+        "rank": 9,
+        "position": "RHP",
+        "name": "Trey Gregory-Alford"
+      },
+      {
+        "id": 813335,
+        "rank": 10,
+        "position": "RHP",
+        "name": "Dylan Jordan"
+      },
+      {
+        "id": 820986,
+        "rank": 11,
+        "position": "OF",
+        "name": "Hayden Alvarez"
+      },
+      {
+        "id": 700933,
+        "rank": 12,
+        "position": "RHP",
+        "name": "Chris Cortez"
+      },
+      {
+        "id": 813989,
+        "rank": 13,
+        "position": "LHP",
+        "name": "Talon Haley"
+      },
+      {
+        "id": 832457,
+        "rank": 14,
+        "position": "RHP",
+        "name": "CJ Gray"
+      },
+      {
+        "id": 804558,
+        "rank": 15,
+        "position": "OF",
+        "name": "Raudi Rodriguez"
+      },
+      {
+        "id": 691951,
+        "rank": 16,
+        "position": "LHP",
+        "name": "Sam Aldegheri"
+      },
+      {
+        "id": 806010,
+        "rank": 17,
+        "position": "RHP",
+        "name": "Barrett Kent"
+      },
+      {
+        "id": 700712,
+        "rank": 18,
+        "position": "RHP",
+        "name": "Walbert Urena"
+      },
+      {
+        "id": 805422,
+        "rank": 19,
+        "position": "RHP",
+        "name": "Nate Snead"
+      },
+      {
+        "id": 808129,
+        "rank": 20,
+        "position": "C",
+        "name": "Juan Flores"
+      },
+      {
+        "id": 836588,
+        "rank": 21,
+        "position": "SS",
+        "name": "Jeyson Horton"
+      },
+      {
+        "id": 805871,
+        "rank": 22,
+        "position": "RHP",
+        "name": "Joel Hurtado"
+      },
+      {
+        "id": 829795,
+        "rank": 23,
+        "position": "SS",
+        "name": "Yilver De Paula"
+      },
+      {
+        "id": 815718,
+        "rank": 24,
+        "position": "LHP",
+        "name": "Xavier Mitchell"
+      },
+      {
+        "id": 808161,
+        "rank": 25,
+        "position": "RHP",
+        "name": "Ubaldo Soto"
+      },
+      {
+        "id": 803135,
+        "rank": 26,
+        "position": "RHP",
+        "name": "Austin Gordon"
+      },
+      {
+        "id": 821238,
+        "rank": 27,
+        "position": "C",
+        "name": "Marlon Quintero"
+      },
+      {
+        "id": 803021,
+        "rank": 28,
+        "position": "RHP",
+        "name": "Peyton Olejnik"
+      },
+      {
+        "id": 703194,
+        "rank": 29,
+        "position": "OF",
+        "name": "Randy De Jesus"
+      },
+      {
+        "id": 834241,
+        "rank": 30,
+        "position": "RHP",
+        "name": "Luke LaCourse"
+      }
+    ],
+    "astros": [
+      {
+        "id": 829037,
+        "rank": 1,
+        "position": "OF",
+        "name": "Kevin Alvarez"
+      },
+      {
+        "id": 815832,
+        "rank": 2,
+        "position": "SS",
+        "name": "Xavier Neyens"
+      },
+      {
+        "id": 703676,
+        "rank": 3,
+        "position": "OF",
+        "name": "Ethan Frey"
+      },
+      {
+        "id": 694728,
+        "rank": 4,
+        "position": "2B",
+        "name": "Brice Matthews"
+      },
+      {
+        "id": 801075,
+        "rank": 5,
+        "position": "C",
+        "name": "Walker Janek"
+      },
+      {
+        "id": 809343,
+        "rank": 6,
+        "position": "RHP",
+        "name": "Bryce Mayer"
+      },
+      {
+        "id": 814490,
+        "rank": 7,
+        "position": "RHP",
+        "name": "Ethan Pecko"
+      },
+      {
+        "id": 801573,
+        "rank": 8,
+        "position": "RHP",
+        "name": "Ryan Forcucci"
+      },
+      {
+        "id": 837522,
+        "rank": 9,
+        "position": "SS",
+        "name": "Albert Fermín"
+      },
+      {
+        "id": 805904,
+        "rank": 10,
+        "position": "CF",
+        "name": "Zach Cole"
+      },
+      {
+        "id": 828599,
+        "rank": 11,
+        "position": "OF",
+        "name": "Lucas Spence"
+      },
+      {
+        "id": 699044,
+        "rank": 12,
+        "position": "RHP",
+        "name": "Miguel Ullola"
+      },
+      {
+        "id": 813896,
+        "rank": 13,
+        "position": "OF",
+        "name": "Joseph Sullivan"
+      },
+      {
+        "id": 801802,
+        "rank": 14,
+        "position": "RHP",
+        "name": "James Hicks"
+      },
+      {
+        "id": 694545,
+        "rank": 15,
+        "position": "RHP",
+        "name": "Jackson Nezuh"
+      },
+      {
+        "id": 696280,
+        "rank": 16,
+        "position": "RHP",
+        "name": "Alonzo Tredwell"
+      },
+      {
+        "id": 695001,
+        "rank": 17,
+        "position": "RHP",
+        "name": "Alimber Santa"
+      },
+      {
+        "id": 805953,
+        "rank": 18,
+        "position": "OF",
+        "name": "Anthony Huezo"
+      },
+      {
+        "id": 813844,
+        "rank": 19,
+        "position": "C/1B",
+        "name": "Will Bush"
+      },
+      {
+        "id": 829860,
+        "rank": 20,
+        "position": "OF",
+        "name": "Anthony Millan"
+      },
+      {
+        "id": 834234,
+        "rank": 21,
+        "position": "C",
+        "name": "Jase Mitchell"
+      },
+      {
+        "id": 826315,
+        "rank": 22,
+        "position": "RHP",
+        "name": "Cole Hertzler"
+      },
+      {
+        "id": 800067,
+        "rank": 23,
+        "position": "RHP",
+        "name": "Jose Fleury"
+      },
+      {
+        "id": 809789,
+        "rank": 24,
+        "position": "RHP",
+        "name": "Parker Smith"
+      },
+      {
+        "id": 813865,
+        "rank": 25,
+        "position": "RHP",
+        "name": "Hudson Leach"
+      },
+      {
+        "id": 702547,
+        "rank": 26,
+        "position": "SS",
+        "name": "Caden Powell"
+      },
+      {
+        "id": 687062,
+        "rank": 27,
+        "position": "RHP",
+        "name": "Ramsey David"
+      },
+      {
+        "id": 830769,
+        "rank": 28,
+        "position": "RHP",
+        "name": "Nick Potter"
+      },
+      {
+        "id": 834872,
+        "rank": 29,
+        "position": "RHP",
+        "name": "Gabel Pentecost"
+      },
+      {
+        "id": 832795,
+        "rank": 30,
+        "position": "2B/3B",
+        "name": "Sami Manzueta"
+      }
+    ],
+    "athletics": [
+      {
+        "id": 815888,
+        "rank": 1,
+        "position": "SS",
+        "name": "Leo De Vries"
+      },
+      {
+        "id": 701364,
+        "rank": 2,
+        "position": "LHP",
+        "name": "Jamie Arnold"
+      },
+      {
+        "id": 695611,
+        "rank": 3,
+        "position": "LHP",
+        "name": "Gage Jump"
+      },
+      {
+        "id": 827734,
+        "rank": 4,
+        "position": "LHP",
+        "name": "Wei-En Lin"
+      },
+      {
+        "id": 703607,
+        "rank": 5,
+        "position": "OF",
+        "name": "Henry Bolte"
+      },
+      {
+        "id": 804556,
+        "rank": 6,
+        "position": "RHP",
+        "name": "Braden Nett"
+      },
+      {
+        "id": 836584,
+        "rank": 7,
+        "position": "SS",
+        "name": "Johenssy Colome"
+      },
+      {
+        "id": 805127,
+        "rank": 8,
+        "position": "OF",
+        "name": "Devin Taylor"
+      },
+      {
+        "id": 695720,
+        "rank": 9,
+        "position": "3B/1B",
+        "name": "Tommy White"
+      },
+      {
+        "id": 811965,
+        "rank": 10,
+        "position": "SS",
+        "name": "Joshua Kuroda-Grauer"
+      },
+      {
+        "id": 815911,
+        "rank": 11,
+        "position": "SS",
+        "name": "Edgar Montero"
+      },
+      {
+        "id": 695034,
+        "rank": 12,
+        "position": "RHP",
+        "name": "Kade Morris"
+      },
+      {
+        "id": 829679,
+        "rank": 13,
+        "position": "SS/RHP",
+        "name": "Shotaro Morii"
+      },
+      {
+        "id": 692013,
+        "rank": 14,
+        "position": "RHP",
+        "name": "Henry Baez"
+      },
+      {
+        "id": 702504,
+        "rank": 15,
+        "position": "OF",
+        "name": "Gavin Turley"
+      },
+      {
+        "id": 806064,
+        "rank": 16,
+        "position": "RHP",
+        "name": "Steven Echavarria"
+      },
+      {
+        "id": 686930,
+        "rank": 17,
+        "position": "RHP",
+        "name": "Mason Barnett"
+      },
+      {
+        "id": 680684,
+        "rank": 18,
+        "position": "RHP",
+        "name": "Gunnar Hoglund"
+      },
+      {
+        "id": 823990,
+        "rank": 19,
+        "position": "RHP",
+        "name": "Zane Taylor"
+      },
+      {
+        "id": 678577,
+        "rank": 20,
+        "position": "CF",
+        "name": "Junior Perez"
+      },
+      {
+        "id": 805782,
+        "rank": 21,
+        "position": "OF",
+        "name": "Ryan Lasko"
+      },
+      {
+        "id": 674384,
+        "rank": 22,
+        "position": "RHP",
+        "name": "Eduarniel Núñez"
+      },
+      {
+        "id": 829052,
+        "rank": 23,
+        "position": "OF",
+        "name": "Breyson Guedez"
+      },
+      {
+        "id": 695761,
+        "rank": 24,
+        "position": "RHP",
+        "name": "Kenya Huggins"
+      },
+      {
+        "id": 800612,
+        "rank": 25,
+        "position": "RHP",
+        "name": "Cole Miller"
+      },
+      {
+        "id": 694977,
+        "rank": 26,
+        "position": "OF",
+        "name": "Nate Nankil"
+      },
+      {
+        "id": 800018,
+        "rank": 27,
+        "position": "RHP",
+        "name": "Chen Zhong-Ao Zhuang"
+      },
+      {
+        "id": 829048,
+        "rank": 28,
+        "position": "OF",
+        "name": "Darwing Ozuna"
+      },
+      {
+        "id": 802474,
+        "rank": 29,
+        "position": "OF",
+        "name": "Cameron Leary"
+      },
+      {
+        "id": 804119,
+        "rank": 30,
+        "position": "3B/2B/SS",
+        "name": "Bobby Boser"
+      }
+    ],
+    "blue-jays": [
+      {
+        "id": 702056,
+        "rank": 1,
+        "position": "RHP",
+        "name": "Trey Yesavage"
+      },
+      {
+        "id": 828098,
+        "rank": 2,
+        "position": "SS",
+        "name": "JoJo Parker"
+      },
+      {
+        "id": 805796,
+        "rank": 3,
+        "position": "SS",
+        "name": "Arjun Nimmala"
+      },
+      {
+        "id": 803516,
+        "rank": 4,
+        "position": "LHP",
+        "name": "Johnny King"
+      },
+      {
+        "id": 694357,
+        "rank": 5,
+        "position": "LHP",
+        "name": "Ricky Tiedemann"
+      },
+      {
+        "id": 804948,
+        "rank": 6,
+        "position": "RHP",
+        "name": "Gage Stanifer"
+      },
+      {
+        "id": 825646,
+        "rank": 7,
+        "position": "3B/SS",
+        "name": "Juan Sanchez"
+      },
+      {
+        "id": 814005,
+        "rank": 8,
+        "position": "RHP",
+        "name": "Jake Bloss"
+      },
+      {
+        "id": 702302,
+        "rank": 9,
+        "position": "LF",
+        "name": "RJ Schreck"
+      },
+      {
+        "id": 682818,
+        "rank": 10,
+        "position": "LF",
+        "name": "Yohendrick Pinango"
+      },
+      {
+        "id": 834404,
+        "rank": 11,
+        "position": "OF",
+        "name": "Jake Cook"
+      },
+      {
+        "id": 692478,
+        "rank": 12,
+        "position": "CF",
+        "name": "Victor Arias"
+      },
+      {
+        "id": 688460,
+        "rank": 13,
+        "position": "SS/3B",
+        "name": "Josh Kasevich"
+      },
+      {
+        "id": 827664,
+        "rank": 14,
+        "position": "RHP",
+        "name": "Silvano Hechavarria"
+      },
+      {
+        "id": 828557,
+        "rank": 15,
+        "position": "OF",
+        "name": "Blaine Bullard"
+      },
+      {
+        "id": 800125,
+        "rank": 16,
+        "position": "RHP",
+        "name": "Fernando Perez"
+      },
+      {
+        "id": 815873,
+        "rank": 17,
+        "position": "3B",
+        "name": "Sean Keys"
+      },
+      {
+        "id": 692117,
+        "rank": 18,
+        "position": "RHP",
+        "name": "Micah Bucknam"
+      },
+      {
+        "id": 698927,
+        "rank": 19,
+        "position": "C",
+        "name": "Edward Duran"
+      },
+      {
+        "id": 815992,
+        "rank": 20,
+        "position": "3B",
+        "name": "Tim Piasentin"
+      },
+      {
+        "id": 671936,
+        "rank": 21,
+        "position": "LHP",
+        "name": "Adam Macko"
+      },
+      {
+        "id": 702255,
+        "rank": 22,
+        "position": "LHP",
+        "name": "Brandon Barriera"
+      },
+      {
+        "id": 694495,
+        "rank": 23,
+        "position": "LHP",
+        "name": "Javen Coleman"
+      },
+      {
+        "id": 678218,
+        "rank": 24,
+        "position": "C",
+        "name": "Brandon Valenzuela"
+      },
+      {
+        "id": 702690,
+        "rank": 25,
+        "position": "3B/2B",
+        "name": "Cutter Coffey"
+      },
+      {
+        "id": 807727,
+        "rank": 26,
+        "position": "3B/1B",
+        "name": "Charles McAdoo"
+      },
+      {
+        "id": 801358,
+        "rank": 27,
+        "position": "LHP",
+        "name": "Jared Spencer"
+      },
+      {
+        "id": 703566,
+        "rank": 28,
+        "position": "RHP",
+        "name": "Carson Messina"
+      },
+      {
+        "id": 691437,
+        "rank": 29,
+        "position": "2B",
+        "name": "Adrian Pinto"
+      }
+    ],
+    "braves": [
+      {
+        "id": 807284,
+        "rank": 1,
+        "position": "LHP",
+        "name": "Cam Caminiti"
+      },
+      {
+        "id": 702275,
+        "rank": 2,
+        "position": "RHP",
+        "name": "JR Ritchie"
+      },
+      {
+        "id": 800311,
+        "rank": 3,
+        "position": "RHP",
+        "name": "Didier Fuentes"
+      },
+      {
+        "id": 816111,
+        "rank": 4,
+        "position": "SS/OF",
+        "name": "Tate Southisene"
+      },
+      {
+        "id": 822676,
+        "rank": 5,
+        "position": "SS",
+        "name": "Alex Lodise"
+      },
+      {
+        "id": 702566,
+        "rank": 6,
+        "position": "RHP",
+        "name": "Owen Murphy"
+      },
+      {
+        "id": 828987,
+        "rank": 7,
+        "position": "LHP",
+        "name": "Briggs McKenzie"
+      },
+      {
+        "id": 829053,
+        "rank": 8,
+        "position": "OF",
+        "name": "Diego Tornes"
+      },
+      {
+        "id": 814351,
+        "rank": 9,
+        "position": "RHP",
+        "name": "Lucas Braun"
+      },
+      {
+        "id": 808535,
+        "rank": 10,
+        "position": "SS",
+        "name": "John Gil"
+      },
+      {
+        "id": 820827,
+        "rank": 11,
+        "position": "RHP",
+        "name": "Luke Sinnard"
+      },
+      {
+        "id": 803833,
+        "rank": 12,
+        "position": "RHP",
+        "name": "Garrett Baumann"
+      },
+      {
+        "id": 828148,
+        "rank": 13,
+        "position": "OF",
+        "name": "Conor Essenburg"
+      },
+      {
+        "id": 803349,
+        "rank": 14,
+        "position": "LHP",
+        "name": "Herick Hernandez"
+      },
+      {
+        "id": 686628,
+        "rank": 15,
+        "position": "RHP",
+        "name": "Blake Burkhalter"
+      },
+      {
+        "id": 802357,
+        "rank": 16,
+        "position": "RHP",
+        "name": "Drue Hackenberg"
+      },
+      {
+        "id": 702910,
+        "rank": 17,
+        "position": "RHP",
+        "name": "Jhancarlos Lara"
+      },
+      {
+        "id": 691548,
+        "rank": 18,
+        "position": "RHP",
+        "name": "Rolddy Muñoz"
+      },
+      {
+        "id": 826928,
+        "rank": 19,
+        "position": "OF",
+        "name": "Owen Carey"
+      },
+      {
+        "id": 807080,
+        "rank": 20,
+        "position": "OF",
+        "name": "Eric Hartman"
+      },
+      {
+        "id": 806994,
+        "rank": 21,
+        "position": "OF",
+        "name": "Luis Guanipa"
+      },
+      {
+        "id": 802686,
+        "rank": 22,
+        "position": "LHP",
+        "name": "Hayden Harris"
+      },
+      {
+        "id": 804860,
+        "rank": 23,
+        "position": "LHP",
+        "name": "Landon Beidelschies"
+      },
+      {
+        "id": 815626,
+        "rank": 24,
+        "position": "RHP",
+        "name": "Ethan Bagwell"
+      },
+      {
+        "id": 815899,
+        "rank": 25,
+        "position": "SS",
+        "name": "Jose Perdomo"
+      },
+      {
+        "id": 802117,
+        "rank": 26,
+        "position": "OF",
+        "name": "Patrick Clohisy"
+      },
+      {
+        "id": 825495,
+        "rank": 27,
+        "position": "SS",
+        "name": "Jose Manon"
+      },
+      {
+        "id": 703483,
+        "rank": 28,
+        "position": "2B/3B",
+        "name": "Dixon Williams"
+      },
+      {
+        "id": 829909,
+        "rank": 29,
+        "position": "RHP",
+        "name": "Raudy Reyes"
+      },
+      {
+        "id": 806061,
+        "rank": 30,
+        "position": "OF",
+        "name": "Isaiah Drake"
+      }
+    ],
+    "brewers": [
+      {
+        "id": 815908,
+        "rank": 1,
+        "position": "SS",
+        "name": "Jesús Made"
+      },
+      {
+        "id": 821270,
+        "rank": 2,
+        "position": "SS",
+        "name": "Luis Peña"
+      },
+      {
+        "id": 702518,
+        "rank": 3,
+        "position": "SS/2B/OF",
+        "name": "Jett Williams"
+      },
+      {
+        "id": 806198,
+        "rank": 4,
+        "position": "SS",
+        "name": "Cooper Pratt"
+      },
+      {
+        "id": 687075,
+        "rank": 5,
+        "position": "RHP",
+        "name": "Brandon Sproat"
+      },
+      {
+        "id": 702652,
+        "rank": 6,
+        "position": "3B",
+        "name": "Andrew Fischer"
+      },
+      {
+        "id": 701656,
+        "rank": 7,
+        "position": "RHP",
+        "name": "Logan Henderson"
+      },
+      {
+        "id": 691620,
+        "rank": 8,
+        "position": "C",
+        "name": "Jeferson Quero"
+      },
+      {
+        "id": 811309,
+        "rank": 9,
+        "position": "RHP",
+        "name": "Bishop Letson"
+      },
+      {
+        "id": 701392,
+        "rank": 10,
+        "position": "C",
+        "name": "Marco Dinges"
+      },
+      {
+        "id": 815304,
+        "rank": 11,
+        "position": "OF/2B",
+        "name": "Josh Adamczewski"
+      },
+      {
+        "id": 800325,
+        "rank": 12,
+        "position": "CF",
+        "name": "Luis Lara"
+      },
+      {
+        "id": 702726,
+        "rank": 13,
+        "position": "1B/3B",
+        "name": "Luke Adams"
+      },
+      {
+        "id": 815520,
+        "rank": 14,
+        "position": "OF",
+        "name": "Braylon Payne"
+      },
+      {
+        "id": 815816,
+        "rank": 15,
+        "position": "SS",
+        "name": "Brady Ebel"
+      },
+      {
+        "id": 702505,
+        "rank": 16,
+        "position": "LHP",
+        "name": "J.D. Thompson"
+      },
+      {
+        "id": 688107,
+        "rank": 17,
+        "position": "LHP",
+        "name": "Robert Gasser"
+      },
+      {
+        "id": 695501,
+        "rank": 18,
+        "position": "1B",
+        "name": "Blake Burke"
+      },
+      {
+        "id": 824620,
+        "rank": 19,
+        "position": "RHP",
+        "name": "Tyson Hardin"
+      },
+      {
+        "id": 828475,
+        "rank": 20,
+        "position": "RHP",
+        "name": "Ethan Dorchies"
+      },
+      {
+        "id": 815501,
+        "rank": 21,
+        "position": "RHP",
+        "name": "Bryce Meccage"
+      },
+      {
+        "id": 694385,
+        "rank": 22,
+        "position": "3B",
+        "name": "Brock Wilken"
+      },
+      {
+        "id": 836601,
+        "rank": 23,
+        "position": "SS",
+        "name": "Diego Frontado"
+      },
+      {
+        "id": 805807,
+        "rank": 24,
+        "position": "RHP",
+        "name": "Josh Knoth"
+      },
+      {
+        "id": 675660,
+        "rank": 25,
+        "position": "LHP",
+        "name": "Shane Drohan"
+      }
+    ],
+    "cardinals": [
+      {
+        "id": 802139,
+        "rank": 1,
+        "position": "SS",
+        "name": "JJ Wetherholt"
+      },
+      {
+        "id": 824604,
+        "rank": 2,
+        "position": "LHP",
+        "name": "Liam Doyle"
+      },
+      {
+        "id": 823787,
+        "rank": 3,
+        "position": "C",
+        "name": "Rainiel Rodriguez"
+      },
+      {
+        "id": 695491,
+        "rank": 4,
+        "position": "RF",
+        "name": "Joshua Báez"
+      },
+      {
+        "id": 701388,
+        "rank": 5,
+        "position": "RHP",
+        "name": "Jurrangelo Cijntje"
+      },
+      {
+        "id": 699024,
+        "rank": 6,
+        "position": "C",
+        "name": "Leo Bernal"
+      },
+      {
+        "id": 687273,
+        "rank": 7,
+        "position": "LHP",
+        "name": "Quinn Mathews"
+      },
+      {
+        "id": 699625,
+        "rank": 8,
+        "position": "C",
+        "name": "Jimmy Crooks"
+      },
+      {
+        "id": 700251,
+        "rank": 9,
+        "position": "LHP",
+        "name": "Brandon Clarke"
+      },
+      {
+        "id": 694358,
+        "rank": 10,
+        "position": "RHP",
+        "name": "Tekoah Roby"
+      },
+      {
+        "id": 815119,
+        "rank": 11,
+        "position": "RHP",
+        "name": "Tanner Franklin"
+      },
+      {
+        "id": 815829,
+        "rank": 12,
+        "position": "OF/SS",
+        "name": "Ryan Mitchell"
+      },
+      {
+        "id": 823369,
+        "rank": 13,
+        "position": "RHP",
+        "name": "Yhoiker Fajardo"
+      },
+      {
+        "id": 809100,
+        "rank": 14,
+        "position": "LHP",
+        "name": "Ixan Henderson"
+      },
+      {
+        "id": 693311,
+        "rank": 15,
+        "position": "RHP",
+        "name": "Tink Hence"
+      },
+      {
+        "id": 821107,
+        "rank": 16,
+        "position": "SS",
+        "name": "Yairo Padilla"
+      },
+      {
+        "id": 687309,
+        "rank": 17,
+        "position": "LHP",
+        "name": "Cooper Hjerpe"
+      },
+      {
+        "id": 806191,
+        "rank": 18,
+        "position": "OF",
+        "name": "Tai Peete"
+      },
+      {
+        "id": 836587,
+        "rank": 19,
+        "position": "OF",
+        "name": "Emanuel Luna"
+      },
+      {
+        "id": 800305,
+        "rank": 20,
+        "position": "SS",
+        "name": "Jesús  Baéz"
+      },
+      {
+        "id": 802408,
+        "rank": 21,
+        "position": "LHP",
+        "name": "Brycen Mautz"
+      },
+      {
+        "id": 703725,
+        "rank": 22,
+        "position": "RHP",
+        "name": "Luis Gastelum"
+      },
+      {
+        "id": 811765,
+        "rank": 23,
+        "position": "3B/1B",
+        "name": "Deniel Ortiz"
+      },
+      {
+        "id": 827265,
+        "rank": 24,
+        "position": "LHP",
+        "name": "Cade Crossland"
+      }
+    ],
+    "cubs": [
+      {
+        "id": 694208,
+        "rank": 1,
+        "position": "C",
+        "name": "Moisés Ballesteros"
+      },
+      {
+        "id": 694393,
+        "rank": 2,
+        "position": "RHP",
+        "name": "Jaxon Wiggins"
+      },
+      {
+        "id": 828255,
+        "rank": 3,
+        "position": "OF",
+        "name": "Ethan Conrad"
+      },
+      {
+        "id": 682634,
+        "rank": 4,
+        "position": "RF",
+        "name": "Kevin Alcántara"
+      },
+      {
+        "id": 800473,
+        "rank": 5,
+        "position": "SS",
+        "name": "Jefferson Rojas"
+      },
+      {
+        "id": 823807,
+        "rank": 6,
+        "position": "OF",
+        "name": "Kane Kepley"
+      },
+      {
+        "id": 675085,
+        "rank": 7,
+        "position": "1B",
+        "name": "Jonathon Long"
+      },
+      {
+        "id": 815824,
+        "rank": 8,
+        "position": "OF",
+        "name": "Josiah Hartshorn"
+      },
+      {
+        "id": 699393,
+        "rank": 9,
+        "position": "3B/2B",
+        "name": "Pedro Ramírez"
+      },
+      {
+        "id": 701649,
+        "rank": 10,
+        "position": "2B/OF",
+        "name": "James Triantos"
+      },
+      {
+        "id": 689196,
+        "rank": 11,
+        "position": "C",
+        "name": "Owen Ayers"
+      },
+      {
+        "id": 829040,
+        "rank": 12,
+        "position": "2B/3B",
+        "name": "Juan Cabada"
+      },
+      {
+        "id": 832453,
+        "rank": 13,
+        "position": "RHP",
+        "name": "Kaleb Wing"
+      },
+      {
+        "id": 829823,
+        "rank": 14,
+        "position": "SS",
+        "name": "Juan Tomas"
+      },
+      {
+        "id": 695573,
+        "rank": 15,
+        "position": "1B/3B",
+        "name": "Cole Mathis"
+      },
+      {
+        "id": 805255,
+        "rank": 16,
+        "position": "RHP",
+        "name": "Dominick Reid"
+      },
+      {
+        "id": 669361,
+        "rank": 17,
+        "position": "RHP",
+        "name": "Brandon Birdsell"
+      },
+      {
+        "id": 808062,
+        "rank": 18,
+        "position": "RHP",
+        "name": "Jostin Florentino"
+      },
+      {
+        "id": 837824,
+        "rank": 19,
+        "position": "SS",
+        "name": "Jaims Martinez"
+      },
+      {
+        "id": 813666,
+        "rank": 20,
+        "position": "C",
+        "name": "Ariel Armas"
+      },
+      {
+        "id": 703520,
+        "rank": 21,
+        "position": "OF",
+        "name": "Brett Bateman"
+      },
+      {
+        "id": 837852,
+        "rank": 22,
+        "position": "SS",
+        "name": "Johan Geraldo"
+      },
+      {
+        "id": 701477,
+        "rank": 23,
+        "position": "RHP",
+        "name": "Erian Rodriguez"
+      },
+      {
+        "id": 815292,
+        "rank": 24,
+        "position": "RHP",
+        "name": "Luis Martinez-Gomez"
+      },
+      {
+        "id": 806980,
+        "rank": 25,
+        "position": "SS",
+        "name": "Angel Cepeda"
+      },
+      {
+        "id": 807257,
+        "rank": 26,
+        "position": "2B",
+        "name": "Ty Southisene"
+      },
+      {
+        "id": 820835,
+        "rank": 27,
+        "position": "OF",
+        "name": "Kade Snell"
+      },
+      {
+        "id": 702303,
+        "rank": 28,
+        "position": "LHP",
+        "name": "Riley Martin"
+      },
+      {
+        "id": 805990,
+        "rank": 29,
+        "position": "RHP",
+        "name": "Grant Kipp"
+      },
+      {
+        "id": 815890,
+        "rank": 30,
+        "position": "SS",
+        "name": "Fernando Cruz"
+      }
+    ],
+    "dbacks": [
+      {
+        "id": 814439,
+        "rank": 1,
+        "position": "OF",
+        "name": "Ryan Waldschmidt"
+      },
+      {
+        "id": 815617,
+        "rank": 2,
+        "position": "SS",
+        "name": "Kayson Cunningham"
+      },
+      {
+        "id": 815154,
+        "rank": 3,
+        "position": "OF",
+        "name": "Slade Caldwell"
+      },
+      {
+        "id": 694371,
+        "rank": 4,
+        "position": "2B/OF",
+        "name": "Tommy Troy"
+      },
+      {
+        "id": 702679,
+        "rank": 5,
+        "position": "2B/3B",
+        "name": "Demetrio Crisantes"
+      },
+      {
+        "id": 807267,
+        "rank": 6,
+        "position": "2B",
+        "name": "JD Dix"
+      },
+      {
+        "id": 811666,
+        "rank": 7,
+        "position": "RHP",
+        "name": "Daniel Eagen"
+      },
+      {
+        "id": 701908,
+        "rank": 8,
+        "position": "RHP",
+        "name": "David Hagaman"
+      },
+      {
+        "id": 804467,
+        "rank": 9,
+        "position": "RHP",
+        "name": "Patrick Forbes"
+      },
+      {
+        "id": 694410,
+        "rank": 10,
+        "position": "3B",
+        "name": "LuJames Groover"
+      },
+      {
+        "id": 691441,
+        "rank": 11,
+        "position": "RHP",
+        "name": "Cristian Mena"
+      },
+      {
+        "id": 684442,
+        "rank": 12,
+        "position": "LHP",
+        "name": "Kohl Drake"
+      },
+      {
+        "id": 800306,
+        "rank": 13,
+        "position": "2B",
+        "name": "Jansel Luis"
+      },
+      {
+        "id": 683352,
+        "rank": 14,
+        "position": "LHP",
+        "name": "Mitch Bratt"
+      },
+      {
+        "id": 800198,
+        "rank": 15,
+        "position": "SS",
+        "name": "Cristofer Torin"
+      },
+      {
+        "id": 702258,
+        "rank": 16,
+        "position": "OF",
+        "name": "Druw Jones"
+      },
+      {
+        "id": 808024,
+        "rank": 17,
+        "position": "C",
+        "name": "Carlos Virahonda"
+      },
+      {
+        "id": 802416,
+        "rank": 18,
+        "position": "RHP",
+        "name": "Ashton Izzi"
+      },
+      {
+        "id": 828344,
+        "rank": 19,
+        "position": "RHP",
+        "name": "Dean Livingston"
+      },
+      {
+        "id": 805299,
+        "rank": 20,
+        "position": "LHP",
+        "name": "Brandyn Garcia"
+      },
+      {
+        "id": 807957,
+        "rank": 21,
+        "position": "3B",
+        "name": "Yassel Soler"
+      },
+      {
+        "id": 826536,
+        "rank": 22,
+        "position": "RHP",
+        "name": "Brian Curley"
+      },
+      {
+        "id": 700270,
+        "rank": 23,
+        "position": "RHP",
+        "name": "Yilber Díaz"
+      },
+      {
+        "id": 800286,
+        "rank": 24,
+        "position": "RHP",
+        "name": "Wellington Aracena"
+      },
+      {
+        "id": 808035,
+        "rank": 25,
+        "position": "RHP",
+        "name": "Daury Vasquez"
+      },
+      {
+        "id": 813930,
+        "rank": 26,
+        "position": "C",
+        "name": "Ivan Luciano"
+      },
+      {
+        "id": 699912,
+        "rank": 27,
+        "position": "SS",
+        "name": "Jose Fernandez"
+      },
+      {
+        "id": 696277,
+        "rank": 28,
+        "position": "RHP",
+        "name": "Mason Marriott"
+      },
+      {
+        "id": 801938,
+        "rank": 29,
+        "position": "CF",
+        "name": "Avery Owusu-Asiedu"
+      }
+    ],
+    "dodgers": [
+      {
+        "id": 800543,
+        "rank": 1,
+        "position": "CF",
+        "name": "Josue De Paula"
+      },
+      {
+        "id": 814307,
+        "rank": 2,
+        "position": "CF",
+        "name": "Zyhir Hope"
+      },
+      {
+        "id": 808234,
+        "rank": 3,
+        "position": "OF",
+        "name": "Eduardo Quintero"
+      },
+      {
+        "id": 701527,
+        "rank": 4,
+        "position": "CF",
+        "name": "Mike Sirota"
+      },
+      {
+        "id": 815896,
+        "rank": 5,
+        "position": "SS",
+        "name": "Emil Morales"
+      },
+      {
+        "id": 689981,
+        "rank": 6,
+        "position": "RHP",
+        "name": "River Ryan"
+      },
+      {
+        "id": 701328,
+        "rank": 7,
+        "position": "LHP",
+        "name": "Jackson Ferris"
+      },
+      {
+        "id": 804560,
+        "rank": 8,
+        "position": "OF",
+        "name": "Charles Davalan"
+      },
+      {
+        "id": 800537,
+        "rank": 9,
+        "position": "RHP",
+        "name": "Christian Zazueta"
+      },
+      {
+        "id": 696486,
+        "rank": 10,
+        "position": "OF/1B",
+        "name": "James Tibbs III"
+      },
+      {
+        "id": 703445,
+        "rank": 11,
+        "position": "LHP",
+        "name": "Adam Serwinowski"
+      },
+      {
+        "id": 702539,
+        "rank": 12,
+        "position": "LHP",
+        "name": "Zach Root"
+      },
+      {
+        "id": 806077,
+        "rank": 13,
+        "position": "OF",
+        "name": "Kendall George"
+      },
+      {
+        "id": 828667,
+        "rank": 14,
+        "position": "OF",
+        "name": "Ching-Hsien Ko"
+      },
+      {
+        "id": 813916,
+        "rank": 15,
+        "position": "SS",
+        "name": "Kellon Lindsey"
+      },
+      {
+        "id": 815792,
+        "rank": 16,
+        "position": "3B",
+        "name": "Chase Harlan"
+      },
+      {
+        "id": 701394,
+        "rank": 17,
+        "position": "OF",
+        "name": "Zach Ehrhard"
+      },
+      {
+        "id": 812363,
+        "rank": 18,
+        "position": "RHP",
+        "name": "Marlon Nieves"
+      },
+      {
+        "id": 669899,
+        "rank": 19,
+        "position": "OF/1B",
+        "name": "Ryan Ward"
+      },
+      {
+        "id": 806959,
+        "rank": 20,
+        "position": "SS",
+        "name": "Joendry Vargas"
+      },
+      {
+        "id": 804942,
+        "rank": 21,
+        "position": "RHP",
+        "name": "Cam Leiter"
+      },
+      {
+        "id": 814507,
+        "rank": 22,
+        "position": "LHP",
+        "name": "Sterling Patick"
+      },
+      {
+        "id": 669165,
+        "rank": 23,
+        "position": "RHP",
+        "name": "Kyle Hurt"
+      },
+      {
+        "id": 806293,
+        "rank": 24,
+        "position": "RHP",
+        "name": "Payton Martin"
+      },
+      {
+        "id": 809944,
+        "rank": 25,
+        "position": "SS",
+        "name": "Elijah Hainline"
+      },
+      {
+        "id": 811716,
+        "rank": 26,
+        "position": "OF",
+        "name": "Landyn Vidourek"
+      },
+      {
+        "id": 815665,
+        "rank": 27,
+        "position": "OF",
+        "name": "Brendan Tunink"
+      },
+      {
+        "id": 695653,
+        "rank": 28,
+        "position": "SS",
+        "name": "Noah Miller"
+      },
+      {
+        "id": 814527,
+        "rank": 29,
+        "position": "RHP",
+        "name": "Patrick Copen"
+      },
+      {
+        "id": 695646,
+        "rank": 30,
+        "position": "RHP",
+        "name": "Peter Heubeck"
+      }
+    ],
+    "giants": [
+      {
+        "id": 805811,
+        "rank": 1,
+        "position": "1B",
+        "name": "Bryce Eldridge"
+      },
+      {
+        "id": 829034,
+        "rank": 2,
+        "position": "SS",
+        "name": "Josuar Gonzalez"
+      },
+      {
+        "id": 836582,
+        "rank": 3,
+        "position": "SS",
+        "name": "Luis Hernández"
+      },
+      {
+        "id": 815929,
+        "rank": 4,
+        "position": "SS",
+        "name": "Jhonny Level"
+      },
+      {
+        "id": 702264,
+        "rank": 5,
+        "position": "SS",
+        "name": "Gavin Kilen"
+      },
+      {
+        "id": 702607,
+        "rank": 6,
+        "position": "OF",
+        "name": "Dakota Jordan"
+      },
+      {
+        "id": 815589,
+        "rank": 7,
+        "position": "OF",
+        "name": "Bo Davidson"
+      },
+      {
+        "id": 815298,
+        "rank": 8,
+        "position": "LHP",
+        "name": "Jacob Bresnahan"
+      },
+      {
+        "id": 701906,
+        "rank": 9,
+        "position": "OF",
+        "name": "Trevor Cohen"
+      },
+      {
+        "id": 694918,
+        "rank": 10,
+        "position": "RHP",
+        "name": "Blade Tidwell"
+      },
+      {
+        "id": 815212,
+        "rank": 11,
+        "position": "RHP",
+        "name": "Keyner Martinez"
+      },
+      {
+        "id": 687931,
+        "rank": 12,
+        "position": "LHP",
+        "name": "Carson Whisenhunt"
+      },
+      {
+        "id": 821783,
+        "rank": 13,
+        "position": "RHP",
+        "name": "Argenis Cayama"
+      },
+      {
+        "id": 692238,
+        "rank": 14,
+        "position": "3B/1B",
+        "name": "Parks Harber"
+      },
+      {
+        "id": 806872,
+        "rank": 15,
+        "position": "OF",
+        "name": "Carlos Gutierrez"
+      },
+      {
+        "id": 686790,
+        "rank": 16,
+        "position": "RHP",
+        "name": "Trevor McDonald"
+      },
+      {
+        "id": 815219,
+        "rank": 17,
+        "position": "LHP",
+        "name": "Luis De La Torre"
+      },
+      {
+        "id": 683679,
+        "rank": 18,
+        "position": "C/3B",
+        "name": "Jesus Rodriguez"
+      },
+      {
+        "id": 823768,
+        "rank": 19,
+        "position": "SS",
+        "name": "Lorenzo Meola"
+      },
+      {
+        "id": 694757,
+        "rank": 20,
+        "position": "SS",
+        "name": "Maui Ahuna"
+      },
+      {
+        "id": 691740,
+        "rank": 21,
+        "position": "C",
+        "name": "Daniel Susac"
+      },
+      {
+        "id": 823929,
+        "rank": 22,
+        "position": "RHP",
+        "name": "Alberto Laroche"
+      },
+      {
+        "id": 805345,
+        "rank": 23,
+        "position": "RHP",
+        "name": "Trent Harris"
+      },
+      {
+        "id": 701241,
+        "rank": 24,
+        "position": "RHP",
+        "name": "Josh Bostick"
+      },
+      {
+        "id": 806611,
+        "rank": 25,
+        "position": "C/OF",
+        "name": "Jancel Villarroel"
+      },
+      {
+        "id": 802126,
+        "rank": 26,
+        "position": "LHP",
+        "name": "Joe Whitman"
+      },
+      {
+        "id": 822215,
+        "rank": 27,
+        "position": "LHP",
+        "name": "Carlos De La Rosa"
+      },
+      {
+        "id": 829905,
+        "rank": 28,
+        "position": "2B",
+        "name": "Yulian Barreto"
+      },
+      {
+        "id": 698965,
+        "rank": 29,
+        "position": "RHP",
+        "name": "Gerelmi Maldonado"
+      },
+      {
+        "id": 815464,
+        "rank": 30,
+        "position": "OF",
+        "name": "Lisbel Diaz"
+      }
+    ],
+    "guardians": [
+      {
+        "id": 683953,
+        "rank": 1,
+        "position": "2B",
+        "name": "Travis Bazzana"
+      },
+      {
+        "id": 800050,
+        "rank": 2,
+        "position": "RF",
+        "name": "Chase DeLauter"
+      },
+      {
+        "id": 694197,
+        "rank": 3,
+        "position": "SS",
+        "name": "Angel Genao"
+      },
+      {
+        "id": 806252,
+        "rank": 4,
+        "position": "1B/OF",
+        "name": "Ralphy Velazquez"
+      },
+      {
+        "id": 694876,
+        "rank": 5,
+        "position": "C",
+        "name": "Cooper Ingle"
+      },
+      {
+        "id": 701590,
+        "rank": 6,
+        "position": "RHP",
+        "name": "Khal Stephen"
+      },
+      {
+        "id": 815785,
+        "rank": 7,
+        "position": "RHP",
+        "name": "Braylon Doughty"
+      },
+      {
+        "id": 702593,
+        "rank": 8,
+        "position": "OF",
+        "name": "Jace LaViolette"
+      },
+      {
+        "id": 815841,
+        "rank": 9,
+        "position": "RHP",
+        "name": "Joey Oakie"
+      },
+      {
+        "id": 821181,
+        "rank": 10,
+        "position": "OF",
+        "name": "Juneiker Caceres"
+      },
+      {
+        "id": 702693,
+        "rank": 11,
+        "position": "OF",
+        "name": "Jaison Chourio"
+      },
+      {
+        "id": 806988,
+        "rank": 12,
+        "position": "SS",
+        "name": "Welbyn Francisca"
+      },
+      {
+        "id": 806053,
+        "rank": 13,
+        "position": "SS",
+        "name": "Dean Curley"
+      },
+      {
+        "id": 696135,
+        "rank": 14,
+        "position": "LF",
+        "name": "Kahlil Watson"
+      },
+      {
+        "id": 806210,
+        "rank": 15,
+        "position": "OF",
+        "name": "Alfonsin Rosario"
+      },
+      {
+        "id": 682877,
+        "rank": 16,
+        "position": "2B",
+        "name": "Juan Brito"
+      },
+      {
+        "id": 682982,
+        "rank": 17,
+        "position": "RHP",
+        "name": "Daniel Espino"
+      },
+      {
+        "id": 830239,
+        "rank": 18,
+        "position": "OF",
+        "name": "Aaron Walton"
+      },
+      {
+        "id": 695524,
+        "rank": 19,
+        "position": "C",
+        "name": "Jacob Cozart"
+      },
+      {
+        "id": 821657,
+        "rank": 20,
+        "position": "SS/3B",
+        "name": "Gabriel Rodriguez"
+      },
+      {
+        "id": 815897,
+        "rank": 21,
+        "position": "OF",
+        "name": "Robert Arias"
+      },
+      {
+        "id": 821171,
+        "rank": 22,
+        "position": "2B",
+        "name": "Dauri Fernandez"
+      },
+      {
+        "id": 807077,
+        "rank": 23,
+        "position": "RHP",
+        "name": "Will Hynes"
+      },
+      {
+        "id": 836614,
+        "rank": 24,
+        "position": "SS",
+        "name": "Svert Reinoso"
+      },
+      {
+        "id": 689958,
+        "rank": 25,
+        "position": "RHP",
+        "name": "Andrew Walters"
+      },
+      {
+        "id": 691776,
+        "rank": 26,
+        "position": "LHP",
+        "name": "Josh Hartle"
+      },
+      {
+        "id": 702278,
+        "rank": 27,
+        "position": "OF/1B",
+        "name": "Nolan Schubart"
+      },
+      {
+        "id": 671655,
+        "rank": 28,
+        "position": "RF",
+        "name": "George Valera"
+      }
+    ],
+    "mariners": [
+      {
+        "id": 806068,
+        "rank": 1,
+        "position": "SS",
+        "name": "Colt Emerson"
+      },
+      {
+        "id": 807739,
+        "rank": 2,
+        "position": "LHP",
+        "name": "Kade Anderson"
+      },
+      {
+        "id": 815549,
+        "rank": 3,
+        "position": "RHP",
+        "name": "Ryan Sloan"
+      },
+      {
+        "id": 703155,
+        "rank": 4,
+        "position": "OF",
+        "name": "Lazaro Montes"
+      },
+      {
+        "id": 703197,
+        "rank": 5,
+        "position": "2B",
+        "name": "Michael Arroyo"
+      },
+      {
+        "id": 806071,
+        "rank": 6,
+        "position": "OF",
+        "name": "Jonny Farmelo"
+      },
+      {
+        "id": 806958,
+        "rank": 7,
+        "position": "SS",
+        "name": "Felnin Celesten"
+      },
+      {
+        "id": 806233,
+        "rank": 8,
+        "position": "C",
+        "name": "Luke Stevenson"
+      },
+      {
+        "id": 829306,
+        "rank": 9,
+        "position": "SS",
+        "name": "Nick Becker"
+      },
+      {
+        "id": 829045,
+        "rank": 10,
+        "position": "OF",
+        "name": "Yorger Bautista"
+      },
+      {
+        "id": 702976,
+        "rank": 11,
+        "position": "RHP",
+        "name": "Griffin Hugus"
+      },
+      {
+        "id": 702668,
+        "rank": 12,
+        "position": "OF",
+        "name": "Korbyn Dickerson"
+      },
+      {
+        "id": 803141,
+        "rank": 13,
+        "position": "RHP",
+        "name": "Teddy McGraw"
+      },
+      {
+        "id": 836591,
+        "rank": 14,
+        "position": "OF",
+        "name": "Juan Rijo"
+      },
+      {
+        "id": 830336,
+        "rank": 15,
+        "position": "LHP",
+        "name": "Mason Peters"
+      },
+      {
+        "id": 691786,
+        "rank": 16,
+        "position": "RHP",
+        "name": "Michael Morales"
+      },
+      {
+        "id": 814791,
+        "rank": 17,
+        "position": "OF",
+        "name": "Jared Sundstrom"
+      },
+      {
+        "id": 801126,
+        "rank": 18,
+        "position": "2B/3B",
+        "name": "Brock Rodden"
+      },
+      {
+        "id": 828430,
+        "rank": 19,
+        "position": "RHP",
+        "name": "Chia-Shi Shen"
+      },
+      {
+        "id": 681041,
+        "rank": 20,
+        "position": "RHP",
+        "name": "Marcelo Perez"
+      },
+      {
+        "id": 692039,
+        "rank": 21,
+        "position": "CF",
+        "name": "Carlos Jimenez"
+      },
+      {
+        "id": 694840,
+        "rank": 22,
+        "position": "RHP/DH",
+        "name": "Grant Knipp"
+      },
+      {
+        "id": 689041,
+        "rank": 23,
+        "position": "LF",
+        "name": "Rhylan Thomas"
+      },
+      {
+        "id": 673662,
+        "rank": 24,
+        "position": "LHP",
+        "name": "Robinson Ortiz"
+      },
+      {
+        "id": 806836,
+        "rank": 25,
+        "position": "RHP",
+        "name": "Po-Chun Lin"
+      },
+      {
+        "id": 810897,
+        "rank": 26,
+        "position": "RHP",
+        "name": "Charlie Beilenson"
+      },
+      {
+        "id": 804663,
+        "rank": 27,
+        "position": "RHP",
+        "name": "Tyler Cleveland"
+      },
+      {
+        "id": 829036,
+        "rank": 28,
+        "position": "SS",
+        "name": "Kendry Martínez"
+      },
+      {
+        "id": 805220,
+        "rank": 29,
+        "position": "RHP",
+        "name": "Lucas Kelly"
+      },
+      {
+        "id": 702522,
+        "rank": 30,
+        "position": "OF",
+        "name": "Aiden Taurek"
+      }
+    ],
+    "marlins": [
+      {
+        "id": 806258,
+        "rank": 1,
+        "position": "LHP",
+        "name": "Thomas White"
+      },
+      {
+        "id": 702281,
+        "rank": 2,
+        "position": "LHP",
+        "name": "Robby Snelling"
+      },
+      {
+        "id": 683357,
+        "rank": 3,
+        "position": "RF",
+        "name": "Owen Caissie"
+      },
+      {
+        "id": 804109,
+        "rank": 4,
+        "position": "SS",
+        "name": "Aiva Arquette"
+      },
+      {
+        "id": 691788,
+        "rank": 5,
+        "position": "C",
+        "name": "Joe Mack"
+      },
+      {
+        "id": 829074,
+        "rank": 6,
+        "position": "RHP",
+        "name": "Kevin Defrank"
+      },
+      {
+        "id": 806965,
+        "rank": 7,
+        "position": "SS",
+        "name": "Starlyn Caba"
+      },
+      {
+        "id": 703448,
+        "rank": 8,
+        "position": "OF",
+        "name": "Cam Cannarella"
+      },
+      {
+        "id": 694580,
+        "rank": 9,
+        "position": "OF",
+        "name": "Kemp Alderman"
+      },
+      {
+        "id": 703596,
+        "rank": 10,
+        "position": "RHP",
+        "name": "Karson Milbrandt"
+      },
+      {
+        "id": 827665,
+        "rank": 11,
+        "position": "OF",
+        "name": "Dillon Lewis"
+      },
+      {
+        "id": 829035,
+        "rank": 12,
+        "position": "OF/SS/2B",
+        "name": "Andrew Salas"
+      },
+      {
+        "id": 703680,
+        "rank": 13,
+        "position": "OF",
+        "name": "Brandon Compton"
+      },
+      {
+        "id": 836594,
+        "rank": 14,
+        "position": "SS",
+        "name": "Santiago Solarte"
+      },
+      {
+        "id": 800611,
+        "rank": 15,
+        "position": "RHP",
+        "name": "Noble Meyer"
+      },
+      {
+        "id": 694183,
+        "rank": 16,
+        "position": "SS",
+        "name": "Cristian Hernández"
+      },
+      {
+        "id": 815909,
+        "rank": 17,
+        "position": "OF",
+        "name": "Luis Cova"
+      },
+      {
+        "id": 703637,
+        "rank": 18,
+        "position": "OF",
+        "name": "Max Williams"
+      },
+      {
+        "id": 800957,
+        "rank": 19,
+        "position": "CF",
+        "name": "Brendan Jones"
+      },
+      {
+        "id": 814458,
+        "rank": 20,
+        "position": "OF",
+        "name": "Fenwick Trimble"
+      },
+      {
+        "id": 829854,
+        "rank": 21,
+        "position": "SS/3B",
+        "name": "Luis Arana"
+      },
+      {
+        "id": 821078,
+        "rank": 22,
+        "position": "OF",
+        "name": "José Castro"
+      },
+      {
+        "id": 806982,
+        "rank": 23,
+        "position": "CF",
+        "name": "Esmil Valencia"
+      },
+      {
+        "id": 836604,
+        "rank": 24,
+        "position": "SS",
+        "name": "Ronny Muñoz"
+      },
+      {
+        "id": 827626,
+        "rank": 25,
+        "position": "LHP",
+        "name": "Nate Payne"
+      },
+      {
+        "id": 702977,
+        "rank": 26,
+        "position": "CF",
+        "name": "Dillon Head"
+      },
+      {
+        "id": 703563,
+        "rank": 27,
+        "position": "OF",
+        "name": "PJ Morlando"
+      },
+      {
+        "id": 801995,
+        "rank": 28,
+        "position": "RHP",
+        "name": "Aiden May"
+      },
+      {
+        "id": 824415,
+        "rank": 29,
+        "position": "RHP",
+        "name": "Grant Shepardson"
+      },
+      {
+        "id": 808690,
+        "rank": 30,
+        "position": "RHP",
+        "name": "Yohanfer Santana"
+      }
+    ],
+    "mets": [
+      {
+        "id": 701807,
+        "rank": 1,
+        "position": "OF",
+        "name": "Carson Benge"
+      },
+      {
+        "id": 804636,
+        "rank": 2,
+        "position": "RHP",
+        "name": "Jonah Tong"
+      },
+      {
+        "id": 805999,
+        "rank": 3,
+        "position": "OF/2B",
+        "name": "A.J. Ewing"
+      },
+      {
+        "id": 691775,
+        "rank": 4,
+        "position": "1B/OF",
+        "name": "Ryan Clifford"
+      },
+      {
+        "id": 702544,
+        "rank": 5,
+        "position": "3B/1B",
+        "name": "Jacob Reimer"
+      },
+      {
+        "id": 811307,
+        "rank": 6,
+        "position": "RHP",
+        "name": "Jack Wenninger"
+      },
+      {
+        "id": 702491,
+        "rank": 7,
+        "position": "2B/SS",
+        "name": "Mitch Voit"
+      },
+      {
+        "id": 829033,
+        "rank": 8,
+        "position": "SS",
+        "name": "Elian Peña"
+      },
+      {
+        "id": 695558,
+        "rank": 9,
+        "position": "LHP",
+        "name": "Jonathan Santucci"
+      },
+      {
+        "id": 814492,
+        "rank": 10,
+        "position": "RHP",
+        "name": "Will Watson"
+      },
+      {
+        "id": 836583,
+        "rank": 11,
+        "position": "SS",
+        "name": "Wandy Asigen"
+      },
+      {
+        "id": 703492,
+        "rank": 12,
+        "position": "CF",
+        "name": "Nick Morabito"
+      },
+      {
+        "id": 702501,
+        "rank": 13,
+        "position": "OF",
+        "name": "Eli Serrano III"
+      },
+      {
+        "id": 804267,
+        "rank": 14,
+        "position": "LHP",
+        "name": "Zach Thornton"
+      },
+      {
+        "id": 801523,
+        "rank": 15,
+        "position": "C/OF/1B",
+        "name": "Chris Suero"
+      },
+      {
+        "id": 806128,
+        "rank": 16,
+        "position": "SS",
+        "name": "Antonio Jimenez"
+      },
+      {
+        "id": 822038,
+        "rank": 17,
+        "position": "RHP",
+        "name": "Ryan Lambert"
+      },
+      {
+        "id": 697811,
+        "rank": 18,
+        "position": "RHP",
+        "name": "Dylan Ross"
+      },
+      {
+        "id": 822161,
+        "rank": 19,
+        "position": "RHP",
+        "name": "R.J. Gordon"
+      },
+      {
+        "id": 804614,
+        "rank": 20,
+        "position": "2B/SS",
+        "name": "Marco Vargas"
+      },
+      {
+        "id": 702752,
+        "rank": 21,
+        "position": "RHP",
+        "name": "Jonathan Pintaro"
+      },
+      {
+        "id": 828097,
+        "rank": 22,
+        "position": "RHP",
+        "name": "Peter Kussow"
+      },
+      {
+        "id": 805951,
+        "rank": 23,
+        "position": "SS",
+        "name": "Boston Baro"
+      },
+      {
+        "id": 807383,
+        "rank": 24,
+        "position": "1B/OF",
+        "name": "Randy Guzman"
+      },
+      {
+        "id": 806987,
+        "rank": 25,
+        "position": "C",
+        "name": "Daiverson Gutierrez"
+      },
+      {
+        "id": 834242,
+        "rank": 26,
+        "position": "RHP",
+        "name": "Camden Lohman"
+      },
+      {
+        "id": 807937,
+        "rank": 27,
+        "position": "RHP",
+        "name": "Nathan Hall"
+      },
+      {
+        "id": 806704,
+        "rank": 28,
+        "position": "RHP",
+        "name": "Cam Tilly"
+      },
+      {
+        "id": 694858,
+        "rank": 29,
+        "position": "RHP",
+        "name": "Brendan Girton"
+      },
+      {
+        "id": 815928,
+        "rank": 30,
+        "position": "OF",
+        "name": "Edward Lantigua"
+      }
+    ],
+    "nationals": [
+      {
+        "id": 816113,
+        "rank": 1,
+        "position": "SS",
+        "name": "Eli Willits"
+      },
+      {
+        "id": 805809,
+        "rank": 2,
+        "position": "RHP",
+        "name": "Travis Sykora"
+      },
+      {
+        "id": 695670,
+        "rank": 3,
+        "position": "C",
+        "name": "Harry Ford"
+      },
+      {
+        "id": 703186,
+        "rank": 4,
+        "position": "RHP",
+        "name": "Jarlin Susana"
+      },
+      {
+        "id": 815818,
+        "rank": 5,
+        "position": "SS",
+        "name": "Gavin Fien"
+      },
+      {
+        "id": 691384,
+        "rank": 6,
+        "position": "RHP",
+        "name": "Luis Perales"
+      },
+      {
+        "id": 814409,
+        "rank": 7,
+        "position": "SS",
+        "name": "Seaver King"
+      },
+      {
+        "id": 815380,
+        "rank": 8,
+        "position": "SS",
+        "name": "Luke Dickerson"
+      },
+      {
+        "id": 803849,
+        "rank": 9,
+        "position": "SS",
+        "name": "Devin Fitz-Gerald"
+      },
+      {
+        "id": 816102,
+        "rank": 10,
+        "position": "RHP",
+        "name": "Landon Harmon"
+      },
+      {
+        "id": 806046,
+        "rank": 11,
+        "position": "LHP",
+        "name": "Alex Clemmey"
+      },
+      {
+        "id": 701337,
+        "rank": 12,
+        "position": "OF/1B",
+        "name": "Ethan Petry"
+      },
+      {
+        "id": 701347,
+        "rank": 13,
+        "position": "RHP",
+        "name": "Yoel Tejeda Jr."
+      },
+      {
+        "id": 800600,
+        "rank": 14,
+        "position": "LHP",
+        "name": "Jackson Kent"
+      },
+      {
+        "id": 691730,
+        "rank": 15,
+        "position": "RHP",
+        "name": "Alejandro Rosario"
+      },
+      {
+        "id": 828137,
+        "rank": 16,
+        "position": "RHP",
+        "name": "Miguel Sime Jr."
+      },
+      {
+        "id": 815983,
+        "rank": 17,
+        "position": "SS",
+        "name": "Coy James"
+      },
+      {
+        "id": 681047,
+        "rank": 18,
+        "position": "LF",
+        "name": "Christian Franklin"
+      },
+      {
+        "id": 687605,
+        "rank": 19,
+        "position": "OF",
+        "name": "Andrew Pinckney"
+      },
+      {
+        "id": 800393,
+        "rank": 20,
+        "position": "CF",
+        "name": "Yeremy Cabrera"
+      },
+      {
+        "id": 829699,
+        "rank": 21,
+        "position": "2B/SS",
+        "name": "Marconi German"
+      },
+      {
+        "id": 695763,
+        "rank": 22,
+        "position": "OF",
+        "name": "Sam Petersen"
+      },
+      {
+        "id": 815906,
+        "rank": 23,
+        "position": "SS",
+        "name": "Angel Feliz"
+      },
+      {
+        "id": 694673,
+        "rank": 24,
+        "position": "1B/OF",
+        "name": "Abimelec Ortiz"
+      },
+      {
+        "id": 826723,
+        "rank": 25,
+        "position": "SS",
+        "name": "Ronny Cruz"
+      },
+      {
+        "id": 811291,
+        "rank": 26,
+        "position": "RHP",
+        "name": "Eriq Swan"
+      },
+      {
+        "id": 701616,
+        "rank": 27,
+        "position": "C",
+        "name": "Caleb Lomavita"
+      }
+    ],
+    "orioles": [
+      {
+        "id": 825582,
+        "rank": 1,
+        "position": "OF",
+        "name": "Nate George"
+      },
+      {
+        "id": 801725,
+        "rank": 2,
+        "position": "LHP",
+        "name": "Luis De León"
+      },
+      {
+        "id": 694346,
+        "rank": 3,
+        "position": "RHP",
+        "name": "Trey Gibson"
+      },
+      {
+        "id": 702610,
+        "rank": 4,
+        "position": "C/OF/1B",
+        "name": "Ike Irish"
+      },
+      {
+        "id": 814450,
+        "rank": 5,
+        "position": "SS",
+        "name": "Wehiwa Aloy"
+      },
+      {
+        "id": 821757,
+        "rank": 6,
+        "position": "RHP",
+        "name": "Esteban Mejia"
+      },
+      {
+        "id": 800406,
+        "rank": 7,
+        "position": "2B/OF",
+        "name": "Aron Estrada"
+      },
+      {
+        "id": 690961,
+        "rank": 8,
+        "position": "OF",
+        "name": "Enrique Bradfield Jr."
+      },
+      {
+        "id": 815348,
+        "rank": 9,
+        "position": "LHP",
+        "name": "Boston Bateman"
+      },
+      {
+        "id": 815148,
+        "rank": 10,
+        "position": "RHP",
+        "name": "Nestor German"
+      },
+      {
+        "id": 688867,
+        "rank": 11,
+        "position": "RHP",
+        "name": "Braxton Bragg"
+      },
+      {
+        "id": 804530,
+        "rank": 12,
+        "position": "LHP",
+        "name": "Joseph Dzierwa"
+      },
+      {
+        "id": 694370,
+        "rank": 13,
+        "position": "RHP",
+        "name": "Levi Wells"
+      },
+      {
+        "id": 695033,
+        "rank": 14,
+        "position": "RHP",
+        "name": "Juaron Watts-Brown"
+      },
+      {
+        "id": 695695,
+        "rank": 15,
+        "position": "RHP",
+        "name": "Tyson Neighbors"
+      },
+      {
+        "id": 820847,
+        "rank": 16,
+        "position": "OF",
+        "name": "Jordan Sanchez"
+      },
+      {
+        "id": 695735,
+        "rank": 17,
+        "position": "C/1B",
+        "name": "Creed Willems"
+      },
+      {
+        "id": 800449,
+        "rank": 18,
+        "position": "OF",
+        "name": "Thomas Sosa"
+      },
+      {
+        "id": 802411,
+        "rank": 19,
+        "position": "RHP",
+        "name": "JT Quinn"
+      },
+      {
+        "id": 829043,
+        "rank": 20,
+        "position": "SS",
+        "name": "Wilfri De La Cruz"
+      },
+      {
+        "id": 836593,
+        "rank": 21,
+        "position": "SS",
+        "name": "Jose Luis Acevedo"
+      },
+      {
+        "id": 836602,
+        "rank": 22,
+        "position": "LHP",
+        "name": "Andri Hidalgo"
+      },
+      {
+        "id": 689296,
+        "rank": 23,
+        "position": "RHP",
+        "name": "Anthony Nunez"
+      },
+      {
+        "id": 803175,
+        "rank": 24,
+        "position": "C/1B",
+        "name": "Ethan Anderson"
+      },
+      {
+        "id": 694345,
+        "rank": 25,
+        "position": "RHP",
+        "name": "Patrick Reilly"
+      },
+      {
+        "id": 815913,
+        "rank": 26,
+        "position": "OF",
+        "name": "Stiven Martinez"
+      },
+      {
+        "id": 803172,
+        "rank": 27,
+        "position": "SS",
+        "name": "Griff O'Ferrall"
+      },
+      {
+        "id": 829649,
+        "rank": 28,
+        "position": "3B/SS",
+        "name": "Colin Yeaman"
+      },
+      {
+        "id": 701689,
+        "rank": 29,
+        "position": "OF",
+        "name": "Vance Honeycutt"
+      },
+      {
+        "id": 826932,
+        "rank": 30,
+        "position": "2B/SS",
+        "name": "Cobb Hightower"
+      }
+    ],
+    "padres": [
+      {
+        "id": 828244,
+        "rank": 1,
+        "position": "LHP",
+        "name": "Kruz Schoolcraft"
+      },
+      {
+        "id": 806956,
+        "rank": 2,
+        "position": "C",
+        "name": "Ethan Salas"
+      },
+      {
+        "id": 700280,
+        "rank": 3,
+        "position": "RHP",
+        "name": "Miguel Mendez"
+      },
+      {
+        "id": 824026,
+        "rank": 4,
+        "position": "LHP",
+        "name": "Kash Mayfield"
+      },
+      {
+        "id": 814232,
+        "rank": 5,
+        "position": "RHP",
+        "name": "Humberto Cruz"
+      },
+      {
+        "id": 699134,
+        "rank": 6,
+        "position": "RHP",
+        "name": "Bradgley Rodriguez"
+      },
+      {
+        "id": 815894,
+        "rank": 7,
+        "position": "SS",
+        "name": "Jorge Quintana"
+      },
+      {
+        "id": 829210,
+        "rank": 8,
+        "position": "C",
+        "name": "Ty Harvey"
+      },
+      {
+        "id": 834240,
+        "rank": 9,
+        "position": "OF",
+        "name": "Ryan Wideman"
+      },
+      {
+        "id": 806495,
+        "rank": 10,
+        "position": "1B/3B",
+        "name": "Kale Fountain"
+      },
+      {
+        "id": 814491,
+        "rank": 11,
+        "position": "RHP",
+        "name": "Tucker Musgrove"
+      },
+      {
+        "id": 701682,
+        "rank": 12,
+        "position": "OF",
+        "name": "Braedon Karpathios"
+      },
+      {
+        "id": 823745,
+        "rank": 13,
+        "position": "RHP",
+        "name": "Michael Salina"
+      },
+      {
+        "id": 678184,
+        "rank": 14,
+        "position": "RHP",
+        "name": "Garrett Hawkins"
+      },
+      {
+        "id": 695247,
+        "rank": 15,
+        "position": "LHP",
+        "name": "Jagger Haynes"
+      },
+      {
+        "id": 702601,
+        "rank": 16,
+        "position": "C/1B",
+        "name": "Lamar King Jr."
+      },
+      {
+        "id": 836592,
+        "rank": 17,
+        "position": "SS",
+        "name": "Joniel Hernandez"
+      },
+      {
+        "id": 837088,
+        "rank": 18,
+        "position": "RHP",
+        "name": "Lan-Hong Su"
+      },
+      {
+        "id": 807748,
+        "rank": 19,
+        "position": "RHP",
+        "name": "Kannon Kemp"
+      },
+      {
+        "id": 692294,
+        "rank": 20,
+        "position": "LHP",
+        "name": "Luis Gutierrez"
+      },
+      {
+        "id": 801932,
+        "rank": 21,
+        "position": "OF",
+        "name": "Alex McCoy"
+      },
+      {
+        "id": 835315,
+        "rank": 22,
+        "position": "LHP",
+        "name": "Diego Serna"
+      },
+      {
+        "id": 829063,
+        "rank": 23,
+        "position": "SS",
+        "name": "Jhoan De La Cruz"
+      },
+      {
+        "id": 833008,
+        "rank": 24,
+        "position": "C",
+        "name": "Truitt Madonna"
+      },
+      {
+        "id": 672359,
+        "rank": 25,
+        "position": "LF",
+        "name": "Tirso Ornelas"
+      },
+      {
+        "id": 829060,
+        "rank": 26,
+        "position": "3B/SS",
+        "name": "Deivid Coronil"
+      },
+      {
+        "id": 701837,
+        "rank": 27,
+        "position": "OF",
+        "name": "Kavares Tears"
+      },
+      {
+        "id": 703804,
+        "rank": 28,
+        "position": "1B",
+        "name": "Romeo Sanabria"
+      },
+      {
+        "id": 808893,
+        "rank": 29,
+        "position": "RHP",
+        "name": "Bryan Balzer"
+      },
+      {
+        "id": 826941,
+        "rank": 30,
+        "position": "RHP",
+        "name": "Jaxon Dalena"
+      }
+    ],
+    "phillies": [
+      {
+        "id": 805795,
+        "rank": 1,
+        "position": "SS",
+        "name": "Aidan Miller"
+      },
+      {
+        "id": 691725,
+        "rank": 2,
+        "position": "RHP",
+        "name": "Andrew Painter"
+      },
+      {
+        "id": 702222,
+        "rank": 3,
+        "position": "CF",
+        "name": "Justin Crawford"
+      },
+      {
+        "id": 805906,
+        "rank": 4,
+        "position": "RHP",
+        "name": "Gage Wood"
+      },
+      {
+        "id": 836353,
+        "rank": 5,
+        "position": "OF",
+        "name": "Francisco Renteria"
+      },
+      {
+        "id": 800169,
+        "rank": 6,
+        "position": "2B",
+        "name": "Aroon Escobar"
+      },
+      {
+        "id": 807276,
+        "rank": 7,
+        "position": "OF",
+        "name": "Dante Nori"
+      },
+      {
+        "id": 687282,
+        "rank": 8,
+        "position": "RF",
+        "name": "Gabriel Rincones Jr."
+      },
+      {
+        "id": 805261,
+        "rank": 9,
+        "position": "LHP",
+        "name": "Cade Obermueller"
+      },
+      {
+        "id": 691330,
+        "rank": 10,
+        "position": "RHP",
+        "name": "Moisés Chace"
+      },
+      {
+        "id": 827408,
+        "rank": 11,
+        "position": "RHP",
+        "name": "Ramon Marquez"
+      },
+      {
+        "id": 832455,
+        "rank": 12,
+        "position": "RHP",
+        "name": "Matthew Fisher"
+      },
+      {
+        "id": 816120,
+        "rank": 13,
+        "position": "OF",
+        "name": "Griffin Burkholder"
+      },
+      {
+        "id": 808207,
+        "rank": 14,
+        "position": "RHP",
+        "name": "Wen-Hui Pan"
+      },
+      {
+        "id": 691893,
+        "rank": 15,
+        "position": "RHP",
+        "name": "Jean Cabrera"
+      },
+      {
+        "id": 805790,
+        "rank": 16,
+        "position": "RHP",
+        "name": "Cody Bowker"
+      },
+      {
+        "id": 823781,
+        "rank": 17,
+        "position": "RHP",
+        "name": "Sean Youngerman"
+      },
+      {
+        "id": 701831,
+        "rank": 18,
+        "position": "3B",
+        "name": "Carson DeMartini"
+      },
+      {
+        "id": 686934,
+        "rank": 19,
+        "position": "RHP",
+        "name": "Alex McFarlane"
+      },
+      {
+        "id": 810890,
+        "rank": 20,
+        "position": "LHP",
+        "name": "James Tallon"
+      },
+      {
+        "id": 813880,
+        "rank": 21,
+        "position": "OF/2B",
+        "name": "Devin Saltiban"
+      },
+      {
+        "id": 808232,
+        "rank": 22,
+        "position": "C/1B",
+        "name": "Alirio Ferrebus"
+      },
+      {
+        "id": 832324,
+        "rank": 23,
+        "position": "SS",
+        "name": "Juan Parra"
+      },
+      {
+        "id": 700582,
+        "rank": 24,
+        "position": "RHP",
+        "name": "Gabe Craig"
+      },
+      {
+        "id": 829089,
+        "rank": 25,
+        "position": "SS",
+        "name": "Romeli Espinosa"
+      },
+      {
+        "id": 814955,
+        "rank": 26,
+        "position": "SS",
+        "name": "Matthew Ferrara"
+      },
+      {
+        "id": 703496,
+        "rank": 27,
+        "position": "LHP",
+        "name": "Mavis Graves"
+      },
+      {
+        "id": 800607,
+        "rank": 28,
+        "position": "C/1B",
+        "name": "Kehden Hettiger"
+      },
+      {
+        "id": 804858,
+        "rank": 29,
+        "position": "SS",
+        "name": "Bryan Rincon"
+      },
+      {
+        "id": 805704,
+        "rank": 30,
+        "position": "1B",
+        "name": "Keaton Anthony"
+      }
+    ],
+    "pirates": [
+      {
+        "id": 804606,
+        "rank": 1,
+        "position": "SS",
+        "name": "Konnor Griffin"
+      },
+      {
+        "id": 815825,
+        "rank": 2,
+        "position": "RHP",
+        "name": "Seth Hernandez"
+      },
+      {
+        "id": 821273,
+        "rank": 3,
+        "position": "OF/1B",
+        "name": "Edward Florentino"
+      },
+      {
+        "id": 682995,
+        "rank": 4,
+        "position": "LHP",
+        "name": "Hunter Barco"
+      },
+      {
+        "id": 691373,
+        "rank": 5,
+        "position": "CF",
+        "name": "Jhostynxon Garcia"
+      },
+      {
+        "id": 702261,
+        "rank": 6,
+        "position": "2B",
+        "name": "Termarr Johnson"
+      },
+      {
+        "id": 815608,
+        "rank": 7,
+        "position": "SS",
+        "name": "Wyatt Sanford"
+      },
+      {
+        "id": 699008,
+        "rank": 8,
+        "position": "RHP",
+        "name": "Antwone Kelly"
+      },
+      {
+        "id": 804668,
+        "rank": 9,
+        "position": "C/1B",
+        "name": "Rafael Flores Jr."
+      },
+      {
+        "id": 699013,
+        "rank": 10,
+        "position": "OF/1B",
+        "name": "Esmerlyn Valdez"
+      },
+      {
+        "id": 806230,
+        "rank": 11,
+        "position": "SS",
+        "name": "Sammy Stafura"
+      },
+      {
+        "id": 696062,
+        "rank": 12,
+        "position": "RHP",
+        "name": "Wilber Dotel"
+      },
+      {
+        "id": 802419,
+        "rank": 13,
+        "position": "RHP",
+        "name": "Thomas Harrington"
+      },
+      {
+        "id": 815552,
+        "rank": 14,
+        "position": "RHP",
+        "name": "Levi Sterling"
+      },
+      {
+        "id": 692657,
+        "rank": 15,
+        "position": "C",
+        "name": "Omar Alfonzo"
+      },
+      {
+        "id": 829716,
+        "rank": 16,
+        "position": "SS",
+        "name": "Darell Morel"
+      },
+      {
+        "id": 702695,
+        "rank": 17,
+        "position": "C",
+        "name": "Easton Carmichael"
+      },
+      {
+        "id": 809092,
+        "rank": 18,
+        "position": "3B",
+        "name": "Murf Gray"
+      },
+      {
+        "id": 703154,
+        "rank": 19,
+        "position": "SS/3B/2B",
+        "name": "Yordany De Los Santos"
+      },
+      {
+        "id": 800208,
+        "rank": 20,
+        "position": "C/1B",
+        "name": "Axiel Plaz"
+      },
+      {
+        "id": 814297,
+        "rank": 21,
+        "position": "C/1B",
+        "name": "Edgleen Perez"
+      },
+      {
+        "id": 694753,
+        "rank": 22,
+        "position": "RHP",
+        "name": "Khristian Curtis"
+      },
+      {
+        "id": 687394,
+        "rank": 23,
+        "position": "SS/3B",
+        "name": "Jack Brannigan"
+      },
+      {
+        "id": 805800,
+        "rank": 24,
+        "position": "RHP",
+        "name": "Zander Mueth"
+      },
+      {
+        "id": 821116,
+        "rank": 25,
+        "position": "LHP",
+        "name": "Reinold Navarro"
+      },
+      {
+        "id": 807002,
+        "rank": 26,
+        "position": "RHP",
+        "name": "Jeter Martinez"
+      },
+      {
+        "id": 701546,
+        "rank": 27,
+        "position": "2B/3B/1B",
+        "name": "Duce Gourson"
+      },
+      {
+        "id": 703156,
+        "rank": 28,
+        "position": "1B",
+        "name": "Tony Blanco Jr."
+      },
+      {
+        "id": 801978,
+        "rank": 29,
+        "position": "1B",
+        "name": "Callan Moss"
+      },
+      {
+        "id": 682997,
+        "rank": 30,
+        "position": "LF",
+        "name": "Tyler Callihan"
+      }
+    ],
+    "rangers": [
+      {
+        "id": 806964,
+        "rank": 1,
+        "position": "SS/3B",
+        "name": "Sebastian Walcott"
+      },
+      {
+        "id": 807291,
+        "rank": 2,
+        "position": "RHP",
+        "name": "Caden Scarborough"
+      },
+      {
+        "id": 805706,
+        "rank": 3,
+        "position": "RHP",
+        "name": "AJ Russell"
+      },
+      {
+        "id": 692030,
+        "rank": 4,
+        "position": "RHP",
+        "name": "Jose Corniell"
+      },
+      {
+        "id": 692437,
+        "rank": 5,
+        "position": "RHP",
+        "name": "Winston Santos"
+      },
+      {
+        "id": 831384,
+        "rank": 6,
+        "position": "SS/RHP",
+        "name": "Josh Owens"
+      },
+      {
+        "id": 699314,
+        "rank": 7,
+        "position": "RHP",
+        "name": "David Davalillo"
+      },
+      {
+        "id": 815931,
+        "rank": 8,
+        "position": "SS/3B",
+        "name": "Yolfran Castillo"
+      },
+      {
+        "id": 836589,
+        "rank": 9,
+        "position": "OF/3B",
+        "name": "Elian Rosario"
+      },
+      {
+        "id": 702662,
+        "rank": 10,
+        "position": "OF",
+        "name": "Dylan Dreiling"
+      },
+      {
+        "id": 806094,
+        "rank": 11,
+        "position": "RHP",
+        "name": "Izack Tiger"
+      },
+      {
+        "id": 701717,
+        "rank": 12,
+        "position": "LHP",
+        "name": "Dalton Pence"
+      },
+      {
+        "id": 695508,
+        "rank": 13,
+        "position": "SS/OF/2B",
+        "name": "Cameron Cauley"
+      },
+      {
+        "id": 699214,
+        "rank": 14,
+        "position": "RHP",
+        "name": "Leandro Lopez"
+      },
+      {
+        "id": 834605,
+        "rank": 15,
+        "position": "SS/RHP",
+        "name": "Seong-Jun Kim"
+      },
+      {
+        "id": 829069,
+        "rank": 16,
+        "position": "OF/2B",
+        "name": "Elorky Rodriguez"
+      },
+      {
+        "id": 693713,
+        "rank": 17,
+        "position": "RHP",
+        "name": "Emiliano Teodo"
+      },
+      {
+        "id": 702270,
+        "rank": 18,
+        "position": "C",
+        "name": "Malcolm Moore"
+      },
+      {
+        "id": 828087,
+        "rank": 19,
+        "position": "3B",
+        "name": "Jack Wheeler"
+      },
+      {
+        "id": 822415,
+        "rank": 20,
+        "position": "RHP",
+        "name": "Mason McConnaughey"
+      },
+      {
+        "id": 702265,
+        "rank": 21,
+        "position": "OF",
+        "name": "Paxton Kling"
+      },
+      {
+        "id": 815889,
+        "rank": 22,
+        "position": "OF",
+        "name": "Paulino Santana"
+      },
+      {
+        "id": 815048,
+        "rank": 23,
+        "position": "LHP",
+        "name": "Josh Trentadue"
+      },
+      {
+        "id": 807722,
+        "rank": 24,
+        "position": "OF",
+        "name": "Maxton Martin"
+      },
+      {
+        "id": 691945,
+        "rank": 25,
+        "position": "RHP",
+        "name": "Carter Baumler"
+      },
+      {
+        "id": 702727,
+        "rank": 26,
+        "position": "LHP",
+        "name": "Ben Abeldt"
+      },
+      {
+        "id": 835375,
+        "rank": 27,
+        "position": "RHP",
+        "name": "Jacob Johnson"
+      },
+      {
+        "id": 697795,
+        "rank": 28,
+        "position": "RHP",
+        "name": "Ismael Agreda"
+      },
+      {
+        "id": 703152,
+        "rank": 29,
+        "position": "CF",
+        "name": "Anthony Gutierrez"
+      },
+      {
+        "id": 686560,
+        "rank": 30,
+        "position": "RHP",
+        "name": "Gavin Collyer"
+      }
+    ],
+    "rays": [
+      {
+        "id": 815394,
+        "rank": 1,
+        "position": "OF",
+        "name": "Theo Gillen"
+      },
+      {
+        "id": 811315,
+        "rank": 2,
+        "position": "RHP",
+        "name": "Brody Hopkins"
+      },
+      {
+        "id": 689200,
+        "rank": 3,
+        "position": "LF",
+        "name": "Jacob Melton"
+      },
+      {
+        "id": 828084,
+        "rank": 4,
+        "position": "SS",
+        "name": "Daniel Pierce"
+      },
+      {
+        "id": 820901,
+        "rank": 5,
+        "position": "RHP",
+        "name": "Anderson Brito"
+      },
+      {
+        "id": 694375,
+        "rank": 6,
+        "position": "RHP",
+        "name": "TJ Nichols"
+      },
+      {
+        "id": 702650,
+        "rank": 7,
+        "position": "RHP",
+        "name": "Michael Forret"
+      },
+      {
+        "id": 800571,
+        "rank": 8,
+        "position": "RHP",
+        "name": "Santiago Suarez"
+      },
+      {
+        "id": 828173,
+        "rank": 9,
+        "position": "OF",
+        "name": "Slater de Brun"
+      },
+      {
+        "id": 807083,
+        "rank": 10,
+        "position": "C",
+        "name": "Nathan Flewelling"
+      },
+      {
+        "id": 806223,
+        "rank": 11,
+        "position": "OF",
+        "name": "Aidan Smith"
+      },
+      {
+        "id": 805207,
+        "rank": 12,
+        "position": "C",
+        "name": "Caden Bodine"
+      },
+      {
+        "id": 800060,
+        "rank": 13,
+        "position": "1B",
+        "name": "Xavier Isaac"
+      },
+      {
+        "id": 699130,
+        "rank": 14,
+        "position": "2B",
+        "name": "Jadher Areinamo"
+      },
+      {
+        "id": 807314,
+        "rank": 15,
+        "position": "RHP",
+        "name": "Trevor Harrison"
+      },
+      {
+        "id": 808250,
+        "rank": 16,
+        "position": "RHP",
+        "name": "Jose Urbina"
+      },
+      {
+        "id": 694494,
+        "rank": 17,
+        "position": "RHP",
+        "name": "Ty Johnson"
+      },
+      {
+        "id": 691003,
+        "rank": 18,
+        "position": "1B/OF",
+        "name": "Tre' Morgan"
+      },
+      {
+        "id": 681371,
+        "rank": 19,
+        "position": "C",
+        "name": "Dom Keegan"
+      },
+      {
+        "id": 804911,
+        "rank": 20,
+        "position": "OF",
+        "name": "Brendan Summerhill"
+      },
+      {
+        "id": 836590,
+        "rank": 21,
+        "position": "SS",
+        "name": "Victor Valdez"
+      },
+      {
+        "id": 837521,
+        "rank": 22,
+        "position": "SS",
+        "name": "Fabricio Blanco"
+      },
+      {
+        "id": 806967,
+        "rank": 23,
+        "position": "OF",
+        "name": "Brailer Guerrero"
+      },
+      {
+        "id": 683344,
+        "rank": 24,
+        "position": "CF",
+        "name": "Homer Bush Jr."
+      },
+      {
+        "id": 702556,
+        "rank": 25,
+        "position": "OF",
+        "name": "Austin Overn"
+      }
+    ],
+    "red-sox": [
+      {
+        "id": 801139,
+        "rank": 1,
+        "position": "LHP",
+        "name": "Payton Tolle"
+      },
+      {
+        "id": 808265,
+        "rank": 2,
+        "position": "SS",
+        "name": "Franklin Arias"
+      },
+      {
+        "id": 813349,
+        "rank": 3,
+        "position": "LHP",
+        "name": "Connelly Early"
+      },
+      {
+        "id": 804817,
+        "rank": 4,
+        "position": "RHP",
+        "name": "Kyson Witherspoon"
+      },
+      {
+        "id": 813536,
+        "rank": 5,
+        "position": "RHP",
+        "name": "Juan Valera"
+      },
+      {
+        "id": 821100,
+        "rank": 6,
+        "position": "OF",
+        "name": "Justin Gonzales"
+      },
+      {
+        "id": 687562,
+        "rank": 7,
+        "position": "LHP",
+        "name": "Jake Bennett"
+      },
+      {
+        "id": 829039,
+        "rank": 8,
+        "position": "SS",
+        "name": "Dorian Soto"
+      },
+      {
+        "id": 815071,
+        "rank": 9,
+        "position": "RHP",
+        "name": "Marcus Phillips"
+      },
+      {
+        "id": 809254,
+        "rank": 10,
+        "position": "RHP",
+        "name": "Anthony Eyanson"
+      },
+      {
+        "id": 804995,
+        "rank": 11,
+        "position": "2B",
+        "name": "Henry Godbout"
+      },
+      {
+        "id": 821150,
+        "rank": 12,
+        "position": "OF",
+        "name": "Enddy Azocar"
+      },
+      {
+        "id": 702540,
+        "rank": 13,
+        "position": "SS",
+        "name": "Mikey Romero"
+      },
+      {
+        "id": 827292,
+        "rank": 14,
+        "position": "RHP",
+        "name": "John Holobetz"
+      },
+      {
+        "id": 700413,
+        "rank": 15,
+        "position": "RHP",
+        "name": "Tyler Uberstine"
+      },
+      {
+        "id": 683093,
+        "rank": 16,
+        "position": "LHP",
+        "name": "Hayden Mullins"
+      },
+      {
+        "id": 694194,
+        "rank": 17,
+        "position": "RF",
+        "name": "Miguel Bleis"
+      },
+      {
+        "id": 806985,
+        "rank": 18,
+        "position": "2B",
+        "name": "Yoeilin Cespedes"
+      },
+      {
+        "id": 829094,
+        "rank": 19,
+        "position": "RHP",
+        "name": "Sadbiel Delzine"
+      },
+      {
+        "id": 829093,
+        "rank": 20,
+        "position": "OF",
+        "name": "Harold Rivas"
+      },
+      {
+        "id": 699151,
+        "rank": 21,
+        "position": "RHP",
+        "name": "Jedixson Paez"
+      },
+      {
+        "id": 695721,
+        "rank": 22,
+        "position": "RHP",
+        "name": "Gage Ziehl"
+      },
+      {
+        "id": 807511,
+        "rank": 23,
+        "position": "OF",
+        "name": "Nelly Taylor"
+      },
+      {
+        "id": 829892,
+        "rank": 24,
+        "position": "SS",
+        "name": "Hector Ramos"
+      },
+      {
+        "id": 836605,
+        "rank": 25,
+        "position": "SS",
+        "name": "Dawvris Brito"
+      },
+      {
+        "id": 691369,
+        "rank": 26,
+        "position": "CF",
+        "name": "Allan Castro"
+      },
+      {
+        "id": 700842,
+        "rank": 27,
+        "position": "LHP",
+        "name": "Eduardo Rivera"
+      },
+      {
+        "id": 703190,
+        "rank": 28,
+        "position": "C",
+        "name": "Johanfran Garcia"
+      },
+      {
+        "id": 694057,
+        "rank": 29,
+        "position": "RHP",
+        "name": "Yordanny Monegro"
+      },
+      {
+        "id": 815359,
+        "rank": 30,
+        "position": "RHP/SS",
+        "name": "Conrad Cason"
+      }
+    ],
+    "reds": [
+      {
+        "id": 701398,
+        "rank": 1,
+        "position": "3B",
+        "name": "Sal Stewart"
+      },
+      {
+        "id": 806957,
+        "rank": 2,
+        "position": "C",
+        "name": "Alfredo Duno"
+      },
+      {
+        "id": 829162,
+        "rank": 3,
+        "position": "SS",
+        "name": "Steele Hall"
+      },
+      {
+        "id": 815653,
+        "rank": 4,
+        "position": "SS/3B",
+        "name": "Tyson Lewis"
+      },
+      {
+        "id": 699302,
+        "rank": 5,
+        "position": "LF",
+        "name": "Héctor Rodríguez"
+      },
+      {
+        "id": 702253,
+        "rank": 6,
+        "position": "1B/3B",
+        "name": "Cam Collier"
+      },
+      {
+        "id": 695490,
+        "rank": 7,
+        "position": "SS",
+        "name": "Edwin Arroyo"
+      },
+      {
+        "id": 695534,
+        "rank": 8,
+        "position": "RHP",
+        "name": "Chase Petty"
+      },
+      {
+        "id": 826209,
+        "rank": 9,
+        "position": "RHP",
+        "name": "Aaron Watson"
+      },
+      {
+        "id": 806823,
+        "rank": 10,
+        "position": "RHP",
+        "name": "Sheng-En Lin"
+      },
+      {
+        "id": 683742,
+        "rank": 11,
+        "position": "RHP",
+        "name": "Jose Franco"
+      },
+      {
+        "id": 702568,
+        "rank": 12,
+        "position": "RHP",
+        "name": "Mason Morris"
+      },
+      {
+        "id": 829051,
+        "rank": 13,
+        "position": "SS",
+        "name": "Liberts Aponte"
+      },
+      {
+        "id": 807645,
+        "rank": 14,
+        "position": "OF",
+        "name": "Adolfo Sanchez"
+      },
+      {
+        "id": 806984,
+        "rank": 15,
+        "position": "OF",
+        "name": "Arnaldo Lantigua"
+      },
+      {
+        "id": 699114,
+        "rank": 16,
+        "position": "SS",
+        "name": "Leo Balcazar"
+      },
+      {
+        "id": 699115,
+        "rank": 17,
+        "position": "SS",
+        "name": "Carlos Jorge"
+      },
+      {
+        "id": 687209,
+        "rank": 18,
+        "position": "RHP",
+        "name": "Zach Maxwell"
+      },
+      {
+        "id": 687924,
+        "rank": 19,
+        "position": "RHP",
+        "name": "Julian Aguiar"
+      },
+      {
+        "id": 695705,
+        "rank": 20,
+        "position": "RHP",
+        "name": "Luke Holman"
+      },
+      {
+        "id": 702563,
+        "rank": 21,
+        "position": "OF",
+        "name": "Mason Neville"
+      },
+      {
+        "id": 821073,
+        "rank": 22,
+        "position": "C",
+        "name": "Jirvin Morillo"
+      },
+      {
+        "id": 703150,
+        "rank": 23,
+        "position": "3B/2B",
+        "name": "Ricky Cabrera"
+      },
+      {
+        "id": 820941,
+        "rank": 24,
+        "position": "RHP",
+        "name": "Stharlin Torres"
+      },
+      {
+        "id": 701370,
+        "rank": 25,
+        "position": "RHP",
+        "name": "JeanPierre Ortiz"
+      },
+      {
+        "id": 836585,
+        "rank": 26,
+        "position": "OF",
+        "name": "Angel Nuñez"
+      },
+      {
+        "id": 800176,
+        "rank": 27,
+        "position": "3B/SS/OF",
+        "name": "Carlos Sanchez"
+      },
+      {
+        "id": 812151,
+        "rank": 28,
+        "position": "RHP",
+        "name": "Deivi Villafana"
+      },
+      {
+        "id": 823851,
+        "rank": 29,
+        "position": "3B",
+        "name": "Hansel Jimenez"
+      }
+    ],
+    "rockies": [
+      {
+        "id": 815787,
+        "rank": 1,
+        "position": "SS",
+        "name": "Ethan Holliday"
+      },
+      {
+        "id": 809707,
+        "rank": 2,
+        "position": "1B/OF",
+        "name": "Charlie Condon"
+      },
+      {
+        "id": 703606,
+        "rank": 3,
+        "position": "OF",
+        "name": "Jared Thomas"
+      },
+      {
+        "id": 821041,
+        "rank": 4,
+        "position": "OF/2B",
+        "name": "Roldy Brito"
+      },
+      {
+        "id": 806978,
+        "rank": 5,
+        "position": "OF",
+        "name": "Robert Calaz"
+      },
+      {
+        "id": 694249,
+        "rank": 6,
+        "position": "OF",
+        "name": "Cole Carrigg"
+      },
+      {
+        "id": 822477,
+        "rank": 7,
+        "position": "RHP",
+        "name": "JB Middleton"
+      },
+      {
+        "id": 701679,
+        "rank": 8,
+        "position": "RHP",
+        "name": "Brody Brecht"
+      },
+      {
+        "id": 702622,
+        "rank": 9,
+        "position": "LHP",
+        "name": "Griffin Herring"
+      },
+      {
+        "id": 691792,
+        "rank": 10,
+        "position": "2B",
+        "name": "Roc Riggio"
+      },
+      {
+        "id": 807743,
+        "rank": 11,
+        "position": "LHP",
+        "name": "Sean Sullivan"
+      },
+      {
+        "id": 803284,
+        "rank": 12,
+        "position": "OF",
+        "name": "Max Belyeu"
+      },
+      {
+        "id": 691728,
+        "rank": 13,
+        "position": "LF",
+        "name": "Zac Veen"
+      },
+      {
+        "id": 700327,
+        "rank": 14,
+        "position": "LHP",
+        "name": "Welinton Herrera"
+      },
+      {
+        "id": 694514,
+        "rank": 15,
+        "position": "OF",
+        "name": "Sterlin Thompson"
+      },
+      {
+        "id": 687312,
+        "rank": 16,
+        "position": "RHP",
+        "name": "Gabriel Hughes"
+      },
+      {
+        "id": 805260,
+        "rank": 17,
+        "position": "3B",
+        "name": "Ethan Hedges"
+      },
+      {
+        "id": 815195,
+        "rank": 18,
+        "position": "SS",
+        "name": "Wilder Dalis"
+      },
+      {
+        "id": 702484,
+        "rank": 19,
+        "position": "RHP",
+        "name": "Jackson Cox"
+      },
+      {
+        "id": 692632,
+        "rank": 20,
+        "position": "RHP",
+        "name": "Yujanyer Herrera"
+      },
+      {
+        "id": 701783,
+        "rank": 21,
+        "position": "C",
+        "name": "Cole Messina"
+      },
+      {
+        "id": 687223,
+        "rank": 22,
+        "position": "LHP",
+        "name": "Carson Palmquist"
+      },
+      {
+        "id": 821692,
+        "rank": 23,
+        "position": "OF",
+        "name": "Cristian Arguelles"
+      },
+      {
+        "id": 815903,
+        "rank": 24,
+        "position": "SS",
+        "name": "Ashly Andujar"
+      },
+      {
+        "id": 685326,
+        "rank": 25,
+        "position": "RHP",
+        "name": "McCade Brown"
+      },
+      {
+        "id": 820825,
+        "rank": 26,
+        "position": "LHP",
+        "name": "Konner Eaton"
+      }
+    ],
+    "royals": [
+      {
+        "id": 695600,
+        "rank": 1,
+        "position": "C",
+        "name": "Carter Jensen"
+      },
+      {
+        "id": 805810,
+        "rank": 2,
+        "position": "C",
+        "name": "Blake Mitchell"
+      },
+      {
+        "id": 830402,
+        "rank": 3,
+        "position": "RHP",
+        "name": "Kendry Chourio"
+      },
+      {
+        "id": 815789,
+        "rank": 4,
+        "position": "LHP",
+        "name": "David Shields"
+      },
+      {
+        "id": 815819,
+        "rank": 5,
+        "position": "OF/2B",
+        "name": "Sean Gamble"
+      },
+      {
+        "id": 815843,
+        "rank": 6,
+        "position": "SS/3B",
+        "name": "Josh Hammond"
+      },
+      {
+        "id": 825412,
+        "rank": 7,
+        "position": "OF",
+        "name": "Angeibel Gomez"
+      },
+      {
+        "id": 808675,
+        "rank": 8,
+        "position": "C",
+        "name": "Ramon Ramirez"
+      },
+      {
+        "id": 679883,
+        "rank": 9,
+        "position": "RHP",
+        "name": "Luinder Avila"
+      },
+      {
+        "id": 695667,
+        "rank": 10,
+        "position": "RHP",
+        "name": "Ben Kudrna"
+      },
+      {
+        "id": 815902,
+        "rank": 11,
+        "position": "SS",
+        "name": "Yandel Ricardo"
+      },
+      {
+        "id": 701795,
+        "rank": 12,
+        "position": "RHP",
+        "name": "Drew Beam"
+      },
+      {
+        "id": 686632,
+        "rank": 13,
+        "position": "RHP",
+        "name": "Steven Zobac"
+      },
+      {
+        "id": 702373,
+        "rank": 14,
+        "position": "RHP",
+        "name": "Felix Arronde"
+      },
+      {
+        "id": 703610,
+        "rank": 15,
+        "position": "LHP",
+        "name": "Justin Lamkin"
+      },
+      {
+        "id": 813533,
+        "rank": 16,
+        "position": "RHP",
+        "name": "Michael Lombardi"
+      },
+      {
+        "id": 808706,
+        "rank": 17,
+        "position": "OF",
+        "name": "Asbel Gonzalez"
+      },
+      {
+        "id": 811287,
+        "rank": 18,
+        "position": "OF",
+        "name": "Carson Roccaforte"
+      },
+      {
+        "id": 829096,
+        "rank": 19,
+        "position": "SS/3B",
+        "name": "Ramcell Medina"
+      },
+      {
+        "id": 829071,
+        "rank": 20,
+        "position": "SS",
+        "name": "Warren Calcaño"
+      },
+      {
+        "id": 695556,
+        "rank": 21,
+        "position": "RHP",
+        "name": "Shane Panzini"
+      },
+      {
+        "id": 830469,
+        "rank": 22,
+        "position": "RHP",
+        "name": "Freddy Contreras"
+      },
+      {
+        "id": 832698,
+        "rank": 23,
+        "position": "RHP",
+        "name": "Cameron Millar"
+      },
+      {
+        "id": 806265,
+        "rank": 24,
+        "position": "RHP",
+        "name": "Blake Wolters"
+      },
+      {
+        "id": 701207,
+        "rank": 25,
+        "position": "RHP",
+        "name": "Dennis Colleran Jr."
+      },
+      {
+        "id": 694187,
+        "rank": 26,
+        "position": "SS",
+        "name": "Daniel Vazquez"
+      },
+      {
+        "id": 688457,
+        "rank": 27,
+        "position": "OF",
+        "name": "Gavin Cross"
+      },
+      {
+        "id": 700985,
+        "rank": 28,
+        "position": "RHP",
+        "name": "Josh Hansell"
+      }
+    ],
+    "tigers": [
+      {
+        "id": 805808,
+        "rank": 1,
+        "position": "SS",
+        "name": "Kevin McGonigle"
+      },
+      {
+        "id": 703601,
+        "rank": 2,
+        "position": "OF",
+        "name": "Max Clark"
+      },
+      {
+        "id": 800614,
+        "rank": 3,
+        "position": "SS",
+        "name": "Bryce Rainer"
+      },
+      {
+        "id": 800522,
+        "rank": 4,
+        "position": "C/1B",
+        "name": "Josue Briceño"
+      },
+      {
+        "id": 801194,
+        "rank": 5,
+        "position": "2B/3B",
+        "name": "Max Anderson"
+      },
+      {
+        "id": 701678,
+        "rank": 6,
+        "position": "3B/2B",
+        "name": "Hao-Yu  Lee"
+      },
+      {
+        "id": 699073,
+        "rank": 7,
+        "position": "C/1B",
+        "name": "Thayron Liranzo"
+      },
+      {
+        "id": 829038,
+        "rank": 8,
+        "position": "OF",
+        "name": "Cris Rodriguez"
+      },
+      {
+        "id": 803723,
+        "rank": 9,
+        "position": "SS",
+        "name": "Jordan Yost"
+      },
+      {
+        "id": 808825,
+        "rank": 10,
+        "position": "LHP",
+        "name": "Andrew Sears"
+      },
+      {
+        "id": 802412,
+        "rank": 11,
+        "position": "RHP",
+        "name": "Malachi Witherspoon"
+      },
+      {
+        "id": 800508,
+        "rank": 12,
+        "position": "SS",
+        "name": "Franyerber Montilla"
+      },
+      {
+        "id": 834672,
+        "rank": 13,
+        "position": "C",
+        "name": "Michael Oliveto"
+      },
+      {
+        "id": 808383,
+        "rank": 14,
+        "position": "RHP",
+        "name": "Kelvis Salcedo"
+      },
+      {
+        "id": 807726,
+        "rank": 15,
+        "position": "SS",
+        "name": "John Peck"
+      },
+      {
+        "id": 805725,
+        "rank": 16,
+        "position": "LHP",
+        "name": "Jake Miller"
+      },
+      {
+        "id": 800624,
+        "rank": 17,
+        "position": "LHP",
+        "name": "Ben Jacobs"
+      },
+      {
+        "id": 827640,
+        "rank": 18,
+        "position": "RHP",
+        "name": "Lucas Elissalt"
+      },
+      {
+        "id": 815157,
+        "rank": 19,
+        "position": "RHP",
+        "name": "Owen Hall"
+      },
+      {
+        "id": 680744,
+        "rank": 20,
+        "position": "RHP",
+        "name": "Ty Madden"
+      },
+      {
+        "id": 691789,
+        "rank": 21,
+        "position": "3B/1B",
+        "name": "Izaac Pacheco"
+      },
+      {
+        "id": 811290,
+        "rank": 22,
+        "position": "RHP",
+        "name": "Jaden Hamm"
+      },
+      {
+        "id": 827672,
+        "rank": 23,
+        "position": "SS",
+        "name": "Jude Warwick"
+      },
+      {
+        "id": 680664,
+        "rank": 24,
+        "position": "C/1B",
+        "name": "Eduardo Valencia"
+      },
+      {
+        "id": 669360,
+        "rank": 25,
+        "position": "OF/INF",
+        "name": "Trei Cruz"
+      },
+      {
+        "id": 825094,
+        "rank": 26,
+        "position": "OF",
+        "name": "Nick Dumesnil"
+      },
+      {
+        "id": 834393,
+        "rank": 27,
+        "position": "LHP",
+        "name": "Caleb Leys"
+      },
+      {
+        "id": 825924,
+        "rank": 28,
+        "position": "OF",
+        "name": "Jackson Strong"
+      },
+      {
+        "id": 804852,
+        "rank": 29,
+        "position": "LHP",
+        "name": "Grayson Grinsell"
+      },
+      {
+        "id": 836597,
+        "rank": 30,
+        "position": "OF",
+        "name": "Randy Santana"
+      }
+    ],
+    "twins": [
+      {
+        "id": 805805,
+        "rank": 1,
+        "position": "OF",
+        "name": "Walker Jenkins"
+      },
+      {
+        "id": 701785,
+        "rank": 2,
+        "position": "SS",
+        "name": "Kaelen Culpepper"
+      },
+      {
+        "id": 806953,
+        "rank": 3,
+        "position": "C",
+        "name": "Eduardo Tait"
+      },
+      {
+        "id": 691181,
+        "rank": 4,
+        "position": "CF",
+        "name": "Emmanuel Rodriguez"
+      },
+      {
+        "id": 687570,
+        "rank": 5,
+        "position": "LHP",
+        "name": "Connor Prielipp"
+      },
+      {
+        "id": 815598,
+        "rank": 6,
+        "position": "LHP",
+        "name": "Dasan Hill"
+      },
+      {
+        "id": 694224,
+        "rank": 7,
+        "position": "RF",
+        "name": "Gabriel Gonzalez"
+      },
+      {
+        "id": 701339,
+        "rank": 8,
+        "position": "SS",
+        "name": "Marek Houston"
+      },
+      {
+        "id": 805792,
+        "rank": 9,
+        "position": "RHP",
+        "name": "Charlee Soto"
+      },
+      {
+        "id": 696070,
+        "rank": 10,
+        "position": "LHP",
+        "name": "Kendry Rojas"
+      },
+      {
+        "id": 804981,
+        "rank": 11,
+        "position": "RHP",
+        "name": "Riley Quick"
+      },
+      {
+        "id": 694230,
+        "rank": 12,
+        "position": "OF",
+        "name": "Hendry Mendez"
+      },
+      {
+        "id": 702193,
+        "rank": 13,
+        "position": "RHP",
+        "name": "Andrew Morris"
+      },
+      {
+        "id": 815839,
+        "rank": 14,
+        "position": "SS/3B",
+        "name": "Quentin Young"
+      },
+      {
+        "id": 807974,
+        "rank": 15,
+        "position": "RHP",
+        "name": "Adrian Bohorquez"
+      },
+      {
+        "id": 806067,
+        "rank": 16,
+        "position": "RHP",
+        "name": "James Ellwanger"
+      },
+      {
+        "id": 806263,
+        "rank": 17,
+        "position": "SS/3B/OF",
+        "name": "Brandon Winokur"
+      },
+      {
+        "id": 694397,
+        "rank": 18,
+        "position": "RHP",
+        "name": "Marco Raya"
+      },
+      {
+        "id": 801594,
+        "rank": 19,
+        "position": "RHP",
+        "name": "Ryan Gallagher"
+      },
+      {
+        "id": 804619,
+        "rank": 20,
+        "position": "RHP",
+        "name": "John Klein"
+      },
+      {
+        "id": 814414,
+        "rank": 21,
+        "position": "SS",
+        "name": "Kyle DeBarge"
+      },
+      {
+        "id": 690217,
+        "rank": 22,
+        "position": "RHP",
+        "name": "C.J. Culpepper"
+      },
+      {
+        "id": 813715,
+        "rank": 23,
+        "position": "C",
+        "name": "Khadim Diaw"
+      },
+      {
+        "id": 701771,
+        "rank": 24,
+        "position": "3B/1B",
+        "name": "Billy Amick"
+      },
+      {
+        "id": 829764,
+        "rank": 25,
+        "position": "RHP",
+        "name": "Santiago Castellanos"
+      },
+      {
+        "id": 699276,
+        "rank": 26,
+        "position": "RHP",
+        "name": "Jose Olivares"
+      },
+      {
+        "id": 806992,
+        "rank": 27,
+        "position": "C/1B",
+        "name": "Enrique Jimenez"
+      }
+    ],
+    "white-sox": [
+      {
+        "id": 695731,
+        "rank": 1,
+        "position": "OF",
+        "name": "Braden Montgomery"
+      },
+      {
+        "id": 702273,
+        "rank": 2,
+        "position": "LHP",
+        "name": "Noah Schultz"
+      },
+      {
+        "id": 815352,
+        "rank": 3,
+        "position": "SS/3B",
+        "name": "Caleb Bonemer"
+      },
+      {
+        "id": 696146,
+        "rank": 4,
+        "position": "LHP",
+        "name": "Hagen Smith"
+      },
+      {
+        "id": 815814,
+        "rank": 5,
+        "position": "SS",
+        "name": "Billy Carlson"
+      },
+      {
+        "id": 701780,
+        "rank": 6,
+        "position": "RHP",
+        "name": "Tanner McDougal"
+      },
+      {
+        "id": 828262,
+        "rank": 7,
+        "position": "OF",
+        "name": "Jaden Fauske"
+      },
+      {
+        "id": 803291,
+        "rank": 8,
+        "position": "LHP",
+        "name": "Christian Oppor"
+      },
+      {
+        "id": 803011,
+        "rank": 9,
+        "position": "2B/3B",
+        "name": "Sam Antonacci"
+      },
+      {
+        "id": 827517,
+        "rank": 10,
+        "position": "SS",
+        "name": "Kyle Lodise"
+      },
+      {
+        "id": 703151,
+        "rank": 11,
+        "position": "2B",
+        "name": "William Bergolla Jr."
+      },
+      {
+        "id": 690279,
+        "rank": 12,
+        "position": "RHP",
+        "name": "Mason Adams"
+      },
+      {
+        "id": 808684,
+        "rank": 13,
+        "position": "2B/SS",
+        "name": "Javier Mogollon"
+      },
+      {
+        "id": 805804,
+        "rank": 14,
+        "position": "OF",
+        "name": "George Wolkow"
+      },
+      {
+        "id": 800419,
+        "rank": 15,
+        "position": "2B/SS",
+        "name": "Jeral Perez"
+      },
+      {
+        "id": 820836,
+        "rank": 16,
+        "position": "LHP",
+        "name": "Blake Larson"
+      },
+      {
+        "id": 807187,
+        "rank": 17,
+        "position": "RHP",
+        "name": "Mathias LaCombe"
+      },
+      {
+        "id": 689818,
+        "rank": 18,
+        "position": "RHP",
+        "name": "David Sandlin"
+      },
+      {
+        "id": 837870,
+        "rank": 19,
+        "position": "OF",
+        "name": "Sebastian Romero"
+      },
+      {
+        "id": 821933,
+        "rank": 20,
+        "position": "C",
+        "name": "Landon Hodge"
+      },
+      {
+        "id": 800316,
+        "rank": 21,
+        "position": "3B",
+        "name": "Alexander Albertus"
+      },
+      {
+        "id": 702881,
+        "rank": 22,
+        "position": "RHP",
+        "name": "Aldrin Batista"
+      },
+      {
+        "id": 805326,
+        "rank": 23,
+        "position": "LHP",
+        "name": "Tyler Schweitzer"
+      },
+      {
+        "id": 694378,
+        "rank": 24,
+        "position": "SS",
+        "name": "Jacob Gonzalez"
+      },
+      {
+        "id": 805031,
+        "rank": 25,
+        "position": "RHP",
+        "name": "Gabe Davis"
+      },
+      {
+        "id": 836608,
+        "rank": 26,
+        "position": "C",
+        "name": "Fernando Graterol"
+      },
+      {
+        "id": 690294,
+        "rank": 27,
+        "position": "LHP",
+        "name": "Shane Murphy"
+      },
+      {
+        "id": 681066,
+        "rank": 28,
+        "position": "LHP",
+        "name": "Ky Bush"
+      },
+      {
+        "id": 802018,
+        "rank": 29,
+        "position": "INF/OF",
+        "name": "Ryan Burrowes"
+      },
+      {
+        "id": 701474,
+        "rank": 30,
+        "position": "RHP",
+        "name": "Duncan Davitt"
+      }
+    ],
+    "yankees": [
+      {
+        "id": 806146,
+        "rank": 1,
+        "position": "SS",
+        "name": "George Lombard Jr."
+      },
+      {
+        "id": 801739,
+        "rank": 2,
+        "position": "RHP",
+        "name": "Carlos Lagrange"
+      },
+      {
+        "id": 695684,
+        "rank": 3,
+        "position": "RHP",
+        "name": "Elmer Rodríguez"
+      },
+      {
+        "id": 828076,
+        "rank": 4,
+        "position": "SS",
+        "name": "Dax Kilby"
+      },
+      {
+        "id": 696292,
+        "rank": 5,
+        "position": "RHP",
+        "name": "Ben Hess"
+      },
+      {
+        "id": 682987,
+        "rank": 6,
+        "position": "CF",
+        "name": "Spencer Jones"
+      },
+      {
+        "id": 701480,
+        "rank": 7,
+        "position": "RHP",
+        "name": "Bryce Cunningham"
+      },
+      {
+        "id": 694633,
+        "rank": 8,
+        "position": "RHP",
+        "name": "Chase Hampton"
+      },
+      {
+        "id": 695765,
+        "rank": 9,
+        "position": "RHP",
+        "name": "Thatcher Hurd"
+      },
+      {
+        "id": 695560,
+        "rank": 10,
+        "position": "LHP",
+        "name": "Pico Kohn"
+      },
+      {
+        "id": 694805,
+        "rank": 11,
+        "position": "LHP",
+        "name": "Kyle Carr"
+      },
+      {
+        "id": 692110,
+        "rank": 12,
+        "position": "SS",
+        "name": "Core Jackson"
+      },
+      {
+        "id": 809763,
+        "rank": 13,
+        "position": "SS",
+        "name": "Kaeden Kent"
+      },
+      {
+        "id": 700649,
+        "rank": 14,
+        "position": "LHP",
+        "name": "Henry Lalane"
+      },
+      {
+        "id": 691795,
+        "rank": 15,
+        "position": "LHP",
+        "name": "Brock Selvidge"
+      },
+      {
+        "id": 694696,
+        "rank": 16,
+        "position": "RHP",
+        "name": "Cade Smith"
+      },
+      {
+        "id": 685464,
+        "rank": 17,
+        "position": "RHP",
+        "name": "Cade Winquest"
+      },
+      {
+        "id": 815147,
+        "rank": 18,
+        "position": "OF",
+        "name": "Wilson Rodriguez"
+      },
+      {
+        "id": 829501,
+        "rank": 19,
+        "position": "SS",
+        "name": "Stiven Marinez"
+      },
+      {
+        "id": 701778,
+        "rank": 20,
+        "position": "LF",
+        "name": "Jace Avina"
+      },
+      {
+        "id": 812431,
+        "rank": 21,
+        "position": "RHP",
+        "name": "Rory Fox"
+      },
+      {
+        "id": 694341,
+        "rank": 22,
+        "position": "RHP",
+        "name": "Brendan Beck"
+      },
+      {
+        "id": 800344,
+        "rank": 23,
+        "position": "RHP",
+        "name": "Sean Paul Liñan"
+      },
+      {
+        "id": 814392,
+        "rank": 24,
+        "position": "LHP",
+        "name": "Xavier Rivas"
+      },
+      {
+        "id": 806121,
+        "rank": 25,
+        "position": "RHP",
+        "name": "Mac Heuer"
+      },
+      {
+        "id": 701411,
+        "rank": 26,
+        "position": "RHP",
+        "name": "Jack Cebert"
+      },
+      {
+        "id": 702098,
+        "rank": 27,
+        "position": "LHP",
+        "name": "Allen Facundo"
+      },
+      {
+        "id": 694660,
+        "rank": 28,
+        "position": "RHP",
+        "name": "Harrison Cohen"
+      },
+      {
+        "id": 801432,
+        "rank": 29,
+        "position": "RHP",
+        "name": "Eric Reyzelman"
+      },
+      {
+        "id": 829041,
+        "rank": 30,
+        "position": "SS",
+        "name": "Mani Cedeno"
+      }
+    ]
+  },
+  "level_map": {
+    "691951": "AAA",
+    "815083": "AAA",
+    "820862": "AAA",
+    "687093": "AAA",
+    "694203": "AAA",
+    "668876": "AAA",
+    "694559": "AAA",
+    "694359": "AAA",
+    "695049": "AAA",
+    "691946": "AAA",
+    "683090": "AAA",
+    "663611": "AAA",
+    "641820": "AAA",
+    "683079": "AAA",
+    "685133": "AAA",
+    "682989": "AAA",
+    "695681": "AAA",
+    "696519": "AAA",
+    "672391": "AAA",
+    "622780": "AAA",
+    "701488": "AAA",
+    "703185": "AAA",
+    "665861": "AAA",
+    "570560": "AAA",
+    "680704": "AAA",
+    "642048": "AAA",
+    "642350": "AAA",
+    "683177": "AAA",
+    "519326": "AAA",
+    "621035": "AAA",
+    "700712": "AAA",
+    "622268": "AAA",
+    "660623": "AAA",
+    "683341": "AA",
+    "672569": "AA",
+    "694563": "AA",
+    "695065": "AA",
+    "671925": "AA",
+    "683490": "AA",
+    "685313": "AA",
+    "800514": "AA",
+    "687272": "AA",
+    "692623": "AA",
+    "806534": "AA",
+    "683681": "AA",
+    "803135": "AA",
+    "699613": "AA",
+    "805871": "AA",
+    "815151": "AA",
+    "702574": "AA",
+    "695229": "AA",
+    "684665": "AA",
+    "683098": "AA",
+    "676502": "AA",
+    "702882": "AA",
+    "823795": "AA",
+    "804558": "AA",
+    "695402": "AA",
+    "668719": "AA",
+    "656008": "AA",
+    "680960": "A+",
+    "803285": "A+",
+    "815755": "A+",
+    "686196": "A+",
+    "700933": "A+",
+    "703194": "A+",
+    "808129": "A+",
+    "688944": "A+",
+    "702629": "A+",
+    "700322": "A+",
+    "686731": "A+",
+    "691571": "A+",
+    "822652": "A+",
+    "692624": "A+",
+    "827719": "A+",
+    "690804": "A+",
+    "800194": "A+",
+    "691269": "A+",
+    "828412": "A+",
+    "828314": "A+",
+    "702409": "A+",
+    "703430": "A+",
+    "702274": "A+",
+    "805422": "A+",
+    "814394": "A+",
+    "802967": "A+",
+    "702494": "A+",
+    "814279": "A+",
+    "695477": "A",
+    "820986": "A",
+    "800203": "A",
+    "823909": "A",
+    "829058": "A",
+    "805744": "A",
+    "822654": "A",
+    "807281": "A",
+    "824200": "A",
+    "813989": "A",
+    "803108": "A",
+    "813335": "A",
+    "808154": "A",
+    "800200": "A",
+    "702586": "A",
+    "701342": "A",
+    "808113": "A",
+    "692169": "A",
+    "807011": "A",
+    "695950": "A",
+    "821238": "A",
+    "813429": "A",
+    "700714": "A",
+    "808161": "A",
+    "809814": "A",
+    "815758": "A",
+    "805262": "A",
+    "680769": "AAA",
+    "669920": "AAA",
+    "681293": "AAA",
+    "680890": "AAA",
+    "624415": "AAA",
+    "672277": "AAA",
+    "685091": "AAA",
+    "805904": "AAA",
+    "676680": "AAA",
+    "660853": "AAA",
+    "800067": "AAA",
+    "641585": "AAA",
+    "676467": "AAA",
+    "681077": "AAA",
+    "663567": "AAA",
+    "813865": "AAA",
+    "687424": "AAA",
+    "681151": "AAA",
+    "542208": "AAA",
+    "805672": "AAA",
+    "685005": "AAA",
+    "663967": "AAA",
+    "695001": "AAA",
+    "687005": "AAA",
+    "666211": "AAA",
+    "699044": "AAA",
+    "624523": "AAA",
+    "701121": "AAA",
+    "694376": "AAA",
+    "686294": "AAA",
+    "676466": "AAA",
+    "809338": "AA",
+    "800232": "AA",
+    "813844": "AA",
+    "702847": "AA",
+    "687062": "AA",
+    "690667": "AA",
+    "699043": "AA",
+    "814299": "AA",
+    "801039": "AA",
+    "702094": "AA",
+    "695048": "AA",
+    "801802": "AA",
+    "801075": "AA",
+    "686223": "AA",
+    "809343": "AA",
+    "694381": "AA",
+    "835483": "AA",
+    "663445": "AA",
+    "694545": "AA",
+    "683988": "AA",
+    "690474": "AA",
+    "804522": "AA",
+    "691012": "AA",
+    "828599": "AA",
+    "813896": "AA",
+    "702462": "AA",
+    "687776": "AA",
+    "689223": "AA",
+    "673945": "A+",
+    "695046": "A+",
+    "813842": "A+",
+    "800045": "A+",
+    "700358": "A+",
+    "836055": "A+",
+    "801700": "A+",
+    "703676": "A+",
+    "814374": "A+",
+    "803247": "A+",
+    "800516": "A+",
+    "821009": "A+",
+    "826315": "A+",
+    "802959": "A+",
+    "703440": "A+",
+    "815308": "A+",
+    "691480": "A+",
+    "805168": "A+",
+    "808010": "A+",
+    "703900": "A+",
+    "702547": "A+",
+    "812160": "A+",
+    "676560": "A+",
+    "802105": "A+",
+    "828395": "A+",
+    "809789": "A+",
+    "800063": "A+",
+    "702520": "A+",
+    "809143": "A+",
+    "691028": "A+",
+    "806948": "A",
+    "829037": "A",
+    "823891": "A",
+    "828672": "A",
+    "811632": "A",
+    "806969": "A",
+    "829251": "A",
+    "822162": "A",
+    "703198": "A",
+    "805222": "A",
+    "805953": "A",
+    "823809": "A",
+    "815832": "A",
+    "822163": "A",
+    "806441": "A",
+    "814490": "A",
+    "834872": "A",
+    "823649": "A",
+    "830769": "A",
+    "806993": "A",
+    "703855": "A",
+    "827504": "A",
+    "808027": "A",
+    "703502": "A",
+    "806014": "A",
+    "806102": "A",
+    "811633": "A",
+    "822456": "A",
+    "811718": "A",
+    "836167": "A",
+    "836170": "A",
+    "623433": "AAA",
+    "683494": "AAA",
+    "686930": "AAA",
+    "669620": "AAA",
+    "703607": "AAA",
+    "641386": "AAA",
+    "683155": "AAA",
+    "621053": "AAA",
+    "680869": "AAA",
+    "695391": "AAA",
+    "663321": "AAA",
+    "695611": "AAA",
+    "621139": "AAA",
+    "640454": "AAA",
+    "669270": "AAA",
+    "681526": "AAA",
+    "687799": "AAA",
+    "608841": "AAA",
+    "695034": "AAA",
+    "674384": "AAA",
+    "678577": "AAA",
+    "678022": "AAA",
+    "661531": "AAA",
+    "683021": "AAA",
+    "593833": "AAA",
+    "669439": "AAA",
+    "687515": "AAA",
+    "814305": "AAA",
+    "800018": "AAA",
+    "701364": "AA",
+    "813895": "AA",
+    "685290": "AA",
+    "683454": "AA",
+    "822067": "AA",
+    "813833": "AA",
+    "690921": "AA",
+    "815888": "AA",
+    "801406": "AA",
+    "686499": "AA",
+    "669434": "AA",
+    "686857": "AA",
+    "683101": "AA",
+    "690985": "AA",
+    "695761": "AA",
+    "811965": "AA",
+    "805782": "AA",
+    "802474": "AA",
+    "827734": "AA",
+    "703420": "AA",
+    "676063": "AA",
+    "686810": "AA",
+    "641962": "AA",
+    "806281": "AA",
+    "660781": "AA",
+    "693388": "AA",
+    "695720": "AA",
+    "804119": "A+",
+    "696286": "A+",
+    "695542": "A+",
+    "806064": "A+",
+    "814504": "A+",
+    "686533": "A+",
+    "691863": "A+",
+    "687195": "A+",
+    "802005": "A+",
+    "701587": "A+",
+    "678163": "A+",
+    "680823": "A+",
+    "694977": "A+",
+    "692329": "A+",
+    "694191": "A+",
+    "694953": "A+",
+    "811312": "A+",
+    "701836": "A+",
+    "703895": "A+",
+    "809223": "A+",
+    "814445": "A+",
+    "805127": "A+",
+    "823990": "A+",
+    "671748": "A+",
+    "807963": "A",
+    "800182": "A",
+    "701699": "A",
+    "828781": "A",
+    "701520": "A",
+    "701409": "A",
+    "690962": "A",
+    "827759": "A",
+    "701548": "A",
+    "801928": "A",
+    "803427": "A",
+    "700579": "A",
+    "701839": "A",
+    "828589": "A",
+    "803370": "A",
+    "800177": "A",
+    "829052": "A",
+    "822488": "A",
+    "800612": "A",
+    "835269": "A",
+    "802504": "A",
+    "800149": "A",
+    "691007": "A",
+    "692844": "A",
+    "808911": "A",
+    "812559": "A",
+    "702023": "A",
+    "823771": "A",
+    "807988": "A",
+    "807992": "A",
+    "660896": "AAA",
+    "681084": "AAA",
+    "676454": "AAA",
+    "682729": "AAA",
+    "689149": "AAA",
+    "681751": "AAA",
+    "676596": "AAA",
+    "534910": "AAA",
+    "687288": "AAA",
+    "650391": "AAA",
+    "696522": "AAA",
+    "688460": "AAA",
+    "672463": "AAA",
+    "695445": "AAA",
+    "663893": "AAA",
+    "671936": "AAA",
+    "573009": "AAA",
+    "807727": "AAA",
+    "806005": "AAA",
+    "685332": "AAA",
+    "682818": "AAA",
+    "674681": "AAA",
+    "687069": "AAA",
+    "684320": "AAA",
+    "814804": "AAA",
+    "702302": "AAA",
+    "686766": "AAA",
+    "667690": "AAA",
+    "694661": "AAA",
+    "678218": "AAA",
+    "669310": "AAA",
+    "608723": "AAA",
+    "806334": "AA",
+    "690957": "AA",
+    "684222": "AA",
+    "691774": "AA",
+    "702690": "AA",
+    "694495": "AA",
+    "683103": "AA",
+    "673965": "AA",
+    "693483": "AA",
+    "682620": "AA",
+    "828353": "AA",
+    "800959": "AA",
+    "803385": "AA",
+    "814408": "AA",
+    "815873": "AA",
+    "680212": "AA",
+    "676540": "AA",
+    "804446": "AA",
+    "665998": "AA",
+    "801590": "AA",
+    "800125": "AA",
+    "815322": "AA",
+    "685712": "AA",
+    "804948": "AA",
+    "696064": "AA",
+    "669219": "AA",
+    "695741": "AA",
+    "807625": "A+",
+    "694202": "A+",
+    "814457": "A+",
+    "827110": "A+",
+    "800140": "A+",
+    "701860": "A+",
+    "698927": "A+",
+    "800484": "A+",
+    "701540": "A+",
+    "828600": "A+",
+    "801957": "A+",
+    "806413": "A+",
+    "692562": "A+",
+    "802418": "A+",
+    "803516": "A+",
+    "823944": "A+",
+    "805793": "A+",
+    "815317": "A+",
+    "805796": "A+",
+    "802981": "A+",
+    "804710": "A+",
+    "804544": "A+",
+    "694989": "A+",
+    "814411": "A+",
+    "700849": "A+",
+    "834978": "A+",
+    "828496": "A+",
+    "702283": "A+",
+    "700795": "A+",
+    "806666": "A+",
+    "828334": "A+",
+    "823994": "A",
+    "702255": "A",
+    "806962": "A",
+    "828557": "A",
+    "571578": "A",
+    "701796": "A",
+    "828495": "A",
+    "808220": "A",
+    "828749": "A",
+    "815220": "A",
+    "816142": "A",
+    "828419": "A",
+    "827326": "A",
+    "695704": "A",
+    "816362": "A",
+    "828098": "A",
+    "804526": "A",
+    "814748": "A",
+    "691793": "A",
+    "806684": "A",
+    "801563": "A",
+    "702526": "A",
+    "814288": "A",
+    "814346": "A",
+    "702486": "A",
+    "805268": "A",
+    "834882": "A",
+    "702056": "A",
+    "805373": "AAA",
+    "640492": "AAA",
+    "814351": "AAA",
+    "665856": "AAA",
+    "471911": "AAA",
+    "689266": "AAA",
+    "800311": "AAA",
+    "592325": "AAA",
+    "642770": "AAA",
+    "641656": "AAA",
+    "802686": "AAA",
+    "622694": "AAA",
+    "676551": "AAA",
+    "805347": "AAA",
+    "675916": "AAA",
+    "680577": "AAA",
+    "506702": "AAA",
+    "683627": "AAA",
+    "691548": "AAA",
+    "666768": "AAA",
+    "687166": "AAA",
+    "702275": "AAA",
+    "668845": "AAA",
+    "605463": "AAA",
+    "676702": "AAA",
+    "642133": "AAA",
+    "644433": "AAA",
+    "680672": "AAA",
+    "663897": "AAA",
+    "689172": "AAA",
+    "686588": "AA",
+    "803833": "AA",
+    "802180": "AA",
+    "666386": "AA",
+    "802117": "AA",
+    "686541": "AA",
+    "695462": "AA",
+    "669081": "AA",
+    "663536": "AA",
+    "669416": "AA",
+    "692371": "AA",
+    "677954": "AA",
+    "802357": "AA",
+    "803349": "AA",
+    "693176": "AA",
+    "687201": "AA",
+    "679489": "AA",
+    "702910": "AA",
+    "678173": "AA",
+    "690229": "AA",
+    "702566": "AA",
+    "681212": "AA",
+    "822412": "AA",
+    "694436": "AA",
+    "694222": "AA",
+    "682855": "AA",
+    "689688": "AA",
+    "700845": "AA",
+    "824742": "A+",
+    "830485": "A+",
+    "689878": "A+",
+    "807284": "A+",
+    "826928": "A+",
+    "824763": "A+",
+    "678142": "A+",
+    "806061": "A+",
+    "811319": "A+",
+    "814541": "A+",
+    "808535": "A+",
+    "701653": "A+",
+    "691944": "A+",
+    "813706": "A+",
+    "807080": "A+",
+    "803475": "A+",
+    "800811": "A+",
+    "805780": "A+",
+    "700043": "A+",
+    "827637": "A+",
+    "681256": "A+",
+    "811764": "A+",
+    "687248": "A+",
+    "808512": "A+",
+    "815095": "A+",
+    "808469": "A+",
+    "822465": "A+",
+    "809921": "A+",
+    "815299": "A+",
+    "696505": "A+",
+    "703483": "A+",
+    "808515": "A",
+    "808244": "A",
+    "815626": "A",
+    "809685": "A",
+    "695513": "A",
+    "813555": "A",
+    "828148": "A",
+    "702649": "A",
+    "815010": "A",
+    "806994": "A",
+    "836085": "A",
+    "822676": "A",
+    "801921": "A",
+    "702582": "A",
+    "803102": "A",
+    "834846": "A",
+    "807277": "A",
+    "815586": "A",
+    "814511": "A",
+    "814230": "A",
+    "815899": "A",
+    "805175": "A",
+    "821062": "A",
+    "805942": "A",
+    "800506": "A",
+    "808508": "A",
+    "695659": "A",
+    "816111": "A",
+    "826933": "A",
+    "702726": "AAA",
+    "672642": "AAA",
+    "672012": "AAA",
+    "689337": "AAA",
+    "682999": "AAA",
+    "663782": "AAA",
+    "689441": "AAA",
+    "675660": "AAA",
+    "702153": "AAA",
+    "688107": "AAA",
+    "701656": "AAA",
+    "700183": "AAA",
+    "675659": "AAA",
+    "804249": "AAA",
+    "800325": "AAA",
+    "678760": "AAA",
+    "668834": "AAA",
+    "696140": "AAA",
+    "682774": "AAA",
+    "671111": "AAA",
+    "806198": "AAA",
+    "691620": "AAA",
+    "692230": "AAA",
+    "670232": "AAA",
+    "680723": "AAA",
+    "668831": "AAA",
+    "657265": "AAA",
+    "621097": "AAA",
+    "694385": "AAA",
+    "702518": "AAA",
+    "668965": "AAA",
+    "642239": "AAA",
+    "677941": "AA",
+    "699223": "AA",
+    "804670": "AA",
+    "801670": "AA",
+    "695871": "AA",
+    "687521": "AA",
+    "672018": "AA",
+    "695501": "AA",
+    "691602": "AA",
+    "809229": "AA",
+    "800260": "AA",
+    "822760": "AA",
+    "828705": "AA",
+    "824620": "AA",
+    "674441": "AA",
+    "701618": "AA",
+    "811309": "AA",
+    "815908": "AA",
+    "815081": "AA",
+    "687152": "AA",
+    "702461": "AA",
+    "802506": "AA",
+    "804973": "AA",
+    "691621": "AA",
+    "814489": "AA",
+    "687783": "AA",
+    "815304": "A+",
+    "800345": "A+",
+    "800724": "A+",
+    "699127": "A+",
+    "691600": "A+",
+    "823658": "A+",
+    "701392": "A+",
+    "828475": "A+",
+    "702652": "A+",
+    "808222": "A+",
+    "694725": "A+",
+    "800223": "A+",
+    "671272": "A+",
+    "694206": "A+",
+    "695554": "A+",
+    "807723": "A+",
+    "701703": "A+",
+    "815501": "A+",
+    "703360": "A+",
+    "823182": "A+",
+    "815520": "A+",
+    "821270": "A+",
+    "828824": "A+",
+    "800469": "A+",
+    "693750": "A+",
+    "808952": "A+",
+    "695605": "A+",
+    "800485": "A+",
+    "803068": "A+",
+    "814710": "A+",
+    "808236": "A",
+    "821262": "A",
+    "806426": "A",
+    "821131": "A",
+    "820902": "A",
+    "835213": "A",
+    "821818": "A",
+    "808308": "A",
+    "806995": "A",
+    "815816": "A",
+    "821136": "A",
+    "815723": "A",
+    "804986": "A",
+    "823748": "A",
+    "808338": "A",
+    "808288": "A",
+    "800427": "A",
+    "821253": "A",
+    "823650": "A",
+    "836533": "A",
+    "821149": "A",
+    "836172": "A",
+    "821187": "A",
+    "811697": "A",
+    "808260": "A",
+    "808350": "A",
+    "815868": "A",
+    "703102": "A",
+    "806921": "A",
+    "695491": "AAA",
+    "678016": "AAA",
+    "699024": "AAA",
+    "656240": "AAA",
+    "699625": "AAA",
+    "690928": "AAA",
+    "681676": "AAA",
+    "690916": "AAA",
+    "703725": "AAA",
+    "700669": "AAA",
+    "813766": "AAA",
+    "693311": "AAA",
+    "691458": "AAA",
+    "689288": "AAA",
+    "807742": "AAA",
+    "676632": "AAA",
+    "687273": "AAA",
+    "802408": "AAA",
+    "680636": "AAA",
+    "690914": "AAA",
+    "642575": "AAA",
+    "676050": "AAA",
+    "693409": "AAA",
+    "691008": "AAA",
+    "675919": "AAA",
+    "684516": "AAA",
+    "688297": "AAA",
+    "694363": "AAA",
+    "663494": "AAA",
+    "676369": "AAA",
+    "647378": "AAA",
+    "669145": "AAA",
+    "802680": "AA",
+    "826314": "AA",
+    "701481": "AA",
+    "701388": "AA",
+    "695003": "AA",
+    "801078": "AA",
+    "690971": "AA",
+    "824604": "AA",
+    "822501": "AA",
+    "703766": "AA",
+    "702119": "AA",
+    "802469": "AA",
+    "804241": "AA",
+    "813820": "AA",
+    "701800": "AA",
+    "676153": "AA",
+    "702331": "AA",
+    "695766": "AA",
+    "694885": "AA",
+    "695835": "AA",
+    "811765": "AA",
+    "813852": "AA",
+    "822472": "AA",
+    "692405": "AA",
+    "692404": "AA",
+    "815104": "AA",
+    "825576": "AA",
+    "692568": "AA",
+    "828594": "AA",
+    "820832": "A+",
+    "800305": "A+",
+    "813291": "A+",
+    "681884": "A+",
+    "800231": "A+",
+    "692390": "A+",
+    "699031": "A+",
+    "823369": "A+",
+    "701469": "A+",
+    "703602": "A+",
+    "815119": "A+",
+    "802683": "A+",
+    "803679": "A+",
+    "701569": "A+",
+    "811339": "A+",
+    "801629": "A+",
+    "822410": "A+",
+    "806191": "A+",
+    "691711": "A+",
+    "693832": "A+",
+    "823787": "A+",
+    "692401": "A+",
+    "691013": "A+",
+    "800320": "A+",
+    "701374": "A+",
+    "822463": "A+",
+    "699027": "A+",
+    "692446": "A+",
+    "802371": "A+",
+    "810098": "A",
+    "807555": "A",
+    "801130": "A",
+    "832225": "A",
+    "812430": "A",
+    "827265": "A",
+    "692391": "A",
+    "809633": "A",
+    "834897": "A",
+    "834989": "A",
+    "800243": "A",
+    "813668": "A",
+    "677337": "A",
+    "695579": "A",
+    "800840": "A",
+    "800277": "A",
+    "689506": "A",
+    "802353": "A",
+    "822956": "A",
+    "703158": "A",
+    "808048": "A",
+    "815829": "A",
+    "800728": "A",
+    "813838": "A",
+    "800266": "A",
+    "814413": "A",
+    "700720": "A",
+    "835657": "A",
+    "807549": "A",
+    "805550": "A",
+    "800295": "A",
+    "831273": "A",
+    "682634": "AAA",
+    "665871": "AAA",
+    "656212": "AAA",
+    "703520": "AAA",
+    "542194": "AAA",
+    "676463": "AAA",
+    "701496": "AAA",
+    "681909": "AAA",
+    "668970": "AAA",
+    "686754": "AAA",
+    "656620": "AAA",
+    "681432": "AAA",
+    "675085": "AAA",
+    "656686": "AAA",
+    "702303": "AAA",
+    "676801": "AAA",
+    "680911": "AAA",
+    "681230": "AAA",
+    "690939": "AAA",
+    "699393": "AAA",
+    "605441": "AAA",
+    "681799": "AAA",
+    "669020": "AAA",
+    "691739": "AAA",
+    "687825": "AAA",
+    "676092": "AAA",
+    "701649": "AAA",
+    "592826": "AAA",
+    "694393": "AAA",
+    "687066": "AAA",
+    "827294": "AA",
+    "813666": "AA",
+    "689476": "AA",
+    "686953": "AA",
+    "696513": "AA",
+    "683001": "AA",
+    "690992": "AA",
+    "805990": "AA",
+    "810830": "AA",
+    "823702": "AA",
+    "815292": "AA",
+    "702333": "AA",
+    "677312": "AA",
+    "683100": "AA",
+    "685087": "AA",
+    "668776": "AA",
+    "691267": "AA",
+    "680724": "AA",
+    "805291": "AA",
+    "701477": "AA",
+    "800473": "AA",
+    "805060": "AA",
+    "701329": "AA",
+    "690370": "AA",
+    "701565": "AA",
+    "689302": "AA",
+    "673548": "AA",
+    "681117": "AA",
+    "807714": "AA",
+    "687766": "AA",
+    "689196": "A+",
+    "809754": "A+",
+    "690958": "A+",
+    "699944": "A+",
+    "806980": "A+",
+    "687881": "A+",
+    "696083": "A+",
+    "801561": "A+",
+    "687260": "A+",
+    "823807": "A+",
+    "691103": "A+",
+    "700840": "A+",
+    "691262": "A+",
+    "801252": "A+",
+    "696091": "A+",
+    "815133": "A+",
+    "820835": "A+",
+    "833458": "A+",
+    "802699": "A+",
+    "814131": "A",
+    "803425": "A",
+    "801205": "A",
+    "801686": "A",
+    "801260": "A",
+    "833415": "A",
+    "803241": "A",
+    "806968": "A",
+    "810070": "A",
+    "815824": "A",
+    "823932": "A",
+    "836074": "A",
+    "702260": "A",
+    "814118": "A",
+    "815654": "A",
+    "815121": "A",
+    "695573": "A",
+    "702576": "A",
+    "823898": "A",
+    "702268": "A",
+    "830742": "A",
+    "804751": "A",
+    "805255": "A",
+    "703724": "A",
+    "807257": "A",
+    "806961": "A",
+    "703726": "A",
+    "828393": "A",
+    "691769": "AAA",
+    "676070": "AAA",
+    "663609": "AAA",
+    "683352": "AAA",
+    "686228": "AAA",
+    "663462": "AAA",
+    "672629": "AAA",
+    "595928": "AAA",
+    "680728": "AAA",
+    "700270": "AAA",
+    "684442": "AAA",
+    "681869": "AAA",
+    "699912": "AAA",
+    "605244": "AAA",
+    "805299": "AAA",
+    "801517": "AAA",
+    "694410": "AAA",
+    "641672": "AAA",
+    "694815": "AAA",
+    "686753": "AAA",
+    "686826": "AAA",
+    "518876": "AAA",
+    "801179": "AAA",
+    "699471": "AAA",
+    "690841": "AAA",
+    "688497": "AAA",
+    "691009": "AAA",
+    "677565": "AAA",
+    "699232": "AAA",
+    "605452": "AAA",
+    "669704": "AAA",
+    "694371": "AAA",
+    "691021": "AAA",
+    "814439": "AAA",
+    "695078": "AAA",
+    "814783": "AA",
+    "809109": "AA",
+    "696508": "AA",
+    "703615": "AA",
+    "695521": "AA",
+    "675450": "AA",
+    "700369": "AA",
+    "666301": "AA",
+    "694492": "AA",
+    "811666": "AA",
+    "691285": "AA",
+    "701056": "AA",
+    "802416": "AA",
+    "702258": "AA",
+    "678099": "AA",
+    "800306": "AA",
+    "808768": "AA",
+    "694674": "AA",
+    "801219": "AA",
+    "691292": "AA",
+    "694211": "AA",
+    "692229": "AA",
+    "681400": "AA",
+    "683008": "AA",
+    "683085": "AA",
+    "800198": "AA",
+    "678232": "AA",
+    "695486": "A+",
+    "800569": "A+",
+    "685763": "A+",
+    "694833": "A+",
+    "815154": "A+",
+    "700341": "A+",
+    "800712": "A+",
+    "703519": "A+",
+    "826536": "A+",
+    "814544": "A+",
+    "694364": "A+",
+    "700895": "A+",
+    "681060": "A+",
+    "800029": "A+",
+    "694781": "A+",
+    "800206": "A+",
+    "801938": "A+",
+    "806583": "A+",
+    "701793": "A+",
+    "703641": "A+",
+    "808087": "A+",
+    "800185": "A+",
+    "811139": "A+",
+    "691014": "A+",
+    "807957": "A+",
+    "802482": "A+",
+    "700282": "A+",
+    "827636": "A+",
+    "808148": "A",
+    "800434": "A",
+    "813409": "A",
+    "821380": "A",
+    "804502": "A",
+    "806869": "A",
+    "815795": "A",
+    "815617": "A",
+    "703192": "A",
+    "807267": "A",
+    "806060": "A",
+    "808127": "A",
+    "807818": "A",
+    "694453": "A",
+    "814340": "A",
+    "829473": "A",
+    "699228": "A",
+    "806536": "A",
+    "813930": "A",
+    "808090": "A",
+    "682754": "A",
+    "813535": "A",
+    "808051": "A",
+    "808381": "A",
+    "807791": "A",
+    "800961": "A",
+    "821193": "A",
+    "808024": "A",
+    "672613": "AAA",
+    "663531": "AAA",
+    "679922": "AAA",
+    "671109": "AAA",
+    "701394": "AAA",
+    "701328": "AAA",
+    "680837": "AAA",
+    "702789": "AAA",
+    "801434": "AAA",
+    "669165": "AAA",
+    "608344": "AAA",
+    "681520": "AAA",
+    "808975": "AAA",
+    "682087": "AAA",
+    "691947": "AAA",
+    "680729": "AAA",
+    "641871": "AAA",
+    "695653": "AAA",
+    "670090": "AAA",
+    "699071": "AAA",
+    "682645": "AAA",
+    "689981": "AAA",
+    "656924": "AAA",
+    "669222": "AAA",
+    "672279": "AAA",
+    "669261": "AAA",
+    "696486": "AAA",
+    "669899": "AAA",
+    "607179": "AAA",
+    "664874": "AAA",
+    "691772": "AA",
+    "814527": "AA",
+    "694573": "AA",
+    "701764": "AA",
+    "800543": "AA",
+    "691558": "AA",
+    "803183": "AA",
+    "695372": "AA",
+    "806077": "AA",
+    "692262": "AA",
+    "809944": "AA",
+    "814481": "AA",
+    "814307": "AA",
+    "684169": "AA",
+    "674976": "AA",
+    "806293": "AA",
+    "683169": "AA",
+    "801887": "AA",
+    "680897": "AA",
+    "693819": "AA",
+    "683006": "AA",
+    "685716": "AA",
+    "699062": "AA",
+    "687798": "AA",
+    "703445": "AA",
+    "822627": "AA",
+    "682949": "AA",
+    "694838": "AA",
+    "689233": "AA",
+    "703821": "A+",
+    "807724": "A+",
+    "823803": "A+",
+    "800395": "A+",
+    "804560": "A+",
+    "806306": "A+",
+    "700310": "A+",
+    "826538": "A+",
+    "815088": "A+",
+    "694188": "A+",
+    "805120": "A+",
+    "800370": "A+",
+    "692222": "A+",
+    "801317": "A+",
+    "691561": "A+",
+    "701808": "A+",
+    "703153": "A+",
+    "814507": "A+",
+    "703639": "A+",
+    "808234": "A+",
+    "800332": "A+",
+    "702539": "A+",
+    "701527": "A+",
+    "805841": "A+",
+    "702488": "A+",
+    "809915": "A+",
+    "702905": "A+",
+    "800537": "A+",
+    "695484": "A",
+    "694847": "A",
+    "812745": "A",
+    "808218": "A",
+    "814696": "A",
+    "833386": "A",
+    "811668": "A",
+    "800383": "A",
+    "815792": "A",
+    "800408": "A",
+    "691559": "A",
+    "699075": "A",
+    "831093": "A",
+    "804942": "A",
+    "807403": "A",
+    "702583": "A",
+    "800302": "A",
+    "703193": "A",
+    "815896": "A",
+    "812363": "A",
+    "836052": "A",
+    "805379": "A",
+    "806221": "A",
+    "806224": "A",
+    "831004": "A",
+    "808313": "A",
+    "815665": "A",
+    "806959": "A",
+    "811716": "A",
+    "678545": "AAA",
+    "663941": "AAA",
+    "687218": "AAA",
+    "682674": "AAA",
+    "802609": "AAA",
+    "702352": "AAA",
+    "686823": "AAA",
+    "805811": "AAA",
+    "666149": "AAA",
+    "605242": "AAA",
+    "801501": "AAA",
+    "687284": "AAA",
+    "687551": "AAA",
+    "606992": "AAA",
+    "805345": "AAA",
+    "687724": "AAA",
+    "688730": "AAA",
+    "671083": "AAA",
+    "675920": "AAA",
+    "687529": "AAA",
+    "686790": "AAA",
+    "666711": "AAA",
+    "682515": "AAA",
+    "678576": "AAA",
+    "683679": "AAA",
+    "694820": "AAA",
+    "678738": "AAA",
+    "666619": "AAA",
+    "693313": "AAA",
+    "681916": "AAA",
+    "694918": "AAA",
+    "687931": "AAA",
+    "686873": "AAA",
+    "694757": "AA",
+    "692348": "AA",
+    "814154": "AA",
+    "694581": "AA",
+    "701852": "AA",
+    "694754": "AA",
+    "805257": "AA",
+    "813841": "AA",
+    "806401": "AA",
+    "681924": "AA",
+    "815589": "AA",
+    "805661": "AA",
+    "663408": "AA",
+    "806367": "AA",
+    "814803": "AA",
+    "692352": "AA",
+    "681439": "AA",
+    "702885": "AA",
+    "680102": "AA",
+    "815780": "AA",
+    "700800": "AA",
+    "692368": "AA",
+    "805126": "AA",
+    "694196": "AA",
+    "804922": "AA",
+    "801639": "AA",
+    "813266": "AA",
+    "802126": "AA",
+    "682616": "A+",
+    "701906": "A+",
+    "801592": "A+",
+    "815219": "A+",
+    "815464": "A+",
+    "669366": "A+",
+    "827500": "A+",
+    "806872": "A+",
+    "800643": "A+",
+    "815779": "A+",
+    "813771": "A+",
+    "702607": "A+",
+    "702264": "A+",
+    "698965": "A+",
+    "805074": "A+",
+    "806152": "A+",
+    "695789": "A+",
+    "826052": "A+",
+    "696037": "A+",
+    "694552": "A+",
+    "692366": "A+",
+    "803292": "A+",
+    "687216": "A+",
+    "695421": "A+",
+    "814088": "A+",
+    "802000": "A+",
+    "687864": "A+",
+    "827293": "A+",
+    "691263": "A+",
+    "823185": "A+",
+    "805371": "A",
+    "701373": "A",
+    "804984": "A",
+    "809720": "A",
+    "701214": "A",
+    "821783": "A",
+    "805149": "A",
+    "698962": "A",
+    "800442": "A",
+    "692232": "A",
+    "831149": "A",
+    "806672": "A",
+    "833426": "A",
+    "815877": "A",
+    "836072": "A",
+    "815929": "A",
+    "809686": "A",
+    "815212": "A",
+    "822824": "A",
+    "811229": "A",
+    "823768": "A",
+    "698952": "A",
+    "703941": "A",
+    "828489": "A",
+    "701435": "A",
+    "814294": "A",
+    "836083": "A",
+    "832110": "A",
+    "694029": "A",
+    "680916": "AAA",
+    "671106": "AAA",
+    "658648": "AAA",
+    "683953": "AAA",
+    "682877": "AAA",
+    "669142": "AAA",
+    "681004": "AAA",
+    "671143": "AAA",
+    "702021": "AAA",
+    "807718": "AAA",
+    "701884": "AAA",
+    "682982": "AAA",
+    "656413": "AAA",
+    "682679": "AAA",
+    "683769": "AAA",
+    "690984": "AAA",
+    "676051": "AAA",
+    "670059": "AAA",
+    "687627": "AAA",
+    "694876": "AAA",
+    "801367": "AAA",
+    "687916": "AAA",
+    "666134": "AAA",
+    "676393": "AAA",
+    "676390": "AAA",
+    "702045": "AAA",
+    "801555": "AAA",
+    "822483": "AAA",
+    "681313": "AAA",
+    "624513": "AAA",
+    "682897": "AAA",
+    "675455": "AAA",
+    "671655": "AAA",
+    "689958": "AAA",
+    "696135": "AAA",
+    "669067": "AAA",
+    "685095": "AA",
+    "686404": "AA",
+    "677319": "AA",
+    "691405": "AA",
+    "695524": "AA",
+    "690626": "AA",
+    "691410": "AA",
+    "801129": "AA",
+    "695780": "AA",
+    "694197": "AA",
+    "691776": "AA",
+    "694773": "AA",
+    "694387": "AA",
+    "802407": "AA",
+    "805865": "AA",
+    "814455": "AA",
+    "695612": "AA",
+    "689557": "AA",
+    "806210": "AA",
+    "686811": "AA",
+    "701533": "AA",
+    "701590": "AA",
+    "806252": "AA",
+    "683363": "AA",
+    "683235": "A+",
+    "825761": "A+",
+    "702693": "A+",
+    "800621": "A+",
+    "691408": "A+",
+    "806053": "A+",
+    "815785": "A+",
+    "800058": "A+",
+    "805702": "A+",
+    "800338": "A+",
+    "691416": "A+",
+    "800292": "A+",
+    "702619": "A+",
+    "827628": "A+",
+    "703469": "A+",
+    "702604": "A+",
+    "702593": "A+",
+    "695661": "A+",
+    "800253": "A+",
+    "701178": "A+",
+    "702278": "A+",
+    "807575": "A+",
+    "702500": "A+",
+    "701750": "A+",
+    "802068": "A+",
+    "830239": "A+",
+    "808754": "A+",
+    "805124": "A+",
+    "805122": "A",
+    "807697": "A",
+    "815897": "A",
+    "823746": "A",
+    "686579": "A",
+    "821181": "A",
+    "821151": "A",
+    "821139": "A",
+    "821171": "A",
+    "804855": "A",
+    "821793": "A",
+    "692372": "A",
+    "804946": "A",
+    "703196": "A",
+    "804940": "A",
+    "806997": "A",
+    "802146": "A",
+    "814452": "A",
+    "808159": "A",
+    "823790": "A",
+    "808119": "A",
+    "813949": "A",
+    "815841": "A",
+    "702555": "A",
+    "823862": "A",
+    "806272": "A",
+    "808141": "A",
+    "821657": "A",
+    "802410": "A",
+    "815111": "A",
+    "669208": "AAA",
+    "680604": "AAA",
+    "641487": "AAA",
+    "680695": "AAA",
+    "695342": "AAA",
+    "646242": "AAA",
+    "677976": "AAA",
+    "641540": "AAA",
+    "806068": "AAA",
+    "682445": "AAA",
+    "695380": "AAA",
+    "656582": "AAA",
+    "700032": "AAA",
+    "596271": "AAA",
+    "664670": "AAA",
+    "670156": "AAA",
+    "686763": "AAA",
+    "682077": "AAA",
+    "673662": "AAA",
+    "689070": "AAA",
+    "640902": "AAA",
+    "656883": "AAA",
+    "801126": "AAA",
+    "674175": "AAA",
+    "621074": "AAA",
+    "681006": "AAA",
+    "694930": "AAA",
+    "700187": "AAA",
+    "689041": "AAA",
+    "686839": "AAA",
+    "669717": "AAA",
+    "621550": "AAA",
+    "691172": "AAA",
+    "688230": "AA",
+    "807739": "AA",
+    "703197": "AA",
+    "686793": "AA",
+    "810897": "AA",
+    "687730": "AA",
+    "806464": "AA",
+    "804663": "AA",
+    "689546": "AA",
+    "686638": "AA",
+    "694356": "AA",
+    "686470": "AA",
+    "681377": "AA",
+    "700675": "AA",
+    "681098": "AA",
+    "687190": "AA",
+    "703155": "AA",
+    "691786": "AA",
+    "813860": "AA",
+    "806288": "AA",
+    "800683": "AA",
+    "695596": "AA",
+    "674022": "AA",
+    "686445": "AA",
+    "815549": "AA",
+    "814791": "AA",
+    "688548": "AA",
+    "804577": "AA",
+    "701805": "A+",
+    "806958": "A+",
+    "694555": "A+",
+    "693440": "A+",
+    "823703": "A+",
+    "826163": "A+",
+    "822498": "A+",
+    "694806": "A+",
+    "700815": "A+",
+    "806071": "A+",
+    "703609": "A+",
+    "702751": "A+",
+    "690989": "A+",
+    "808750": "A+",
+    "692039": "A+",
+    "805220": "A+",
+    "691733": "A+",
+    "701828": "A+",
+    "683264": "A+",
+    "822160": "A+",
+    "692046": "A+",
+    "681064": "A+",
+    "823764": "A+",
+    "691669": "A+",
+    "694318": "A+",
+    "806233": "A+",
+    "692044": "A+",
+    "822462": "A+",
+    "690944": "A+",
+    "694223": "A",
+    "687006": "A",
+    "822817": "A",
+    "804210": "A",
+    "838328": "A",
+    "699698": "A",
+    "695289": "A",
+    "699695": "A",
+    "702668": "A",
+    "683270": "A",
+    "690455": "A",
+    "692031": "A",
+    "702314": "A",
+    "825099": "A",
+    "703603": "A",
+    "699699": "A",
+    "813609": "A",
+    "809059": "A",
+    "692663": "A",
+    "835614": "A",
+    "814456": "A",
+    "830336": "A",
+    "827264": "A",
+    "692364": "A",
+    "808487": "A",
+    "805517": "A",
+    "702522": "A",
+    "829258": "A",
+    "805319": "A",
+    "813683": "A",
+    "670183": "AAA",
+    "694580": "AAA",
+    "665846": "AAA",
+    "694351": "AAA",
+    "687134": "AAA",
+    "694350": "AAA",
+    "691277": "AAA",
+    "694795": "AAA",
+    "803033": "AAA",
+    "690978": "AAA",
+    "666129": "AAA",
+    "806188": "AAA",
+    "687473": "AAA",
+    "702315": "AAA",
+    "669288": "AAA",
+    "687531": "AAA",
+    "691788": "AAA",
+    "687210": "AAA",
+    "685112": "AAA",
+    "687287": "AAA",
+    "640459": "AAA",
+    "807751": "AAA",
+    "675394": "AAA",
+    "672712": "AAA",
+    "801464": "AAA",
+    "667652": "AAA",
+    "691858": "AAA",
+    "702281": "AAA",
+    "688445": "AAA",
+    "687985": "AAA",
+    "676604": "AAA",
+    "811310": "AA",
+    "810891": "AA",
+    "685321": "AA",
+    "702708": "AA",
+    "688540": "AA",
+    "807720": "AA",
+    "700243": "AA",
+    "694183": "AA",
+    "813883": "AA",
+    "815734": "AA",
+    "800957": "AA",
+    "682240": "AA",
+    "659381": "AA",
+    "691588": "AA",
+    "827665": "AA",
+    "703596": "AA",
+    "824028": "AA",
+    "702571": "AA",
+    "802984": "AA",
+    "801696": "AA",
+    "681977": "AA",
+    "688617": "AA",
+    "814458": "AA",
+    "679029": "AA",
+    "681315": "AA",
+    "677354": "AA",
+    "806965": "A+",
+    "703448": "A+",
+    "702696": "A+",
+    "683353": "A+",
+    "701784": "A+",
+    "703680": "A+",
+    "836078": "A+",
+    "702656": "A+",
+    "833439": "A+",
+    "702977": "A+",
+    "814172": "A+",
+    "801881": "A+",
+    "695366": "A+",
+    "702906": "A+",
+    "830894": "A+",
+    "801737": "A+",
+    "801276": "A+",
+    "801995": "A+",
+    "694207": "A+",
+    "702418": "A+",
+    "691794": "A+",
+    "814193": "A+",
+    "702419": "A+",
+    "701777": "A+",
+    "808503": "A",
+    "701360": "A",
+    "808903": "A",
+    "808547": "A",
+    "815704": "A",
+    "801384": "A",
+    "806927": "A",
+    "808510": "A",
+    "802082": "A",
+    "698929": "A",
+    "815793": "A",
+    "823817": "A",
+    "808497": "A",
+    "703563": "A",
+    "703861": "A",
+    "827626": "A",
+    "805872": "A",
+    "800254": "A",
+    "802092": "A",
+    "829035": "A",
+    "806466": "A",
+    "801522": "A",
+    "800013": "A",
+    "836071": "A",
+    "805144": "A",
+    "806982": "A",
+    "808516": "A",
+    "800448": "A",
+    "806258": "A",
+    "836056": "A",
+    "624414": "AAA",
+    "678225": "AAA",
+    "657508": "AAA",
+    "660644": "AAA",
+    "595897": "AAA",
+    "692024": "AAA",
+    "691775": "AAA",
+    "687714": "AAA",
+    "676785": "AAA",
+    "650960": "AAA",
+    "605218": "AAA",
+    "802363": "AAA",
+    "680702": "AAA",
+    "628709": "AAA",
+    "669285": "AAA",
+    "660634": "AAA",
+    "682175": "AAA",
+    "822038": "AAA",
+    "677595": "AAA",
+    "669004": "AAA",
+    "703492": "AAA",
+    "665506": "AAA",
+    "702752": "AAA",
+    "670351": "AAA",
+    "666163": "AAA",
+    "681035": "AAA",
+    "663584": "AAA",
+    "644429": "AAA",
+    "680933": "AAA",
+    "804636": "AAA",
+    "681974": "AAA",
+    "681810": "AAA",
+    "811307": "AAA",
+    "691027": "AAA",
+    "700370": "AA",
+    "805999": "AA",
+    "702903": "AA",
+    "694858": "AA",
+    "666151": "AA",
+    "664346": "AA",
+    "700681": "AA",
+    "682260": "AA",
+    "702878": "AA",
+    "691006": "AA",
+    "686745": "AA",
+    "682947": "AA",
+    "702544": "AA",
+    "676082": "AA",
+    "689822": "AA",
+    "695558": "AA",
+    "681286": "AA",
+    "702501": "AA",
+    "815084": "AA",
+    "694266": "AA",
+    "801523": "AA",
+    "804267": "AA",
+    "676666": "AA",
+    "804614": "AA",
+    "814492": "AA",
+    "642376": "AA",
+    "696281": "AA",
+    "699304": "A+",
+    "688781": "A+",
+    "700083": "A+",
+    "804546": "A+",
+    "800686": "A+",
+    "690970": "A+",
+    "672550": "A+",
+    "806522": "A+",
+    "699293": "A+",
+    "699309": "A+",
+    "805684": "A+",
+    "806987": "A+",
+    "801801": "A+",
+    "809950": "A+",
+    "800257": "A+",
+    "698933": "A+",
+    "808788": "A+",
+    "806124": "A+",
+    "694766": "A+",
+    "808743": "A+",
+    "806128": "A+",
+    "815183": "A+",
+    "805774": "A+",
+    "699305": "A+",
+    "691710": "A+",
+    "809784": "A+",
+    "692944": "A+",
+    "702491": "A+",
+    "688875": "A+",
+    "694842": "A",
+    "813697": "A",
+    "805273": "A",
+    "807993": "A",
+    "678743": "A",
+    "800452": "A",
+    "700305": "A",
+    "808067": "A",
+    "807383": "A",
+    "703159": "A",
+    "518886": "A",
+    "827445": "A",
+    "681320": "A",
+    "665896": "A",
+    "823230": "A",
+    "809861": "A",
+    "800233": "A",
+    "808274": "A",
+    "621345": "A",
+    "682796": "A",
+    "829033": "A",
+    "502054": "A",
+    "816384": "A",
+    "815184": "A",
+    "814514": "A",
+    "806704": "A",
+    "800331": "A",
+    "800466": "A",
+    "811172": "A",
+    "808289": "A",
+    "656180": "AAA",
+    "674841": "AAA",
+    "669441": "AAA",
+    "665953": "AAA",
+    "683000": "AAA",
+    "686611": "AAA",
+    "642759": "AAA",
+    "695670": "AAA",
+    "681047": "AAA",
+    "701298": "AAA",
+    "641627": "AAA",
+    "690987": "AAA",
+    "691251": "AAA",
+    "702358": "AAA",
+    "670223": "AAA",
+    "656755": "AAA",
+    "691002": "AAA",
+    "694673": "AAA",
+    "680730": "AAA",
+    "683068": "AAA",
+    "691384": "AAA",
+    "687605": "AAA",
+    "687377": "AAA",
+    "671131": "AAA",
+    "687606": "AAA",
+    "670097": "AAA",
+    "670234": "AAA",
+    "695378": "AAA",
+    "680899": "AAA",
+    "678868": "AAA",
+    "680998": "AA",
+    "694848": "AA",
+    "806046": "AA",
+    "805957": "AA",
+    "807485": "AA",
+    "682624": "AA",
+    "680770": "AA",
+    "814409": "AA",
+    "687751": "AA",
+    "679066": "AA",
+    "701616": "AA",
+    "680734": "AA",
+    "691183": "AA",
+    "625510": "AA",
+    "829272": "AA",
+    "695763": "AA",
+    "682775": "AA",
+    "683610": "AA",
+    "676026": "AA",
+    "679788": "AA",
+    "686912": "AA",
+    "686463": "AA",
+    "688692": "AA",
+    "811291": "AA",
+    "684976": "AA",
+    "681854": "AA",
+    "691024": "AA",
+    "805272": "AA",
+    "692454": "A+",
+    "694544": "A+",
+    "813707": "A+",
+    "695494": "A+",
+    "702712": "A+",
+    "694780": "A+",
+    "694939": "A+",
+    "696491": "A+",
+    "801128": "A+",
+    "695538": "A+",
+    "815906": "A+",
+    "803849": "A+",
+    "701327": "A+",
+    "687984": "A+",
+    "702309": "A+",
+    "678973": "A+",
+    "678883": "A+",
+    "824600": "A+",
+    "693759": "A+",
+    "800195": "A+",
+    "694399": "A+",
+    "701337": "A+",
+    "702877": "A+",
+    "695620": "A+",
+    "702110": "A+",
+    "701347": "A+",
+    "802486": "A+",
+    "703143": "A+",
+    "695604": "A+",
+    "805724": "A",
+    "800393": "A",
+    "806048": "A",
+    "809397": "A",
+    "826723": "A",
+    "815380": "A",
+    "815818": "A",
+    "831572": "A",
+    "816102": "A",
+    "824753": "A",
+    "814487": "A",
+    "815983": "A",
+    "810022": "A",
+    "806550": "A",
+    "805214": "A",
+    "824015": "A",
+    "814384": "A",
+    "828514": "A",
+    "833381": "A",
+    "825926": "A",
+    "683634": "A",
+    "703612": "A",
+    "808224": "A",
+    "824667": "A",
+    "807480": "A",
+    "700291": "A",
+    "828137": "A",
+    "701862": "A",
+    "816113": "A",
+    "686976": "AAA",
+    "676480": "AAA",
+    "690961": "AAA",
+    "664744": "AAA",
+    "682983": "AAA",
+    "671382": "AAA",
+    "815148": "AAA",
+    "694346": "AAA",
+    "668974": "AAA",
+    "815179": "AAA",
+    "702616": "AAA",
+    "669087": "AAA",
+    "552640": "AAA",
+    "663804": "AAA",
+    "665152": "AAA",
+    "702465": "AAA",
+    "687841": "AAA",
+    "694646": "AAA",
+    "676116": "AAA",
+    "678877": "AAA",
+    "660600": "AAA",
+    "702129": "AAA",
+    "700249": "AAA",
+    "682868": "AAA",
+    "683770": "AAA",
+    "671286": "AAA",
+    "682144": "AAA",
+    "701655": "AAA",
+    "691938": "AAA",
+    "677020": "AAA",
+    "694370": "AAA",
+    "687721": "AAA",
+    "695735": "AAA",
+    "642215": "AAA",
+    "687064": "AAA",
+    "803175": "AA",
+    "809840": "AA",
+    "813829": "AA",
+    "695930": "AA",
+    "687238": "AA",
+    "822578": "AA",
+    "678922": "AA",
+    "801725": "AA",
+    "698945": "AA",
+    "800406": "AA",
+    "807792": "AA",
+    "656120": "AA",
+    "683233": "AA",
+    "694444": "AA",
+    "695695": "AA",
+    "803172": "AA",
+    "676012": "AA",
+    "800387": "AA",
+    "806273": "AA",
+    "700072": "AA",
+    "800449": "AA",
+    "679857": "AA",
+    "701539": "AA",
+    "696524": "AA",
+    "677356": "AA",
+    "828494": "A+",
+    "814450": "A+",
+    "703202": "A+",
+    "702720": "A+",
+    "815348": "A+",
+    "686572": "A+",
+    "805699": "A+",
+    "814837": "A+",
+    "668968": "A+",
+    "800433": "A+",
+    "687040": "A+",
+    "804530": "A+",
+    "809372": "A+",
+    "825582": "A+",
+    "812521": "A+",
+    "694204": "A+",
+    "701689": "A+",
+    "702610": "A+",
+    "694285": "A+",
+    "828520": "A+",
+    "802411": "A+",
+    "700357": "A+",
+    "829670": "A+",
+    "701696": "A+",
+    "703178": "A+",
+    "702239": "A+",
+    "694978": "A+",
+    "829649": "A+",
+    "806981": "A",
+    "800348": "A",
+    "808118": "A",
+    "808166": "A",
+    "808055": "A",
+    "833410": "A",
+    "828511": "A",
+    "800394": "A",
+    "827317": "A",
+    "808374": "A",
+    "834596": "A",
+    "823892": "A",
+    "826932": "A",
+    "703634": "A",
+    "816152": "A",
+    "828666": "A",
+    "808162": "A",
+    "811296": "A",
+    "815913": "A",
+    "821757": "A",
+    "808323": "A",
+    "800438": "A",
+    "821366": "A",
+    "808302": "A",
+    "800426": "A",
+    "691010": "A",
+    "820847": "A",
+    "800630": "A",
+    "828519": "A",
+    "592094": "AAA",
+    "687749": "AAA",
+    "682044": "AAA",
+    "656288": "AAA",
+    "676203": "AAA",
+    "800550": "AAA",
+    "678316": "AAA",
+    "687867": "AAA",
+    "660710": "AAA",
+    "683157": "AAA",
+    "670810": "AAA",
+    "594835": "AAA",
+    "678184": "AAA",
+    "689690": "AAA",
+    "673513": "AAA",
+    "669200": "AAA",
+    "663474": "AAA",
+    "669304": "AAA",
+    "670148": "AAA",
+    "622569": "AAA",
+    "677578": "AAA",
+    "701240": "AAA",
+    "678010": "AAA",
+    "676664": "AAA",
+    "669256": "AAA",
+    "823550": "AAA",
+    "685377": "AAA",
+    "669392": "AAA",
+    "681036": "AAA",
+    "681871": "AAA",
+    "663362": "AAA",
+    "680232": "AAA",
+    "687866": "AAA",
+    "672696": "AA",
+    "701195": "AA",
+    "686643": "AA",
+    "683546": "AA",
+    "663901": "AA",
+    "677614": "AA",
+    "814480": "AA",
+    "692294": "AA",
+    "695247": "AA",
+    "810838": "AA",
+    "701682": "AA",
+    "701617": "AA",
+    "694205": "AA",
+    "687084": "AA",
+    "700280": "AA",
+    "808052": "AA",
+    "687625": "AA",
+    "672359": "AA",
+    "800212": "AA",
+    "805956": "AA",
+    "806956": "AA",
+    "703804": "AA",
+    "685719": "AA",
+    "690053": "AA",
+    "592806": "AA",
+    "691020": "AA",
+    "677605": "AA",
+    "801293": "AA",
+    "690711": "A+",
+    "694320": "A+",
+    "801507": "A+",
+    "692157": "A+",
+    "811667": "A+",
+    "828473": "A+",
+    "702445": "A+",
+    "815951": "A+",
+    "834966": "A+",
+    "811594": "A+",
+    "702601": "A+",
+    "692021": "A+",
+    "702584": "A+",
+    "824026": "A+",
+    "801932": "A+",
+    "808063": "A+",
+    "811598": "A+",
+    "811600": "A+",
+    "692025": "A+",
+    "800317": "A+",
+    "701837": "A+",
+    "815580": "A+",
+    "695570": "A+",
+    "698916": "A+",
+    "834232": "A+",
+    "703673": "A+",
+    "808893": "A",
+    "826141": "A",
+    "836061": "A",
+    "822877": "A",
+    "827463": "A",
+    "700274": "A",
+    "826466": "A",
+    "701136": "A",
+    "813664": "A",
+    "683609": "A",
+    "833413": "A",
+    "806495": "A",
+    "804503": "A",
+    "829210": "A",
+    "823877": "A",
+    "699546": "A",
+    "800970": "A",
+    "695572": "A",
+    "835236": "A",
+    "690994": "A",
+    "833008": "A",
+    "802392": "A",
+    "820882": "A",
+    "831683": "A",
+    "815894": "A",
+    "831325": "A",
+    "828244": "A",
+    "825269": "A",
+    "836173": "A",
+    "834240": "A",
+    "642727": "AAA",
+    "650893": "AAA",
+    "691893": "AAA",
+    "686551": "AAA",
+    "680743": "AAA",
+    "656353": "AAA",
+    "650559": "AAA",
+    "681495": "AAA",
+    "687362": "AAA",
+    "642546": "AAA",
+    "676510": "AAA",
+    "686751": "AAA",
+    "689147": "AAA",
+    "666198": "AAA",
+    "694175": "AAA",
+    "676046": "AAA",
+    "682192": "AAA",
+    "640458": "AAA",
+    "691001": "AAA",
+    "678894": "AAA",
+    "650907": "AAA",
+    "660604": "AAA",
+    "694025": "AAA",
+    "670950": "AAA",
+    "681080": "AAA",
+    "663767": "AAA",
+    "596117": "AAA",
+    "642152": "AAA",
+    "681003": "AAA",
+    "554430": "AAA",
+    "669060": "AAA",
+    "687900": "AA",
+    "800179": "AA",
+    "681323": "AA",
+    "686599": "AA",
+    "694749": "AA",
+    "806585": "AA",
+    "701831": "AA",
+    "805301": "AA",
+    "800169": "AA",
+    "702911": "AA",
+    "688753": "AA",
+    "679702": "AA",
+    "699712": "AA",
+    "800607": "AA",
+    "666155": "AA",
+    "686934": "AA",
+    "689456": "AA",
+    "807276": "AA",
+    "668761": "AA",
+    "804858": "AA",
+    "689726": "AA",
+    "694372": "AA",
+    "686651": "AA",
+    "699703": "AA",
+    "678013": "AA",
+    "665993": "AA",
+    "685319": "AA",
+    "694310": "AA",
+    "702431": "A+",
+    "809701": "A+",
+    "682858": "A+",
+    "699552": "A+",
+    "680994": "A+",
+    "691276": "A+",
+    "683569": "A+",
+    "694551": "A+",
+    "701592": "A+",
+    "800953": "A+",
+    "811780": "A+",
+    "823804": "A+",
+    "700848": "A+",
+    "690974": "A+",
+    "802531": "A+",
+    "826939": "A+",
+    "703496": "A+",
+    "687122": "A+",
+    "813901": "A+",
+    "701296": "A+",
+    "700247": "A+",
+    "800012": "A+",
+    "699707": "A+",
+    "813880": "A+",
+    "809975": "A+",
+    "808864": "A+",
+    "691908": "A+",
+    "802544": "A+",
+    "835716": "A",
+    "700176": "A",
+    "834579": "A",
+    "805790": "A",
+    "816120": "A",
+    "808496": "A",
+    "834395": "A",
+    "700582": "A",
+    "814955": "A",
+    "808232": "A",
+    "700248": "A",
+    "823242": "A",
+    "823028": "A",
+    "701320": "A",
+    "814781": "A",
+    "801537": "A",
+    "800272": "A",
+    "808158": "A",
+    "694909": "A",
+    "700429": "A",
+    "814372": "A",
+    "808805": "A",
+    "804859": "A",
+    "809131": "A",
+    "806518": "A",
+    "805416": "A",
+    "800276": "A",
+    "805758": "A",
+    "805906": "A",
+    "823781": "A",
+    "823358": "A",
+    "663681": "AAA",
+    "684049": "AAA",
+    "663366": "AAA",
+    "682997": "AAA",
+    "701177": "AAA",
+    "605182": "AAA",
+    "695257": "AAA",
+    "690382": "AAA",
+    "663562": "AAA",
+    "694298": "AAA",
+    "696062": "AAA",
+    "666150": "AAA",
+    "804668": "AAA",
+    "608334": "AAA",
+    "691373": "AAA",
+    "804606": "AAA",
+    "802419": "AAA",
+    "689134": "AAA",
+    "702261": "AAA",
+    "699008": "AAA",
+    "686747": "AAA",
+    "701568": "AAA",
+    "682848": "AAA",
+    "676742": "AAA",
+    "682927": "AAA",
+    "681895": "AAA",
+    "665839": "AAA",
+    "699013": "AAA",
+    "673995": "AAA",
+    "675961": "AAA",
+    "692657": "AA",
+    "815074": "AA",
+    "691913": "AA",
+    "820888": "AA",
+    "696040": "AA",
+    "694753": "AA",
+    "700731": "AA",
+    "828335": "AA",
+    "701546": "AA",
+    "680713": "AA",
+    "690448": "AA",
+    "694991": "AA",
+    "700380": "AA",
+    "801978": "AA",
+    "677957": "AA",
+    "686951": "AA",
+    "806270": "AA",
+    "669421": "AA",
+    "691922": "AA",
+    "676566": "AA",
+    "696143": "AA",
+    "814482": "AA",
+    "696142": "AA",
+    "814280": "AA",
+    "809733": "AA",
+    "692243": "AA",
+    "682944": "AA",
+    "805266": "A+",
+    "703156": "A+",
+    "687394": "A+",
+    "800573": "A+",
+    "702695": "A+",
+    "807962": "A+",
+    "800213": "A+",
+    "703154": "A+",
+    "671600": "A+",
+    "695946": "A+",
+    "699010": "A+",
+    "812518": "A+",
+    "702262": "A+",
+    "701685": "A+",
+    "804999": "A+",
+    "823153": "A+",
+    "701686": "A+",
+    "800308": "A+",
+    "700167": "A+",
+    "700179": "A+",
+    "800208": "A+",
+    "694186": "A+",
+    "831951": "A+",
+    "694788": "A+",
+    "809331": "A+",
+    "815608": "A+",
+    "703177": "A+",
+    "827620": "A+",
+    "800225": "A+",
+    "696145": "A+",
+    "701400": "A",
+    "804985": "A",
+    "827610": "A",
+    "606965": "A",
+    "699167": "A",
+    "809092": "A",
+    "815825": "A",
+    "821348": "A",
+    "808286": "A",
+    "695652": "A",
+    "807002": "A",
+    "807968": "A",
+    "700356": "A",
+    "805800": "A",
+    "821116": "A",
+    "801743": "A",
+    "805590": "A",
+    "814297": "A",
+    "824288": "A",
+    "808240": "A",
+    "820905": "A",
+    "800278": "A",
+    "815535": "A",
+    "800615": "A",
+    "806230": "A",
+    "815552": "A",
+    "800209": "A",
+    "692176": "A",
+    "702495": "A",
+    "814136": "A",
+    "825932": "A",
+    "686769": "AAA",
+    "695239": "AAA",
+    "689379": "AAA",
+    "666123": "AAA",
+    "674003": "AAA",
+    "518489": "AAA",
+    "681146": "AAA",
+    "695508": "AAA",
+    "687847": "AAA",
+    "686560": "AAA",
+    "681168": "AAA",
+    "664747": "AAA",
+    "679822": "AAA",
+    "596295": "AAA",
+    "682608": "AAA",
+    "669386": "AAA",
+    "680737": "AAA",
+    "645444": "AAA",
+    "666194": "AAA",
+    "680862": "AAA",
+    "621006": "AAA",
+    "641907": "AAA",
+    "696030": "AAA",
+    "671305": "AAA",
+    "615698": "AAA",
+    "622250": "AAA",
+    "695776": "AAA",
+    "657022": "AAA",
+    "693713": "AAA",
+    "666168": "AAA",
+    "642180": "AAA",
+    "701648": "AAA",
+    "685076": "AA",
+    "693781": "AA",
+    "701213": "AA",
+    "683149": "AA",
+    "687926": "AA",
+    "669413": "AA",
+    "699314": "AA",
+    "702662": "AA",
+    "815152": "AA",
+    "695069": "AA",
+    "665878": "AA",
+    "686984": "AA",
+    "815590": "AA",
+    "823793": "AA",
+    "699214": "AA",
+    "694395": "AA",
+    "692447": "AA",
+    "678636": "AA",
+    "688367": "AA",
+    "695744": "AA",
+    "686762": "AA",
+    "677601": "AA",
+    "686744": "AA",
+    "822966": "AA",
+    "678620": "AA",
+    "815048": "AA",
+    "703106": "AA",
+    "697795": "A+",
+    "695778": "A+",
+    "828506": "A+",
+    "815697": "A+",
+    "695037": "A+",
+    "699213": "A+",
+    "703152": "A+",
+    "702630": "A+",
+    "803015": "A+",
+    "681896": "A+",
+    "692179": "A+",
+    "702265": "A+",
+    "805950": "A+",
+    "807722": "A+",
+    "801525": "A+",
+    "702270": "A+",
+    "694218": "A+",
+    "701717": "A+",
+    "825927": "A+",
+    "702550": "A+",
+    "702548": "A+",
+    "699560": "A+",
+    "694504": "A+",
+    "701701": "A+",
+    "800283": "A+",
+    "808744": "A+",
+    "801453": "A+",
+    "695618": "A+",
+    "801505": "A+",
+    "800536": "A+",
+    "807816": "A",
+    "802397": "A",
+    "815931": "A",
+    "823330": "A",
+    "694227": "A",
+    "827604": "A",
+    "821599": "A",
+    "828364": "A",
+    "821611": "A",
+    "835516": "A",
+    "805058": "A",
+    "808347": "A",
+    "800859": "A",
+    "805874": "A",
+    "800354": "A",
+    "815473": "A",
+    "808891": "A",
+    "800540": "A",
+    "802085": "A",
+    "805706": "A",
+    "815889": "A",
+    "804905": "A",
+    "807256": "A",
+    "808368": "A",
+    "800106": "A",
+    "808297": "A",
+    "815301": "A",
+    "808396": "A",
+    "835183": "A",
+    "800384": "AAA",
+    "685801": "AAA",
+    "592155": "AAA",
+    "688682": "AAA",
+    "802541": "AAA",
+    "805363": "AAA",
+    "694181": "AAA",
+    "702047": "AAA",
+    "681328": "AAA",
+    "669722": "AAA",
+    "669384": "AAA",
+    "692285": "AAA",
+    "657611": "AAA",
+    "811315": "AAA",
+    "687268": "AAA",
+    "681371": "AAA",
+    "666158": "AAA",
+    "669234": "AAA",
+    "694680": "AAA",
+    "689200": "AAA",
+    "683748": "AAA",
+    "691003": "AAA",
+    "658668": "AAA",
+    "682126": "AAA",
+    "697812": "AAA",
+    "666165": "AAA",
+    "669947": "AAA",
+    "686678": "AAA",
+    "681806": "AAA",
+    "676831": "AAA",
+    "700246": "AAA",
+    "694312": "AAA",
+    "693739": "AA",
+    "699126": "AA",
+    "691765": "AA",
+    "807744": "AA",
+    "691252": "AA",
+    "694647": "AA",
+    "689433": "AA",
+    "801435": "AA",
+    "684967": "AA",
+    "690991": "AA",
+    "800060": "AA",
+    "687553": "AA",
+    "687189": "AA",
+    "677342": "AA",
+    "695692": "AA",
+    "688776": "AA",
+    "695294": "AA",
+    "694375": "AA",
+    "702556": "AA",
+    "700652": "AA",
+    "687310": "AA",
+    "814388": "AA",
+    "691797": "AA",
+    "800571": "AA",
+    "694966": "AA",
+    "670955": "AA",
+    "678962": "AA",
+    "671093": "AA",
+    "801643": "AA",
+    "822876": "A+",
+    "695063": "A+",
+    "820901": "A+",
+    "699530": "A+",
+    "804254": "A+",
+    "807083": "A+",
+    "677334": "A+",
+    "822535": "A+",
+    "800883": "A+",
+    "804541": "A+",
+    "815394": "A+",
+    "806083": "A+",
+    "800357": "A+",
+    "807314": "A+",
+    "824615": "A+",
+    "827526": "A+",
+    "695771": "A+",
+    "701604": "A+",
+    "800377": "A+",
+    "700178": "A+",
+    "699077": "A+",
+    "692150": "A+",
+    "800440": "A+",
+    "809231": "A+",
+    "703142": "A+",
+    "812163": "A+",
+    "811948": "A+",
+    "803745": "A+",
+    "808250": "A+",
+    "687020": "A",
+    "805207": "A",
+    "809093": "A",
+    "827613": "A",
+    "701330": "A",
+    "828237": "A",
+    "804571": "A",
+    "828685": "A",
+    "806967": "A",
+    "826935": "A",
+    "815063": "A",
+    "703683": "A",
+    "810951": "A",
+    "834873": "A",
+    "702266": "A",
+    "808267": "A",
+    "815830": "A",
+    "805783": "A",
+    "823116": "A",
+    "808285": "A",
+    "828084": "A",
+    "823129": "A",
+    "833397": "A",
+    "815144": "A",
+    "702279": "A",
+    "833401": "A",
+    "804911": "A",
+    "834971": "A",
+    "681252": "AAA",
+    "687562": "AAA",
+    "692225": "AAA",
+    "681962": "AAA",
+    "691369": "AAA",
+    "691907": "AAA",
+    "641511": "AAA",
+    "681987": "AAA",
+    "681508": "AAA",
+    "594027": "AAA",
+    "687208": "AAA",
+    "592454": "AAA",
+    "664918": "AAA",
+    "677161": "AAA",
+    "651016": "AAA",
+    "661527": "AAA",
+    "681544": "AAA",
+    "702540": "AAA",
+    "701719": "AAA",
+    "663776": "AAA",
+    "684128": "AAA",
+    "674674": "AAA",
+    "686765": "AAA",
+    "679977": "AAA",
+    "682967": "AAA",
+    "642136": "AAA",
+    "801139": "AAA",
+    "700413": "AAA",
+    "685274": "AAA",
+    "701288": "AAA",
+    "822416": "AA",
+    "800421": "AA",
+    "808265": "AA",
+    "686960": "AA",
+    "694194": "AA",
+    "690967": "AA",
+    "806190": "AA",
+    "679602": "AA",
+    "814366": "AA",
+    "681132": "AA",
+    "701856": "AA",
+    "827292": "AA",
+    "678478": "AA",
+    "699157": "AA",
+    "696020": "AA",
+    "694812": "AA",
+    "683093": "AA",
+    "682992": "AA",
+    "691385": "AA",
+    "694896": "AA",
+    "806333": "AA",
+    "807511": "AA",
+    "814444": "AA",
+    "687762": "AA",
+    "695721": "AA",
+    "801829": "A+",
+    "702995": "A+",
+    "814810": "A+",
+    "827635": "A+",
+    "809933": "A+",
+    "806985": "A+",
+    "800324": "A+",
+    "805972": "A+",
+    "703175": "A+",
+    "809254": "A+",
+    "813745": "A+",
+    "804995": "A+",
+    "821100": "A+",
+    "702631": "A+",
+    "810091": "A+",
+    "695293": "A+",
+    "805365": "A+",
+    "686623": "A+",
+    "815071": "A+",
+    "808269": "A+",
+    "806983": "A+",
+    "801873": "A+",
+    "813536": "A+",
+    "815143": "A+",
+    "695742": "A+",
+    "702517": "A+",
+    "813400": "A+",
+    "804817": "A+",
+    "800256": "A+",
+    "805801": "A+",
+    "821150": "A",
+    "806724": "A",
+    "838799": "A",
+    "832562": "A",
+    "821112": "A",
+    "821180": "A",
+    "803287": "A",
+    "702257": "A",
+    "821052": "A",
+    "695656": "A",
+    "702642": "A",
+    "821064": "A",
+    "701326": "A",
+    "695606": "A",
+    "808631": "A",
+    "828499": "A",
+    "703455": "A",
+    "823808": "A",
+    "834900": "A",
+    "695632": "A",
+    "808245": "A",
+    "836168": "A",
+    "808571": "A",
+    "811573": "A",
+    "821130": "A",
+    "808252": "A",
+    "808307": "A",
+    "805964": "A",
+    "833080": "A",
+    "687924": "AAA",
+    "622088": "AAA",
+    "695490": "AAA",
+    "677943": "AAA",
+    "680397": "AAA",
+    "668709": "AAA",
+    "605177": "AAA",
+    "656308": "AAA",
+    "669721": "AAA",
+    "668470": "AAA",
+    "694362": "AAA",
+    "687952": "AAA",
+    "670062": "AAA",
+    "641658": "AAA",
+    "664731": "AAA",
+    "677956": "AAA",
+    "671155": "AAA",
+    "805321": "AAA",
+    "605335": "AAA",
+    "802143": "AAA",
+    "628708": "AAA",
+    "687209": "AAA",
+    "670766": "AAA",
+    "682825": "AAA",
+    "664948": "AAA",
+    "693312": "AAA",
+    "695534": "AAA",
+    "680689": "AAA",
+    "699302": "AAA",
+    "669911": "AAA",
+    "688005": "AAA",
+    "674265": "AA",
+    "691641": "AA",
+    "695481": "AA",
+    "699114": "AA",
+    "825756": "AA",
+    "702253": "AA",
+    "683104": "AA",
+    "686671": "AA",
+    "687905": "AA",
+    "801333": "AA",
+    "690988": "AA",
+    "687192": "AA",
+    "702140": "AA",
+    "699115": "AA",
+    "702300": "AA",
+    "805723": "AA",
+    "685829": "AA",
+    "680749": "AA",
+    "815043": "AA",
+    "800017": "AA",
+    "688609": "AA",
+    "685396": "AA",
+    "694689": "AA",
+    "805311": "AA",
+    "687071": "AA",
+    "681114": "AA",
+    "683061": "AA",
+    "680518": "AA",
+    "694832": "A+",
+    "807643": "A+",
+    "694200": "A+",
+    "691392": "A+",
+    "699782": "A+",
+    "691398": "A+",
+    "699106": "A+",
+    "828718": "A+",
+    "806957": "A+",
+    "806652": "A+",
+    "702114": "A+",
+    "807728": "A+",
+    "695787": "A+",
+    "689297": "A+",
+    "686544": "A+",
+    "701734": "A+",
+    "701370": "A+",
+    "690104": "A+",
+    "814102": "A+",
+    "703204": "A+",
+    "808839": "A+",
+    "695740": "A+",
+    "800176": "A+",
+    "800616": "A+",
+    "687535": "A+",
+    "803174": "A+",
+    "696510": "A+",
+    "809844": "A+",
+    "808833": "A",
+    "804643": "A",
+    "834673": "A",
+    "802560": "A",
+    "813958": "A",
+    "806730": "A",
+    "701820": "A",
+    "806675": "A",
+    "802372": "A",
+    "806120": "A",
+    "802001": "A",
+    "695732": "A",
+    "806984": "A",
+    "815653": "A",
+    "806823": "A",
+    "666157": "A",
+    "702578": "A",
+    "807239": "A",
+    "702568": "A",
+    "702563": "A",
+    "800152": "A",
+    "802086": "A",
+    "807636": "A",
+    "810836": "A",
+    "702280": "A",
+    "807951": "A",
+    "703188": "A",
+    "812151": "A",
+    "814525": "A",
+    "691182": "AAA",
+    "682183": "AAA",
+    "694677": "AAA",
+    "678368": "AAA",
+    "700164": "AAA",
+    "668843": "AAA",
+    "694249": "AAA",
+    "809707": "AAA",
+    "682276": "AAA",
+    "688760": "AAA",
+    "690924": "AAA",
+    "685299": "AAA",
+    "679057": "AAA",
+    "678020": "AAA",
+    "700327": "AAA",
+    "687312": "AAA",
+    "684715": "AAA",
+    "668800": "AAA",
+    "669445": "AAA",
+    "670032": "AAA",
+    "605353": "AAA",
+    "668943": "AAA",
+    "656786": "AAA",
+    "687223": "AAA",
+    "678821": "AAA",
+    "690022": "AAA",
+    "669298": "AAA",
+    "702297": "AAA",
+    "677060": "AAA",
+    "807743": "AAA",
+    "624522": "AAA",
+    "694514": "AAA",
+    "691728": "AAA",
+    "622256": "AAA",
+    "687060": "AA",
+    "694860": "AA",
+    "682769": "AA",
+    "814106": "AA",
+    "820825": "AA",
+    "702622": "AA",
+    "677338": "AA",
+    "694170": "AA",
+    "692589": "AA",
+    "694808": "AA",
+    "815067": "AA",
+    "694968": "AA",
+    "701783": "AA",
+    "695603": "AA",
+    "687616": "AA",
+    "691436": "AA",
+    "801754": "AA",
+    "700321": "AA",
+    "687087": "AA",
+    "691792": "AA",
+    "694518": "AA",
+    "688422": "AA",
+    "688876": "AA",
+    "686958": "AA",
+    "801842": "AA",
+    "676333": "AA",
+    "687918": "AA",
+    "803284": "A+",
+    "802136": "A+",
+    "701679": "A+",
+    "806978": "A+",
+    "691435": "A+",
+    "700481": "A+",
+    "702484": "A+",
+    "694541": "A+",
+    "822624": "A+",
+    "687317": "A+",
+    "694811": "A+",
+    "812407": "A+",
+    "805260": "A+",
+    "800281": "A+",
+    "692632": "A+",
+    "800193": "A+",
+    "688871": "A+",
+    "805931": "A+",
+    "809101": "A+",
+    "814410": "A+",
+    "701404": "A+",
+    "683328": "A+",
+    "820830": "A+",
+    "815065": "A+",
+    "682863": "A+",
+    "686683": "A+",
+    "809819": "A+",
+    "700174": "A+",
+    "800204": "A",
+    "821041": "A",
+    "692165": "A",
+    "703523": "A",
+    "836087": "A",
+    "814354": "A",
+    "822043": "A",
+    "815195": "A",
+    "815305": "A",
+    "822531": "A",
+    "694732": "A",
+    "823226": "A",
+    "700668": "A",
+    "800154": "A",
+    "815787": "A",
+    "691439": "A",
+    "702600": "A",
+    "808042": "A",
+    "692591": "A",
+    "822477": "A",
+    "701698": "A",
+    "806174": "A",
+    "813282": "A",
+    "691942": "A",
+    "836059": "A",
+    "836051": "A",
+    "805003": "A",
+    "805880": "A",
+    "679883": "AAA",
+    "686701": "AAA",
+    "696131": "AAA",
+    "815073": "AAA",
+    "672021": "AAA",
+    "688457": "AAA",
+    "674444": "AAA",
+    "621016": "AAA",
+    "553869": "AAA",
+    "592273": "AAA",
+    "699489": "AAA",
+    "663731": "AAA",
+    "695667": "AAA",
+    "679845": "AAA",
+    "663503": "AAA",
+    "681324": "AAA",
+    "686681": "AAA",
+    "670224": "AAA",
+    "669212": "AAA",
+    "621028": "AAA",
+    "672487": "AAA",
+    "695556": "AAA",
+    "680970": "AAA",
+    "687547": "AAA",
+    "670231": "AAA",
+    "668942": "AAA",
+    "592717": "AAA",
+    "687765": "AAA",
+    "647351": "AAA",
+    "681123": "AAA",
+    "671221": "AAA",
+    "694360": "AAA",
+    "686523": "AAA",
+    "702373": "AA",
+    "701795": "AA",
+    "813851": "AA",
+    "701401": "AA",
+    "815045": "AA",
+    "685125": "AA",
+    "701207": "AA",
+    "815039": "AA",
+    "683427": "AA",
+    "829524": "AA",
+    "813386": "AA",
+    "814528": "AA",
+    "657675": "AA",
+    "701695": "AA",
+    "681387": "AA",
+    "688474": "AA",
+    "700924": "AA",
+    "687593": "AA",
+    "801442": "AA",
+    "699325": "AA",
+    "811287": "AA",
+    "669002": "AA",
+    "700786": "AA",
+    "689531": "AA",
+    "694187": "AA",
+    "689275": "AA",
+    "828043": "A+",
+    "822836": "A+",
+    "822177": "A+",
+    "800051": "A+",
+    "694921": "A+",
+    "833403": "A+",
+    "700283": "A+",
+    "808706": "A+",
+    "700985": "A+",
+    "822743": "A+",
+    "703610": "A+",
+    "692137": "A+",
+    "692223": "A+",
+    "805810": "A+",
+    "804114": "A+",
+    "808675": "A+",
+    "823073": "A+",
+    "815789": "A+",
+    "805075": "A+",
+    "702073": "A+",
+    "687731": "A+",
+    "800576": "A",
+    "804871": "A",
+    "800492": "A",
+    "830402": "A",
+    "826940": "A",
+    "815819": "A",
+    "805073": "A",
+    "815843": "A",
+    "806776": "A",
+    "802088": "A",
+    "813533": "A",
+    "808693": "A",
+    "822317": "A",
+    "805615": "A",
+    "835609": "A",
+    "703201": "A",
+    "811278": "A",
+    "808671": "A",
+    "815902": "A",
+    "807841": "A",
+    "806212": "A",
+    "800526": "A",
+    "805870": "A",
+    "822461": "A",
+    "834408": "A",
+    "806265": "A",
+    "806637": "A",
+    "702965": "A",
+    "702435": "A",
+    "801194": "AAA",
+    "661733": "AAA",
+    "703601": "AAA",
+    "669360": "AAA",
+    "668766": "AAA",
+    "687830": "AAA",
+    "808970": "AAA",
+    "674944": "AAA",
+    "669724": "AAA",
+    "667452": "AAA",
+    "690291": "AAA",
+    "701678": "AAA",
+    "669193": "AAA",
+    "679712": "AAA",
+    "680744": "AAA",
+    "701162": "AAA",
+    "694331": "AAA",
+    "672456": "AAA",
+    "621512": "AAA",
+    "685329": "AAA",
+    "672761": "AAA",
+    "663455": "AAA",
+    "663432": "AAA",
+    "676614": "AAA",
+    "676910": "AAA",
+    "572143": "AAA",
+    "805427": "AAA",
+    "670276": "AAA",
+    "680664": "AAA",
+    "676568": "AAA",
+    "686972": "AAA",
+    "669398": "AAA",
+    "689577": "AA",
+    "694425": "AA",
+    "814430": "AA",
+    "690523": "AA",
+    "664301": "AA",
+    "802991": "AA",
+    "802953": "AA",
+    "829338": "AA",
+    "689931": "AA",
+    "695038": "AA",
+    "687543": "AA",
+    "681289": "AA",
+    "700939": "AA",
+    "680273": "AA",
+    "800723": "AA",
+    "701464": "AA",
+    "691789": "AA",
+    "807726": "AA",
+    "685481": "AA",
+    "681458": "AA",
+    "690162": "AA",
+    "696150": "AA",
+    "696059": "AA",
+    "694496": "AA",
+    "700931": "AA",
+    "814477": "AA",
+    "689450": "AA",
+    "828603": "A+",
+    "693073": "A+",
+    "691449": "A+",
+    "698982": "A+",
+    "701493": "A+",
+    "827640": "A+",
+    "837584": "A+",
+    "800510": "A+",
+    "802219": "A+",
+    "687308": "A+",
+    "808986": "A+",
+    "812442": "A+",
+    "691452": "A+",
+    "815268": "A+",
+    "687033": "A+",
+    "701557": "A+",
+    "700354": "A+",
+    "688354": "A+",
+    "681644": "A+",
+    "693243": "A+",
+    "694050": "A+",
+    "694184": "A+",
+    "826942": "A+",
+    "825924": "A+",
+    "691708": "A+",
+    "694291": "A+",
+    "801954": "A",
+    "835214": "A",
+    "813891": "A",
+    "832420": "A",
+    "692288": "A",
+    "801221": "A",
+    "700365": "A",
+    "806275": "A",
+    "804852": "A",
+    "808037": "A",
+    "690544": "A",
+    "800624": "A",
+    "834393": "A",
+    "822487": "A",
+    "823114": "A",
+    "803252": "A",
+    "703157": "A",
+    "687074": "A",
+    "800423": "A",
+    "821765": "A",
+    "689535": "A",
+    "800614": "A",
+    "692598": "A",
+    "813620": "A",
+    "807010": "A",
+    "816305": "A",
+    "685337": "A",
+    "827672": "A",
+    "835054": "A",
+    "802412": "A",
+    "656186": "AAA",
+    "606115": "AAA",
+    "694536": "AAA",
+    "687856": "AAA",
+    "621199": "AAA",
+    "605154": "AAA",
+    "669993": "AAA",
+    "681433": "AAA",
+    "701785": "AAA",
+    "693459": "AAA",
+    "694224": "AAA",
+    "701643": "AAA",
+    "656577": "AAA",
+    "805805": "AAA",
+    "687849": "AAA",
+    "804619": "AAA",
+    "668952": "AAA",
+    "681306": "AAA",
+    "805673": "AAA",
+    "702193": "AAA",
+    "687570": "AAA",
+    "694397": "AAA",
+    "702176": "AAA",
+    "691181": "AAA",
+    "693306": "AAA",
+    "674285": "AAA",
+    "802355": "AAA",
+    "622098": "AAA",
+    "676572": "AAA",
+    "701771": "AA",
+    "814098": "AA",
+    "804539": "AA",
+    "690462": "AA",
+    "681355": "AA",
+    "690217": "AA",
+    "814414": "AA",
+    "801594": "AA",
+    "803276": "AA",
+    "691576": "AA",
+    "806368": "AA",
+    "807716": "AA",
+    "694230": "AA",
+    "701549": "AA",
+    "691627": "AA",
+    "702474": "AA",
+    "687879": "AA",
+    "693850": "AA",
+    "805346": "AA",
+    "696160": "AA",
+    "695000": "AA",
+    "687857": "AA",
+    "691191": "AA",
+    "696521": "AA",
+    "806337": "AA",
+    "800875": "A+",
+    "807974": "A+",
+    "691605": "A+",
+    "694185": "A+",
+    "813715": "A+",
+    "822503": "A+",
+    "699061": "A+",
+    "695634": "A+",
+    "828671": "A+",
+    "801346": "A+",
+    "815598": "A+",
+    "701339": "A+",
+    "801796": "A+",
+    "814522": "A+",
+    "702889": "A+",
+    "829643": "A+",
+    "695308": "A+",
+    "828497": "A+",
+    "835380": "A+",
+    "813676": "A+",
+    "828374": "A+",
+    "691315": "A+",
+    "813828": "A+",
+    "834575": "A+",
+    "806953": "A+",
+    "823295": "A+",
+    "806713": "A+",
+    "806263": "A+",
+    "814291": "A+",
+    "703195": "A",
+    "814188": "A",
+    "815924": "A",
+    "805102": "A",
+    "695527": "A",
+    "806067": "A",
+    "802709": "A",
+    "807819": "A",
+    "702025": "A",
+    "695727": "A",
+    "703191": "A",
+    "830242": "A",
+    "809826": "A",
+    "828492": "A",
+    "837351": "A",
+    "823810": "A",
+    "823671": "A",
+    "810920": "A",
+    "815966": "A",
+    "687567": "A",
+    "808365": "A",
+    "800547": "A",
+    "696070": "A",
+    "823770": "A",
+    "701368": "A",
+    "823779": "A",
+    "828716": "A",
+    "815839": "A",
+    "823227": "A",
+    "803011": "AAA",
+    "671117": "AAA",
+    "681333": "AAA",
+    "703151": "AAA",
+    "677007": "AAA",
+    "680519": "AAA",
+    "686563": "AAA",
+    "676249": "AAA",
+    "699823": "AAA",
+    "701474": "AAA",
+    "686554": "AAA",
+    "685126": "AAA",
+    "702103": "AAA",
+    "656457": "AAA",
+    "694378": "AAA",
+    "682790": "AAA",
+    "687957": "AAA",
+    "672284": "AAA",
+    "686676": "AAA",
+    "701780": "AAA",
+    "668338": "AAA",
+    "695020": "AAA",
+    "687239": "AAA",
+    "684384": "AAA",
+    "691011": "AAA",
+    "676881": "AAA",
+    "702273": "AAA",
+    "805326": "AAA",
+    "608371": "AAA",
+    "696146": "AAA",
+    "664774": "AAA",
+    "805892": "AA",
+    "804728": "AA",
+    "804645": "AA",
+    "687262": "AA",
+    "687148": "AA",
+    "814436": "AA",
+    "690981": "AA",
+    "803035": "AA",
+    "691941": "AA",
+    "669436": "AA",
+    "683568": "AA",
+    "805958": "AA",
+    "691721": "AA",
+    "681410": "AA",
+    "687202": "AA",
+    "695731": "AA",
+    "690294": "AA",
+    "807747": "AA",
+    "803291": "AA",
+    "669449": "AA",
+    "800419": "AA",
+    "695316": "AA",
+    "688394": "AA",
+    "691442": "AA",
+    "677352": "AA",
+    "681581": "AA",
+    "694214": "AA",
+    "815096": "A+",
+    "802087": "A+",
+    "809459": "A+",
+    "687259": "A+",
+    "815352": "A+",
+    "836058": "A+",
+    "804240": "A+",
+    "802018": "A+",
+    "702165": "A+",
+    "804706": "A+",
+    "813268": "A+",
+    "805031": "A+",
+    "834962": "A+",
+    "803143": "A+",
+    "827517": "A+",
+    "686944": "A+",
+    "701062": "A+",
+    "813878": "A+",
+    "690996": "A+",
+    "687077": "A+",
+    "822473": "A+",
+    "701333": "A+",
+    "811958": "A+",
+    "802359": "A+",
+    "836153": "A+",
+    "805804": "A+",
+    "808865": "A+",
+    "808708": "A",
+    "814453": "A",
+    "822514": "A",
+    "816256": "A",
+    "815814": "A",
+    "801858": "A",
+    "694469": "A",
+    "694408": "A",
+    "828262": "A",
+    "808696": "A",
+    "807461": "A",
+    "805025": "A",
+    "703670": "A",
+    "805078": "A",
+    "694065": "A",
+    "808684": "A",
+    "823124": "A",
+    "808041": "A",
+    "696488": "A",
+    "815101": "A",
+    "831912": "A",
+    "811167": "A",
+    "700987": "A",
+    "695722": "A",
+    "823173": "A",
+    "808382": "A",
+    "811721": "A",
+    "812372": "A",
+    "695057": "A",
+    "822360": "A",
+    "694341": "AAA",
+    "664913": "AAA",
+    "665828": "AAA",
+    "665645": "AAA",
+    "683409": "AAA",
+    "694660": "AAA",
+    "679693": "AAA",
+    "672442": "AAA",
+    "660787": "AAA",
+    "657557": "AAA",
+    "691176": "AAA",
+    "668752": "AAA",
+    "692585": "AAA",
+    "661563": "AAA",
+    "687589": "AAA",
+    "690440": "AAA",
+    "668721": "AAA",
+    "682987": "AAA",
+    "680572": "AAA",
+    "801739": "AAA",
+    "667803": "AAA",
+    "684725": "AAA",
+    "680716": "AAA",
+    "695684": "AAA",
+    "645305": "AAA",
+    "680474": "AAA",
+    "669699": "AAA",
+    "702130": "AAA",
+    "683522": "AA",
+    "675502": "AA",
+    "701778": "AA",
+    "684608": "AA",
+    "694805": "AA",
+    "681116": "AA",
+    "686540": "AA",
+    "685744": "AA",
+    "676442": "AA",
+    "687280": "AA",
+    "687554": "AA",
+    "676205": "AA",
+    "696292": "AA",
+    "815454": "AA",
+    "702046": "AA",
+    "806146": "AA",
+    "682617": "AA",
+    "682003": "AA",
+    "675296": "AA",
+    "815089": "AA",
+    "692633": "AA",
+    "682692": "AA",
+    "801432": "AA",
+    "814392": "AA",
+    "815587": "AA",
+    "694696": "AA",
+    "657051": "AA",
+    "703149": "A+",
+    "703748": "A+",
+    "823754": "A+",
+    "804698": "A+",
+    "690977": "A+",
+    "702068": "A+",
+    "823759": "A+",
+    "700648": "A+",
+    "695066": "A+",
+    "800471": "A+",
+    "692110": "A+",
+    "809763": "A+",
+    "695560": "A+",
+    "815069": "A+",
+    "800344": "A+",
+    "821296": "A+",
+    "694742": "A+",
+    "804603": "A+",
+    "692550": "A+",
+    "815147": "A+",
+    "702036": "A+",
+    "694662": "A+",
+    "685067": "A+",
+    "803131": "A+",
+    "810102": "A+",
+    "823918": "A+",
+    "702909": "A",
+    "801307": "A",
+    "701706": "A",
+    "702098": "A",
+    "814343": "A",
+    "805730": "A",
+    "801726": "A",
+    "809719": "A",
+    "826142": "A",
+    "700649": "A",
+    "702874": "A",
+    "701727": "A",
+    "800741": "A",
+    "806963": "A",
+    "702212": "A",
+    "694215": "A",
+    "701206": "A",
+    "815528": "A",
+    "815278": "A",
+    "692646": "A",
+    "666720": "A",
+    "703752": "A",
+    "800285": "A",
+    "806244": "A",
+    "822915": "A",
+    "800246": "A",
+    "814269": "A",
+    "804892": "A"
+  }
+}
