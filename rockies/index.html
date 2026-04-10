@@ -327,20 +327,29 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
 .columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
 .columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
-.columnists-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.column{background:var(--ink-2);border:1px solid var(--rule);border-top:3px solid var(--team-primary);border-radius:3px;padding:20px 22px 22px;display:flex;flex-direction:column;gap:10px;min-height:260px}
-.column[data-role="straight_beat"]{border-top-color:var(--paper)}
-.column[data-role="optimist"]{border-top-color:var(--gold)}
-.column[data-role="pessimist"]{border-top-color:var(--team-accent)}
-.column-byline{display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
-.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1}
-.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold)}
-.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim)}
+.columnists-grid{display:flex;flex-direction:column;gap:10px}
+.column{background:var(--ink-2);border:1px solid var(--rule);border-left:3px solid var(--team-primary);border-radius:3px;overflow:hidden}
+.column[data-role="straight_beat"]{border-left-color:var(--paper)}
+.column[data-role="optimist"]{border-left-color:var(--gold)}
+.column[data-role="pessimist"]{border-left-color:var(--team-accent)}
+.column > summary.column-byline{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:12px 18px;transition:background .15s ease}
+.column > summary.column-byline::-webkit-details-marker{display:none}
+.column > summary.column-byline::marker{display:none;content:""}
+.column > summary.column-byline:hover{background:rgba(255,255,255,.03)}
+.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1;flex:0 1 auto}
+.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold);flex:1 1 auto}
+.column-toggle{font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;font-size:10px;color:var(--paper-mute);border:1px solid var(--rule);border-radius:2px;padding:3px 8px;flex:0 0 auto}
+.column[open] .column-toggle::before{content:"Close"}
+.column:not([open]) .column-toggle::before{content:"Read"}
+.column-toggle{font-size:0}
+.column-toggle::before{font-size:10px}
+.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim);padding:4px 18px 18px;border-top:1px dashed var(--rule)}
 .column-body p{margin:0 0 10px}
 .column-body p:last-child{margin-bottom:0}
 .column-body .column-off{color:var(--paper-mute);font-size:13px}
-@media(max-width:900px){.columnists-grid{grid-template-columns:1fr;gap:14px}.column{min-height:auto}}
 body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
+body.theme-paper .column > summary.column-byline:hover{background:rgba(0,0,0,.03)}
+body.theme-paper .column-toggle{border-color:#cfc39a;color:#6b6550}
 body.theme-paper .column-name{color:var(--ink)}
 body.theme-paper .column-body{color:#3a3626}
 body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
@@ -374,7 +383,7 @@ body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><article class="column" data-role="straight_beat"><div class="column-byline"><span class="column-name">Casey Underwood</span><span class="column-role">The Straight Beat</span></div><div class="column-body"><p>The Rockies lost again. Another game, another 3-7 drubbing. The scoreboard reads like a bad joke—Coors Field, the place where the thin air is supposed to turn fly balls into home runs, now feels more like a graveyard for the team’s fading hopes. High altitude math isn’t just about batting averages or pitch trajectories; it’s about the arithmetic of expectations. You’d think, with the sun beating down on this place, the Rockies would be doing more than just scratching out runs. But here we are, 6-7, 3.5 games behind, and the math isn’t adding up.</p><p>The offense, that supposed strength, has been a sieve. Yesterday’s game was a textbook example: Rockies’ hitters couldn’t capitalize on opportunities. The Padres’ pitching staff, for all its flaws, was just too effective. You can’t blame the weather for that. You can</p></div></article><article class="column" data-role="optimist"><div class="column-byline"><span class="column-name">Winnie Calderón</span><span class="column-role">The Optimist</span></div><div class="column-body"><p>The Rockies lost yesterday, but that’s not the story I’m telling. The story is about the flicker of hope that lingers in the air at Coors Field, the way the sun hits the scoreboard just so, and the stubborn belief that this team is still building something special. You see, every season is a canvas, and the Rockies are just getting their brushes wet.</p><p>Let’s not mince words: the 6-7 record feels like a punch to the gut. But here’s the thing—this team isn’t built on April stats. They’re built on May magic. The Padres’ win? A reminder that baseball is a long, winding road, and every loss is just a detour. The Rockies have the kind of roster that thrives in the second half. You think they’re struggling now? Wait till the sun starts climbing higher in the sky and the nights get cooler. That’s when the real magic happens.</p><p>Look at the rotation. They’ve got pieces that can click into</p></div></article><article class="column" data-role="pessimist"><div class="column-byline"><span class="column-name">Dwight Krenek</span><span class="column-role">The Pessimist</span></div><div class="column-body"><p>The Rockies lost again. Another loss. Another step closer to the end of another rebuild. You’d think after seven years of this, the team would have a plan. Instead, they’ve got the Monfort method: a strategy that’s less about baseball and more about how many suites can be filled before the season ends.</p><p>The Padres swept them yesterday, 7-3. Not a crushing defeat, but a reminder that the Rockies are still stuck in the same place they were in 2016. Back then, the team was a mess, but at least there was a glimmer of hope. Now? Hope is a luxury the Rockies can’t afford. They’re</p></div></article></div><script>(function(){
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><details class="column" data-role="straight_beat"><summary class="column-byline"><span class="column-name">Casey Underwood</span><span class="column-role">The Straight Beat</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Rockies lost again. Another game, another 3-7 drubbing. The scoreboard reads like a bad joke—Coors Field, the place where the thin air is supposed to turn fly balls into home runs, now feels more like a graveyard for the team’s fading hopes. High altitude math isn’t just about batting averages or pitch trajectories; it’s about the arithmetic of expectations. You’d think, with the sun beating down on this place, the Rockies would be doing more than just scratching out runs. But here we are, 6-7, 3.5 games behind, and the math isn’t adding up.</p><p>The offense, that supposed strength, has been a sieve. Yesterday’s game was a textbook example: Rockies’ hitters couldn’t capitalize on opportunities. The Padres’ pitching staff, for all its flaws, was just too effective. You can’t blame the weather for that. You can</p></div></details><details class="column" data-role="optimist"><summary class="column-byline"><span class="column-name">Winnie Calderón</span><span class="column-role">The Optimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Rockies lost yesterday, but that’s not the story I’m telling. The story is about the flicker of hope that lingers in the air at Coors Field, the way the sun hits the scoreboard just so, and the stubborn belief that this team is still building something special. You see, every season is a canvas, and the Rockies are just getting their brushes wet.</p><p>Let’s not mince words: the 6-7 record feels like a punch to the gut. But here’s the thing—this team isn’t built on April stats. They’re built on May magic. The Padres’ win? A reminder that baseball is a long, winding road, and every loss is just a detour. The Rockies have the kind of roster that thrives in the second half. You think they’re struggling now? Wait till the sun starts climbing higher in the sky and the nights get cooler. That’s when the real magic happens.</p><p>Look at the rotation. They’ve got pieces that can click into</p></div></details><details class="column" data-role="pessimist"><summary class="column-byline"><span class="column-name">Dwight Krenek</span><span class="column-role">The Pessimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Rockies lost again. Another loss. Another step closer to the end of another rebuild. You’d think after seven years of this, the team would have a plan. Instead, they’ve got the Monfort method: a strategy that’s less about baseball and more about how many suites can be filled before the season ends.</p><p>The Padres swept them yesterday, 7-3. Not a crushing defeat, but a reminder that the Rockies are still stuck in the same place they were in 2016. Back then, the team was a mess, but at least there was a glimmer of hope. Now? Hope is a luxury the Rockies can’t afford. They’re</p></div></details></div><script>(function(){
   var grid = document.currentScript && document.currentScript.previousElementSibling;
   if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
   var kids = Array.prototype.slice.call(grid.children);
@@ -461,7 +470,7 @@ body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
         <div class="nx-pitcher"><span class="nx-side">Rockies</span> Tomoyuki Sugano<div class="nx-pline">1.69 ERA &middot; 1-0 &middot; 10.2 IP &middot; 9 K &middot; 0.84 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">SD</span> Walker Buehler<div class="nx-pline">9.45 ERA &middot; 0-1 &middot; 6.2 IP &middot; 7 K &middot; 1.95 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Padres.TV Presented by UC San Diego Health &middot; Rockies.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KWFN 97.3 &middot; KOA 850 AM/94.1 FM </div>
-        <div class="nx-wx">72°F &middot; Clear &middot; 10 mph W</div>
+        <div class="nx-wx">72°F &middot; Mostly Clear &middot; 9 mph W</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sat, Apr 11 &middot; at SD</div>
@@ -755,7 +764,7 @@ body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Coors Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 16:15 CT</span>
+  <span>Filed 04/10/26 16:33 CT</span>
 </footer>
 
 <script>
