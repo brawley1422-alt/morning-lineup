@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reset Password — Morning Lineup</title>
+<link rel="icon" href="/morning-lineup/icons/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,900&family=Oswald:wght@400;600&family=Lora:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="auth.css">
+</head>
+<body>
+<header class="masthead auth-masthead">
+  <div class="kicker">
+    <span>Morning Lineup</span>
+    <span class="vol">Vol. I</span>
+  </div>
+  <h1>
+    <span>
+      <span class="the">The</span>
+      <span class="lineup">Lineup</span>
+    </span>
+  </h1>
+</header>
+
+<main class="auth-wrap">
+  <section class="auth-card">
+    <div class="sechead">
+      <span class="num">02</span>
+      <span class="h">Reset Password</span>
+      <span class="tag">Locker Room</span>
+    </div>
+
+    <p class="auth-lede" id="reset-lede">
+      Choose a new password to get back in the press box.
+    </p>
+
+    <form id="reset-form" novalidate>
+      <label class="field">
+        <span>New Password</span>
+        <input type="password" name="password" autocomplete="new-password" required minlength="6" placeholder="At least 6 characters">
+      </label>
+
+      <label class="field">
+        <span>Confirm Password</span>
+        <input type="password" name="confirm" autocomplete="new-password" required minlength="6">
+      </label>
+
+      <div class="auth-error" id="reset-error" role="alert" hidden></div>
+      <div class="auth-notice" id="reset-notice" role="status" hidden></div>
+
+      <button type="submit" class="auth-submit" id="reset-submit">Update Password</button>
+    </form>
+
+    <div class="auth-footer">
+      <a href="index.html" class="link-btn">← Back to sign in</a>
+    </div>
+  </section>
+</main>
+
+<footer class="auth-foot">
+  <a href="../">← Back to Morning Lineup</a>
+</footer>
+
+<script type="module" src="reset.js"></script>
+</body>
+</html>

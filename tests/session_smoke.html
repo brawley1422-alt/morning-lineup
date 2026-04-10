@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Session Smoke — Morning Lineup</title>
+<style>
+  body { font-family: ui-monospace, Menlo, monospace; background: #0d0f14; color: #ece4d0; padding: 24px; max-width: 720px; margin: 0 auto; }
+  h1 { font-family: Georgia, serif; font-size: 22px; margin: 0 0 6px; }
+  p.dek { color: #8b836d; font-size: 12px; margin: 0 0 20px; text-transform: uppercase; letter-spacing: .12em; }
+  .box { background: #141823; border: 1px solid #2a3142; border-radius: 3px; padding: 14px; margin-bottom: 14px; }
+  .box h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .18em; color: #c9a24a; margin: 0 0 8px; font-family: inherit; }
+  pre { white-space: pre-wrap; word-break: break-all; margin: 0; font-size: 12px; line-height: 1.5; color: #c9bfa6; }
+  button { background: #0E3386; border: 1px solid #2a56c4; color: #ece4d0; padding: 8px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .14em; cursor: pointer; border-radius: 2px; margin-right: 8px; }
+  button:hover { background: #2a56c4; color: #c9a24a; }
+  a { color: #c9a24a; }
+</style>
+</head>
+<body>
+<h1>Session Smoke Test</h1>
+<p class="dek">Not shipped. Local verification of auth/session.js</p>
+
+<div class="box">
+  <h2>Actions</h2>
+  <button id="refresh">Refresh</button>
+  <button id="signout">Sign Out</button>
+  <a href="../auth/index.html"><button type="button">Go to Auth</button></a>
+</div>
+
+<div class="box">
+  <h2>Session</h2>
+  <pre id="session-box">loading...</pre>
+</div>
+
+<div class="box">
+  <h2>Profile</h2>
+  <pre id="profile-box">loading...</pre>
+</div>
+
+<div class="box">
+  <h2>Auth Events (live)</h2>
+  <pre id="events-box">(waiting)</pre>
+</div>
+
+<script type="module">
+import { supabase, getSession, getProfile, onAuthChange, signOut } from "../auth/session.js";
+
+const sessionBox = document.getElementById("session-box");
+const profileBox = document.getElementById("profile-box");
+const eventsBox = document.getElementById("events-box");
+
+async function refresh() {
+  const session = await getSession();
+  sessionBox.textContent = session
+    ? JSON.stringify({
+        user_id: session.user.id,
+        email: session.user.email,
+        expires_at: session.expires_at,
+      }, null, 2)
+    : "(no session — sign in via the Auth button)";
+
+  const profile = await getProfile({ force: true });
+  profileBox.textContent = profile ? JSON.stringify(profile, null, 2) : "(no profile)";
+}
+
+document.getElementById("refresh").addEventListener("click", refresh);
+document.getElementById("signout").addEventListener("click", async () => {
+  await signOut();
+  refresh();
+});
+
+let events = [];
+onAuthChange((event, session) => {
+  events.unshift(`${new Date().toISOString()}  ${event}  ${session ? session.user.email : "(null)"}`);
+  eventsBox.textContent = events.slice(0, 10).join("\n");
+  refresh();
+});
+
+refresh();
+</script>
+</body>
+</html>

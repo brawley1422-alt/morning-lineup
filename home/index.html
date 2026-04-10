@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your Lineup — Morning Lineup</title>
+<link rel="icon" href="/morning-lineup/icons/favicon.ico">
+<link rel="manifest" href="/morning-lineup/manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,900&family=Oswald:wght@400;600&family=Lora:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="home.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="kicker">
+    <span>Morning Lineup · Your Edition</span>
+    <span class="vol" id="today-stamp"></span>
+  </div>
+  <h1>
+    <span>
+      <span class="the">Your</span>
+      <span class="lineup">Lineup</span>
+    </span>
+  </h1>
+  <div class="dek">
+    <span class="item"><span class="label">Reader</span><span class="val" id="reader-name">—</span></span>
+    <span class="item"><span class="label">Following</span><span class="val" id="follow-count">—</span></span>
+    <span class="item">
+      <a href="../settings/" class="home-nav-link">Settings</a>
+      <a href="#" id="signout-link" class="home-nav-link">Sign Out</a>
+    </span>
+  </div>
+</header>
+
+<main id="home-shell">
+  <div id="loading-state" class="home-loading">
+    <p>Loading your lineup…</p>
+  </div>
+</main>
+
+<footer class="home-foot">
+  <a href="../">Back to Morning Lineup</a>
+  <span>·</span>
+  <a href="../auth/">Account</a>
+</footer>
+
+<script type="module" src="home.js"></script>
+</body>
+</html>

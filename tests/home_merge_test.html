@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Home Merge Smoke — Morning Lineup</title>
+<style>
+  body { font-family: ui-monospace, Menlo, monospace; background: #0d0f14; color: #ece4d0; padding: 24px; max-width: 900px; margin: 0 auto; }
+  h1 { font-family: Georgia, serif; }
+  .case { border: 1px solid #2a3142; padding: 12px 16px; margin: 12px 0; border-radius: 3px; background: #141823; }
+  .pass { color: #6ea86a; }
+  .fail { color: #c0554f; }
+  pre { font-size: 11px; white-space: pre-wrap; color: #8b836d; }
+</style>
+</head>
+<body>
+<h1>Home Merge — Smoke Test</h1>
+<p>Fetches a known team page, verifies DOMParser section extraction works, and checks the profile→html-id map.</p>
+<div id="results"></div>
+
+<script type="module">
+const SECTION_ID_MAP = {
+  headline: "team",
+  scouting: "scout",
+  stretch: "pulse",
+  pressbox: "pressbox",
+  farm: "farm",
+  slate: "today",
+  division: "div",
+  around_league: "league",
+  history: "history",
+};
+
+const results = document.getElementById("results");
+function record(name, ok, detail = "") {
+  const div = document.createElement("div");
+  div.className = "case";
+  div.innerHTML = `<strong class="${ok ? "pass" : "fail"}">${ok ? "PASS" : "FAIL"}</strong> — ${name}<pre>${detail}</pre>`;
+  results.appendChild(div);
+}
+
+async function run() {
+  // Test 1: fetch Cubs page
+  let doc;
+  try {
+    const res = await fetch("../cubs/");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+    doc = new DOMParser().parseFromString(text, "text/html");
+    record("Fetch + parse cubs/index.html", true, `${text.length} chars parsed`);
+  } catch (e) {
+    record("Fetch + parse cubs/index.html", false, e.message);
+    return;
+  }
+
+  // Test 2: every profile key maps to an existing section
+  const missing = [];
+  const found = [];
+  for (const [key, htmlId] of Object.entries(SECTION_ID_MAP)) {
+    const el = doc.querySelector(`section#${htmlId}`);
+    if (el) found.push(`${key}→${htmlId}`);
+    else missing.push(`${key}→${htmlId}`);
+  }
+  record(
+    "All 9 profile section keys found in Cubs page",
+    missing.length === 0,
+    `found: ${found.join(", ")}\nmissing: ${missing.join(", ") || "(none)"}`,
+  );
+
+  // Test 3: extracted nodes can be cloned and inserted
+  try {
+    const node = doc.querySelector("section#team").cloneNode(true);
+    const container = document.createElement("div");
+    container.appendChild(node);
+    record("Clone + append section#team", container.children.length === 1, `inserted, text length ${container.innerText.length}`);
+  } catch (e) {
+    record("Clone + append section#team", false, e.message);
+  }
+
+  // Test 4: another team (Yankees)
+  try {
+    const res = await fetch("../yankees/");
+    const text = await res.text();
+    const doc2 = new DOMParser().parseFromString(text, "text/html");
+    const n = doc2.querySelectorAll("section[id]").length;
+    record("Fetch yankees/index.html", n > 0, `found ${n} sections`);
+  } catch (e) {
+    record("Fetch yankees/index.html", false, e.message);
+  }
+}
+run();
+</script>
+</body>
+</html>

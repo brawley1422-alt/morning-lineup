@@ -1,0 +1,358 @@
+// /home — the personalized merged briefing.
+//
+// Flow:
+//   1. Check session. Logged out → render preview with CTA to /auth.
+//   2. Load profile + followed_teams + team configs (in parallel).
+//   3. For each followed team, fetch ../{slug}/index.html, parse with
+//      DOMParser, extract the <section> blocks whose IDs correspond to
+//      the user's section_order + section_visibility, wrap them in a
+//      per-team block styled with the team's colors.
+//   4. Apply density + theme body classes from profile.
+//
+// Section ID mapping — profile keys vs. static page markup:
+//   profile key    → HTML id
+//   headline       → team
+//   scouting       → scout
+//   stretch        → pulse
+//   pressbox       → pressbox
+//   farm           → farm
+//   slate          → today
+//   division       → div
+//   around_league  → league
+//   history        → history
+
+import { supabase, getSession, getProfile, signOut, onAuthChange } from "../auth/session.js";
+
+const SECTION_ID_MAP = {
+  headline: "team",
+  scouting: "scout",
+  stretch: "pulse",
+  pressbox: "pressbox",
+  farm: "farm",
+  slate: "today",
+  division: "div",
+  around_league: "league",
+  history: "history",
+};
+
+const SECTION_LABELS = {
+  headline: "The Team",
+  scouting: "Scouting",
+  stretch: "The Stretch",
+  pressbox: "Pressbox",
+  farm: "Farm",
+  slate: "Slate",
+  division: "Division",
+  around_league: "Around the League",
+  history: "History",
+};
+
+const shell = document.getElementById("home-shell");
+const readerName = document.getElementById("reader-name");
+const followCount = document.getElementById("follow-count");
+const todayStamp = document.getElementById("today-stamp");
+const signoutLink = document.getElementById("signout-link");
+
+// Cache extracted sections per team slug for the page lifetime.
+const teamHtmlCache = new Map();
+// Cache team config JSON per slug.
+const teamConfigCache = new Map();
+// Holds the list of all 30 team slugs for the picker.
+let allTeamSlugs = null;
+
+function stamp() {
+  const d = new Date();
+  const opts = { weekday: "long", month: "long", day: "numeric", year: "numeric" };
+  todayStamp.textContent = d.toLocaleDateString("en-US", opts);
+}
+stamp();
+
+function renderLoading(msg = "Loading your lineup…") {
+  shell.innerHTML = `<div class="home-loading"><p>${msg}</p></div>`;
+}
+function renderError(msg) {
+  shell.innerHTML = `<div class="home-error"><p>${msg}</p></div>`;
+}
+
+function renderPreview() {
+  readerName.textContent = "Guest";
+  followCount.textContent = "—";
+  signoutLink.hidden = true;
+  shell.innerHTML = `
+    <div class="home-preview">
+      <h2>Your morning paper, your way.</h2>
+      <p>Pick your teams. Choose the sections that matter. Read a briefing that looks like it was written for you, because it was.</p>
+      <p><a href="../auth/" class="home-btn-primary">Create a free account</a></p>
+      <p style="margin-top:28px;font-size:13px;">Already a member? <a href="../auth/">Sign in</a></p>
+    </div>
+  `;
+}
+
+function renderEmpty() {
+  shell.innerHTML = `
+    <div class="home-empty">
+      <h2>Pick your teams.</h2>
+      <p>Follow at least one team to see your merged briefing. You can always change this later.</p>
+    </div>
+    <div class="team-picker" id="team-picker"></div>
+  `;
+  mountTeamPicker();
+}
+
+async function loadAllTeamSlugs() {
+  if (allTeamSlugs) return allTeamSlugs;
+  // There's no public manifest of all 30 teams. Hard-code the list — it changes
+  // only when MLB adds or relocates a franchise. Keeps /home zero-fetch for
+  // team discovery.
+  allTeamSlugs = [
+    "angels","astros","athletics","blue-jays","braves","brewers","cardinals",
+    "cubs","dbacks","dodgers","giants","guardians","mariners","marlins","mets",
+    "nationals","orioles","padres","phillies","pirates","rangers","rays","reds",
+    "red-sox","rockies","royals","tigers","twins","white-sox","yankees",
+  ];
+  return allTeamSlugs;
+}
+
+async function getTeamConfig(slug) {
+  if (teamConfigCache.has(slug)) return teamConfigCache.get(slug);
+  const res = await fetch(`../teams/${slug}.json`);
+  if (!res.ok) throw new Error(`team config ${slug} ${res.status}`);
+  const cfg = await res.json();
+  teamConfigCache.set(slug, cfg);
+  return cfg;
+}
+
+async function getTeamHtml(slug) {
+  if (teamHtmlCache.has(slug)) return teamHtmlCache.get(slug);
+  const res = await fetch(`../${slug}/`, { cache: "default" });
+  if (!res.ok) throw new Error(`team page ${slug} ${res.status}`);
+  const text = await res.text();
+  const doc = new DOMParser().parseFromString(text, "text/html");
+  teamHtmlCache.set(slug, doc);
+  return doc;
+}
+
+async function loadFollowedTeams() {
+  const { data, error } = await supabase
+    .from("followed_teams")
+    .select("team_slug, position")
+    .order("position", { ascending: true });
+  if (error) throw error;
+  return data || [];
+}
+
+async function addFollowedTeam(slug) {
+  const session = await getSession();
+  if (!session) return;
+  const existing = await loadFollowedTeams();
+  if (existing.find((f) => f.team_slug === slug)) return;
+  const nextPos = existing.length;
+  const { error } = await supabase.from("followed_teams").insert({
+    user_id: session.user.id,
+    team_slug: slug,
+    position: nextPos,
+  });
+  if (error) {
+    alert(`Could not follow ${slug}: ${error.message}`);
+    return;
+  }
+  await renderHome();
+}
+
+async function removeFollowedTeam(slug) {
+  const session = await getSession();
+  if (!session) return;
+  const { error } = await supabase
+    .from("followed_teams")
+    .delete()
+    .eq("user_id", session.user.id)
+    .eq("team_slug", slug);
+  if (error) {
+    alert(`Could not unfollow ${slug}: ${error.message}`);
+    return;
+  }
+  await renderHome();
+}
+
+async function mountTeamPicker() {
+  const picker = document.getElementById("team-picker");
+  if (!picker) return;
+  const [slugs, followed] = await Promise.all([
+    loadAllTeamSlugs(),
+    loadFollowedTeams(),
+  ]);
+  const followedSet = new Set(followed.map((f) => f.team_slug));
+  const options = slugs
+    .filter((s) => !followedSet.has(s))
+    .map((s) => `<option value="${s}">${s}</option>`)
+    .join("");
+  const chips = followed
+    .map(
+      (f) => `
+      <span class="chip">
+        ${f.team_slug}
+        <button type="button" data-slug="${f.team_slug}" title="Unfollow">×</button>
+      </span>`,
+    )
+    .join("");
+
+  picker.innerHTML = `
+    <h3>Your Teams · Quick Pick</h3>
+    <form id="follow-form">
+      <select id="team-select">${options}</select>
+      <button type="submit" class="home-btn-primary">Follow</button>
+    </form>
+    <div class="followed">${chips || "(no teams followed yet)"}</div>
+  `;
+
+  picker.querySelector("#follow-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const slug = picker.querySelector("#team-select").value;
+    if (slug) await addFollowedTeam(slug);
+  });
+  picker.querySelectorAll(".chip button").forEach((btn) => {
+    btn.addEventListener("click", () => removeFollowedTeam(btn.dataset.slug));
+  });
+}
+
+function extractSection(doc, htmlId) {
+  // Team pages wrap sections as <section id="X" open>. Clone the node so we
+  // don't strip it from the source doc (cached for re-renders).
+  const node = doc.querySelector(`section#${htmlId}`);
+  if (!node) return null;
+  return node.cloneNode(true);
+}
+
+function renderTeamBlock(cfg, sectionsHtml) {
+  const colors = cfg.colors || {};
+  const block = document.createElement("div");
+  block.className = "team-block";
+  block.style.setProperty("--team-primary", colors.primary || "#0E3386");
+  block.style.setProperty("--team-primary-hi", colors.primary_hi || "#2a56c4");
+  block.style.setProperty("--team-accent", colors.accent || "#CC3433");
+  block.style.setProperty("--team-accent-hi", colors.accent_hi || "#e8544f");
+
+  const strip = document.createElement("header");
+  strip.className = "team-strip";
+  strip.innerHTML = `
+    <h2 class="strip-name">${cfg.full_name || cfg.name || cfg.id}</h2>
+    <div class="strip-meta">
+      <span>${cfg.division_name || ""}</span>
+      <a href="../${cfg.id === 112 ? "cubs" : ""}" id="full-link">Full page →</a>
+    </div>
+  `;
+  // Fix the full-link slug: we don't have it on cfg directly, derive from the
+  // config file we loaded. Caller passes slug via dataset.
+  block.appendChild(strip);
+
+  if (sectionsHtml.length === 0) {
+    const msg = document.createElement("div");
+    msg.className = "team-block-error";
+    msg.textContent = "No visible sections for this team. Check your settings.";
+    block.appendChild(msg);
+  } else {
+    for (const node of sectionsHtml) block.appendChild(node);
+  }
+  return block;
+}
+
+async function renderMergedView(profile, followed) {
+  shell.innerHTML = "";
+  const visibility = profile.section_visibility || {};
+  const order = profile.section_order || [];
+
+  // Apply density + theme classes.
+  document.body.classList.toggle("density-compact", profile.density === "compact");
+  document.body.classList.toggle("density-full", profile.density !== "compact");
+  document.body.classList.toggle("theme-paper", profile.theme === "paper");
+  document.body.classList.toggle("theme-dark", profile.theme === "dark");
+
+  // Render each team in the user's followed-order.
+  for (const fol of followed) {
+    const slug = fol.team_slug;
+    try {
+      const [cfg, doc] = await Promise.all([getTeamConfig(slug), getTeamHtml(slug)]);
+      const sections = [];
+      for (const key of order) {
+        if (visibility[key] === false) continue;
+        const htmlId = SECTION_ID_MAP[key];
+        if (!htmlId) continue;
+        const node = extractSection(doc, htmlId);
+        if (node) sections.push(node);
+      }
+      const block = renderTeamBlock(cfg, sections);
+      // Fix up the Full page → link to actually point to the team slug.
+      const fullLink = block.querySelector("#full-link");
+      if (fullLink) {
+        fullLink.id = "";
+        fullLink.setAttribute("href", `../${slug}/`);
+      }
+      shell.appendChild(block);
+    } catch (err) {
+      console.warn(`team ${slug} render failed`, err);
+      const errDiv = document.createElement("div");
+      errDiv.className = "team-block-error";
+      errDiv.textContent = `Could not load ${slug}: ${err.message}`;
+      shell.appendChild(errDiv);
+    }
+  }
+
+  // Always append the quick picker at the bottom so users can add/remove teams
+  // without leaving /home during Phase B. Unit 6 replaces this with settings.
+  const picker = document.createElement("div");
+  picker.className = "team-picker";
+  picker.id = "team-picker";
+  shell.appendChild(picker);
+  mountTeamPicker();
+}
+
+async function renderHome() {
+  renderLoading();
+  try {
+    const session = await getSession();
+    if (!session) {
+      renderPreview();
+      return;
+    }
+    const [profile, followed] = await Promise.all([getProfile({ force: true }), loadFollowedTeams()]);
+    if (!profile) {
+      renderError("Could not load profile.");
+      return;
+    }
+    readerName.textContent = profile.display_name || session.user.email;
+    followCount.textContent = `${followed.length} team${followed.length === 1 ? "" : "s"}`;
+    signoutLink.hidden = false;
+
+    if (followed.length === 0) {
+      renderEmpty();
+      return;
+    }
+
+    await renderMergedView(profile, followed);
+  } catch (err) {
+    console.error("renderHome failed", err);
+    renderError(err.message || "Something went wrong loading your lineup.");
+  }
+}
+
+signoutLink.addEventListener("click", async (e) => {
+  e.preventDefault();
+  await signOut();
+  window.location.href = "../auth/";
+});
+
+onAuthChange((event) => {
+  if (event === "SIGNED_OUT") window.location.href = "../auth/";
+});
+
+// Cross-tab sync: /settings pings localStorage after any profile change; this
+// tab re-renders to pick up new visibility/order/density/theme.
+window.addEventListener("storage", (e) => {
+  if (e.key === "ml-profile-updated") renderHome();
+});
+// And refetch when the tab regains focus, in case storage events were missed.
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") renderHome();
+});
+
+renderHome();

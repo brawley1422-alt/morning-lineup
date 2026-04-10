@@ -130,4 +130,48 @@ if data_file.exists():
         else:
             print(f"warning: data ledger push failed: {e.code}")
 
+# 4) push static asset files (auth UI + config). These rarely change so we
+#    GET current SHA first to allow in-place updates without 422 conflicts.
+STATIC_ASSETS = [
+    "config/supabase.js",
+    "auth/index.html",
+    "auth/reset.html",
+    "auth/auth.css",
+    "auth/auth.js",
+    "auth/reset.js",
+    "auth/session.js",
+    "home/index.html",
+    "home/home.js",
+    "home/home.css",
+    "settings/index.html",
+    "settings/settings.js",
+    "settings/settings.css",
+]
+for rel in STATIC_ASSETS:
+    local = ROOT / rel
+    if not local.exists():
+        continue
+    try:
+        remote = gh("GET", f"/{rel}")
+        sha = remote["sha"]
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            sha = None
+        else:
+            print(f"warning: {rel} GET failed: {e.code}")
+            continue
+    body = {
+        "message": f"update {rel} {today_iso}",
+        "content": base64.b64encode(local.read_bytes()).decode(),
+    }
+    if sha:
+        body["sha"] = sha
+    try:
+        resp = gh("PUT", f"/{rel}", body)
+        size = resp["content"]["size"]
+        print(f"asset     → {rel} ({size:,} bytes)")
+    except urllib.error.HTTPError as e:
+        body = e.read().decode(errors="replace")
+        print(f"warning: {rel} PUT failed: {e.code} {body}")
+
 print(f"live      → https://{OWNER}.github.io/{REPO}/")

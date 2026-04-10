@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign In — Morning Lineup</title>
+<link rel="icon" href="/morning-lineup/icons/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,900&family=Oswald:wght@400;600&family=Lora:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="auth.css">
+</head>
+<body>
+<header class="masthead auth-masthead">
+  <div class="kicker">
+    <span>Morning Lineup</span>
+    <span class="vol">Vol. I</span>
+  </div>
+  <h1>
+    <span>
+      <span class="the">The</span>
+      <span class="lineup">Lineup</span>
+    </span>
+  </h1>
+  <div class="dek">
+    <span class="item"><span class="label">Edition</span><span class="val">Subscriber</span></span>
+    <span class="item"><span class="label">Access</span><span class="val">Members Only</span></span>
+  </div>
+</header>
+
+<main class="auth-wrap">
+  <section class="auth-card">
+    <div class="sechead">
+      <span class="num" id="mode-num">01</span>
+      <span class="h" id="mode-title">Sign In</span>
+      <span class="tag" id="mode-tag">Members Desk</span>
+    </div>
+
+    <p class="auth-lede" id="mode-lede">
+      Welcome back. Your personalized briefing awaits.
+    </p>
+
+    <form id="auth-form" novalidate>
+      <label class="field" id="name-field" hidden>
+        <span>Display Name</span>
+        <input type="text" name="display_name" autocomplete="name" placeholder="How you'll be credited">
+      </label>
+
+      <label class="field">
+        <span>Email</span>
+        <input type="email" name="email" autocomplete="email" required placeholder="you@ballpark.com">
+      </label>
+
+      <label class="field" id="password-field">
+        <span>Password</span>
+        <input type="password" name="password" autocomplete="current-password" required minlength="6" placeholder="At least 6 characters">
+      </label>
+
+      <div class="auth-error" id="auth-error" role="alert" hidden></div>
+      <div class="auth-notice" id="auth-notice" role="status" hidden></div>
+
+      <button type="submit" class="auth-submit" id="auth-submit">Sign In</button>
+    </form>
+
+    <div class="auth-divider"><span>or</span></div>
+
+    <button type="button" class="auth-google" id="auth-google">
+      Continue with Google
+    </button>
+
+    <div class="auth-footer">
+      <button type="button" class="link-btn" id="toggle-mode">Need an account? Sign up</button>
+      <button type="button" class="link-btn" id="forgot-link">Forgot password</button>
+    </div>
+
+    <p class="auth-fineprint">
+      Accounts are free. By signing up you accept that this is a baseball newspaper, not a legal document.
+    </p>
+  </section>
+</main>
+
+<footer class="auth-foot">
+  <a href="../">← Back to Morning Lineup</a>
+</footer>
+
+<script type="module" src="auth.js"></script>
+</body>
+</html>

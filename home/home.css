@@ -1,0 +1,213 @@
+/* /home scoped styles — extends style.css variables, no new design system. */
+
+.masthead h1 { font-size: clamp(44px, 9vw, 96px); }
+
+.home-nav-link {
+  color: var(--gold);
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 11px;
+  margin-left: 14px;
+  border-bottom: 1px dotted var(--gold-dim);
+}
+.home-nav-link:hover { color: var(--paper); border-bottom-color: var(--paper); }
+
+#home-shell {
+  position: relative;
+  z-index: 2;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 10px 20px 40px;
+}
+
+.home-loading,
+.home-error,
+.home-empty,
+.home-preview {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--paper-dim);
+  font-family: var(--body);
+  font-style: italic;
+}
+.home-error { color: var(--loss); }
+
+.home-empty h2,
+.home-preview h2 {
+  font-family: var(--serif);
+  font-size: clamp(26px, 5vw, 40px);
+  color: var(--paper);
+  font-style: italic;
+  font-weight: 900;
+  margin: 0 0 10px;
+}
+.home-empty p,
+.home-preview p { max-width: 540px; margin: 0 auto 18px; }
+
+.home-btn-primary {
+  display: inline-block;
+  background: var(--team-primary);
+  border: 1px solid var(--team-primary-hi);
+  color: var(--paper);
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 13px 22px;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  border-bottom: none;
+  transition: background 0.15s, color 0.15s;
+}
+.home-btn-primary:hover {
+  background: var(--team-primary-hi);
+  color: var(--gold);
+  border-bottom: none;
+}
+
+/* Dev team picker — bootstrap affordance until Phase C settings page lands. */
+.team-picker {
+  margin: 24px auto 0;
+  max-width: 520px;
+  background: var(--ink-2);
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--gold-dim);
+  border-radius: 3px;
+  padding: 18px 20px 16px;
+  text-align: left;
+}
+.team-picker h3 {
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 11px;
+  color: var(--gold);
+  margin: 0 0 10px;
+}
+.team-picker form { display: flex; gap: 10px; align-items: center; }
+.team-picker select {
+  flex: 1;
+  background: var(--ink);
+  border: 1px solid var(--rule);
+  color: var(--paper);
+  font-family: var(--body);
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 2px;
+}
+.team-picker .followed {
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--paper-dim);
+}
+.team-picker .followed .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  background: var(--ink);
+  border: 1px solid var(--rule-hi);
+  border-radius: 2px;
+  margin: 3px 4px 0 0;
+}
+.team-picker .followed .chip button {
+  background: none;
+  border: none;
+  color: var(--loss);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 0;
+  line-height: 1;
+}
+
+/* Per-team merge block — each followed team's sections wrap in one of these. */
+.team-block {
+  --team-primary: var(--ink-3);
+  --team-primary-hi: var(--rule-hi);
+  --team-accent: var(--gold-dim);
+  --team-accent-hi: var(--gold);
+  margin: 28px 0 32px;
+  padding-top: 8px;
+  border-top: 3px double var(--team-accent-hi);
+}
+
+.team-strip {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  margin: 0 0 14px;
+  background: linear-gradient(90deg, var(--team-primary) 0%, var(--ink-2) 100%);
+  border: 1px solid var(--team-primary-hi);
+  border-radius: 3px;
+  box-shadow: 0 4px 18px -10px rgba(0, 0, 0, 0.6);
+}
+.team-strip .strip-name {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 900;
+  font-size: clamp(22px, 3.5vw, 30px);
+  color: var(--paper);
+  margin: 0;
+  line-height: 1;
+}
+.team-strip .strip-meta {
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 10px;
+  color: var(--paper-mute);
+}
+.team-strip .strip-meta a {
+  color: var(--team-accent-hi);
+  border-bottom: 1px dotted var(--team-accent);
+  margin-left: 10px;
+}
+
+.team-block section { margin: 10px 0 18px; }
+
+.team-block-error {
+  padding: 14px 16px;
+  border: 1px solid var(--loss);
+  background: rgba(192, 85, 79, 0.08);
+  border-radius: 2px;
+  color: var(--loss);
+  font-family: var(--body);
+  font-size: 13px;
+  margin: 12px 0;
+}
+
+.home-foot {
+  text-align: center;
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 11px;
+  color: var(--paper-mute);
+  padding: 20px 0 40px;
+}
+.home-foot a { color: var(--gold); }
+.home-foot span { margin: 0 8px; color: var(--rule-hi); }
+
+/* Density: compact shrinks type slightly + tightens margins. */
+body.density-compact { font-size: 14px; }
+body.density-compact .team-block section { margin: 6px 0 12px; }
+body.density-compact .team-block section p { margin-bottom: 5px; }
+body.density-compact .team-strip { padding: 8px 12px; }
+
+/* Theme: paper flips background to light cream for the whole page. */
+body.theme-paper {
+  background: radial-gradient(1200px 600px at 10% -10%, rgba(14,51,134,.08), transparent 60%),
+              linear-gradient(180deg, #f3ecd7 0%, #ece4d0 40%, #e6dec9 100%);
+  color: var(--ink);
+}
+body.theme-paper .masthead h1 .lineup { color: var(--ink); -webkit-text-fill-color: var(--ink); }
+body.theme-paper .team-strip { background: linear-gradient(90deg, #dfd5bc 0%, #ece4d0 100%); }
+body.theme-paper .team-strip .strip-name { color: var(--ink); }
+body.theme-paper section { color: var(--ink); }

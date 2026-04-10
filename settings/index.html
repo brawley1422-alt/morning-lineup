@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Settings — Morning Lineup</title>
+<link rel="icon" href="/morning-lineup/icons/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,900&family=Oswald:wght@400;600&family=Lora:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../auth/auth.css">
+<link rel="stylesheet" href="settings.css">
+</head>
+<body>
+<header class="masthead auth-masthead">
+  <div class="kicker">
+    <span>Morning Lineup</span>
+    <span class="vol">Subscriber Desk</span>
+  </div>
+  <h1>
+    <span>
+      <span class="the">Your</span>
+      <span class="lineup">Settings</span>
+    </span>
+  </h1>
+  <div class="dek">
+    <span class="item"><span class="label">Signed In</span><span class="val" id="reader-name">—</span></span>
+    <span class="item"><span class="label">Saved</span><span class="val" id="save-state">idle</span></span>
+  </div>
+</header>
+
+<main class="settings-wrap">
+  <div class="settings-nav">
+    <a href="../home/" class="link-btn">← Back to your lineup</a>
+    <button type="button" class="link-btn" id="signout-link">Sign Out</button>
+  </div>
+
+  <section class="auth-card settings-card">
+    <div class="sechead">
+      <span class="num">01</span>
+      <span class="h">Profile</span>
+      <span class="tag">Byline</span>
+    </div>
+    <label class="field">
+      <span>Display Name</span>
+      <input type="text" id="display-name" placeholder="How you're credited">
+    </label>
+  </section>
+
+  <section class="auth-card settings-card">
+    <div class="sechead">
+      <span class="num">02</span>
+      <span class="h">Followed Teams</span>
+      <span class="tag">Your Clubs</span>
+    </div>
+    <p class="settings-hint">Drag to reorder. Click × to unfollow.</p>
+    <ul class="teams-list" id="teams-list"></ul>
+    <form id="follow-form" class="follow-form">
+      <select id="team-select"></select>
+      <button type="submit" class="auth-submit follow-btn">Follow</button>
+    </form>
+  </section>
+
+  <section class="auth-card settings-card">
+    <div class="sechead">
+      <span class="num">03</span>
+      <span class="h">Sections</span>
+      <span class="tag">Show / Hide / Reorder</span>
+    </div>
+    <p class="settings-hint">Drag to reorder. Uncheck to hide a section across all your teams.</p>
+    <ul class="sections-list" id="sections-list"></ul>
+  </section>
+
+  <section class="auth-card settings-card">
+    <div class="sechead">
+      <span class="num">04</span>
+      <span class="h">Density</span>
+      <span class="tag">Type & Spacing</span>
+    </div>
+    <div class="radio-row" id="density-row">
+      <label><input type="radio" name="density" value="full"><span>Full</span></label>
+      <label><input type="radio" name="density" value="compact"><span>Compact</span></label>
+    </div>
+  </section>
+
+  <section class="auth-card settings-card">
+    <div class="sechead">
+      <span class="num">05</span>
+      <span class="h">Theme</span>
+      <span class="tag">Paper or Ink</span>
+    </div>
+    <div class="radio-row" id="theme-row">
+      <label><input type="radio" name="theme" value="dark"><span>Dark</span></label>
+      <label><input type="radio" name="theme" value="paper"><span>Paper</span></label>
+    </div>
+  </section>
+
+  <div class="auth-error" id="settings-error" hidden></div>
+</main>
+
+<footer class="auth-foot">
+  <a href="../">← Back to Morning Lineup</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script type="module" src="settings.js"></script>
+</body>
+</html>
