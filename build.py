@@ -19,6 +19,7 @@ import sections.headline
 import sections.history
 import sections.pressbox
 import sections.scouting
+import sections.slate
 import sections.stretch
 try:
     from zoneinfo import ZoneInfo
@@ -616,35 +617,6 @@ def render_leaders(lh, lp, tmap):
     <tbody>{pit}</tbody></table></div></div>
     </div>"""
 
-def render_slate_today(games_t, tmap):
-    cards = []
-    for g in games_t:
-        aid = g["teams"]["away"]["team"]["id"]; hid = g["teams"]["home"]["team"]["id"]
-        aa = abbr(tmap, aid); ha = abbr(tmap, hid)
-        try:
-            gd = datetime.strptime(g["gameDate"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
-            ct = gd.astimezone(CT)
-            time_str = ct.strftime("%-I:%M") + " CT"
-        except Exception:
-            time_str = ""
-        ap = g["teams"]["away"].get("probablePitcher",{}) or {}
-        hp = g["teams"]["home"].get("probablePitcher",{}) or {}
-        ap_n = ap.get("fullName","TBD").split()[-1] if ap else "TBD"
-        hp_n = hp.get("fullName","TBD").split()[-1] if hp else "TBD"
-        # Broadcast info
-        bc = g.get("broadcasts", [])
-        bc_parts = []
-        for b in bc:
-            if b.get("type") == "TV" and b.get("language","en") == "en":
-                bc_parts.append(escape(b.get("name","")))
-        bc_str = f'<div class="bc">{" · ".join(bc_parts)}</div>' if bc_parts else ""
-        cards.append(f"""<div class="g" data-gpk="{g['gamePk']}">
-        <div class="matchup">{aa} @ {ha}</div>
-        <div class="time">{time_str}</div>
-        <div class="probs">{escape(ap_n)} vs {escape(hp_n)}</div>
-        {bc_str}
-      </div>""")
-    return f'<div class="slate">{"".join(cards)}</div>'
 
 
 def detect_league_news(games_y, standings_data, tmap):
@@ -884,7 +856,7 @@ def page(briefing):
     scoreboard_yest = render_scoreboard_yest(data["games_y"], data["tmap"])
     all_div = render_all_divisions(data["standings"], data["tmap"])
     leaders_html = render_leaders(data["leaders_hit"], data["leaders_pit"], data["tmap"])
-    slate_html = render_slate_today(data["games_t"], data["tmap"])
+    slate_html = sections.slate.render(briefing)
     news_items = detect_league_news(data["games_y"], data["standings"], data["tmap"])
     news_count = len(news_items)
     league_news_html = render_league_news_from_items(news_items)
