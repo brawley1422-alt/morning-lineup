@@ -689,7 +689,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Braves</span> <player-card pid="527048">Martín Pérez</player-card><div class="nx-pline">3.86 ERA &middot; 0-0 &middot; 9.1 IP &middot; 4 K &middot; 0.86 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-114"/></svg>CLE</span> Parker Messick<div class="nx-pline">0.82 ERA &middot; 1-0 &middot; 11.0 IP &middot; 11 K &middot; 0.91 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="660670">Jr.</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="686948">Baldwin</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="645277">Albies</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="621566">Olson</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="663586">Riley</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="643289">Dubón</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="573262">Yastrzemski</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="641680">Heim</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="622761">Mateo</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Guardians.TV Presented by Progressive &middot; BravesVision</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WTAM 1100 &middot; 680 AM/93.7 FM The Fan &middot; WMMS 100.7 &middot; Guardians Radio Network</div>
-        <div class="nx-wx">82°F &middot; Clear &middot; 4 mph W</div>
+        <div class="nx-wx">83°F &middot; Clear &middot; 5 mph W</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; vs <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-114"/></svg><span class="ab">CLE</span></div>
@@ -1049,7 +1049,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Truist Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 15:20 CT</span>
+  <span>Filed 04/11/26 15:35 CT</span>
 </footer>
 
 <script>
@@ -1082,7 +1082,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
-document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});
+document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});
 if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});
 </script>
 

@@ -689,7 +689,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">D-backs</span> <player-card pid="694297">Brandon Pfaadt</player-card><div class="nx-pline">5.94 ERA &middot; 0-1 &middot; 16.2 IP &middot; 11 K &middot; 1.38 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-143"/></svg>PHI</span> Taijuan Walker<div class="nx-pline">7.36 ERA &middot; 1-2 &middot; 14.2 IP &middot; 12 K &middot; 1.91 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="606466">Marte</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="682998">Carroll</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="672695">Perdomo</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="680728">Castillo</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="699912">Fernandez</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="571448">Arenado</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="694374">Tawa</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="677950">Thomas</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="678489">Barrosa</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> NBCSP &middot; FS1 &middot; Dbacks.TV &middot; FS1</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 98.7 FM Arizona&#x27;s Sports Station &middot; 94 WIP</div>
-        <div class="nx-wx">66°F &middot; Clear &middot; 11 mph NW</div>
+        <div class="nx-wx">65°F &middot; Clear &middot; 11 mph NW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-143"/></svg><span class="ab">PHI</span></div>
@@ -1046,7 +1046,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Chase Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 15:20 CT</span>
+  <span>Filed 04/11/26 15:36 CT</span>
 </footer>
 
 <script>
@@ -1079,7 +1079,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
-document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});
+document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});
 if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});
 </script>
 

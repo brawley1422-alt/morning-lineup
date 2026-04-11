@@ -687,7 +687,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-venue">American Family Field <span class="nx-dome">Retractable Roof</span></div>
         <div class="nx-meta"><span class="nx-opp-rec">WSH: 5-8, 5th NL East (W1)</span> &middot; <span class="nx-series">Season series: 0-1</span></div>
         <div class="nx-pitcher"><span class="nx-side">Brewers</span> <player-card pid="690986">Kyle Harrison</player-card><div class="nx-pline">2.61 ERA &middot; 1-0 &middot; 10.1 IP &middot; 14 K &middot; 0.97 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-120"/></svg>WSH</span> Foster Griffin<div class="nx-pline">2.70 ERA &middot; 1-0 &middot; 10.0 IP &middot; 11 K &middot; 1.30 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="668930">Turang</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="650859">Rengifo</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="661388">Contreras</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="592885">Yelich</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="596142">Sánchez</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="663604">Lockridge</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="686217">Frelick</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="663368">Perkins</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="687401">Ortiz</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Brewers.TV &middot; Nationals.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WTMJ 620 &middot; WJFK 106.7 The Fan</div>
         <div class="nx-wx">72°F &middot; Climate controlled</div>
       </div><div class="nx-card">
@@ -1046,7 +1046,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A American Family Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 15:20 CT</span>
+  <span>Filed 04/11/26 15:35 CT</span>
 </footer>
 
 <script>
@@ -1079,7 +1079,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
-document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});
+document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});
 if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});
 </script>
 

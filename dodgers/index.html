@@ -689,7 +689,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Dodgers</span> <player-card pid="686218">Emmet Sheehan</player-card><div class="nx-pline">8.00 ERA &middot; 1-0 &middot; 9.0 IP &middot; 8 K &middot; 1.89 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-140"/></svg>TEX</span> Jack Leiter<div class="nx-pline">2.45 ERA &middot; 1-0 &middot; 11.0 IP &middot; 17 K &middot; 1.00 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> SportsNet LA &middot; Rangers Sports Network</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> Dodgers Radio AM570 &middot; 105.3 The Fan</div>
-        <div class="nx-wx">69°F &middot; Mostly Clear &middot; 10 mph SW</div>
+        <div class="nx-wx">69°F &middot; Mostly Clear &middot; 9 mph WSW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; vs <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-140"/></svg><span class="ab">TEX</span></div>
@@ -1046,7 +1046,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Dodger Stadium Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 15:20 CT</span>
+  <span>Filed 04/11/26 15:36 CT</span>
 </footer>
 
 <script>
@@ -1079,7 +1079,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
-document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});
+document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});
 if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});
 </script>
 
