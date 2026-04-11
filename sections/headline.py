@@ -157,7 +157,7 @@ def _render_three_stars(boxscore, game, tmap, team_id):
     if pitchers:
         p, ps = pitchers[0][1], pitchers[0][2]
         line = f"{ps.get('inningsPitched')} IP &middot; {ps.get('hits',0)} H &middot; {ps.get('earnedRuns',0)} ER &middot; {ps.get('strikeOuts',0)} K"
-        stars.append((p['person']['fullName'], line, _pos(p) or "P"))
+        stars.append((p['person']['fullName'], line, _pos(p) or "P", p['person'].get('id')))
     if hitters:
         p, s = hitters[0][1], hitters[0][2]
         extras = []
@@ -168,7 +168,7 @@ def _render_three_stars(boxscore, game, tmap, team_id):
         if s.get('stolenBases', 0): extras.append(f"{s['stolenBases']} SB")
         if s.get('baseOnBalls', 0): extras.append(f"{s['baseOnBalls']} BB")
         line = f"{s.get('hits',0)}-for-{s.get('atBats',0)}" + ("" if not extras else " &middot; " + " &middot; ".join(extras))
-        stars.append((p['person']['fullName'], line, _pos(p)))
+        stars.append((p['person']['fullName'], line, _pos(p), p['person'].get('id')))
     if len(hitters) > 1:
         p, s = hitters[1][1], hitters[1][2]
         extras = []
@@ -177,18 +177,21 @@ def _render_three_stars(boxscore, game, tmap, team_id):
         if s.get('rbi', 0): extras.append(f"{s['rbi']} RBI")
         if s.get('stolenBases', 0): extras.append(f"{s['stolenBases']} SB")
         line = f"{s.get('hits',0)}-for-{s.get('atBats',0)}" + ("" if not extras else " &middot; " + " &middot; ".join(extras))
-        stars.append((p['person']['fullName'], line, _pos(p)))
+        stars.append((p['person']['fullName'], line, _pos(p), p['person'].get('id')))
 
     if hitters and hitters[0][0] >= 6:
         stars = [stars[1], stars[0], stars[2]] if len(stars) >= 3 else stars
 
     cards = []
-    for i, (name, line, pos_badge) in enumerate(stars[:3]):
+    for i, (name, line, pos_badge, pid) in enumerate(stars[:3]):
         badge_html = f'<div class="star-badge">{escape(pos_badge)}</div>' if pos_badge else ''
+        name_html = (
+            f'<player-card pid="{pid}">{escape(name)}</player-card>' if pid else escape(name)
+        )
         cards.append(f"""<div class="star">
         <div class="star-rank">{i+1}</div>
         <div class="star-body">
-          <div class="star-name">{escape(name)}</div>
+          <div class="star-name">{name_html}</div>
           <div class="star-stat">{line}</div>
         </div>
         {badge_html}
@@ -285,8 +288,7 @@ def _render_next_games(next_games, tmap, team_id, team_name, today_lineup, today
 
         def _pitcher_name_html(name, pid):
             safe = escape(name)
-            # Phase 1: only today's Cubs SP gets a card (team_id 112, first game).
-            if pid and idx == 0 and team_id == 112:
+            if pid:
                 return f'<player-card pid="{pid}">{safe}</player-card>'
             return safe
 
@@ -318,10 +320,9 @@ def _render_next_games(next_games, tmap, team_id, team_name, today_lineup, today
                     def _lu_slot(p):
                         last = escape(p["name"].split()[-1])
                         pid = p.get("id")
-                        # Phase 1: only Cubs (team_id 112) gets clickable player cards.
                         name_html = (
                             f'<player-card pid="{pid}">{last}</player-card>'
-                            if pid and team_id == 112 else last
+                            if pid else last
                         )
                         return (
                             f'<span class="lu-slot">'
@@ -358,7 +359,7 @@ def _render_hot_cold(hitters_data, pitchers_data):
             st = stats_list[0]["splits"][0]["stat"]
             if st.get("plateAppearances", 0) < 10:
                 continue
-            out.append({"player": p["person"]["fullName"], "stat": st})
+            out.append({"player": p["person"]["fullName"], "stat": st, "pid": p["person"].get("id")})
         return out
 
     qual = extract_hitters(hitters_data)
@@ -376,8 +377,11 @@ def _render_hot_cold(hitters_data, pitchers_data):
     def hitter_li(s):
         name = s["player"]
         st = s["stat"]
+        pid = s.get("pid")
         avg = st.get("avg", "."); hr = st.get("homeRuns", 0); ops = st.get("ops", "-")
-        return f'<li><span class="n">{escape(name.split()[-1])}</span><span class="s">{avg} / {hr} HR / {ops} OPS</span></li>'
+        last = escape(name.split()[-1])
+        name_html = f'<player-card pid="{pid}">{last}</player-card>' if pid else last
+        return f'<li><span class="n">{name_html}</span><span class="s">{avg} / {hr} HR / {ops} OPS</span></li>'
 
     hot_html = "".join(hitter_li(s) for s in hot)
     cold_html = "".join(hitter_li(s) for s in cold)
@@ -393,7 +397,7 @@ def _render_hot_cold(hitters_data, pitchers_data):
             st = stats_list[0]["splits"][0]["stat"]
             if float(st.get("inningsPitched", "0") or 0) < 2:
                 continue
-            out.append({"player": p["person"]["fullName"], "stat": st})
+            out.append({"player": p["person"]["fullName"], "stat": st, "pid": p["person"].get("id")})
         return out
 
     p_qual = extract_pitchers(pitchers_data)
@@ -411,8 +415,11 @@ def _render_hot_cold(hitters_data, pitchers_data):
     def pitcher_li(s):
         name = s["player"]
         st = s["stat"]
+        pid = s.get("pid")
         era_v = st.get("era", "-"); k = st.get("strikeOuts", 0); ip = st.get("inningsPitched", "0")
-        return f'<li><span class="n">{escape(name.split()[-1])}</span><span class="s">{ip} IP &middot; {era_v} ERA &middot; {k} K</span></li>'
+        last = escape(name.split()[-1])
+        name_html = f'<player-card pid="{pid}">{last}</player-card>' if pid else last
+        return f'<li><span class="n">{name_html}</span><span class="s">{ip} IP &middot; {era_v} ERA &middot; {k} K</span></li>'
 
     phot_html = "".join(pitcher_li(s) for s in p_hot)
     pcold_html = "".join(pitcher_li(s) for s in p_cold)
@@ -443,6 +450,7 @@ def _render_cubs_leaders(cubs_season_data):
             continue
         players.append({
             "name": p["person"]["fullName"],
+            "pid": p["person"].get("id"),
             "pos": p.get("position", {}).get("abbreviation", ""),
             "avg": st.get("avg", ".000"),
             "obp": st.get("obp", ".000"),
@@ -471,9 +479,13 @@ def _render_cubs_leaders(cubs_season_data):
             display = str(val)
         name = leader["name"].split()[-1]
         pos = leader["pos"]
+        pid = leader.get("pid")
+        name_html = (
+            f'<player-card pid="{pid}">{escape(name)}</player-card>' if pid else escape(name)
+        )
         rows.append(
             f'<tr><td>{label}</td>'
-            f'<td class="name">{escape(name)} <span style="color:var(--paper-mute);font-size:10px">{escape(pos)}</span></td>'
+            f'<td class="name">{name_html} <span style="color:var(--paper-mute);font-size:10px">{escape(pos)}</span></td>'
             f'<td class="num">{escape(display)}</td></tr>'
         )
 

@@ -37,7 +37,7 @@ def render(briefing):
     if not cubs_sp and not opp_sp:
         return ""
 
-    def _sp_card(sp, side_label):
+    def _sp_card(sp, side_label, is_own=False):
         if not sp:
             return f'<div class="sp-card"><div class="sp-side">{side_label}</div><div class="sp-name">TBD</div></div>'
         log_rows = []
@@ -55,9 +55,15 @@ def render(briefing):
             log_html = f"""<table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
             <tbody>{"".join(log_rows)}</tbody></table>"""
+        sp_name = escape(sp.get("name", "TBD"))
+        sp_pid = sp.get("id")
+        sp_name_html = (
+            f'<player-card pid="{sp_pid}">{sp_name}</player-card>'
+            if is_own and sp_pid else sp_name
+        )
         return f"""<div class="sp-card">
         <div class="sp-side">{side_label}</div>
-        <div class="sp-name">{escape(sp.get("name","TBD"))}</div>
+        <div class="sp-name">{sp_name_html}</div>
         <div class="sp-season">{sp.get("season","")}</div>
         {f'<h4>Last {len(sp.get("log",[]))} Starts</h4>{log_html}' if log_html else ''}
         </div>"""
@@ -77,7 +83,7 @@ def render(briefing):
 
     return f"""{game_ctx}
     <div class="matchup-vs">
-        {_sp_card(cubs_sp, team_name)}
+        {_sp_card(cubs_sp, team_name, is_own=True)}
         <div class="vs-divider">VS</div>
         {_sp_card(opp_sp, _abbr(tmap, next_games[0]["teams"]["away" if next_games[0]["teams"]["home"]["team"]["id"] == team_id else "home"]["team"]["id"]) if next_games else "OPP")}
     </div>"""
