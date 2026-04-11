@@ -40,6 +40,8 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offs
 .home-btn svg,.teams-btn svg{flex-shrink:0}
 @media (max-width:640px){.nav-btns .home-btn span,.nav-btns .teams-btn span{display:none}.nav-btns{top:36px;right:12px}}
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
+.masthead::before{content:"";position:absolute;inset:-8px -28px 0;background:radial-gradient(80% 120% at 50% 0%,color-mix(in srgb,var(--team-primary) 32%,transparent) 0%,transparent 70%);z-index:-1;pointer-events:none;}
+.masthead::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:linear-gradient(90deg,transparent 0%,var(--team-accent) 20%,var(--team-accent-hi) 50%,var(--team-accent) 80%,transparent 100%);pointer-events:none;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
 .masthead .kicker .vol{color:var(--gold)}
 .masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);display:flex;align-items:center;gap:16px}
@@ -64,10 +66,10 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offs
 @media (max-width:900px){.toc{position:static;padding:14px 0 8px;margin-bottom:8px;border-bottom:1px solid var(--rule)}.toc ol{display:flex;flex-wrap:wrap;gap:4px 6px}.toc li{border:none;padding:0}.toc li::before{display:none}.toc a{display:inline-block;padding:6px 10px;border:1px solid var(--rule);background:var(--ink-2);border-radius:2px;font-size:11px;}}
 main{min-width:0}
 section{margin:18px 0 22px;scroll-margin-top:10px}
-section > summary,section > .sechead{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:16px;border-top:none;border-bottom:1px solid var(--rule);padding:14px 0 10px;margin-bottom:14px;background-image:linear-gradient(90deg,var(--paper) 0%,var(--gold) 50%,var(--paper) 100%);background-size:100% 3px;background-repeat:no-repeat;background-position:top;}
+section > summary,section > .sechead{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:16px;border-top:none;border-bottom:1px solid var(--rule);padding:14px 0 10px;margin-bottom:14px;background-image:linear-gradient(90deg,transparent 0%,var(--team-accent) 30%,var(--team-accent-hi) 50%,var(--team-accent) 70%,transparent 100%);background-size:100% 3px;background-repeat:no-repeat;background-position:top;}
 section > summary::-webkit-details-marker{display:none}
-section > summary .num{flex:0 0 auto;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--gold-dim);letter-spacing:.18em;text-transform:uppercase;border:1px dashed var(--gold-dim);padding:5px 10px 4px;border-radius:1px;background:rgba(201,162,74,.05);line-height:1;transition:color .2s ease, border-color .2s ease, background .2s ease;}
-section > summary:hover .num{color:var(--gold);border-color:var(--gold);background:rgba(201,162,74,.1)}
+section > summary .num{flex:0 0 auto;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--team-accent);letter-spacing:.18em;text-transform:uppercase;border:1px dashed var(--team-accent);padding:5px 10px 4px;border-radius:1px;background:color-mix(in srgb,var(--team-accent) 6%,transparent);line-height:1;transition:color .2s ease, border-color .2s ease, background .2s ease;}
+section > summary:hover .num{color:var(--team-accent-hi);border-color:var(--team-accent-hi);background:color-mix(in srgb,var(--team-accent) 12%,transparent)}
 section > summary .h{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(28px,4.2vw,44px);letter-spacing:-.01em;color:var(--paper);flex:1;line-height:.95;transition:color .2s ease;}
 section > summary:hover .h{color:var(--gold-hi,#e6bf62)}
 section > summary .tag{flex:0 0 auto;font-family:var(--cond);text-transform:uppercase;font-size:10px;letter-spacing:.24em;color:var(--paper-mute);}
@@ -665,7 +667,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Tigers Leaders</h3>
     <div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>AVG</td><td class="name"><player-card pid="690993">Keith</player-card> <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.370</td></tr><tr><td>OBP</td><td class="name"><player-card pid="690993">Keith</player-card> <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.408</td></tr><tr><td>HR</td><td class="name"><player-card pid="693307">Dingler</player-card> <span style="color:var(--paper-mute);font-size:10px">C</span></td><td class="num">2</td></tr><tr><td>RBI</td><td class="name"><player-card pid="682985">Greene</player-card> <span style="color:var(--paper-mute);font-size:10px">LF</span></td><td class="num">10</td></tr><tr><td>SB</td><td class="name"><player-card pid="595879">Báez</player-card> <span style="color:var(--paper-mute);font-size:10px">CF</span></td><td class="num">1</td></tr></tbody></table></div>
+    <tbody><tr><td>AVG</td><td class="name"><player-card pid="690993">Keith</player-card> <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.362</td></tr><tr><td>OBP</td><td class="name"><player-card pid="690993">Keith</player-card> <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.400</td></tr><tr><td>HR</td><td class="name"><player-card pid="693307">Dingler</player-card> <span style="color:var(--paper-mute);font-size:10px">C</span></td><td class="num">2</td></tr><tr><td>RBI</td><td class="name"><player-card pid="682985">Greene</player-card> <span style="color:var(--paper-mute);font-size:10px">LF</span></td><td class="num">10</td></tr><tr><td>SB</td><td class="name"><player-card pid="595879">Báez</player-card> <span style="color:var(--paper-mute);font-size:10px">CF</span></td><td class="num">1</td></tr></tbody></table></div>
     <h3>Next Games</h3>
     <div class="next-games"><div class="nx-card nx-today">
         <div class="nx-head">
@@ -674,7 +676,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="nx-venue">Comerica Park <span class="nx-dome">Retractable Roof</span></div>
         <div class="nx-meta"><span class="nx-opp-rec">MIA: 8-6, 2nd NL East (L1)</span> &middot; <span class="nx-series">Season series: 1-0</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Tigers</span> <player-card pid="663554">Casey Mize</player-card><div class="nx-pline">4.05 ERA &middot; 0-1 &middot; 13.1 IP &middot; 17 K &middot; 1.43 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">MIA</span> Janson Junk<div class="nx-pline">4.91 ERA &middot; 0-1 &middot; 14.2 IP &middot; 10 K &middot; 1.43 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">Tigers</span> <player-card pid="663554">Casey Mize</player-card><div class="nx-pline">3.94 ERA &middot; 0-1 &middot; 16.0 IP &middot; 18 K &middot; 1.44 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">MIA</span> Janson Junk<div class="nx-pline">4.32 ERA &middot; 0-1 &middot; 16.2 IP &middot; 12 K &middot; 1.26 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="805808">McGonigle</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="672761">Pérez</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="690993">Keith</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="693307">Dingler</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="682985">Greene</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="681481">Carpenter</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="679529">Torkelson</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="656716">McKinstry</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="663837">Vierling</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Marlins.TV &middot; Detroit SportsNet</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WXYT 97.1 FM &middot; WQAM 104.3</div>
         <div class="nx-wx">72°F &middot; Climate controlled</div>
@@ -704,12 +706,12 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="595879">Báez</player-card></span><span class="s">.391 / 1 HR / 1.052 OPS</span></li><li><span class="n"><player-card pid="681481">Carpenter</player-card></span><span class="s">.263 / 2 HR / .950 OPS</span></li><li><span class="n"><player-card pid="679529">Torkelson</player-card></span><span class="s">.286 / 0 HR / .922 OPS</span></li><li><span class="n"><player-card pid="690993">Keith</player-card></span><span class="s">.318 / 0 HR / .803 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="663330">Jones</player-card></span><span class="s">.000 / 0 HR / .000 OPS</span></li><li><span class="n"><player-card pid="668670">Rogers</player-card></span><span class="s">.083 / 0 HR / .321 OPS</span></li><li><span class="n"><player-card pid="693307">Dingler</player-card></span><span class="s">.222 / 0 HR / .613 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="595879">Báez</player-card></span><span class="s">.391 / 1 HR / 1.052 OPS</span></li><li><span class="n"><player-card pid="681481">Carpenter</player-card></span><span class="s">.263 / 2 HR / .980 OPS</span></li><li><span class="n"><player-card pid="679529">Torkelson</player-card></span><span class="s">.286 / 0 HR / .940 OPS</span></li><li><span class="n"><player-card pid="690993">Keith</player-card></span><span class="s">.304 / 0 HR / .768 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="663330">Jones</player-card></span><span class="s">.000 / 0 HR / .000 OPS</span></li><li><span class="n"><player-card pid="668670">Rogers</player-card></span><span class="s">.083 / 0 HR / .321 OPS</span></li><li><span class="n"><player-card pid="693307">Dingler</player-card></span><span class="s">.211 / 0 HR / .586 OPS</span></li></ul></div>
     </div>
     <div class="two">
       <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="657756">Seabold</player-card></span><span class="s">6.1 IP &middot; 0.00 ERA &middot; 6 K</span></li><li><span class="n"><player-card pid="640448">Finnegan</player-card></span><span class="s">5.1 IP &middot; 0.00 ERA &middot; 3 K</span></li><li><span class="n"><player-card pid="663947">Holton</player-card></span><span class="s">6.1 IP &middot; 0.00 ERA &middot; 5 K</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="676684">Vest</player-card></span><span class="s">5.2 IP &middot; 7.94 ERA &middot; 6 K</span></li><li><span class="n"><player-card pid="623454">Anderson</player-card></span><span class="s">6.1 IP &middot; 7.11 ERA &middot; 7 K</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="676684">Vest</player-card></span><span class="s">5.2 IP &middot; 7.94 ERA &middot; 6 K</span></li><li><span class="n"><player-card pid="623454">Anderson</player-card></span><span class="s">6.2 IP &middot; 6.75 ERA &middot; 7 K</span></li></ul></div>
     </div>
     
   </section>
@@ -726,19 +728,19 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="sp-card">
         <div class="sp-side">Tigers</div>
         <div class="sp-name"><player-card pid="663554">Casey Mize</player-card></div>
-        <div class="sp-season">4.05 ERA &middot; 0-1 &middot; 13.1 IP &middot; 17 K &middot; 1.43 WHIP</div>
+        <div class="sp-season">3.94 ERA &middot; 0-1 &middot; 16.0 IP &middot; 18 K &middot; 1.44 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>03-31</td><td class="opp">vs Arizona Diamondbacks</td><td class="num">6.0</td><td class="num">1</td><td class="num">9</td><td class="num">4</td><td class="num">2</td></tr><tr><td>04-06</td><td class="opp">vs Minnesota Twins</td><td class="num">4.1</td><td class="num">5</td><td class="num">4</td><td class="num">7</td><td class="num">3</td></tr><tr><td>04-11</td><td class="opp">vs Miami Marlins</td><td class="num">3.0</td><td class="num">0</td><td class="num">4</td><td class="num">4</td><td class="num">0</td></tr></tbody></table>
+            <tbody><tr><td>03-31</td><td class="opp">vs Arizona Diamondbacks</td><td class="num">6.0</td><td class="num">1</td><td class="num">9</td><td class="num">4</td><td class="num">2</td></tr><tr><td>04-06</td><td class="opp">vs Minnesota Twins</td><td class="num">4.1</td><td class="num">5</td><td class="num">4</td><td class="num">7</td><td class="num">3</td></tr><tr><td>04-11</td><td class="opp">vs Miami Marlins</td><td class="num">5.2</td><td class="num">1</td><td class="num">5</td><td class="num">6</td><td class="num">1</td></tr></tbody></table>
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
         <div class="sp-side">MIA</div>
         <div class="sp-name">Janson Junk</div>
-        <div class="sp-season">4.91 ERA &middot; 0-1 &middot; 14.2 IP &middot; 10 K &middot; 1.43 WHIP</div>
+        <div class="sp-season">4.32 ERA &middot; 0-1 &middot; 16.2 IP &middot; 12 K &middot; 1.26 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>03-31</td><td class="opp">vs Chicago White Sox</td><td class="num">4.1</td><td class="num">2</td><td class="num">5</td><td class="num">5</td><td class="num">1</td></tr><tr><td>04-06</td><td class="opp">vs Cincinnati Reds</td><td class="num">7.1</td><td class="num">2</td><td class="num">3</td><td class="num">7</td><td class="num">1</td></tr><tr><td>04-11</td><td class="opp">vs Detroit Tigers</td><td class="num">3.0</td><td class="num">4</td><td class="num">2</td><td class="num">5</td><td class="num">2</td></tr></tbody></table>
+            <tbody><tr><td>03-31</td><td class="opp">vs Chicago White Sox</td><td class="num">4.1</td><td class="num">2</td><td class="num">5</td><td class="num">5</td><td class="num">1</td></tr><tr><td>04-06</td><td class="opp">vs Cincinnati Reds</td><td class="num">7.1</td><td class="num">2</td><td class="num">3</td><td class="num">7</td><td class="num">1</td></tr><tr><td>04-11</td><td class="opp">vs Detroit Tigers</td><td class="num">5.0</td><td class="num">4</td><td class="num">4</td><td class="num">5</td><td class="num">2</td></tr></tbody></table>
         </div>
     </div>
   </section>
@@ -974,7 +976,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Comerica Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 13:15 CT</span>
+  <span>Filed 04/11/26 14:00 CT</span>
 </footer>
 
 <script>

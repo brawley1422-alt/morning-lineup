@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Morning Lineup — Before / After Design Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Oswald:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d0f14;--ink-2:#141823;--ink-3:#1c2230;
+  --paper:#ece4d0;--paper-dim:#c9bfa6;--paper-mute:#8b836d;
+  --gold:#c9a24a;--gold-dim:#8a6f32;
+  --red:#c8102e;
+  --serif:"Playfair Display",Georgia,serif;
+  --cond:"Oswald",Impact,sans-serif;
+  --body:"Lora",Georgia,serif;
+  --mono:"IBM Plex Mono",Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0a0c11;color:var(--paper);font-family:var(--body);min-height:100vh}
+body{padding:48px 20px 120px;max-width:1360px;margin:0 auto}
+.doc-head{border-bottom:2px solid var(--gold);padding-bottom:28px;margin-bottom:56px}
+.doc-head .kicker{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;color:var(--gold);font-size:13px;font-weight:500}
+.doc-head h1{font-family:var(--serif);font-style:italic;font-weight:900;font-size:64px;line-height:.95;margin:12px 0 14px;color:var(--paper)}
+.doc-head .dek{font-family:var(--body);font-style:italic;color:var(--paper-dim);font-size:17px;max-width:640px;line-height:1.45}
+.doc-head .meta{margin-top:20px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;color:var(--paper-mute);font-size:11px}
+.doc-head .meta span{margin-right:18px}
+
+.howto{background:var(--ink-2);border-left:3px solid var(--gold);padding:14px 20px;margin:24px 0 48px;font-size:14px;color:var(--paper-dim)}
+.howto b{color:var(--paper);font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:12px}
+
+.panel{margin:0 0 80px}
+.panel-head{border-top:1px dashed var(--gold-dim);padding-top:20px;margin-bottom:18px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+.panel-head .num{font-family:var(--cond);font-weight:700;font-size:13px;color:var(--gold);letter-spacing:.2em;min-width:32px}
+.panel-head h2{font-family:var(--serif);font-weight:700;font-size:24px;color:var(--paper);flex:1;min-width:240px}
+.panel-head .tag{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:11px;padding:3px 10px;border:1px solid var(--paper-mute);color:var(--paper-dim)}
+.panel-head .tag.p0{color:var(--red);border-color:var(--red)}
+.panel-head .tag.p1{color:var(--gold);border-color:var(--gold)}
+.panel-head .tag.p2{color:var(--paper-dim);border-color:var(--paper-mute)}
+.panel .why{font-style:italic;color:var(--paper-dim);font-size:14px;margin:0 0 16px;max-width:800px;line-height:1.5}
+
+/* Before/After comparison container */
+.compare{
+  position:relative;width:100%;
+  background:var(--ink);
+  border:1px solid var(--ink-3);
+  overflow:hidden;
+  user-select:none;
+  --split:50%;
+}
+.compare .pane{
+  position:absolute;inset:0;
+  display:flex;align-items:stretch;justify-content:stretch;
+  overflow:hidden;
+}
+.compare .pane.before{clip-path:inset(0 calc(100% - var(--split)) 0 0)}
+.compare .pane.after{clip-path:inset(0 0 0 var(--split))}
+.compare .label{
+  position:absolute;top:12px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;
+  padding:4px 10px;background:rgba(10,12,17,.88);color:var(--paper);border:1px solid var(--paper-mute);pointer-events:none;z-index:3;
+}
+.compare .label.before{left:14px}
+.compare .label.after{right:14px}
+.compare .divider{
+  position:absolute;top:0;bottom:0;left:var(--split);width:2px;background:var(--gold);
+  transform:translateX(-1px);z-index:4;pointer-events:none;
+}
+.compare .handle{
+  position:absolute;top:50%;left:var(--split);width:40px;height:40px;margin:-20px 0 0 -20px;
+  background:var(--gold);color:var(--ink);border-radius:50%;cursor:ew-resize;z-index:5;
+  display:flex;align-items:center;justify-content:center;font-family:var(--cond);font-weight:700;font-size:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,.6),0 0 0 4px rgba(201,162,74,.15);
+  touch-action:none;
+}
+.compare .handle::before{content:"‹ ›";letter-spacing:-1px}
+
+.pane-inner{width:100%;min-height:100%;display:flex;align-items:stretch}
+
+/* Shared mock "newspaper" skin used inside panes */
+.mock{width:100%;background:var(--ink);color:var(--paper);font-family:var(--body);padding:28px 32px;position:relative}
+.mock .team-bug{display:inline-block;width:28px;height:28px;border-radius:50%;background:var(--paper);vertical-align:middle;margin-right:10px}
+.mock .masthead{display:flex;align-items:center;padding-bottom:14px;border-bottom:3px double var(--gold-dim)}
+.mock .masthead .kicker-col{flex:0 0 auto;font-family:var(--cond);text-transform:uppercase;letter-spacing:.22em;color:var(--gold);font-size:11px;padding-right:18px;border-right:1px solid var(--paper-mute);margin-right:18px}
+.mock .masthead h1{font-family:var(--serif);font-style:italic;font-weight:900;font-size:54px;line-height:.9;color:var(--paper);flex:1}
+.mock .masthead h1 .the{display:block;font-family:var(--cond);font-style:normal;font-weight:600;font-size:13px;letter-spacing:.24em;color:var(--gold);margin-bottom:2px}
+.mock .masthead .meta{font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;font-size:10px;color:var(--paper-mute);text-align:right;line-height:1.6}
+.mock .dek{margin-top:14px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--paper-mute);display:flex;gap:18px;justify-content:space-between;border-bottom:1px solid var(--ink-3);padding-bottom:10px}
+
+/* ======= 1. LANDING: "Just a taste" panel ======= */
+.m-taste-before{padding:60px 32px;background:var(--ink)}
+.m-taste-before .taste-box{max-width:520px;margin:0 auto;background:#1a1f2b;border-radius:18px;padding:30px 28px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.m-taste-before .taste-box h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-size:14px;margin-bottom:10px}
+.m-taste-before .taste-box p{font-family:var(--body);color:var(--paper-dim);font-size:14px;line-height:1.55;margin-bottom:18px}
+.m-taste-before .taste-box button{background:var(--gold);color:var(--ink);border:none;padding:10px 22px;border-radius:10px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:12px;font-weight:600;cursor:pointer}
+
+.m-taste-after{padding:60px 32px;background:var(--ink)}
+.m-taste-after .quote{max-width:640px;margin:0 auto;text-align:center;padding:0 16px}
+.m-taste-after .quote .marks{font-family:var(--serif);font-weight:900;font-size:72px;line-height:.5;color:var(--gold);display:block;margin-bottom:14px}
+.m-taste-after .quote blockquote{font-family:var(--serif);font-style:italic;font-weight:400;font-size:26px;line-height:1.3;color:var(--paper);margin-bottom:18px}
+.m-taste-after .quote blockquote .hi{color:var(--gold);font-style:normal;font-weight:700}
+.m-taste-after .quote cite{font-family:var(--cond);text-transform:uppercase;letter-spacing:.22em;font-size:11px;color:var(--paper-mute);font-style:normal;display:block;padding-top:12px;border-top:1px solid var(--paper-mute);max-width:280px;margin:0 auto}
+
+/* ======= 2. MASTHEAD team-variant ======= */
+.m-masthead-before{--tp:#0E3386}
+.m-masthead-after{--tp:#0E3386;--ta:#CC3433}
+.m-masthead-before .masthead{border-bottom-color:var(--gold-dim)}
+.m-masthead-after .masthead-wrap{position:relative}
+.m-masthead-after .masthead-wrap::before{
+  content:"";position:absolute;inset:-28px -32px 0;
+  background:linear-gradient(180deg,rgba(14,51,134,.28),rgba(14,51,134,0) 80%);
+  z-index:0;pointer-events:none;
+}
+.m-masthead-after .masthead{position:relative;z-index:1;border-bottom:2px solid var(--ta)}
+.m-masthead-after .masthead h1{background:linear-gradient(180deg,var(--paper),var(--paper-dim));-webkit-background-clip:text;background-clip:text;color:transparent}
+.m-masthead-after .masthead .kicker-col{color:var(--ta);border-right-color:var(--ta)}
+.m-masthead-before .team-bug,.m-masthead-after .team-bug{background:#0E3386;border:2px solid var(--paper);position:relative}
+.m-masthead-before .team-bug::after,.m-masthead-after .team-bug::after{content:"C";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;color:var(--paper);font-weight:900;font-size:16px}
+
+/* Tabbed team switcher for panel 2 */
+.team-switch{display:flex;gap:0;margin-bottom:12px;border-bottom:1px solid var(--ink-3)}
+.team-switch button{background:none;border:none;color:var(--paper-mute);font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:11px;padding:10px 18px;cursor:pointer;border-bottom:2px solid transparent}
+.team-switch button.active{color:var(--paper);border-bottom-color:var(--gold)}
+
+/* ======= 3. LINESCORE gold-vs-accent ======= */
+.m-linescore{padding:34px;background:var(--ink)}
+.m-linescore .box{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:center;padding:20px 26px;background:var(--ink-2);border:1px solid var(--ink-3)}
+.m-linescore .score{display:flex;align-items:center;gap:22px;font-family:var(--serif);font-weight:900}
+.m-linescore .team{display:flex;align-items:center;gap:12px}
+.m-linescore .abbr{font-family:var(--cond);font-size:22px;letter-spacing:.1em;color:var(--paper)}
+.m-linescore .num{font-size:64px;line-height:.9}
+.m-linescore-before .num{color:var(--gold)}
+.m-linescore-before .abbr{color:var(--gold)}
+.m-linescore-before .rhe{color:var(--gold)}
+.m-linescore-after .num{color:var(--paper)}
+.m-linescore-after .num.win{color:var(--ta,#CC3433)}
+.m-linescore-after .abbr{color:var(--paper-dim)}
+.m-linescore-after .rhe{color:var(--paper)}
+.m-linescore-after{--ta:#CC3433}
+.m-linescore .rhe-table{font-family:var(--mono);font-size:12px;color:var(--paper-dim);text-align:right}
+.m-linescore .rhe-table b{display:block;letter-spacing:.1em;font-family:var(--cond);text-transform:uppercase;font-size:10px;color:var(--paper-mute)}
+.m-linescore-before .rhe-table b{color:var(--gold)}
+
+/* ======= 4. EMPTY STATE LINESCORE ======= */
+.m-empty{padding:34px;background:var(--ink)}
+.m-empty-before .zero{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;padding:40px 30px;background:var(--ink-2);border:1px solid var(--ink-3)}
+.m-empty-before .zero .t{text-align:center;font-family:var(--serif);font-weight:900;font-size:84px;line-height:.85;color:var(--gold)}
+.m-empty-before .zero .t span{display:block;font-family:var(--cond);font-style:normal;font-size:18px;letter-spacing:.14em;color:var(--paper);margin-top:6px}
+.m-empty-before .zero .dash{font-family:var(--serif);font-size:60px;color:var(--paper-mute)}
+
+.m-empty-after .card{padding:26px 32px;background:var(--ink-2);border-left:4px solid var(--gold);display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.m-empty-after .card .kicker{font-family:var(--cond);text-transform:uppercase;letter-spacing:.22em;font-size:10px;color:var(--gold);margin-bottom:8px;grid-column:1/-1}
+.m-empty-after .card .side{border-left:1px dashed var(--ink-3);padding-left:18px}
+.m-empty-after .card .side:first-of-type{border-left:none;padding-left:0}
+.m-empty-after .card .side .name{font-family:var(--serif);font-style:italic;font-weight:700;font-size:22px;color:var(--paper);margin-bottom:2px}
+.m-empty-after .card .side .rec{font-family:var(--mono);font-size:12px;color:var(--paper-mute);letter-spacing:.06em}
+.m-empty-after .card .side .sp{font-family:var(--cond);text-transform:uppercase;font-size:12px;color:var(--paper-dim);letter-spacing:.12em;margin-top:14px}
+.m-empty-after .card .side .sp b{color:var(--paper);display:block;font-family:var(--serif);font-style:italic;font-weight:700;font-size:17px;letter-spacing:0;text-transform:none;margin-top:2px}
+.m-empty-after .card .side .era{font-family:var(--mono);color:var(--paper-mute);font-size:11px;letter-spacing:.04em;margin-top:4px}
+.m-empty-after .card .foot{grid-column:1/-1;border-top:1px solid var(--ink-3);padding-top:12px;margin-top:6px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;font-size:10px;color:var(--paper-mute);display:flex;justify-content:space-between}
+
+/* ======= 5. COLUMNISTS lead-column ======= */
+.m-col{padding:30px 32px;background:var(--ink)}
+.m-col .col-head{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--gold);margin-bottom:18px;padding-bottom:8px;border-bottom:1px solid var(--ink-3)}
+.m-col-before .row{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:14px 0;border-bottom:1px dashed var(--ink-3)}
+.m-col-before .row .name{font-family:var(--serif);font-style:italic;font-weight:700;font-size:18px;color:var(--paper)}
+.m-col-before .row .beat{font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--paper-dim)}
+.m-col-before .row .tag{font-family:var(--cond);text-transform:uppercase;font-size:10px;color:var(--gold);letter-spacing:.14em}
+
+.m-col-after .lead{display:grid;grid-template-columns:64px 1fr auto;gap:18px;align-items:start;padding:18px 0 22px;border-bottom:1px solid var(--gold-dim)}
+.m-col-after .lead .cap{font-family:var(--serif);font-weight:900;font-size:76px;line-height:.8;color:var(--gold)}
+.m-col-after .lead .body .name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:26px;color:var(--paper);line-height:1.05}
+.m-col-after .lead .body .beat{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--paper-mute);margin-top:6px}
+.m-col-after .lead .body .headline{font-family:var(--body);font-style:italic;color:var(--paper-dim);font-size:14px;line-height:1.45;margin-top:10px;max-width:440px}
+.m-col-after .lead .tag{font-family:var(--cond);text-transform:uppercase;font-size:10px;color:var(--gold);letter-spacing:.14em;padding-top:10px}
+.m-col-after .row{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px dashed var(--ink-3);font-size:13px}
+.m-col-after .row .name{font-family:var(--serif);font-style:italic;font-weight:700;color:var(--paper);font-size:15px}
+.m-col-after .row .beat{font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;font-size:10px;color:var(--paper-mute)}
+.m-col-after .row .tag{font-family:var(--cond);font-size:9px;color:var(--gold-dim);letter-spacing:.14em}
+
+/* ======= 6. CTA button letterpress ======= */
+.m-cta{padding:48px 32px;background:var(--ink);text-align:center}
+.m-cta-before button{background:var(--gold);color:var(--ink);border:none;padding:14px 36px;border-radius:8px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:13px;font-weight:600;cursor:pointer}
+.m-cta-after .letterpress{display:inline-block;padding:10px 0;font-family:var(--serif);font-style:italic;font-weight:700;font-size:22px;color:var(--paper);border-top:1px solid var(--paper);border-bottom:3px double var(--paper);letter-spacing:.01em;cursor:pointer}
+.m-cta-after .letterpress::before{content:"— ";color:var(--gold);font-style:normal}
+.m-cta-after .letterpress::after{content:" —";color:var(--gold);font-style:normal}
+
+/* ======= 7. MOBILE TOP FOLD ======= */
+.m-mobile{display:flex;justify-content:center;padding:20px;background:var(--ink)}
+.m-mobile .phone{width:310px;height:560px;background:var(--ink);border:8px solid #1a1f2b;border-radius:26px;overflow:hidden;position:relative}
+.m-mobile-before .phone .masthead{padding:30px 18px 22px;text-align:center;border-bottom:2px solid var(--gold-dim)}
+.m-mobile-before .phone .masthead .kicker{font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:9px;color:var(--gold);display:block;margin-bottom:10px}
+.m-mobile-before .phone .masthead h1{font-family:var(--serif);font-style:italic;font-weight:900;font-size:46px;color:var(--paper);line-height:.92}
+.m-mobile-before .phone .masthead h1 .the{display:block;font-family:var(--cond);font-style:normal;font-size:11px;letter-spacing:.24em;color:var(--gold);margin-bottom:4px}
+.m-mobile-before .phone .dek{padding:12px 18px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:9px;color:var(--paper-mute);display:flex;gap:14px;flex-wrap:wrap;border-bottom:1px solid var(--ink-3)}
+.m-mobile-before .phone .toc{padding:14px 18px;display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--ink-3)}
+.m-mobile-before .phone .toc a{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-dim);border:1px solid var(--ink-3);padding:4px 9px}
+.m-mobile-before .phone .fold-marker{position:absolute;top:480px;left:0;right:0;border-top:1px dashed var(--red);text-align:center}
+.m-mobile-before .phone .fold-marker span{display:inline-block;background:var(--ink);color:var(--red);font-family:var(--cond);text-transform:uppercase;font-size:9px;letter-spacing:.14em;padding:0 8px;transform:translateY(-7px)}
+
+.m-mobile-after .phone .masthead{padding:14px 14px 10px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--gold-dim)}
+.m-mobile-after .phone .masthead .bug{width:24px;height:24px;border-radius:50%;background:#0E3386;border:1.5px solid var(--paper);flex-shrink:0}
+.m-mobile-after .phone .masthead h1{font-family:var(--serif);font-style:italic;font-weight:900;font-size:28px;color:var(--paper);line-height:.95;flex:1}
+.m-mobile-after .phone .masthead h1 .the{font-family:var(--cond);font-style:normal;font-size:9px;letter-spacing:.22em;color:var(--gold);display:block}
+.m-mobile-after .phone .dek{padding:7px 14px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:8px;color:var(--paper-mute);display:flex;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--ink-3)}
+.m-mobile-after .phone .toc{padding:8px 14px;display:flex;gap:8px;overflow-x:auto;border-bottom:1px solid var(--ink-3);white-space:nowrap}
+.m-mobile-after .phone .toc a{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:9px;color:var(--paper-dim);padding:3px 8px;border:1px solid var(--ink-3);flex-shrink:0}
+.m-mobile-after .phone .content{padding:14px;background:var(--ink)}
+.m-mobile-after .phone .content .kicker{font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:9px;color:var(--gold);margin-bottom:6px}
+.m-mobile-after .phone .content .score{font-family:var(--serif);font-weight:900;font-size:40px;line-height:.9;color:var(--paper);display:flex;align-items:baseline;gap:12px}
+.m-mobile-after .phone .content .score .abbr{font-family:var(--cond);font-size:13px;color:var(--paper-dim);letter-spacing:.1em}
+.m-mobile-after .phone .content .score .v{color:var(--paper-mute);font-size:22px}
+.m-mobile-after .phone .fold-marker{position:absolute;top:260px;left:0;right:0;border-top:1px dashed #4ea341;text-align:center}
+.m-mobile-after .phone .fold-marker span{display:inline-block;background:var(--ink);color:#4ea341;font-family:var(--cond);text-transform:uppercase;font-size:9px;letter-spacing:.14em;padding:0 8px;transform:translateY(-7px)}
+
+/* ======= 8. PAGE-BREAK rule ======= */
+.m-pagebreak{padding:40px 32px;background:var(--ink)}
+.m-pagebreak .sec-a,.m-pagebreak .sec-b{font-family:var(--body);color:var(--paper-dim);font-size:13px;line-height:1.55}
+.m-pagebreak .sec-a h3,.m-pagebreak .sec-b h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--gold);margin-bottom:10px}
+.m-pagebreak-before .gap{height:36px}
+.m-pagebreak-after .pagebreak{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin:34px 0}
+.m-pagebreak-after .pagebreak::before,.m-pagebreak-after .pagebreak::after{content:"";height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim) 40%,var(--gold-dim) 60%,transparent)}
+.m-pagebreak-after .pagebreak .marker{font-family:var(--cond);text-transform:uppercase;letter-spacing:.22em;font-size:10px;color:var(--gold);white-space:nowrap;padding:6px 14px;border:1px dashed var(--gold-dim)}
+
+/* ======= 9. HOME LOADING state ======= */
+.m-loading{padding:32px;background:var(--ink);min-height:360px}
+.m-loading-before{display:flex;align-items:center;justify-content:center;min-height:360px}
+.m-loading-before .msg{font-family:var(--body);font-style:italic;color:var(--paper-mute);font-size:14px}
+
+.m-loading-after .kicker{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold);margin-bottom:4px}
+.m-loading-after .press{font-family:var(--serif);font-style:italic;font-weight:700;font-size:22px;color:var(--paper);margin-bottom:22px;min-height:28px}
+.m-loading-after .press::after{content:"";display:inline-block;width:10px;height:2px;background:var(--gold);vertical-align:middle;margin-left:6px;animation:blink 1.2s infinite}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+.m-loading-after .skel-col{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px dashed var(--ink-3)}
+.m-loading-after .skel-col .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(90deg,var(--ink-2),var(--ink-3),var(--ink-2));background-size:200% 100%;animation:shimmer 1.8s infinite}
+.m-loading-after .skel-col .lines{flex:1;display:flex;flex-direction:column;gap:6px}
+.m-loading-after .skel-col .lines .l{height:9px;background:linear-gradient(90deg,var(--ink-2),var(--ink-3),var(--ink-2));background-size:200% 100%;animation:shimmer 1.8s infinite}
+.m-loading-after .skel-col .lines .l.w1{width:68%}
+.m-loading-after .skel-col .lines .l.w2{width:40%}
+.m-loading-after .skel-col .num{font-family:var(--cond);font-size:11px;color:var(--paper-mute);letter-spacing:.12em;text-transform:uppercase}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ======= 10. MOBILE TABLE cards ======= */
+.m-table{padding:24px;background:var(--ink)}
+.m-table-before table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:10px}
+.m-table-before table th{text-align:left;font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;color:var(--gold);padding:6px 4px;border-bottom:1px solid var(--ink-3);font-size:9px}
+.m-table-before table td{padding:6px 4px;color:var(--paper-dim);border-bottom:1px dashed var(--ink-3);white-space:nowrap;overflow:hidden}
+.m-table-before table td.name{color:var(--paper);font-family:var(--serif);font-style:italic;font-size:11px}
+
+.m-table-after .card{display:grid;grid-template-columns:1fr auto auto;gap:4px 18px;padding:12px 14px;border-bottom:1px solid var(--ink-3);align-items:baseline}
+.m-table-after .card .name{font-family:var(--serif);font-style:italic;font-weight:700;font-size:16px;color:var(--paper);grid-column:1/-1}
+.m-table-after .card .sub{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:9px;color:var(--paper-mute);grid-column:1/2}
+.m-table-after .card .rec{font-family:var(--mono);font-size:13px;color:var(--paper);letter-spacing:.05em;font-weight:600}
+.m-table-after .card .gb{font-family:var(--mono);font-size:11px;color:var(--paper-dim)}
+.m-table-after .card.leader .rec{color:#e8544f}
+.m-table-after .card.leader{border-left:3px solid #CC3433;padding-left:11px}
+
+/* ======= 11. SECTION header rule ======= */
+.m-rule{padding:30px 32px;background:var(--ink)}
+.m-rule .summary-before,.m-rule .summary-after{display:flex;align-items:center;gap:18px;padding:10px 0 14px;position:relative}
+.m-rule .summary-before::before,.m-rule .summary-after::before{content:"";position:absolute;top:0;left:0;right:0;height:1px}
+.m-rule .summary-before::before{background:linear-gradient(90deg,transparent,var(--gold) 40%,var(--gold) 60%,transparent)}
+.m-rule .summary-after::before{background:linear-gradient(90deg,transparent,var(--ta,#CC3433) 40%,var(--ta,#CC3433) 60%,transparent)}
+.m-rule .summary-before .num,.m-rule .summary-after .num{font-family:var(--cond);font-weight:700;font-size:14px;color:var(--gold);padding:4px 10px;border:1px dashed var(--gold)}
+.m-rule .summary-after .num{color:var(--ta,#CC3433);border-color:var(--ta,#CC3433)}
+.m-rule .summary-before h3,.m-rule .summary-after h3{font-family:var(--serif);font-style:italic;font-weight:900;font-size:26px;color:var(--paper)}
+.m-rule .body{padding-top:8px;font-family:var(--body);font-size:13px;color:var(--paper-dim);line-height:1.5}
+
+/* Responsive */
+@media (max-width:900px){
+  body{padding:28px 12px 80px}
+  .doc-head h1{font-size:44px}
+  .panel-head h2{font-size:19px}
+  .mock{padding:20px 18px}
+  .mock .masthead h1{font-size:34px}
+}
+</style>
+</head>
+<body>
+
+<header class="doc-head">
+  <div class="kicker">MORNING LINEUP · DESIGN REVIEW · 2026-04-11</div>
+  <h1>Before &amp; <span style="color:var(--gold)">After</span></h1>
+  <div class="dek">Eleven proposed design changes from tonight's audit, rendered as live HTML mockups. Drag the gold handle on each panel to swipe between the current site and the proposal. Every "after" pane is real code — whatever you approve can be lifted directly into <code>style.css</code>.</div>
+  <div class="meta">
+    <span>11 PANELS</span><span>DRAG THE HANDLE</span><span>ALL MOCKUPS ARE LIVE HTML/CSS</span>
+  </div>
+</header>
+
+<div class="howto">
+  <b>How to read this</b><br>
+  Each panel is a two-layer comparison. The <b>left</b> side is the current site; the <b>right</b> side is the proposed change. Drag the gold handle in the middle (or tap and drag on mobile) to slide between the two. Priority tags: <span style="color:var(--red)">P0</span> = fix tonight, <span style="color:var(--gold)">P1</span> = fix this week, grey = polish.
+</div>
+
+<!-- PANEL 1 — Kill the "just a taste" panel -->
+<section class="panel">
+  <div class="panel-head">
+    <div class="num">01</div>
+    <h2>Landing — replace "just a taste" marketing box with editorial pull quote</h2>
+    <div class="tag p0">P0</div>
+  </div>
+  <p class="why">The rounded-rect panel reads like a Mailchimp modal parachuted into a newspaper. An editorial pull quote stays inside the metaphor and does the same job.</p>
+  <div class="compare" style="height:380px">
+    <div class="pane before"><div class="pane-inner"><div class="mock m-taste-before">
+      <div class="taste-box">
+        <h3>This is just a taste</h3>
+        <p>Sign in to follow your team, build a roster, and unlock daily predictions on every player you care about.</p>
+        <button>Create a free account</button>
+      </div>
+    </div></div></div>
+    <div class="pane after"><div class="pane-inner"><div class="mock m-taste-after">
+      <div class="quote">
+        <span class="marks">&ldquo;</span>
+        <blockquote>You're reading the <span class="hi">Guest Edition</span>. Sign in to pin your team to the front page and follow any player in the league.</blockquote>
+        <cite>— From the Editor's Desk</cite>
+      </div>
+    </div></div></div>
+    <div class="divider"></div><div class="handle" data-handle></div>
+    <div class="label before">Before</div><div class="label after">After</div>
+  </div>
+</section>
+
+<!-- PANEL 2 — Masthead team-color flood -->
+<section class="panel">
+  <div class="panel-head">
+    <div class="num">02</div>
+    <h2>Masthead — flood team primary behind the title, swap gold underline for team accent</h2>
+    <div class="tag p0">P0</div>
+  </div>
+  <p class="why">Right now Cubs / Yankees / Dodgers feel ~90% identical. A soft team-primary gradient tint behind the masthead plus a team-accent bottom border makes the page feel unmistakably "yours" from the first glance.</p>
+  <div class="compare" style="height:180px">
+    <div class="pane before"><div class="pane-inner"><div class="mock m-masthead-before">
+      <div class="masthead">
+        <div class="team-bug"></div>
+        <div class="kicker-col">APR 11 · 2026<br>VOL IV · NO 102</div>
+        <h1><span class="the">THE</span>Morning Lineup</h1>
+        <div class="meta">8:10 CENTRAL<br>76° / WIND OUT</div>
+      </div>
+    </div></div></div>
+    <div class="pane after"><div class="pane-inner"><div class="mock m-masthead-after">
+      <div class="masthead-wrap">
+        <div class="masthead">
+          <div class="team-bug"></div>
+          <div class="kicker-col">APR 11 · 2026<br>VOL IV · NO 102</div>
+          <h1><span class="the">THE</span>Morning Lineup</h1>
+          <div class="meta">8:10 CENTRAL<br>76° / WIND OUT</div>
+        </div>
+      </div>
+    </div></div></div>
+    <div class="divider"></div><div class="handle" data-handle></div>
+    <div class="label before">Before</div><div class="label after">After</div>
+  </div>
+</section>
+
+<!-- PANEL 3 — Linescore gold vs team accent -->
+<section class="panel">
+  <div class="panel-head">
+    <div class="num">03</div>
+    <h2>Linescore — reassign stat-emphasis from gold to team accent</h2>
+    <div class="tag p1">P1</div>
+  </div>
+  <p class="why">Gold currently plays ~12 semantic roles — numerals, numbers, links, rules, borders. Shown this way, the winning team (and the team you're reading about) gets lost. After: gold stays for editorial chrome; the team accent earns the score.</p>
+  <div class="compare" style="height:230px">
+    <div class="pane before"><div class="pane-inner"><div class="mock m-linescore m-linescore-before">
+      <div class="box">
+        <div class="score">
+          <div class="team"><span class="abbr">PIT</span><span class="num">4</span></div>
+          <div class="team"><span class="abbr">CHC</span><span class="num rhe">7</span></div>
+        </div>
+        <div class="rhe-table"><b>R · H · E</b>PIT&nbsp;&nbsp;4&nbsp;·&nbsp;9&nbsp;·&nbsp;1<br>CHC&nbsp;&nbsp;7&nbsp;·&nbsp;11&nbsp;·&nbsp;0</div>
+      </div>
+    </div></div></div>
+    <div class="pane after"><div class="pane-inner"><div class="mock m-linescore m-linescore-after">
+      <div class="box">
+        <div class="score">
+          <div class="team"><span class="abbr">PIT</span><span class="num">4</span></div>
+          <div class="team"><span class="abbr">CHC</span><span class="num win">7</span></div>
+        </div>
+        <div class="rhe-table"><b>R · H · E</b>PIT&nbsp;&nbsp;4&nbsp;·&nbsp;9&nbsp;·&nbsp;1<br>CHC&nbsp;&nbsp;7&nbsp;·&nbsp;11&nbsp;·&nbsp;0</div>
+      </div>
+    </div></div></div>
+    <div class="divider"></div><div class="handle" data-handle></div>
+    <div class="label before">Before</div><div class="label after">After</div>
+  </div>
+</section>
+
+<!-- PANEL 4 — Empty-state linescore -->
+<section class="panel">
+  <div class="panel-head">
+    <div class="num">04</div>
+    <h2>Off-day linescore — show a matchup card instead of "0 — 0"</h2>
+    <div class="tag p1">P1</div>
+  </div>
+  <p class="why">On pre-game and off-days the hero shows "0 — 0" in the same 80px numerals as a real score, which reads like "the game happened and nobody scored." An editorial matchup card sells the site's patience instead.</p>
+  <div class="compare" style="height:260px">
+    <div class="pane before"><div class="pane-inner"><div class="mock m-empty m-empty-before">
+      <div class="zero">
+        <div class="t">0<span>PIT</span></div>
+        <div class="dash">—</div>
+        <div class="t">0<span>CHC</span></div>
+      </div>
+    </div></div></div>
+    <div class="pane after"><div class="pane-inner"><div class="mock m-empty m-empty-after">
+      <div class="card">
+        <div class="kicker">First Pitch — Tonight 8:10 Central · Wrigley</div>
+        <div class="side">
+          <div class="name">Pittsburgh Pirates</div>
+          <div class="rec">4 — 8 · 4th NL Central</div>
+          <div class="sp">Starting Pitcher<b>Paul Skenes</b><span class="era">RHP · 1.87 ERA · 28 K</span></div>
+        </div>
+        <div class="side">
+          <div class="name">Chicago Cubs</div>
+          <div class="rec">6 — 6 · 3rd NL Central</div>
+          <div class="sp">Starting Pitcher<b>Shota Imanaga</b><span class="era">LHP · 2.81 ERA · 20 K</span></div>
+        </div>
+        <div class="foot"><span>FORECAST · 76° WIND 11 MPH OUT</span><span>TV · MARQUEE</span></div>
+      </div>
+    </div></div></div>
+    <div class="divider"></div><div class="handle" data-handle></div>
+    <div class="label before">Before</div><div class="label after">After</div>
+  </div>
+</section>
+
+<!-- PANEL 5 — Columnists lead column -->
+<section class="panel">
+  <div class="panel-head">
+    <div class="num">05</div>
+    <h2>Columnists — give the top beat a lead-column treatment with drop cap</h2>
+    <div class="tag p2">P2</div>
+  </div>
+  <p class="why">Three identical italic rows reads like a TODO list. Newspapers never give three stories equal weight — the top column gets double-height and a drop cap so the eye has somewhere to land.</p>
+  <div class="compare" style="height:300px">
+    <div class="pane before"><div class="pane-inner"><div class="mock m-col m-col-before">
+      <div class="col-head">The Columnists · A Daily Dispatch</div>
+      <div class="row"><span class="name">Walt Kleniewicz</span><span class="beat">The Stretched Hat</span><span class="tag">TODAY'S DISPATCH →</span></div>
+      <div class="row"><span class="name">Tony Gedecki</span><span class="beat">Pressbox Pulse</span><span class="tag">TODAY'S DISPATCH →</span></div>
+      <div class="row"><span class="name">Beatrice 'Bee' Vittorini</span><span class="beat">The Wire</span><span class="tag">TODAY'S DISPATCH →</span></div>
+    </div></div></div>
+    <div class="pane after"><div class="pane-inner"><div class="mock m-col m-col-after">
+      <div class="col-head">The Columnists · A Daily Dispatch</div>
+      <div class="lead">
+        <div class="cap">W</div>
+        <div class="body">
+          <div class="name">Walt Kleniewicz</div>
+          <div class="beat">The Stretched Hat · Lead Column</div>
+          <div class="headline">Imanaga's command has quietly become the most underrated thing on the North Side. Eleven starts, twenty walks, and a whip that belongs to a different decade.</div>
+        </div>
+        <div class="tag">READ →</div>
+      </div>
+      <div class="row"><span class="name">Tony Gedecki</span><span class="beat">Pressbox Pulse</span><span class="tag">→</span></div>
+      <div class="row"><span class="name">Beatrice 'Bee' Vittorini</span><span class="beat">The Wire</span><span class="tag">→</span></div>
+    </div></div></div>
+    <div class="divider"></div><div class="handle" data-handle></div>
+    <div class="label before">Before</div><div class="label after">After</div>
+  </div>
+</section>
+
+<!-- PANEL 6 — CTA letterpress -->
+<section class="panel">
+  <div class="panel-head">
+    <div class="num">06</div>
+    <h2>CTA — replace gold-fill button with a cream letterpress link</h2>
+    <div class="tag p2">P2</div>
+  </div>
+  <p class="why">The gold-fill pill is the single most "Bootstrap" element on the site. A serif italic with a double rule above and below reads editorially and still functions as an affordance.</p>
+  <div class="compare" style="height:220px">
+    <div class="pane before"><div class="pane-inner"><div class="mock m-cta m-cta-before">
+      <button>Create a Free Account</button>
+    </div></div></div>
+    <div class="pane after"><div class="pane-inner"><div class="mock m-cta m-cta-after">
+      <span class="letterpress">Create a Free Account</span>
+    </div></div></div>
+    <div class="divider"></div><div class="handle" data-handle></div>
+    <div class="label before">Before</div><div class="label after">After</div>
+  </div>
+</section>
+
+<!-- PANEL 7 — Mobile top fold -->
+<section class="panel">
+  <div class="panel-head">
+    <div class="num">07</div>
+    <h2>Mobile top fold — tighten masthead so content appears above the fold</h2>
+    <div class="tag p1">P1</div>
+  </div>
+  <p class="why">Current mobile wastes ~480px on masthead chrome before you see a single stat — almost the entire first viewport on an iPhone. Tighter clamps and compressed padding pull the linescore up into the fold.</p>
+  <div class="compare" style="height:610px">
+    <div class="pane before"><div class="pane-inner"><div class="mock m-mobile m-mobile-before">
+      <div class="phone">
+        <div class="masthead">
+          <span class="kicker">A Daily Dispatch · April 11</span>
+          <h1><span class="the">THE</span>Morning Lineup</h1>
+        </div>
+        <div class="dek"><span>VOL IV · NO 102</span><span>8:10 CT</span><span>WRIGLEY</span></div>
+        <div class="toc">
+          <a>01 The Cubs</a><a>02 Scouting</a><a>03 Stretch</a><a>04 Pressbox</a><a>05 Farm</a><a>06 Slate</a><a>07 Division</a>
+        </div>
+        <div class="fold-marker"><span>Fold — no content yet</span></div>
+      </div>
+    </div></div></div>
+    <div class="pane after"><div class="pane-inner"><div class="mock m-mobile m-mobile-after">
+      <div class="phone">
+        <div class="masthead">
+          <div class="bug"></div>
+          <h1><span class="the">THE</span>Morning Lineup</h1>
+        </div>
+        <div class="dek"><span>APR 11</span><span>VOL IV · 102</span><span>8:10 CT</span></div>
+        <div class="toc">
+          <a>01 The Cubs</a><a>02 Scouting</a><a>03 Stretch</a><a>04 Pressbox</a><a>05 Farm</a>
+        </div>
+        <div class="content">
+          <div class="kicker">Final · Last Night</div>
+          <div class="score"><span class="abbr">PIT</span>4<span class="v">—</span>7<span class="abbr">CHC</span></div>
+        </div>
+        <div class="fold-marker"><span>Fold — score above</span></div>
+      </div>
+    </div></div></div>
+    <div class="divider"></div><div class="handle" data-handle></div>
+    <div class="label before">Before</div><div class="label after">After</div>
+  </div>
+</section>
+
+<!-- PANEL 8 — Page break rule -->
+<section class="panel">
+  <div class="panel-head">
+    <div class="num">08</div>
+    <h2>Section rhythm — add a "turn the page" rule between beats</h2>
+    <div class="tag p2">P2</div>
+  </div>
+  <p class="why">Nine sections flow identically; the reader never feels progression. A full-width dashed rule with an editorial marker between the middle sections creates the "turning the page" break a real newspaper has.</p>
+  <div class="compare" style="height:280px">
+    <div class="pane before"><div class="pane-inner"><div class="mock m-pagebreak m-pagebreak-before">
+      <div class="sec-a"><h3>05 · Down on the Farm</h3>Iowa&nbsp;Cubs&nbsp;4-3&nbsp;(Toledo) · Tennessee 6-2 (Birmingham) · South Bend 1-5 · Myrtle Beach PPD</div>
+      <div class="gap"></div>
+      <div class="sec-b"><h3>06 · Today's Slate</h3>Fifteen games on the card. Five day games, ten under lights. Five rematches of last year's NLDS. Two bullpen days. One rain delay already called.</div>
+    </div></div></div>
+    <div class="pane after"><div class="pane-inner"><div class="mock m-pagebreak m-pagebreak-after">
+      <div class="sec-a"><h3>05 · Down on the Farm</h3>Iowa&nbsp;Cubs&nbsp;4-3&nbsp;(Toledo) · Tennessee 6-2 (Birmingham) · South Bend 1-5 · Myrtle Beach PPD</div>
+      <div class="pagebreak">
+        <div class="marker">Page B — Continues</div>
+      </div>
+      <div class="sec-b"><h3>06 · Today's Slate</h3>Fifteen games on the card. Five day games, ten under lights. Five rematches of last year's NLDS. Two bullpen days. One rain delay already called.</div>
+    </div></div></div>
+    <div class="divider"></div><div class="handle" data-handle></div>
+    <div class="label before">Before</div><div class="label after">After</div>
+  </div>
+</section>
+
+<!-- PANEL 9 — Loading state skeleton -->
+<section class="panel">
+  <div class="panel-head">
+    <div class="num">09</div>
+    <h2>Home — replace "Loading your lineup..." void with a skeleton press kicker</h2>
+    <div class="tag p0">P0</div>
+  </div>
+  <p class="why">The current loading state is a single italic line in an 8000px-tall black column. It looks like a 500 error. A rotating kicker + shimmering columnists skeleton looks like something is happening and keeps the metaphor alive.</p>
+  <div class="compare" style="height:400px">
+    <div class="pane before"><div class="pane-inner"><div class="mock m-loading m-loading-before">
+      <div class="msg">Loading your lineup…</div>
+    </div></div></div>
+    <div class="pane after"><div class="pane-inner"><div class="mock m-loading m-loading-after">
+      <div class="kicker">The Press Room</div>
+      <div class="press">Inking the plates</div>
+      <div class="skel-col"><div class="avatar"></div><div class="lines"><div class="l w1"></div><div class="l w2"></div></div><div class="num">01</div></div>
+      <div class="skel-col"><div class="avatar"></div><div class="lines"><div class="l w1"></div><div class="l w2"></div></div><div class="num">02</div></div>
+      <div class="skel-col"><div class="avatar"></div><div class="lines"><div class="l w1"></div><div class="l w2"></div></div><div class="num">03</div></div>
+      <div class="skel-col"><div class="avatar"></div><div class="lines"><div class="l w1"></div><div class="l w2"></div></div><div class="num">04</div></div>
+    </div></div></div>
+    <div class="divider"></div><div class="handle" data-handle></div>
+    <div class="label before">Before</div><div class="label after">After</div>
+  </div>
+</section>
+
+<!-- PANEL 10 — Mobile table cards -->
+<section class="panel">
+  <div class="panel-head">
+    <div class="num">10</div>
+    <h2>Mobile — stack crunched tables into readable cards</h2>
+    <div class="tag p2">P2</div>
+  </div>
+  <p class="why">Standings tables horizontally crunch on mobile. A stacked card-per-row variant preserves the hierarchy and gives the leader a team-accent left-border.</p>
+  <div class="compare" style="height:340px">
+    <div class="pane before"><div class="pane-inner"><div class="mock m-table m-table-before">
+      <table>
+        <thead><tr><th>Team</th><th>W</th><th>L</th><th>PCT</th><th>GB</th><th>L10</th><th>STRK</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Brewers</td><td>8</td><td>4</td><td>.667</td><td>—</td><td>7-3</td><td>W3</td></tr>
+          <tr><td class="name">Cardinals</td><td>7</td><td>5</td><td>.583</td><td>1.0</td><td>6-4</td><td>L1</td></tr>
+          <tr><td class="name">Cubs</td><td>6</td><td>6</td><td>.500</td><td>2.0</td><td>5-5</td><td>W1</td></tr>
+          <tr><td class="name">Pirates</td><td>4</td><td>8</td><td>.333</td><td>4.0</td><td>3-7</td><td>L2</td></tr>
+        </tbody>
+      </table>
+    </div></div></div>
+    <div class="pane after"><div class="pane-inner"><div class="mock m-table m-table-after">
+      <div class="card leader"><div class="name">Milwaukee Brewers</div><div class="sub">1st NL Central · W3</div><div class="rec">8–4</div><div class="gb">.667</div></div>
+      <div class="card"><div class="name">St. Louis Cardinals</div><div class="sub">2nd · L1 · 1.0 GB</div><div class="rec">7–5</div><div class="gb">.583</div></div>
+      <div class="card"><div class="name">Chicago Cubs</div><div class="sub">3rd · W1 · 2.0 GB</div><div class="rec">6–6</div><div class="gb">.500</div></div>
+      <div class="card"><div class="name">Pittsburgh Pirates</div><div class="sub">4th · L2 · 4.0 GB</div><div class="rec">4–8</div><div class="gb">.333</div></div>
+    </div></div></div>
+    <div class="divider"></div><div class="handle" data-handle></div>
+    <div class="label before">Before</div><div class="label after">After</div>
+  </div>
+</section>
+
+<!-- PANEL 11 — Section rule color -->
+<section class="panel">
+  <div class="panel-head">
+    <div class="num">11</div>
+    <h2>Section header rule — gold gradient vs team-accent gradient</h2>
+    <div class="tag p1">P1</div>
+  </div>
+  <p class="why">Section headers carry the site's strongest decorative idea — a paper→gold→paper gradient rule. Swapping gold for team accent on each page makes this rule identify your team every time you scroll past it.</p>
+  <div class="compare" style="height:240px">
+    <div class="pane before"><div class="pane-inner"><div class="mock m-rule">
+      <div class="summary-before"><span class="num">03</span><h3>The Stretch</h3></div>
+      <div class="body">Record, Pythagorean W-L, splits by handedness. A full week of form condensed to one paragraph so you can drink your coffee before leaving the driveway.</div>
+    </div></div></div>
+    <div class="pane after"><div class="pane-inner"><div class="mock m-rule">
+      <div class="summary-after"><span class="num">03</span><h3>The Stretch</h3></div>
+      <div class="body">Record, Pythagorean W-L, splits by handedness. A full week of form condensed to one paragraph so you can drink your coffee before leaving the driveway.</div>
+    </div></div></div>
+    <div class="divider"></div><div class="handle" data-handle></div>
+    <div class="label before">Before</div><div class="label after">After</div>
+  </div>
+</section>
+
+<div class="howto" style="margin-top:60px">
+  <b>Legend</b><br>
+  P0 · embarrassing, ship tonight &nbsp;·&nbsp; P1 · costs a point, fix this week &nbsp;·&nbsp; P2 · visible polish, ship this month · All mockups are vanilla HTML/CSS, no framework, drop-in to <code>style.css</code>.
+</div>
+
+<script>
+// Swipe handle for each .compare
+document.querySelectorAll('.compare').forEach(function(cmp){
+  var handle = cmp.querySelector('[data-handle]');
+  var dragging = false;
+  function setSplit(clientX){
+    var r = cmp.getBoundingClientRect();
+    var pct = Math.max(2, Math.min(98, (clientX - r.left) / r.width * 100));
+    cmp.style.setProperty('--split', pct + '%');
+  }
+  handle.addEventListener('mousedown', function(e){ dragging = true; e.preventDefault(); });
+  window.addEventListener('mousemove', function(e){ if(dragging) setSplit(e.clientX); });
+  window.addEventListener('mouseup', function(){ dragging = false; });
+  handle.addEventListener('touchstart', function(e){ dragging = true; }, {passive:true});
+  window.addEventListener('touchmove', function(e){ if(dragging && e.touches[0]) setSplit(e.touches[0].clientX); }, {passive:true});
+  window.addEventListener('touchend', function(){ dragging = false; });
+  cmp.addEventListener('click', function(e){
+    if(e.target === handle) return;
+    setSplit(e.clientX);
+  });
+});
+</script>
+
+</body>
+</html>

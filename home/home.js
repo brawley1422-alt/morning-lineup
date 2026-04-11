@@ -68,8 +68,35 @@ function stamp() {
 }
 stamp();
 
-function renderLoading(msg = "Loading your lineup…") {
-  shell.innerHTML = `<div class="home-loading"><p>${msg}</p></div>`;
+function renderLoading(msg = null) {
+  if (window.__mlLoadingInterval) {
+    clearInterval(window.__mlLoadingInterval);
+    window.__mlLoadingInterval = null;
+  }
+  shell.innerHTML = `
+    <div class="home-loading-skeleton">
+      <div class="skel-kicker">The Press Room</div>
+      <div class="skel-press" id="skel-press-text">${msg || "Inking the plates"}<span class="skel-cursor"></span></div>
+      <div class="skel-col"><div class="skel-avatar"></div><div class="skel-lines"><div class="l w1"></div><div class="l w2"></div></div><div class="skel-num">01</div></div>
+      <div class="skel-col"><div class="skel-avatar"></div><div class="skel-lines"><div class="l w1"></div><div class="l w2"></div></div><div class="skel-num">02</div></div>
+      <div class="skel-col"><div class="skel-avatar"></div><div class="skel-lines"><div class="l w1"></div><div class="l w2"></div></div><div class="skel-num">03</div></div>
+      <div class="skel-col"><div class="skel-avatar"></div><div class="skel-lines"><div class="l w1"></div><div class="l w2"></div></div><div class="skel-num">04</div></div>
+    </div>
+  `;
+  if (!msg) {
+    const phrases = ["Inking the plates", "Polishing the press", "Waiting on the wire", "Setting the type", "Rolling the paper"];
+    let i = 0;
+    const el = document.getElementById("skel-press-text");
+    window.__mlLoadingInterval = setInterval(() => {
+      if (!el || !el.isConnected) {
+        clearInterval(window.__mlLoadingInterval);
+        window.__mlLoadingInterval = null;
+        return;
+      }
+      i = (i + 1) % phrases.length;
+      el.firstChild.nodeValue = phrases[i];
+    }, 1800);
+  }
 }
 function renderError(msg) {
   shell.innerHTML = `<div class="home-error"><p>${msg}</p></div>`;
@@ -129,9 +156,11 @@ function renderGuestCta(position) {
   div.className = `home-guest-cta home-guest-cta-${position}`;
   if (position === "top") {
     div.innerHTML = `
-      <div class="guest-cta-kicker">Guest Preview</div>
-      <h2>This is just a taste.</h2>
-      <p>You're seeing the top section from three featured teams. Create a free account to pick your own teams, choose your sections, drag them into any order, and add your fantasy players.</p>
+      <span class="quote-marks" aria-hidden="true">&ldquo;</span>
+      <blockquote class="guest-quote">
+        You're reading the <em>Guest Edition</em>. Sign in to pin your team to the front page and follow any player in the league.
+      </blockquote>
+      <cite class="guest-quote-cite">From the Editor's Desk</cite>
       <div class="guest-cta-actions">
         <a href="../auth/" class="home-btn-primary">Create a free account</a>
         <a href="../auth/" class="home-btn-link">Already a member? Sign in</a>
@@ -139,8 +168,11 @@ function renderGuestCta(position) {
     `;
   } else {
     div.innerHTML = `
-      <h2>Want the whole paper?</h2>
-      <p>Nine sections per team. My Players tracker. Density and theme controls. All yours, free.</p>
+      <span class="quote-marks" aria-hidden="true">&ldquo;</span>
+      <blockquote class="guest-quote">
+        Want the whole paper? Nine sections per team, a My Players tracker, density and theme controls. Yours, free.
+      </blockquote>
+      <cite class="guest-quote-cite">From the Editor's Desk</cite>
       <div class="guest-cta-actions">
         <a href="../auth/" class="home-btn-primary">Claim your press pass</a>
       </div>

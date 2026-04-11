@@ -40,6 +40,8 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offs
 .home-btn svg,.teams-btn svg{flex-shrink:0}
 @media (max-width:640px){.nav-btns .home-btn span,.nav-btns .teams-btn span{display:none}.nav-btns{top:36px;right:12px}}
 .masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:14px 20px 10px;max-width:var(--maxw);margin:0 auto;}
+.masthead::before{content:"";position:absolute;inset:-8px -28px 0;background:radial-gradient(80% 120% at 50% 0%,color-mix(in srgb,var(--team-primary) 32%,transparent) 0%,transparent 70%);z-index:-1;pointer-events:none;}
+.masthead::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:linear-gradient(90deg,transparent 0%,var(--team-accent) 20%,var(--team-accent-hi) 50%,var(--team-accent) 80%,transparent 100%);pointer-events:none;}
 .masthead .kicker{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--cond);letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px;}
 .masthead .kicker .vol{color:var(--gold)}
 .masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);display:flex;align-items:center;gap:16px}
@@ -64,10 +66,10 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offs
 @media (max-width:900px){.toc{position:static;padding:14px 0 8px;margin-bottom:8px;border-bottom:1px solid var(--rule)}.toc ol{display:flex;flex-wrap:wrap;gap:4px 6px}.toc li{border:none;padding:0}.toc li::before{display:none}.toc a{display:inline-block;padding:6px 10px;border:1px solid var(--rule);background:var(--ink-2);border-radius:2px;font-size:11px;}}
 main{min-width:0}
 section{margin:18px 0 22px;scroll-margin-top:10px}
-section > summary,section > .sechead{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:16px;border-top:none;border-bottom:1px solid var(--rule);padding:14px 0 10px;margin-bottom:14px;background-image:linear-gradient(90deg,var(--paper) 0%,var(--gold) 50%,var(--paper) 100%);background-size:100% 3px;background-repeat:no-repeat;background-position:top;}
+section > summary,section > .sechead{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:16px;border-top:none;border-bottom:1px solid var(--rule);padding:14px 0 10px;margin-bottom:14px;background-image:linear-gradient(90deg,transparent 0%,var(--team-accent) 30%,var(--team-accent-hi) 50%,var(--team-accent) 70%,transparent 100%);background-size:100% 3px;background-repeat:no-repeat;background-position:top;}
 section > summary::-webkit-details-marker{display:none}
-section > summary .num{flex:0 0 auto;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--gold-dim);letter-spacing:.18em;text-transform:uppercase;border:1px dashed var(--gold-dim);padding:5px 10px 4px;border-radius:1px;background:rgba(201,162,74,.05);line-height:1;transition:color .2s ease, border-color .2s ease, background .2s ease;}
-section > summary:hover .num{color:var(--gold);border-color:var(--gold);background:rgba(201,162,74,.1)}
+section > summary .num{flex:0 0 auto;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--team-accent);letter-spacing:.18em;text-transform:uppercase;border:1px dashed var(--team-accent);padding:5px 10px 4px;border-radius:1px;background:color-mix(in srgb,var(--team-accent) 6%,transparent);line-height:1;transition:color .2s ease, border-color .2s ease, background .2s ease;}
+section > summary:hover .num{color:var(--team-accent-hi);border-color:var(--team-accent-hi);background:color-mix(in srgb,var(--team-accent) 12%,transparent)}
 section > summary .h{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(28px,4.2vw,44px);letter-spacing:-.01em;color:var(--paper);flex:1;line-height:.95;transition:color .2s ease;}
 section > summary:hover .h{color:var(--gold-hi,#e6bf62)}
 section > summary .tag{flex:0 0 auto;font-family:var(--cond);text-transform:uppercase;font-size:10px;letter-spacing:.24em;color:var(--paper-mute);}
@@ -677,7 +679,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Orioles</span> <player-card pid="605135">Chris Bassitt</player-card><div class="nx-pline">14.21 ERA &middot; 0-2 &middot; 6.1 IP &middot; 3 K &middot; 2.84 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">SF</span> Logan Webb<div class="nx-pline">5.00 ERA &middot; 1-1 &middot; 18.0 IP &middot; 15 K &middot; 1.39 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> FOX &middot; FOX</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KNBR 680 &middot; 98 Rock 97.9 FM &middot; WBAL 1090 AM</div>
-        <div class="nx-wx">68°F &middot; Clear &middot; 11 mph NNW</div>
+        <div class="nx-wx">69°F &middot; Clear &middot; 9 mph NNW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; vs SF</div>
@@ -974,7 +976,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Oriole Park at Camden Yards Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 13:13 CT</span>
+  <span>Filed 04/11/26 13:59 CT</span>
 </footer>
 
 <script>
