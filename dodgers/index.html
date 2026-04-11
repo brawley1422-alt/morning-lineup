@@ -546,7 +546,7 @@ body.theme-paper .column[data-role="straight_beat"] .column-role{color:#2d2826}
 body.theme-paper .column:not([open]) > summary.column-byline:hover{background:linear-gradient(90deg,rgba(201,162,74,.14),transparent 55%)}
 </style>
 </head>
-<body>
+<body data-team="dodgers">
 
 <header class="masthead">
   <div class="nav-btns">
@@ -677,7 +677,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Dodgers</span> Emmet Sheehan<div class="nx-pline">8.00 ERA &middot; 1-0 &middot; 9.0 IP &middot; 8 K &middot; 1.89 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">TEX</span> Jack Leiter<div class="nx-pline">2.45 ERA &middot; 1-0 &middot; 11.0 IP &middot; 17 K &middot; 1.00 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> SportsNet LA &middot; Rangers Sports Network</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> Dodgers Radio AM570 &middot; 105.3 The Fan</div>
-        <div class="nx-wx">54°F &middot; Clear &middot; Calm</div>
+        <div class="nx-wx">60°F &middot; Overcast &middot; Calm</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; vs TEX</div>
@@ -687,7 +687,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         
         <div class="nx-pitcher"><span class="nx-side">Dodgers</span> Roki Sasaki<div class="nx-pline">7.00 ERA &middot; 0-1 &middot; 9.0 IP &middot; 9 K &middot; 1.56 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">TEX</span> Jacob deGrom<div class="nx-pline">3.72 ERA &middot; 0-0 &middot; 9.2 IP &middot; 13 K &middot; 0.83 WHIP</div></div>
         
-        <div class="nx-bc"><span class="nx-bc-tag">TV</span> Rangers Sports Network &middot; SportsNet LA</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 105.3 The Fan &middot; Dodgers Radio AM570</div>
+        <div class="nx-bc"><span class="nx-bc-tag">TV</span> SportsNet LA &middot; Rangers Sports Network</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> Dodgers Radio AM570 &middot; 105.3 The Fan</div>
         
       </div><div class="nx-card">
         <div class="nx-head">
@@ -698,7 +698,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         
         <div class="nx-pitcher"><span class="nx-side">NYM</span> David Peterson<div class="nx-pline">6.14 ERA &middot; 0-2 &middot; 14.2 IP &middot; 14 K &middot; 1.84 WHIP</div></div>
         
-        <div class="nx-bc"><span class="nx-bc-tag">TV</span> SNY &middot; SportsNet LA</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> Dodgers Radio AM570 &middot; Audacy Mets Radio WHSQ 880AM</div>
+        <div class="nx-bc"><span class="nx-bc-tag">TV</span> SNY &middot; SportsNet LA</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> Audacy Mets Radio WHSQ 880AM &middot; Dodgers Radio AM570</div>
         
       </div></div>
     <h3>Form Guide (Last 7 Days)</h3>
@@ -873,7 +873,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="matchup">COL @ SD</div>
         <div class="time">7:40 CT</div>
         <div class="probs">Feltner vs Márquez</div>
-        <div class="bc">Padres.TV Presented by UC San Diego Health · Rockies.TV · KFMB 8.1 (CBS)</div>
+        <div class="bc">Rockies.TV · Padres.TV Presented by UC San Diego Health · KFMB 8.1 (CBS)</div>
       </div><div class="g" data-gpk="823967">
         <div class="matchup">TEX @ LAD</div>
         <div class="time">8:10 CT</div>
@@ -974,7 +974,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Dodger Stadium Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 08:55 CT</span>
+  <span>Filed 04/11/26 10:23 CT</span>
 </footer>
 
 <script>
@@ -1004,7 +1004,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=119;var TEAM_IDLE_MSG="No Dodgers game in progress";</script>
-<script src="live.js"></script>
+<script src="live.js"></script><script src="player-card.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});

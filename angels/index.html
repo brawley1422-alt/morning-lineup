@@ -546,7 +546,7 @@ body.theme-paper .column[data-role="straight_beat"] .column-role{color:#2d2826}
 body.theme-paper .column:not([open]) > summary.column-byline:hover{background:linear-gradient(90deg,rgba(201,162,74,.14),transparent 55%)}
 </style>
 </head>
-<body>
+<body data-team="angels">
 
 <header class="masthead">
   <div class="nav-btns">
@@ -677,7 +677,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Angels</span> George Klassen<div class="nx-pline">6.75 ERA &middot; 0-0 &middot; 2.2 IP &middot; 4 K &middot; 3.00 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">CIN</span> Brandon Williamson<div class="nx-pline">4.76 ERA &middot; 1-1 &middot; 11.1 IP &middot; 7 K &middot; 1.06 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Reds.TV &middot; FanDuel Sports Network West</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KLAA 830 &middot; WLW 700</div>
-        <div class="nx-wx">52°F &middot; Mostly Clear &middot; 8 mph ENE</div>
+        <div class="nx-wx">57°F &middot; Clear &middot; 6 mph ENE</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; at CIN</div>
@@ -974,7 +974,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Angel Stadium Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 08:49 CT</span>
+  <span>Filed 04/11/26 10:20 CT</span>
 </footer>
 
 <script>
@@ -1004,7 +1004,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=108;var TEAM_IDLE_MSG="No Angels game in progress";</script>
-<script src="live.js"></script>
+<script src="live.js"></script><script src="player-card.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});

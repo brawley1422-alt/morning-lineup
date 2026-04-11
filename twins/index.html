@@ -546,7 +546,7 @@ body.theme-paper .column[data-role="straight_beat"] .column-role{color:#2d2826}
 body.theme-paper .column:not([open]) > summary.column-byline:hover{background:linear-gradient(90deg,rgba(201,162,74,.14),transparent 55%)}
 </style>
 </head>
-<body>
+<body data-team="twins">
 
 <header class="masthead">
   <div class="nav-btns">
@@ -675,7 +675,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-venue">Rogers Centre <span class="nx-dome">Retractable Roof</span></div>
         <div class="nx-meta"><span class="nx-opp-rec">TOR: 6-7, 4th AL East (W2)</span> &middot; <span class="nx-series">Season series: 0-2</span></div>
         <div class="nx-pitcher"><span class="nx-side">Twins</span> Joe Ryan<div class="nx-pline">4.40 ERA &middot; 1-1 &middot; 14.1 IP &middot; 17 K &middot; 1.26 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">TOR</span> Eric Lauer<div class="nx-pline">4.91 ERA &middot; 1-1 &middot; 7.1 IP &middot; 9 K &middot; 1.36 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">CF</span> Buxton</span><span class="lu-slot"><span class="lu-pos">CF</span> Martin</span><span class="lu-slot"><span class="lu-pos">2B</span> Keaschall</span><span class="lu-slot"><span class="lu-pos">C</span> Jeffers</span><span class="lu-slot"><span class="lu-pos">1B</span> Bell</span><span class="lu-slot"><span class="lu-pos">C</span> Caratini</span><span class="lu-slot"><span class="lu-pos">RF</span> Larnach</span><span class="lu-slot"><span class="lu-pos">3B</span> Lee</span><span class="lu-slot"><span class="lu-pos">CF</span> Kreidler</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Sportsnet &middot; Twins.TV Presented by Progressive</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> TIBN &middot; WCCO 830 &middot; SN590 THE FAN &middot; The Wolf 102.9 FM &middot; Audacy App</div>
         <div class="nx-wx">72°F &middot; Climate controlled</div>
       </div><div class="nx-card">
@@ -974,7 +974,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Target Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 09:09 CT</span>
+  <span>Filed 04/11/26 10:25 CT</span>
 </footer>
 
 <script>
@@ -1004,7 +1004,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=142;var TEAM_IDLE_MSG="No Twins game in progress";</script>
-<script src="live.js"></script>
+<script src="live.js"></script><script src="player-card.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});

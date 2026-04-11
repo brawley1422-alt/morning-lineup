@@ -546,7 +546,7 @@ body.theme-paper .column[data-role="straight_beat"] .column-role{color:#2d2826}
 body.theme-paper .column:not([open]) > summary.column-byline:hover{background:linear-gradient(90deg,rgba(201,162,74,.14),transparent 55%)}
 </style>
 </head>
-<body>
+<body data-team="white-sox">
 
 <header class="masthead">
   <div class="nav-btns">
@@ -677,7 +677,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">White Sox</span> Erick Fedde<div class="nx-pline">4.09 ERA &middot; 0-2 &middot; 11.0 IP &middot; 8 K &middot; 1.18 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">KC</span> Michael Wacha<div class="nx-pline">0.69 ERA &middot; 1-0 &middot; 13.0 IP &middot; 10 K &middot; 0.77 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Royals.TV &middot; Chicago Sports Network Plus</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> ESPN Chicago WMVP 1000 AM &middot; 96.5 The Fan &middot; Royals Radio Network</div>
-        <div class="nx-wx">56°F &middot; Partly Cloudy &middot; 12 mph SE</div>
+        <div class="nx-wx">60°F &middot; Mostly Clear &middot; 12 mph SSE</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; at KC</div>
@@ -977,7 +977,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Guaranteed Rate Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 09:09 CT</span>
+  <span>Filed 04/11/26 10:26 CT</span>
 </footer>
 
 <script>
@@ -1007,7 +1007,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=145;var TEAM_IDLE_MSG="No White Sox game in progress";</script>
-<script src="live.js"></script>
+<script src="live.js"></script><script src="player-card.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});

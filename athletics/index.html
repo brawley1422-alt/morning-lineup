@@ -546,7 +546,7 @@ body.theme-paper .column[data-role="straight_beat"] .column-role{color:#2d2826}
 body.theme-paper .column:not([open]) > summary.column-byline:hover{background:linear-gradient(90deg,rgba(201,162,74,.14),transparent 55%)}
 </style>
 </head>
-<body>
+<body data-team="athletics">
 
 <header class="masthead">
   <div class="nav-btns">
@@ -677,7 +677,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Athletics</span> Jacob Lopez<div class="nx-pline">6.48 ERA &middot; 0-1 &middot; 8.1 IP &middot; 6 K &middot; 2.28 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">NYM</span> Kodai Senga<div class="nx-pline">3.09 ERA &middot; 0-1 &middot; 11.2 IP &middot; 16 K &middot; 1.20 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> SNY &middot; NBCSCA</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> Audacy Mets Radio WHSQ 880AM &middot; Talk 650 KSTE &middot; A&#x27;s Cast</div>
-        <div class="nx-wx">55°F &middot; Clear &middot; 15 mph NW</div>
+        <div class="nx-wx">58°F &middot; Clear &middot; 13 mph NNW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; at NYM</div>
@@ -974,7 +974,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Oakland Coliseum Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 08:51 CT</span>
+  <span>Filed 04/11/26 10:21 CT</span>
 </footer>
 
 <script>
@@ -1004,7 +1004,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=133;var TEAM_IDLE_MSG="No Athletics game in progress";</script>
-<script src="live.js"></script>
+<script src="live.js"></script><script src="player-card.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});

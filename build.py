@@ -640,7 +640,7 @@ def page(briefing):
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,700&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 <style>{CSS}</style>
 </head>
-<body>
+<body data-team="{_team_slug}">
 
 <header class="masthead">
   <div class="nav-btns">
@@ -815,7 +815,7 @@ def page(briefing):
 }})();
 </script>
 <script>var TEAM_ID={TEAM_ID};var TEAM_IDLE_MSG="{CFG['branding']['idle_msg']}";</script>
-<script src="live.js"></script>{'<script src="player-card.js" defer></script>' if _team_slug == 'cubs' else ''}
+<script src="live.js"></script><script src="player-card.js" defer></script>
 <script>
 window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});
 document.addEventListener("click",function(e){{var tr=e.target.closest("tr.scorecard-link");if(tr){{var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}}}});
@@ -980,6 +980,94 @@ def _fetch_player_record(pid, role, season):
     }
 
 
+_PLAYER_CACHE_DIR = None
+
+def _player_cache_path(pid, season, today):
+    global _PLAYER_CACHE_DIR
+    if _PLAYER_CACHE_DIR is None:
+        _PLAYER_CACHE_DIR = DATA_DIR / "cache" / "players"
+        _PLAYER_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    return _PLAYER_CACHE_DIR / f"{pid}-{season}-{today.isoformat()}.json"
+
+
+def _fetch_player_record_cached(pid, role, season, today):
+    """Disk-cached wrapper around _fetch_player_record. Cache key = (pid, season, date).
+    Cache auto-invalidates daily — a new file per (player, day)."""
+    cache_path = _player_cache_path(pid, season, today)
+    if cache_path.exists():
+        try:
+            return json.loads(cache_path.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    rec = _fetch_player_record(pid, role, season)
+    if rec:
+        try:
+            cache_path.write_text(
+                json.dumps(rec, default=_json_default, ensure_ascii=False),
+                encoding="utf-8",
+            )
+        except Exception:
+            pass
+    return rec
+
+
+def load_team_players(team_id, season, today, max_workers=4):
+    """Hydrate the full active roster for a team into a player-card dict.
+    Returns {str(pid): record, ...}. Bounded concurrency, daily disk cache."""
+    import concurrent.futures
+    try:
+        roster_data = fetch(f"/teams/{team_id}/roster", rosterType="active")
+    except Exception as e:
+        print(f"  warning: roster fetch failed for team {team_id}: {e}", flush=True)
+        return {}
+    roster = roster_data.get("roster", []) or []
+    targets = []
+    for entry in roster:
+        person = entry.get("person", {}) or {}
+        pid = person.get("id")
+        if not pid:
+            continue
+        pos_code = (entry.get("position", {}) or {}).get("code", "")
+        role = "pitcher" if pos_code == "1" else "hitter"
+        targets.append((pid, role))
+    if not targets:
+        return {}
+
+    players = {}
+    def _one(pid, role):
+        try:
+            return pid, _fetch_player_record_cached(pid, role, season, today)
+        except Exception as e:
+            print(f"  warning: player {pid} hydrate failed: {e}", flush=True)
+            return pid, None
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as ex:
+        futs = [ex.submit(_one, pid, role) for pid, role in targets]
+        for f in concurrent.futures.as_completed(futs):
+            pid, rec = f.result()
+            if rec:
+                players[str(pid)] = rec
+    return players
+
+
+def save_players(team_slug, players, today):
+    """Write per-team player-card JSON to data/players-<slug>.json."""
+    DATA_DIR.mkdir(exist_ok=True)
+    payload = {
+        "generated_at": datetime.now(tz=CT).isoformat(timespec="seconds"),
+        "team": team_slug,
+        "today": today.isoformat(),
+        "players": players,
+    }
+    out = DATA_DIR / f"players-{team_slug}.json"
+    out.write_text(
+        json.dumps(payload, default=_json_default, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    print(f"Saved player cards → {out.name} ({out.stat().st_size:,} bytes, {len(players)} players)")
+    return out
+
+
 def load_player_cards(lineup, sp_pid, season):
     """Pull per-player card data for today's lineup + starting pitcher.
 
@@ -1095,7 +1183,16 @@ if __name__ == "__main__":
             print("Fetching MLB data …", flush=True)
             briefing = build_briefing(_team_slug)
             save_data_ledger(briefing.data)
-            # Phase 1: Cubs-only player-card data pipeline.
+            # Phase 2: All-teams player-card pipeline (full active roster).
+            try:
+                _d2 = briefing.data
+                print(f"Fetching player cards for {_team_slug} (active roster) …", flush=True)
+                _team_players = load_team_players(TEAM_ID, _d2["season"], _d2["today"])
+                save_players(_team_slug, _team_players, _d2["today"])
+            except Exception as _e2:
+                print(f"  warning: team player-card pipeline failed: {_e2}", flush=True)
+            # Phase 1 holdover: Cubs-only lineup fallback (feeds today_lineup
+            # for headline.py rendering when MLB hasn't posted batting order).
             if _team_slug == "cubs":
                 try:
                     _d = briefing.data
@@ -1143,11 +1240,8 @@ if __name__ == "__main__":
                                 {"id": _c["id"], "name": _c["name"], "pos": _c["pos"]}
                                 for _c in _cubs_side_lineup
                             ]
-                    print(f"Fetching player cards ({len(_cubs_side_lineup)} hitters + {'SP' if _sp_pid else 'no SP'}) …", flush=True)
-                    _players = load_player_cards(_cubs_side_lineup, _sp_pid, _d["season"])
-                    save_players_cubs(_players, _d["today"])
                 except Exception as _e:
-                    print(f"  warning: player-card pipeline failed: {_e}", flush=True)
+                    print(f"  warning: cubs lineup fallback failed: {_e}", flush=True)
         print("Rendering page …", flush=True)
         html = page(briefing)
         out_dir_override = _argv_value("--out-dir")
@@ -1158,3 +1252,12 @@ if __name__ == "__main__":
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(html, encoding="utf-8")
         print(f"Wrote {out_path} ({len(html):,} bytes)")
+        # Copy player-card.js into the team output dir so the relative
+        # script tag resolves on every team page (mirrors the live.js / sw.js pattern).
+        try:
+            _pc_src = ROOT / "player-card.js"
+            if _pc_src.exists():
+                import shutil
+                shutil.copyfile(_pc_src, out_path.parent / "player-card.js")
+        except Exception as _e3:
+            print(f"  warning: player-card.js copy failed: {_e3}", flush=True)

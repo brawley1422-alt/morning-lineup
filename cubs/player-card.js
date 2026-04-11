@@ -10,7 +10,8 @@
 (function () {
   if (customElements.get("player-card")) return;
 
-  const DATA_URL = "../data/players-cubs.json";
+  const TEAM_SLUG = (document.body && document.body.dataset && document.body.dataset.team) || "cubs";
+  const DATA_URL = "../data/players-" + TEAM_SLUG + ".json";
   let _cache = null;
   let _cachePromise = null;
 

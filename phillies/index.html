@@ -546,7 +546,7 @@ body.theme-paper .column[data-role="straight_beat"] .column-role{color:#2d2826}
 body.theme-paper .column:not([open]) > summary.column-byline:hover{background:linear-gradient(90deg,rgba(201,162,74,.14),transparent 55%)}
 </style>
 </head>
-<body>
+<body data-team="phillies">
 
 <header class="masthead">
   <div class="nav-btns">
@@ -677,7 +677,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Phillies</span> Taijuan Walker<div class="nx-pline">9.31 ERA &middot; 0-2 &middot; 9.2 IP &middot; 6 K &middot; 2.28 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">AZ</span> Brandon Pfaadt<div class="nx-pline">6.75 ERA &middot; 0-0 &middot; 10.2 IP &middot; 5 K &middot; 1.41 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> Turner</span><span class="lu-slot"><span class="lu-pos">LF</span> Schwarber</span><span class="lu-slot"><span class="lu-pos">1B</span> Harper</span><span class="lu-slot"><span class="lu-pos">CF</span> Marsh</span><span class="lu-slot"><span class="lu-pos">2B</span> Stott</span><span class="lu-slot"><span class="lu-pos">RF</span> García</span><span class="lu-slot"><span class="lu-pos">C</span> Realmuto</span><span class="lu-slot"><span class="lu-pos">3B</span> Bohm</span><span class="lu-slot"><span class="lu-pos">CF</span> Crawford</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> NBCSP &middot; FS1 &middot; Dbacks.TV &middot; FS1</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 98.7 FM Arizona&#x27;s Sports Station &middot; 94 WIP</div>
-        <div class="nx-wx">56°F &middot; Partly Cloudy &middot; 13 mph NNW</div>
+        <div class="nx-wx">58°F &middot; Clear &middot; 13 mph NNW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; vs AZ</div>
@@ -977,7 +977,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Citizens Bank Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 09:02 CT</span>
+  <span>Filed 04/11/26 10:24 CT</span>
 </footer>
 
 <script>
@@ -1007,7 +1007,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=143;var TEAM_IDLE_MSG="No Phillies game in progress";</script>
-<script src="live.js"></script>
+<script src="live.js"></script><script src="player-card.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});
