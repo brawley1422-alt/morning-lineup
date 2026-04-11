@@ -541,17 +541,32 @@ function renderMyPlayersSection(players, statsMap) {
     // wait for it.
     const tryMount = () => {
       const ML = window.MorningLineupPC;
+      console.log("[binder] mounting", { name: p.full_name, pid: p.mlbam_id, abbr: p.mlb_team_abbr, slug, hasML: !!ML });
       if (!ML) {
-        cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">${p.primary_position || ""} · ${p.mlb_team_abbr || ""}</div></div>`;
+        cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">component not loaded</div></div>`;
         return;
       }
-      if (!p.mlbam_id || !slug) {
-        cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">No card data</div></div>`;
+      if (!p.mlbam_id) {
+        cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">missing pid</div></div>`;
         return;
       }
-      ML.mountInline(cardHost, p.mlbam_id, slug).catch((e) => {
-        console.warn("binder mount failed", p, e);
-      });
+      if (!slug) {
+        cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">unknown team: "${p.mlb_team_abbr || "—"}"</div></div>`;
+        return;
+      }
+      ML.mountInline(cardHost, p.mlbam_id, slug)
+        .then(() => {
+          // Check if we got a stub (player not in that team's roster JSON)
+          const stub = cardHost.querySelector(".pc-stub");
+          if (stub) {
+            console.warn("[binder] pid not in team JSON", { name: p.full_name, pid: p.mlbam_id, slug });
+            cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">pid ${p.mlbam_id} not in ${slug} roster</div></div>`;
+          }
+        })
+        .catch((e) => {
+          console.warn("[binder] mount failed", p, e);
+          cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">load error</div></div>`;
+        });
     };
     if (window.MorningLineupPC) {
       tryMount();
