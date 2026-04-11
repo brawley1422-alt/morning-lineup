@@ -1056,6 +1056,8 @@ def save_players(team_slug, players, today):
     payload = {
         "generated_at": datetime.now(tz=CT).isoformat(timespec="seconds"),
         "team": team_slug,
+        "team_full_name": CFG.get("full_name", ""),
+        "team_abbreviation": CFG.get("abbreviation", ""),
         "today": today.isoformat(),
         "players": players,
     }

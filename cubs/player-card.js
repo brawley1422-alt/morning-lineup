@@ -535,7 +535,7 @@
     }
   `;
 
-  function renderFront(p) {
+  function renderFront(p, teamName) {
     const name = esc(p.name || "Unknown");
     const parts = name.split(/\s+/);
     const firstLine = parts.slice(0, -1).join(" ");
@@ -577,7 +577,7 @@
     return `
       <div class="pc-face pc-front">
         <div class="pc-front-inner">
-          <div class="pc-banner">Chicago Cubs</div>
+          <div class="pc-banner">${esc(teamName || "MLB")}</div>
           <div class="pc-photo">
             <img src="${esc(p.headshot_url || "")}" alt="${name}" onerror="this.style.display='none'">
             <div class="pc-jersey">${esc(p.jersey || "")}</div>
@@ -611,7 +611,7 @@
     `;
   }
 
-  function renderBack(p) {
+  function renderBack(p, teamName) {
     const career = (p.career || []).slice(-4);
     const isPitcher = (p.role === "pitcher");
     let tableHead, rowsHtml;
@@ -695,7 +695,7 @@
       <div class="pc-face pc-back">
         <div class="pc-back-inner">
           <div class="pc-back-head">
-            <div class="lbl">No. ${esc(String(p.jersey || "00").padStart(3, "0"))} — Chicago Cubs</div>
+            <div class="lbl">No. ${esc(String(p.jersey || "00").padStart(3, "0"))} — ${esc(teamName || "MLB")}</div>
             <h2>${esc(p.last_name || "")}${p.first_name ? ", " + esc(p.first_name) : ""}</h2>
             <p>${esc(subline)}</p>
           </div>
@@ -722,11 +722,11 @@
     `;
   }
 
-  function renderStub(name) {
+  function renderStub(name, teamName) {
     return `
       <div class="pc-stub">
         <h3>${esc(name)}</h3>
-        <p>Chicago Cubs · Card coming soon</p>
+        <p>${esc(teamName || "MLB")} · Card coming soon</p>
       </div>
     `;
   }
@@ -769,14 +769,15 @@
     document.body.appendChild(backdrop);
 
     loadData(slug).then((data) => {
+      const teamName = (data && data.team_full_name) || "MLB";
       const rec = data.players ? data.players[String(pid)] : null;
       if (!rec) {
-        wrap.innerHTML = renderStub(displayName || pid);
+        wrap.innerHTML = renderStub(displayName || pid, teamName);
         return;
       }
       const card = document.createElement("div");
       card.className = "pc-card";
-      card.innerHTML = renderFront(rec) + renderBack(rec);
+      card.innerHTML = renderFront(rec, teamName) + renderBack(rec, teamName);
       card.addEventListener("click", (e) => {
         e.stopPropagation();
         card.classList.toggle("flipped");
