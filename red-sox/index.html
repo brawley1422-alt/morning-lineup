@@ -773,7 +773,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Boston Red Sox activated 2B Anthony Seigler from the 10-day injured list.</span></div><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Boston Red Sox optioned 2B Anthony Seigler to Worcester Red Sox.</span></div><div class="transac-item"><span class="transac-date">04-09</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Boston Red Sox sent 2B Anthony Seigler on a rehab assignment to Worcester Red Sox.</span></div><div class="transac-item"><span class="transac-date">04-08</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Boston Red Sox sent LHP Patrick Sandoval on a rehab assignment to Worcester Red Sox.</span></div><div class="transac-item"><span class="transac-date">04-08</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Boston Red Sox recalled LHP Tyler Samaniego from Worcester Red Sox.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Boston Red Sox activated RHP Garrett Whitlock from the paternity list.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Boston Red Sox optioned RHP Tyler Uberstine to Worcester Red Sox.</span></div><div class="transac-item"><span class="transac-date">04-05</span><span class="transac-badge il">Trade</span><span class="transac-desc">Boston Red Sox traded RHP Patrick Galle to St. Louis Cardinals.</span></div><div class="transac-item"><span class="transac-date">04-04</span><span class="transac-badge ">Returned</span><span class="transac-desc">RHP Jedixson Paez returned to Boston Red Sox from Chicago White Sox.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>1B <strong>Triston Casas</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Johan Oviedo</strong></dd><dd>P <strong>Justin Slaten</strong></dd><dd>P <strong>Kutter Crawford</strong></dd><dd>P <strong>Patrick Sandoval</strong></dd><dt>Injured 60-Day</dt><dd>1B <strong>Romy Gonzalez</strong></dd><dd>P <strong>Tanner Houck</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><p><em class="slang">No roster moves in the last 7 days.</em></p></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>1B <strong>Triston Casas</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Johan Oviedo</strong></dd><dd>P <strong>Justin Slaten</strong></dd><dd>P <strong>Kutter Crawford</strong></dd><dd>P <strong>Patrick Sandoval</strong></dd><dt>Injured 60-Day</dt><dd>1B <strong>Romy Gonzalez</strong></dd><dd>P <strong>Tanner Houck</strong></dd></dl></div></div>
   </section>
 
   <section id="farm" open>
@@ -974,7 +974,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Fenway Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 10:57 CT</span>
+  <span>Filed 04/11/26 12:34 CT</span>
 </footer>
 
 <script>
@@ -1004,7 +1004,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=111;var TEAM_IDLE_MSG="No Red Sox game in progress";</script>
-<script src="live.js"></script><script src="player-card.js" defer></script>
+<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});

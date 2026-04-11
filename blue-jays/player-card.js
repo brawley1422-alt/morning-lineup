@@ -48,6 +48,22 @@
     return n.toFixed(d != null ? d : 3).replace(/^0\./, ".");
   }
 
+  function formatShortDate(iso) {
+    if (!iso) return "?";
+    try {
+      const d = new Date(iso);
+      return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    } catch (e) { return iso; }
+  }
+
+  function formatGameTime(iso) {
+    if (!iso) return "first pitch";
+    try {
+      const d = new Date(iso);
+      return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+    } catch (e) { return iso; }
+  }
+
   function pick(obj, keys) {
     for (const k of keys) {
       if (obj && obj[k] !== undefined && obj[k] !== null && obj[k] !== "") return obj[k];
@@ -72,6 +88,49 @@
     style.id = "player-card-styles";
     style.textContent = STYLES;
     document.head.appendChild(style);
+  }
+
+  function renderSparkline(games, isPitcher) {
+    const W = 220, H = 36, PAD_X = 4, PAD_Y = 4;
+    if (!games || games.length === 0) {
+      return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" class="pc-spark-svg"><text x="${W/2}" y="${H/2 + 4}" text-anchor="middle" fill="#8a7e60" font-family="serif" font-style="italic" font-size="11">no recent games</text></svg>`;
+    }
+    const valid = games.filter((g) => g && g.value != null);
+    if (valid.length === 0) {
+      return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" class="pc-spark-svg"><text x="${W/2}" y="${H/2 + 4}" text-anchor="middle" fill="#8a7e60" font-family="serif" font-style="italic" font-size="11">no recent games</text></svg>`;
+    }
+    // Y-axis: hitters use OPS scale (0..1.5 typical), pitchers use GameScore (0..100)
+    const yMin = isPitcher ? 0 : 0;
+    const yMax = isPitcher ? 100 : Math.max(1.5, ...valid.map((g) => g.value));
+    const yRange = yMax - yMin || 1;
+    const innerW = W - PAD_X * 2;
+    const innerH = H - PAD_Y * 2;
+    // X positions evenly spaced across the actual game count
+    const n = games.length;
+    const points = [];
+    games.forEach((g, i) => {
+      if (g && g.value != null) {
+        const x = PAD_X + (n === 1 ? innerW / 2 : (i / (n - 1)) * innerW);
+        const y = PAD_Y + innerH - ((g.value - yMin) / yRange) * innerH;
+        points.push({ x, y, val: g.value, date: g.date });
+      }
+    });
+    if (points.length === 0) return "";
+    const path = points.map((pt, i) => (i === 0 ? "M" : "L") + pt.x.toFixed(1) + "," + pt.y.toFixed(1)).join(" ");
+    // Baseline reference line at the threshold (hot/cold midline)
+    const midVal = isPitcher ? 50 : 0.700;
+    const midY = PAD_Y + innerH - ((midVal - yMin) / yRange) * innerH;
+    // Last point dot — emphasize the most recent game
+    const last = points[points.length - 1];
+    const dots = points.map((pt) =>
+      `<circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="1.6" fill="#c9a24a" opacity="0.7"/>`
+    ).join("");
+    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" class="pc-spark-svg">
+      <line x1="0" y1="${midY.toFixed(1)}" x2="${W}" y2="${midY.toFixed(1)}" stroke="#8a7e60" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.5"/>
+      <path d="${path}" fill="none" stroke="#c8102e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      ${dots}
+      <circle cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="2.6" fill="#c8102e" stroke="#f4ecd8" stroke-width="0.8"/>
+    </svg>`;
   }
 
   const STYLES = `
@@ -339,6 +398,140 @@
     .pc-temp-bar span {
       border: 1px solid #1a1a1a;
     }
+    .pc-spark {
+      background: rgba(13, 15, 20, 0.04);
+      border: 1px solid #1a1a1a;
+      padding: 2px 4px;
+      height: 38px;
+      box-sizing: border-box;
+    }
+    .pc-spark-svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Phase 2: prediction tile + scoreboard + touches ─────────────── */
+    .pc-pred {
+      background: linear-gradient(180deg, #0d1530, #060a1a);
+      border: 1px solid #c9a24a;
+      border-radius: 3px;
+      padding: 12px 14px 10px;
+      margin: 14px 0 10px;
+      color: #f4ecd8;
+      box-shadow: inset 0 0 0 1px rgba(232,200,120,.18);
+    }
+    .pc-pred-q {
+      font-family: "Playfair Display", Georgia, serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      line-height: 1.2;
+      margin-bottom: 10px;
+      color: #f4ecd8;
+    }
+    .pc-pred-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .pc-pred-btn {
+      background: transparent;
+      border: 1.5px solid #c9a24a;
+      color: #f0d57a;
+      font-family: "Oswald", sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      padding: 8px 0;
+      cursor: pointer;
+      transition: all 0.18s;
+      border-radius: 2px;
+    }
+    .pc-pred-btn:hover {
+      background: rgba(232,200,120,.12);
+      color: #f4ecd8;
+    }
+    .pc-pred-btn.active {
+      background: #c9a24a;
+      color: #060a1a;
+    }
+    .pc-pred-meta {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #c9a24a;
+      text-align: center;
+    }
+    .pc-pred-locked .pc-pred-locked-tag {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #c9a24a;
+      text-align: center;
+      padding: 6px 0 2px;
+    }
+    .pc-pred-resolved.win { border-color: #4ea341; }
+    .pc-pred-resolved.loss { border-color: #c8102e; opacity: 0.85; }
+    .pc-pred-resolved.push { border-color: #5a5750; }
+    .pc-pred-result {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #f4ecd8;
+      text-align: center;
+      padding-top: 4px;
+    }
+
+    .pc-scoreboard {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 12px;
+      background: rgba(13, 15, 20, 0.04);
+      border-left: 2px solid #c9a24a;
+      margin-bottom: 12px;
+      font-family: "IBM Plex Mono", monospace;
+    }
+    .pc-sb-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #5a5750;
+    }
+    .pc-sb-record {
+      font-family: "Playfair Display", Georgia, serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #c8102e;
+    }
+    .pc-sb-streak {
+      font-size: 0.6rem;
+      color: #5a5750;
+    }
+    .pc-sb-empty {
+      font-style: italic;
+      font-size: 0.7rem;
+      color: #5a5750;
+      justify-content: center;
+      border-left-color: #5a5750;
+    }
+
+    .pc-touches {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #5a5750;
+      text-align: center;
+      padding: 8px 0 4px;
+      border-top: 1px dashed rgba(13,15,20,.15);
+      margin-top: 8px;
+    }
     .pc-rail {
       background: #1a1a1a;
       color: #f4ecd8;
@@ -559,15 +752,19 @@
         <div><label>SLG</label><strong>${fmtDec(pick(s, ["slg"]))}</strong></div>
       `;
     }
-    const temp = p.temp_strip || [];
-    const tempCells = Array.from({ length: 15 }, (_, i) => {
-      const t = temp[i];
-      const color = t == null ? "#b3a98a" : interpColor(t);
-      return `<span style="background:${color}"></span>`;
-    }).join("");
-    const hot = temp.filter((v) => v != null && v > 0.6).length;
-    const cold = temp.filter((v) => v != null && v < 0.4).length;
-    const label = hot > cold ? "Hot" : cold > hot ? "Cold" : "Even";
+    const last10 = p.last_10_games || [];
+    const sparkSvg = renderSparkline(last10, isPitcher);
+    const valid = last10.filter((g) => g && g.value != null).map((g) => g.value);
+    let label = "—";
+    if (valid.length >= 3) {
+      const recent = valid.slice(-3);
+      const avg = recent.reduce((a, b) => a + b, 0) / recent.length;
+      if (isPitcher) {
+        label = avg > 60 ? "Hot" : avg < 35 ? "Cold" : "Even";
+      } else {
+        label = avg > 0.85 ? "Hot" : avg < 0.55 ? "Cold" : "Even";
+      }
+    }
     const age = p.age ? `${p.age} yrs` : "";
     const handed = [p.bats, p.throws].filter(Boolean).join(" · ");
     const height = p.height || "";
@@ -595,10 +792,10 @@
             <div class="pc-slash">${slash}</div>
             <div class="pc-temp">
               <div class="pc-temp-label">
-                <span>Last 15 Games</span>
+                <span>Last 10 Games · ${isPitcher ? "GameScore" : "OPS"}</span>
                 <strong>${label}</strong>
               </div>
-              <div class="pc-temp-bar">${tempCells}</div>
+              <div class="pc-spark">${sparkSvg}</div>
             </div>
           </div>
           <div class="pc-rail">
@@ -691,6 +888,77 @@
     const born = [p.birth_city, p.birth_state || p.birth_country].filter(Boolean).join(", ");
     const subline = `${p.position || ""} · Bats/Throws ${[p.bats, p.throws].filter(Boolean).join("/")}${born ? " · " + born : ""}`;
 
+    // Phase 2: prediction tile + scoreboard + reader touches
+    const RS = window.MorningLineupReaderState;
+    const pid = p.id;
+    const isFollowed = RS && pid && RS.isFollowed(pid);
+    let predictionHtml = "";
+    let scoreboardHtml = "";
+    let touchesHtml = "";
+
+    if (RS && pid) {
+      const touches = RS.getTouches(pid);
+      if (touches && touches.openCount > 0) {
+        const firstSeen = touches.firstSeen ? formatShortDate(touches.firstSeen) : "today";
+        const countLabel = touches.openCount === 1 ? "first visit" : `opened ${touches.openCount} times`;
+        touchesHtml = `<div class="pc-touches">${countLabel} · first seen ${firstSeen}</div>`;
+      }
+    }
+
+    if (isFollowed && p.prediction && p.prediction.question_text) {
+      const stored = RS.getPrediction(pid);
+      const today = new Date().toISOString().slice(0, 10);
+      const isToday = stored && stored.date === today;
+      const locked = isToday && RS.isPickLocked(pid);
+      const resolved = isToday && stored && stored.resolvedAt;
+
+      if (resolved) {
+        const resultClass = stored.result === "WIN" ? "win" : stored.result === "LOSS" ? "loss" : "push";
+        const resultLabel = stored.result === "WIN" ? "✓ You called it" : stored.result === "LOSS" ? "✗ Missed" : "— Push";
+        predictionHtml = `
+          <div class="pc-pred pc-pred-resolved ${resultClass}">
+            <div class="pc-pred-q">${esc(p.prediction.question_text)}</div>
+            <div class="pc-pred-result">
+              You picked <strong>${esc(stored.pick)}</strong> · ${resultLabel}
+            </div>
+          </div>`;
+      } else if (locked) {
+        const pickedLabel = stored.pick ? `Locked: ${stored.pick}` : "Locked";
+        predictionHtml = `
+          <div class="pc-pred pc-pred-locked">
+            <div class="pc-pred-q">${esc(p.prediction.question_text)}</div>
+            <div class="pc-pred-locked-tag">🔒 ${pickedLabel} · resolves tomorrow</div>
+          </div>`;
+      } else {
+        const myPick = isToday && stored ? stored.pick : null;
+        const yesActive = myPick === "YES" ? "active" : "";
+        const noActive = myPick === "NO" ? "active" : "";
+        const lockNote = p.next_game_time ? `locks at ${formatGameTime(p.next_game_time)}` : "locks at first pitch";
+        predictionHtml = `
+          <div class="pc-pred">
+            <div class="pc-pred-q">${esc(p.prediction.question_text)}</div>
+            <div class="pc-pred-actions">
+              <button type="button" class="pc-pred-btn ${yesActive}" data-pick="YES" data-pid="${esc(pid)}">YES</button>
+              <button type="button" class="pc-pred-btn ${noActive}" data-pick="NO" data-pid="${esc(pid)}">NO</button>
+            </div>
+            <div class="pc-pred-meta">${myPick ? `picked ${myPick} · ` : ""}${lockNote}</div>
+          </div>`;
+      }
+
+      // Per-player scoreboard
+      const sb = RS.getScoreboardForPlayer(pid);
+      if (sb && sb.total > 0) {
+        scoreboardHtml = `
+          <div class="pc-scoreboard">
+            <span class="pc-sb-label">Your record</span>
+            <strong class="pc-sb-record">${sb.record}</strong>
+            <span class="pc-sb-streak">${sb.total} pick${sb.total === 1 ? "" : "s"}</span>
+          </div>`;
+      } else {
+        scoreboardHtml = `<div class="pc-scoreboard pc-sb-empty">No picks yet — be the first to call it</div>`;
+      }
+    }
+
     return `
       <div class="pc-face pc-back">
         <div class="pc-back-inner">
@@ -699,6 +967,9 @@
             <h2>${esc(p.last_name || "")}${p.first_name ? ", " + esc(p.first_name) : ""}</h2>
             <p>${esc(subline)}</p>
           </div>
+
+          ${predictionHtml}
+          ${scoreboardHtml}
 
           <table class="pc-table">
             <thead>${tableHead}</thead>
@@ -712,6 +983,8 @@
             </div>
             <div class="pc-adv-grid">${metricHtml}</div>
           </div>
+
+          ${touchesHtml}
 
           <div class="pc-footnote">
             ${isPitcher ? "Starting pitcher. Advanced Statcast metrics (FIP, Stuff+, CSW%) coming in Phase 1.5 via Baseball Savant." : "Today's starting lineup. Advanced Statcast (xwOBA, Barrel%, Sprint Speed) coming in Phase 1.5 via Baseball Savant."}
@@ -778,11 +1051,55 @@
       const card = document.createElement("div");
       card.className = "pc-card";
       card.innerHTML = renderFront(rec, teamName) + renderBack(rec, teamName);
-      card.addEventListener("click", (e) => {
-        e.stopPropagation();
-        card.classList.toggle("flipped");
-      });
       wrap.appendChild(card);
+      wireCardInteractions(card, rec, teamName);
+      if (window.MorningLineupReaderState && rec.id) {
+        try { window.MorningLineupReaderState.touch(rec.id); } catch (e) {}
+      }
+    });
+  }
+
+  // Wire the click-to-flip behavior plus prediction-button taps that should
+  // not bubble up to the flip handler. Re-rendering the back after a pick is
+  // simpler than diffing — the back's HTML is small.
+  function wireCardInteractions(card, rec, teamName) {
+    card.addEventListener("click", function (e) {
+      // Don't flip if a prediction button was clicked
+      if (e.target && e.target.closest && e.target.closest(".pc-pred-btn")) {
+        return;
+      }
+      e.stopPropagation();
+      card.classList.toggle("flipped");
+    });
+
+    // Delegate prediction button taps
+    card.addEventListener("click", function (e) {
+      if (!e.target || !e.target.closest) return;
+      const btn = e.target.closest(".pc-pred-btn");
+      if (!btn) return;
+      e.stopPropagation();
+      const RS = window.MorningLineupReaderState;
+      if (!RS) return;
+      const pick = btn.getAttribute("data-pick");
+      const pid = btn.getAttribute("data-pid");
+      if (!pid || !pick || !rec.prediction) return;
+      const ok = RS.makePick(pid, pick, {
+        question_text: rec.prediction.question_text,
+        resolution_rule: rec.prediction.resolution_rule,
+        role_tag: rec.prediction.role_tag,
+        context_tag: rec.prediction.context_tag,
+        gameTime: rec.next_game_time,
+      });
+      if (!ok) return;
+      // Re-render only the back face
+      const backFace = card.querySelector(".pc-back");
+      if (backFace) {
+        const newBack = renderBack(rec, teamName);
+        const tmp = document.createElement("div");
+        tmp.innerHTML = newBack;
+        const newFace = tmp.firstElementChild;
+        if (newFace) backFace.replaceWith(newFace);
+      }
     });
   }
 
@@ -836,13 +1153,17 @@
         card.className = "pc-card";
         if (rec) {
           card.innerHTML = renderFront(rec, teamName) + renderBack(rec, teamName);
+          wireCardInteractions(card, rec, teamName);
+          if (window.MorningLineupReaderState && rec.id) {
+            try { window.MorningLineupReaderState.touch(rec.id); } catch (e) {}
+          }
         } else {
           card.innerHTML = renderStub(pid, teamName);
+          card.addEventListener("click", function (e) {
+            e.stopPropagation();
+            card.classList.toggle("flipped");
+          });
         }
-        card.addEventListener("click", function (e) {
-          e.stopPropagation();
-          card.classList.toggle("flipped");
-        });
         wrap.appendChild(card);
         container.appendChild(wrap);
         return card;

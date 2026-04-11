@@ -675,9 +675,9 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-venue">Kauffman Stadium </div>
         <div class="nx-meta"><span class="nx-opp-rec">KC: 6-8, 3rd AL Central (W1)</span> &middot; <span class="nx-series">Season series: 1-1</span></div>
         <div class="nx-pitcher"><span class="nx-side">White Sox</span> <player-card pid="607200">Erick Fedde</player-card><div class="nx-pline">4.09 ERA &middot; 0-2 &middot; 11.0 IP &middot; 8 K &middot; 1.18 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">KC</span> Michael Wacha<div class="nx-pline">0.69 ERA &middot; 1-0 &middot; 13.0 IP &middot; 10 K &middot; 0.77 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="805367">Meidroth</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="808959">Murakami</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="643217">Benintendi</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="695657">Montgomery</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="672820">Sosa</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="687957">Harris</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="671976">Peters</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="695020">Murray</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="624512">McGuire</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Royals.TV &middot; Chicago Sports Network Plus</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> ESPN Chicago WMVP 1000 AM &middot; 96.5 The Fan &middot; Royals Radio Network</div>
-        <div class="nx-wx">60°F &middot; Partly Cloudy &middot; 11 mph SSE</div>
+        <div class="nx-wx">62°F &middot; Overcast &middot; 8 mph SSE</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; at KC</div>
@@ -977,7 +977,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Guaranteed Rate Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 10:57 CT</span>
+  <span>Filed 04/11/26 12:35 CT</span>
 </footer>
 
 <script>
@@ -1007,7 +1007,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=145;var TEAM_IDLE_MSG="No White Sox game in progress";</script>
-<script src="live.js"></script><script src="player-card.js" defer></script>
+<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});

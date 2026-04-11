@@ -675,9 +675,9 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-venue">Citi Field </div>
         <div class="nx-meta"><span class="nx-opp-rec">NYM: 7-7, 3rd NL East (L3)</span> &middot; <span class="nx-series">Season series: 1-0</span></div>
         <div class="nx-pitcher"><span class="nx-side">Athletics</span> <player-card pid="682052">Jacob Lopez</player-card><div class="nx-pline">6.48 ERA &middot; 0-1 &middot; 8.1 IP &middot; 6 K &middot; 2.28 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">NYM</span> Kodai Senga<div class="nx-pline">3.09 ERA &middot; 0-1 &middot; 11.2 IP &middot; 16 K &middot; 1.20 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="671732">Butler</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="701762">Kurtz</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="669127">Langeliers</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="691016">Soderstrom</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="805779">Wilson</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="643446">McNeil</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="691777">Muncy</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="666126">Cortes</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="672016">Clarke</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> SNY &middot; NBCSCA</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> Audacy Mets Radio WHSQ 880AM &middot; Talk 650 KSTE &middot; A&#x27;s Cast</div>
-        <div class="nx-wx">59°F &middot; Clear &middot; 13 mph NNW</div>
+        <div class="nx-wx">62°F &middot; Clear &middot; 14 mph NW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; at NYM</div>
@@ -974,7 +974,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Oakland Coliseum Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 10:56 CT</span>
+  <span>Filed 04/11/26 12:31 CT</span>
 </footer>
 
 <script>
@@ -1004,7 +1004,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=133;var TEAM_IDLE_MSG="No Athletics game in progress";</script>
-<script src="live.js"></script><script src="player-card.js" defer></script>
+<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});

@@ -675,7 +675,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-venue">Busch Stadium <span class="nx-dome">Retractable Roof</span></div>
         <div class="nx-meta"><span class="nx-opp-rec">BOS: 4-9, 5th AL East (L1)</span> &middot; <span class="nx-series">Season series: 1-0</span></div>
         <div class="nx-pitcher"><span class="nx-side">Cardinals</span> <player-card pid="681517">Kyle Leahy</player-card><div class="nx-pline">5.40 ERA &middot; 1-1 &middot; 10.0 IP &middot; 5 K &middot; 1.80 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">BOS</span> Ranger Suarez<div class="nx-pline">8.64 ERA &middot; 0-1 &middot; 8.1 IP &middot; 5 K &middot; 1.92 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="802139">Wetherholt</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="671056">Herrera</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="691023">Walker</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="669357">Gorman</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="602104">Urías</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="665877">Fermín</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="695336">Saggese</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="686780">Pagés</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="687363">II</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> FOX &middot; FOX</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WEEI 93.7 &middot; KMOX 1120 AM/104.1 FM</div>
         <div class="nx-wx">72°F &middot; Climate controlled</div>
       </div><div class="nx-card">
@@ -974,7 +974,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Busch Stadium Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 10:56 CT</span>
+  <span>Filed 04/11/26 12:32 CT</span>
 </footer>
 
 <script>
@@ -1004,7 +1004,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=138;var TEAM_IDLE_MSG="No Cardinals game in progress";</script>
-<script src="live.js"></script><script src="player-card.js" defer></script>
+<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});

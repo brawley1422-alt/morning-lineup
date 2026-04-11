@@ -503,6 +503,29 @@ function loadPlayerIndex() {
   return _playerIndexPromise;
 }
 
+function aggregateScoreboardHtml() {
+  const RS = window.MorningLineupReaderState;
+  if (!RS) return "";
+  const sb = RS.getAggregateScoreboard();
+  if (!sb || sb.total === 0) {
+    return `<div class="binder-aggregate binder-aggregate-empty">Start predicting to build your record</div>`;
+  }
+  const streakLabel = sb.streak ? `Current: ${sb.streak}` : "";
+  return `
+    <div class="binder-aggregate">
+      <span class="ba-label">Season Record</span>
+      <strong class="ba-record">${sb.record}</strong>
+      ${streakLabel ? `<span class="ba-streak">${streakLabel}</span>` : ""}
+    </div>
+  `;
+}
+
+function refreshAggregateScoreboard(section) {
+  const grid = section || document;
+  const slot = grid.querySelector("#binder-aggregate-slot");
+  if (slot) slot.innerHTML = aggregateScoreboardHtml();
+}
+
 function renderMyPlayersSection(players, statsMap) {
   const section = document.createElement("section");
   section.id = "my-players";
@@ -511,6 +534,15 @@ function renderMyPlayersSection(players, statsMap) {
 
   const todayLabel = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" });
   const count = String(players.length).padStart(2, "0");
+
+  // Phase 2: write the followed-pid set into ReaderState so non-home pages
+  // can tell which players are followed.
+  if (window.MorningLineupReaderState && players.length > 0) {
+    try {
+      const pids = players.map((p) => String(p.mlbam_id)).filter(Boolean);
+      window.MorningLineupReaderState.setFollowedSet(pids);
+    } catch (e) {}
+  }
 
   section.innerHTML = `
     <div class="binder">
@@ -523,14 +555,18 @@ function renderMyPlayersSection(players, statsMap) {
           <span class="bh-stamp">Approved</span>
         </div>
       </header>
+      <div id="binder-aggregate-slot">${aggregateScoreboardHtml()}</div>
       <div class="binder-rule"></div>
       <div class="binder-grid"></div>
       <div class="binder-foot">
-        <span class="hint">Tap a card to flip</span>
+        <span class="hint">Tap a card to flip · predictions resolve overnight</span>
         <a href="../settings/">Manage roster →</a>
       </div>
     </div>
   `;
+
+  // Refresh the aggregate strip when resolution-pass.js fires
+  window.addEventListener("ml:predictions-resolved", () => refreshAggregateScoreboard(section));
 
   const grid = section.querySelector(".binder-grid");
 

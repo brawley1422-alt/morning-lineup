@@ -815,7 +815,7 @@ def page(briefing):
 }})();
 </script>
 <script>var TEAM_ID={TEAM_ID};var TEAM_IDLE_MSG="{CFG['branding']['idle_msg']}";</script>
-<script src="live.js"></script><script src="player-card.js" defer></script>
+<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});
 document.addEventListener("click",function(e){{var tr=e.target.closest("tr.scorecard-link");if(tr){{var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}}}});
@@ -887,6 +887,169 @@ def compute_temp_strip(game_log, role="hitter"):
     return out[:15]
 
 
+def _extract_last_10_games(splits, role):
+    """Extract last 10 games for the sparkline. Returns list ordered oldest→newest.
+    Each entry: {date, opponent, value}. Hitters: OPS per game. Pitchers: GameScore."""
+    out = []
+    # MLB gameLog returns splits in reverse chronological order — slice the
+    # 10 most recent then flip to oldest→newest for the sparkline left→right.
+    for sp in (splits or [])[:10]:
+        if not isinstance(sp, dict):
+            continue
+        st = sp.get("stat", {}) or {}
+        date = sp.get("date", "")
+        opp = (sp.get("opponent", {}) or {}).get("abbreviation", "?")
+        value = None
+        if role == "hitter":
+            try:
+                ab = int(st.get("atBats", 0) or 0)
+                if ab > 0:
+                    ops_str = st.get("ops", "")
+                    if ops_str not in ("", "-", ".---"):
+                        value = round(float(ops_str), 3)
+            except (ValueError, TypeError):
+                pass
+        else:  # pitcher
+            try:
+                ip_str = str(st.get("inningsPitched", "0") or "0")
+                ip = float(ip_str) if ip_str not in ("", "-") else 0.0
+                if ip > 0:
+                    # Bill James GameScore v1: 50 + outs + Ks - hits - 4*ER - 2*UER - BB
+                    outs = int(round(ip * 3))
+                    h = int(st.get("hits", 0) or 0)
+                    er = int(st.get("earnedRuns", 0) or 0)
+                    bb = int(st.get("baseOnBalls", 0) or 0)
+                    k = int(st.get("strikeOuts", 0) or 0)
+                    gs = 50 + outs + k - h - (4 * er) - (2 * bb)
+                    value = max(0, min(100, gs))
+            except (ValueError, TypeError):
+                pass
+        out.append({"date": date, "opp": opp, "value": value})
+    return list(reversed(out))
+
+
+def _select_prediction(rec):
+    """Pick a contextual daily prediction question for one player record.
+    Walks rules in priority order and returns the first that fires.
+    Returns {question_text, resolution_rule, role_tag, context_tag}."""
+    role = rec.get("role", "hitter")
+    name = rec.get("name", "the player")
+    last = rec.get("last_name", "") or name.split()[-1]
+    last_10 = rec.get("last_10_games", []) or []
+    season = rec.get("season", {}) or {}
+
+    # Hitter rule set
+    if role == "hitter":
+        # Rule: milestone-watch (within 2 of round HR total)
+        try:
+            hr = int(season.get("homeRuns", 0) or 0)
+            for milestone in (10, 20, 30, 40, 50):
+                if 0 < (milestone - hr) <= 2:
+                    return {
+                        "question_text": f"Will {last} hit HR #{milestone} today?",
+                        "resolution_rule": {"stat": "homeRuns", "op": ">=", "value": milestone - hr},
+                        "role_tag": "hitter",
+                        "context_tag": "milestone-watch",
+                    }
+        except (ValueError, TypeError):
+            pass
+
+        # Rule: slump-snap (BA < .200 looking at last 10 game OPS values)
+        recent_values = [g["value"] for g in last_10 if g.get("value") is not None]
+        if len(recent_values) >= 5:
+            avg_ops = sum(recent_values) / len(recent_values)
+            if avg_ops < 0.500:
+                return {
+                    "question_text": f"Will {last} snap out of it with a hit today?",
+                    "resolution_rule": {"stat": "hits", "op": ">=", "value": 1},
+                    "role_tag": "hitter",
+                    "context_tag": "slump-snap",
+                }
+
+        # Rule: hot-streak (avg OPS > 1.000 over last 10)
+        if len(recent_values) >= 5:
+            avg_ops = sum(recent_values) / len(recent_values)
+            if avg_ops > 1.000:
+                return {
+                    "question_text": f"Can {last} keep the heater going — multi-hit game?",
+                    "resolution_rule": {"stat": "hits", "op": ">=", "value": 2},
+                    "role_tag": "hitter",
+                    "context_tag": "hot-streak",
+                }
+
+        # Generic fallback
+        return {
+            "question_text": f"Will {last} get a hit today?",
+            "resolution_rule": {"stat": "hits", "op": ">=", "value": 1},
+            "role_tag": "hitter",
+            "context_tag": "generic",
+        }
+
+    # Pitcher rule set
+    else:
+        # Rule: milestone-watch (within 5 K of a round number)
+        try:
+            so = int(season.get("strikeOuts", 0) or 0)
+            for milestone in (50, 100, 150, 200, 250):
+                if 0 < (milestone - so) <= 5:
+                    return {
+                        "question_text": f"Will {last} reach {milestone} K today?",
+                        "resolution_rule": {"stat": "strikeOuts", "op": ">=", "value": milestone - so},
+                        "role_tag": "pitcher",
+                        "context_tag": "milestone-watch",
+                    }
+        except (ValueError, TypeError):
+            pass
+
+        # Rule: hot-streak (recent GameScore avg > 60)
+        recent_values = [g["value"] for g in last_10[-3:] if g.get("value") is not None]
+        if len(recent_values) >= 2:
+            avg_gs = sum(recent_values) / len(recent_values)
+            if avg_gs > 60:
+                return {
+                    "question_text": f"Will {last} carve them up — 7+ K today?",
+                    "resolution_rule": {"stat": "strikeOuts", "op": ">=", "value": 7},
+                    "role_tag": "pitcher",
+                    "context_tag": "hot-streak",
+                }
+            if avg_gs < 35:
+                return {
+                    "question_text": f"Can {last} get back on track — quality start today?",
+                    "resolution_rule": {"stat": "qualityStart", "op": "==", "value": True},
+                    "role_tag": "pitcher",
+                    "context_tag": "slump-snap",
+                }
+
+        # Generic pitcher fallback
+        return {
+            "question_text": f"Will {last} record 5+ K today?",
+            "resolution_rule": {"stat": "strikeOuts", "op": ">=", "value": 5},
+            "role_tag": "pitcher",
+            "context_tag": "generic",
+        }
+
+
+def _fetch_next_game_time(team_id):
+    """Get the ISO datetime of the team's next scheduled game start, or None.
+    Used by Phase 2's prediction lock — picks lock at first pitch."""
+    try:
+        from datetime import timedelta as _td
+        _today = datetime.now(tz=CT).date()
+        start = _today.isoformat()
+        end = (_today + _td(days=14)).isoformat()
+        sched = fetch("/schedule", sportId=1, teamId=team_id,
+                      startDate=start, endDate=end)
+        for date_block in sched.get("dates", []):
+            for game in date_block.get("games", []):
+                game_date = game.get("gameDate", "")
+                status = (game.get("status", {}) or {}).get("abstractGameState", "")
+                if game_date and status in ("Preview", "Live"):
+                    return game_date
+    except Exception as e:
+        print(f"  warning: next game lookup for team {team_id} failed: {e}", flush=True)
+    return None
+
+
 def _fetch_player_record(pid, role, season):
     """Fetch bio + season line + gameLog for one player. Returns None on failure."""
     if not pid:
@@ -934,6 +1097,7 @@ def _fetch_player_record(pid, role, season):
         print(f"  warning: player career {pid} failed: {e}", flush=True)
 
     temp = []
+    last_10 = []
     try:
         gl_data = fetch(
             f"/people/{pid}/stats",
@@ -946,9 +1110,11 @@ def _fetch_player_record(pid, role, season):
             splits = s.get("splits", [])[:15]
             break
         temp = compute_temp_strip(splits, role=role)
+        last_10 = _extract_last_10_games(splits, role=role)
     except Exception as e:
         print(f"  warning: player gameLog {pid} failed: {e}", flush=True)
         temp = [None] * 15
+        last_10 = []
 
     pos = person.get("primaryPosition", {}).get("abbreviation", "")
     return {
@@ -976,7 +1142,11 @@ def _fetch_player_record(pid, role, season):
         "season": season_stats,
         "career": career,
         "temp_strip": temp,
+        "last_10_games": last_10,
         "advanced": {},  # Phase 1.5: Baseball Savant Statcast
+        # next_game_time and prediction injected by load_team_players (needs team_id)
+        "next_game_time": None,
+        "prediction": None,
     }
 
 
@@ -987,7 +1157,7 @@ def _player_cache_path(pid, season, today):
     if _PLAYER_CACHE_DIR is None:
         _PLAYER_CACHE_DIR = DATA_DIR / "cache" / "players"
         _PLAYER_CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    return _PLAYER_CACHE_DIR / f"{pid}-{season}-{today.isoformat()}.json"
+    return _PLAYER_CACHE_DIR / f"{pid}-{season}-{today.isoformat()}-v2.json"
 
 
 def _fetch_player_record_cached(pid, role, season, today):
@@ -1047,6 +1217,17 @@ def load_team_players(team_id, season, today, max_workers=4):
             pid, rec = f.result()
             if rec:
                 players[str(pid)] = rec
+
+    # Phase 2: inject next_game_time + prediction once per team (cheap)
+    next_game = _fetch_next_game_time(team_id)
+    for pid_str, rec in players.items():
+        rec["next_game_time"] = next_game
+        try:
+            rec["prediction"] = _select_prediction(rec)
+        except Exception as e:
+            print(f"  warning: prediction selection {pid_str} failed: {e}", flush=True)
+            rec["prediction"] = None
+
     return players
 
 
@@ -1279,12 +1460,13 @@ if __name__ == "__main__":
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(html, encoding="utf-8")
         print(f"Wrote {out_path} ({len(html):,} bytes)")
-        # Copy player-card.js into the team output dir so the relative
-        # script tag resolves on every team page (mirrors the live.js / sw.js pattern).
+        # Copy player-card.js + reader-state.js + resolution-pass.js into
+        # the team output dir so the relative script tags resolve on every page.
         try:
-            _pc_src = ROOT / "player-card.js"
-            if _pc_src.exists():
-                import shutil
-                shutil.copyfile(_pc_src, out_path.parent / "player-card.js")
+            import shutil
+            for _asset in ("player-card.js", "reader-state.js", "resolution-pass.js"):
+                _src = ROOT / _asset
+                if _src.exists():
+                    shutil.copyfile(_src, out_path.parent / _asset)
         except Exception as _e3:
-            print(f"  warning: player-card.js copy failed: {_e3}", flush=True)
+            print(f"  warning: phase 2 asset copy failed: {_e3}", flush=True)

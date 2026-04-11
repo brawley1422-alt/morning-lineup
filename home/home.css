@@ -890,3 +890,45 @@ body.theme-paper .home-columnists-wrap {
   border-bottom: 1px dotted var(--binder-gold);
   text-decoration: none;
 }
+
+/* Aggregate scoreboard band — sits between the header and the rule */
+.binder .binder-aggregate {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 18px;
+  padding: 10px 0 8px 36px;
+  font-family: var(--mono, 'IBM Plex Mono', Menlo, monospace);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: var(--binder-gold);
+  border-bottom: 1px dashed rgba(232,200,120,.25);
+  margin: 4px 0 0;
+}
+.binder .ba-label {
+  color: var(--binder-gold);
+}
+.binder .ba-record {
+  font-family: var(--display, 'Playfair Display', Georgia, serif);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: -.01em;
+  color: var(--binder-paper);
+  text-shadow: 0 0 16px rgba(232,200,120,.3);
+}
+.binder .ba-streak {
+  color: var(--binder-gold-foil);
+  font-weight: 600;
+}
+.binder .binder-aggregate-empty {
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--body, 'Lora', Georgia, serif);
+  font-size: 12px;
+  color: var(--binder-gold);
+  padding: 14px 0 10px 36px;
+  border-bottom: 1px dashed rgba(232,200,120,.18);
+}

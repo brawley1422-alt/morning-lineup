@@ -675,9 +675,9 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-venue">Wrigley Field </div>
         <div class="nx-meta"><span class="nx-opp-rec">CHC: 6-7, 5th NL Central (L1)</span> &middot; <span class="nx-series">Season series: 1-0</span></div>
         <div class="nx-pitcher"><span class="nx-side">Pirates</span> <player-card pid="677952">Braxton Ashcraft</player-card><div class="nx-pline">2.25 ERA &middot; 1-1 &middot; 12.0 IP &middot; 11 K &middot; 1.00 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">CHC</span> Edward Cabrera<div class="nx-pline">0.00 ERA &middot; 1-0 &middot; 11.2 IP &middot; 9 K &middot; 0.69 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="665833">Cruz</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="664040">Lowe</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="668804">Reynolds</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="656811">O&#x27;Hearn</player-card></span><span class="lu-slot"><span class="lu-pos">DH</span> <player-card pid="542303">Ozuna</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="694377">Yorke</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="687462">Horwitz</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="804606">Griffin</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="680779">Davis</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> SportsNet Pittsburgh &middot; Marquee Sports Network</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 104.3 The Score &middot; Sports Radio 93.7 KDKA The Fan</div>
-        <div class="nx-wx">46°F &middot; Clear &middot; 10 mph ESE <span class="nx-wrigley">&mdash; Crosswind R→L</span></div>
+        <div class="nx-wx">47°F &middot; Overcast &middot; 8 mph E <span class="nx-wrigley">&mdash; Blowing in from right field</span></div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; at CHC</div>
@@ -977,7 +977,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A PNC Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 10:57 CT</span>
+  <span>Filed 04/11/26 12:33 CT</span>
 </footer>
 
 <script>
@@ -1007,7 +1007,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=134;var TEAM_IDLE_MSG="No Pirates game in progress";</script>
-<script src="live.js"></script><script src="player-card.js" defer></script>
+<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});
