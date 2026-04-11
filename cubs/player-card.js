@@ -10,25 +10,27 @@
 (function () {
   if (customElements.get("player-card")) return;
 
-  const TEAM_SLUG = (document.body && document.body.dataset && document.body.dataset.team) || "cubs";
-  const DATA_URL = "../data/players-" + TEAM_SLUG + ".json";
-  let _cache = null;
-  let _cachePromise = null;
+  const DEFAULT_SLUG =
+    (document.body && document.body.dataset && document.body.dataset.team) || "cubs";
+  const _cacheBySlug = {};
+  const _promiseBySlug = {};
 
-  function loadData() {
-    if (_cache) return Promise.resolve(_cache);
-    if (_cachePromise) return _cachePromise;
-    _cachePromise = fetch(DATA_URL, { cache: "no-cache" })
+  function loadData(slug) {
+    const s = slug || DEFAULT_SLUG;
+    if (_cacheBySlug[s]) return Promise.resolve(_cacheBySlug[s]);
+    if (_promiseBySlug[s]) return _promiseBySlug[s];
+    const url = "../data/players-" + s + ".json";
+    _promiseBySlug[s] = fetch(url, { cache: "no-cache" })
       .then((r) => (r.ok ? r.json() : null))
       .then((j) => {
-        _cache = j || { players: {} };
-        return _cache;
+        _cacheBySlug[s] = j || { players: {} };
+        return _cacheBySlug[s];
       })
       .catch(() => {
-        _cache = { players: {} };
-        return _cache;
+        _cacheBySlug[s] = { players: {} };
+        return _cacheBySlug[s];
       });
-    return _cachePromise;
+    return _promiseBySlug[s];
   }
 
   function esc(s) {
@@ -729,7 +731,7 @@
     `;
   }
 
-  function openOverlay(pid, displayName) {
+  function openOverlay(pid, displayName, slug) {
     injectStylesOnce();
     const backdrop = document.createElement("div");
     backdrop.className = "pc-backdrop";
@@ -766,7 +768,7 @@
 
     document.body.appendChild(backdrop);
 
-    loadData().then((data) => {
+    loadData(slug).then((data) => {
       const rec = data.players ? data.players[String(pid)] : null;
       if (!rec) {
         wrap.innerHTML = renderStub(displayName || pid);
@@ -802,8 +804,9 @@
       e.stopPropagation();
       const pid = this.getAttribute("pid");
       const display = this.textContent.trim();
+      const slug = this.getAttribute("team") || undefined;
       if (!pid) return;
-      openOverlay(pid, display);
+      openOverlay(pid, display, slug);
     }
   }
 
@@ -816,7 +819,8 @@
     const pid = m[1];
     const match = document.querySelector('player-card[pid="' + pid + '"]');
     const name = match ? match.textContent.trim() : pid;
-    openOverlay(pid, name);
+    const slug = match ? (match.getAttribute("team") || undefined) : undefined;
+    openOverlay(pid, name, slug);
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", openFromHash);

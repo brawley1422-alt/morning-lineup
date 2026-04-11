@@ -470,6 +470,19 @@ function formatPlayerLine(player, stats) {
   return "No stats yet this season.";
 }
 
+const ABBR_TO_SLUG = {
+  "LAA": "angels", "HOU": "astros", "ATH": "athletics", "TOR": "blue-jays",
+  "ATL": "braves", "MIL": "brewers", "STL": "cardinals", "CHC": "cubs",
+  "AZ": "dbacks", "ARI": "dbacks", "LAD": "dodgers", "SF": "giants",
+  "SFG": "giants", "CLE": "guardians", "SEA": "mariners", "MIA": "marlins",
+  "NYM": "mets", "WSH": "nationals", "WAS": "nationals", "BAL": "orioles",
+  "SD": "padres", "SDP": "padres", "PHI": "phillies", "PIT": "pirates",
+  "TEX": "rangers", "TB": "rays", "TBR": "rays", "BOS": "red-sox",
+  "CIN": "reds", "COL": "rockies", "KC": "royals", "KCR": "royals",
+  "DET": "tigers", "MIN": "twins", "CWS": "white-sox", "CHW": "white-sox",
+  "NYY": "yankees",
+};
+
 function renderMyPlayersSection(players, statsMap) {
   const section = document.createElement("section");
   section.id = "my-players";
@@ -494,9 +507,13 @@ function renderMyPlayersSection(players, statsMap) {
     const li = document.createElement("li");
     const stats = statsMap[p.mlbam_id];
     const posTeam = [p.primary_position, p.mlb_team_abbr].filter(Boolean).join(" · ") || "—";
+    const slug = ABBR_TO_SLUG[p.mlb_team_abbr] || "";
+    const nameHtml = (p.mlbam_id && slug)
+      ? `<player-card pid="${p.mlbam_id}" team="${slug}">${p.full_name}</player-card>`
+      : p.full_name;
     li.innerHTML = `
       <div class="player-row-head">
-        <span class="player-row-name">${p.full_name}</span>
+        <span class="player-row-name">${nameHtml}</span>
         <span class="player-row-meta">${posTeam}</span>
       </div>
       <div class="player-row-stats">${formatPlayerLine(p, stats)}</div>
@@ -592,6 +609,11 @@ async function renderMergedView(profile, followed) {
         if (!htmlId) continue;
         const node = extractSection(doc, htmlId);
         if (node) {
+          // Tag any player-card elements with their source team so the
+          // component loads the right players-<slug>.json from the home page.
+          node.querySelectorAll("player-card").forEach((el) => {
+            if (!el.getAttribute("team")) el.setAttribute("team", slug);
+          });
           if (!anchored.has(key)) {
             node.id = `section-${key}`;
             anchored.add(key);
