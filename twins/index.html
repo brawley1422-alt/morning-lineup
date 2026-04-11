@@ -316,7 +316,8 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .vs-divider{font-family:var(--serif);font-style:italic;font-weight:900;font-size:24px;color:var(--gold);align-self:center;text-align:center;padding:0 6px}
 @media(max-width:640px){.vs-divider{display:none}}
 .sp-card{background:linear-gradient(135deg,var(--ink-2) 0%,var(--ink-3) 100%);border:1px solid var(--rule);border-radius:3px;padding:10px 12px;border-top:3px solid var(--team-primary-hi)}
-.sp-side{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px}
+.sp-side{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sp-side .sp-side-ab{letter-spacing:.14em}
 .sp-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:18px;font-weight:700;color:var(--paper)}
 .sp-season{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
 .sp-log{min-width:auto !important;margin-top:4px}
@@ -685,7 +686,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="nx-venue">Rogers Centre <span class="nx-dome">Retractable Roof</span></div>
         <div class="nx-meta"><span class="nx-opp-rec">TOR: 6-7, 4th AL East (W2)</span> &middot; <span class="nx-series">Season series: 0-2</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Twins</span> <player-card pid="657746">Joe Ryan</player-card><div class="nx-pline">4.67 ERA &middot; 1-1 &middot; 17.1 IP &middot; 20 K &middot; 1.15 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-141"/></svg>TOR</span> Eric Lauer<div class="nx-pline">8.74 ERA &middot; 1-1 &middot; 11.1 IP &middot; 12 K &middot; 1.68 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">Twins</span> <player-card pid="657746">Joe Ryan</player-card><div class="nx-pline">4.42 ERA &middot; 1-1 &middot; 18.1 IP &middot; 20 K &middot; 1.15 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-141"/></svg>TOR</span> Eric Lauer<div class="nx-pline">8.74 ERA &middot; 1-1 &middot; 11.1 IP &middot; 12 K &middot; 1.68 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="621439">Buxton</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="668885">Martin</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="807712">Keaschall</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="680777">Jeffers</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="605137">Bell</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="605170">Caratini</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="663616">Larnach</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="686797">Lee</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="668952">Kreidler</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Sportsnet &middot; Twins.TV Presented by Progressive</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> TIBN &middot; WCCO 830 &middot; SN590 THE FAN &middot; The Wolf 102.9 FM &middot; Audacy App</div>
         <div class="nx-wx">72°F &middot; Climate controlled</div>
@@ -716,7 +717,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     
     <div class="two">
       <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="605137">Bell</player-card></span><span class="s">.381 / 1 HR / 1.006 OPS</span></li><li><span class="n"><player-card pid="680777">Jeffers</player-card></span><span class="s">.333 / 1 HR / .986 OPS</span></li><li><span class="n"><player-card pid="663616">Larnach</player-card></span><span class="s">.267 / 1 HR / .983 OPS</span></li><li><span class="n"><player-card pid="668885">Martin</player-card></span><span class="s">.375 / 0 HR / .962 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="681546">Outman</player-card></span><span class="s">.000 / 0 HR / .000 OPS</span></li><li><span class="n"><player-card pid="665019">Clemens</player-card></span><span class="s">.136 / 1 HR / .569 OPS</span></li><li><span class="n"><player-card pid="807712">Keaschall</player-card></span><span class="s">.174 / 1 HR / .573 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="681546">Outman</player-card></span><span class="s">.000 / 0 HR / .000 OPS</span></li><li><span class="n"><player-card pid="807712">Keaschall</player-card></span><span class="s">.167 / 1 HR / .551 OPS</span></li><li><span class="n"><player-card pid="665019">Clemens</player-card></span><span class="s">.136 / 1 HR / .569 OPS</span></li></ul></div>
     </div>
     <div class="two">
       <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="671737">Bradley</player-card></span><span class="s">16.2 IP &middot; 1.08 ERA &middot; 22 K</span></li><li><span class="n"><player-card pid="679358">Orze</player-card></span><span class="s">5.2 IP &middot; 1.59 ERA &middot; 4 K</span></li><li><span class="n"><player-card pid="681892">Funderburk</player-card></span><span class="s">5.0 IP &middot; 1.80 ERA &middot; 6 K</span></li></ul></div>
@@ -732,24 +733,24 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="tag">Today&rsquo;s Matchup</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="scout-ctx"><span>at TOR &middot; 2:07 CT</span><span>Rogers Centre</span></div>
+    <div class="scout-ctx"><span>at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-141"/></svg><span class="ab">TOR</span> &middot; 2:07 CT</span><span>Rogers Centre</span></div>
     <div class="matchup-vs">
         <div class="sp-card">
-        <div class="sp-side">Twins</div>
+        <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-142"/></svg><span class="sp-side-ab">Twins</span></div>
         <div class="sp-name"><player-card pid="657746">Joe Ryan</player-card></div>
-        <div class="sp-season">4.67 ERA &middot; 1-1 &middot; 17.1 IP &middot; 20 K &middot; 1.15 WHIP</div>
+        <div class="sp-season">4.42 ERA &middot; 1-1 &middot; 18.1 IP &middot; 20 K &middot; 1.15 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
             <tbody><tr><td>03-26</td><td class="opp">vs Baltimore Orioles</td><td class="num">5.1</td><td class="num">0</td><td class="num">7</td><td class="num">1</td><td class="num">2</td></tr><tr><td>04-01</td><td class="opp">vs Kansas City Royals</td><td class="num">4.0</td><td class="num">5</td><td class="num">3</td><td class="num">9</td><td class="num">0</td></tr><tr><td>04-06</td><td class="opp">vs Detroit Tigers</td><td class="num">5.0</td><td class="num">2</td><td class="num">7</td><td class="num">3</td><td class="num">3</td></tr></tbody></table>
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
-        <div class="sp-side">TOR</div>
+        <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-141"/></svg><span class="sp-side-ab">TOR</span></div>
         <div class="sp-name">Eric Lauer</div>
         <div class="sp-season">8.74 ERA &middot; 1-1 &middot; 11.1 IP &middot; 12 K &middot; 1.68 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>03-29</td><td class="opp">vs Athletics</td><td class="num">5.1</td><td class="num">2</td><td class="num">9</td><td class="num">3</td><td class="num">1</td></tr><tr><td>04-05</td><td class="opp">vs Chicago White Sox</td><td class="num">2.0</td><td class="num">2</td><td class="num">0</td><td class="num">3</td><td class="num">3</td></tr><tr><td>04-11</td><td class="opp">vs Minnesota Twins</td><td class="num">3.2</td><td class="num">7</td><td class="num">3</td><td class="num">5</td><td class="num">4</td></tr></tbody></table>
+            <tbody><tr><td>03-29</td><td class="opp">vs Athletics</td><td class="num">5.1</td><td class="num">2</td><td class="num">9</td><td class="num">3</td><td class="num">1</td></tr><tr><td>04-05</td><td class="opp">vs Chicago White Sox</td><td class="num">2.0</td><td class="num">2</td><td class="num">0</td><td class="num">3</td><td class="num">3</td></tr><tr><td>04-11</td><td class="opp">vs Minnesota Twins</td><td class="num">4.0</td><td class="num">7</td><td class="num">3</td><td class="num">5</td><td class="num">4</td></tr></tbody></table>
         </div>
     </div>
   </section>
@@ -1045,7 +1046,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Target Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 15:12 CT</span>
+  <span>Filed 04/11/26 15:23 CT</span>
 </footer>
 
 <script>

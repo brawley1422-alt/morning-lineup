@@ -316,7 +316,8 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .vs-divider{font-family:var(--serif);font-style:italic;font-weight:900;font-size:24px;color:var(--gold);align-self:center;text-align:center;padding:0 6px}
 @media(max-width:640px){.vs-divider{display:none}}
 .sp-card{background:linear-gradient(135deg,var(--ink-2) 0%,var(--ink-3) 100%);border:1px solid var(--rule);border-radius:3px;padding:10px 12px;border-top:3px solid var(--team-primary-hi)}
-.sp-side{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px}
+.sp-side{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sp-side .sp-side-ab{letter-spacing:.14em}
 .sp-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:18px;font-weight:700;color:var(--paper)}
 .sp-season{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
 .sp-log{min-width:auto !important;margin-top:4px}
@@ -676,7 +677,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Pirates Leaders</h3>
     <div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>AVG</td><td class="name"><player-card pid="694377">Yorke</player-card> <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.393</td></tr><tr><td>OBP</td><td class="name"><player-card pid="694377">Yorke</player-card> <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.486</td></tr><tr><td>HR</td><td class="name"><player-card pid="665833">Cruz</player-card> <span style="color:var(--paper-mute);font-size:10px">CF</span></td><td class="num">4</td></tr><tr><td>RBI</td><td class="name"><player-card pid="665833">Cruz</player-card> <span style="color:var(--paper-mute);font-size:10px">CF</span></td><td class="num">12</td></tr><tr><td>SB</td><td class="name"><player-card pid="665833">Cruz</player-card> <span style="color:var(--paper-mute);font-size:10px">CF</span></td><td class="num">5</td></tr></tbody></table></div>
+    <tbody><tr><td>AVG</td><td class="name"><player-card pid="694377">Yorke</player-card> <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.379</td></tr><tr><td>OBP</td><td class="name"><player-card pid="694377">Yorke</player-card> <span style="color:var(--paper-mute);font-size:10px">2B</span></td><td class="num">.472</td></tr><tr><td>HR</td><td class="name"><player-card pid="665833">Cruz</player-card> <span style="color:var(--paper-mute);font-size:10px">CF</span></td><td class="num">4</td></tr><tr><td>RBI</td><td class="name"><player-card pid="665833">Cruz</player-card> <span style="color:var(--paper-mute);font-size:10px">CF</span></td><td class="num">12</td></tr><tr><td>SB</td><td class="name"><player-card pid="665833">Cruz</player-card> <span style="color:var(--paper-mute);font-size:10px">CF</span></td><td class="num">5</td></tr></tbody></table></div>
     <h3>Next Games</h3>
     <div class="next-games"><div class="nx-card nx-today">
         <div class="nx-head">
@@ -715,8 +716,8 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="694377">Yorke</player-card></span><span class="s">.500 / 0 HR / 1.233 OPS</span></li><li><span class="n"><player-card pid="665833">Cruz</player-card></span><span class="s">.407 / 1 HR / 1.097 OPS</span></li><li><span class="n"><player-card pid="668804">Reynolds</player-card></span><span class="s">.348 / 1 HR / .989 OPS</span></li><li><span class="n"><player-card pid="656811">O&#x27;Hearn</player-card></span><span class="s">.280 / 1 HR / .825 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="542303">Ozuna</player-card></span><span class="s">.040 / 0 HR / .183 OPS</span></li><li><span class="n"><player-card pid="804606">Griffin</player-card></span><span class="s">.143 / 0 HR / .351 OPS</span></li><li><span class="n"><player-card pid="663698">Bart</player-card></span><span class="s">.143 / 0 HR / .393 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="694377">Yorke</player-card></span><span class="s">.476 / 0 HR / 1.179 OPS</span></li><li><span class="n"><player-card pid="665833">Cruz</player-card></span><span class="s">.407 / 1 HR / 1.097 OPS</span></li><li><span class="n"><player-card pid="668804">Reynolds</player-card></span><span class="s">.348 / 1 HR / .989 OPS</span></li><li><span class="n"><player-card pid="656811">O&#x27;Hearn</player-card></span><span class="s">.280 / 1 HR / .847 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="542303">Ozuna</player-card></span><span class="s">.038 / 0 HR / .176 OPS</span></li><li><span class="n"><player-card pid="804606">Griffin</player-card></span><span class="s">.143 / 0 HR / .351 OPS</span></li><li><span class="n"><player-card pid="663698">Bart</player-card></span><span class="s">.143 / 0 HR / .393 OPS</span></li></ul></div>
     </div>
     <div class="two">
       <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="642701">Santana</player-card></span><span class="s">7.0 IP &middot; 0.00 ERA &middot; 6 K</span></li><li><span class="n"><player-card pid="676755">Mattson</player-card></span><span class="s">7.0 IP &middot; 0.00 ERA &middot; 6 K</span></li><li><span class="n"><player-card pid="656605">Keller</player-card></span><span class="s">18.0 IP &middot; 1.00 ERA &middot; 11 K</span></li></ul></div>
@@ -732,10 +733,10 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="tag">Today&rsquo;s Matchup</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="scout-ctx"><span>at CHC &middot; 1:20 CT</span><span>Wrigley Field</span></div>
+    <div class="scout-ctx"><span>at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-112"/></svg><span class="ab">CHC</span> &middot; 1:20 CT</span><span>Wrigley Field</span></div>
     <div class="matchup-vs">
         <div class="sp-card">
-        <div class="sp-side">Pirates</div>
+        <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-134"/></svg><span class="sp-side-ab">Pirates</span></div>
         <div class="sp-name"><player-card pid="677952">Braxton Ashcraft</player-card></div>
         <div class="sp-season">2.12 ERA &middot; 1-1 &middot; 17.0 IP &middot; 20 K &middot; 1.00 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
@@ -744,7 +745,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
-        <div class="sp-side">CHC</div>
+        <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-112"/></svg><span class="sp-side-ab">CHC</span></div>
         <div class="sp-name">Edward Cabrera</div>
         <div class="sp-season">1.62 ERA &middot; 1-0 &middot; 16.2 IP &middot; 13 K &middot; 1.14 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
@@ -1048,7 +1049,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A PNC Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 15:11 CT</span>
+  <span>Filed 04/11/26 15:22 CT</span>
 </footer>
 
 <script>

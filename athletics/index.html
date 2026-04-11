@@ -316,7 +316,8 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .vs-divider{font-family:var(--serif);font-style:italic;font-weight:900;font-size:24px;color:var(--gold);align-self:center;text-align:center;padding:0 6px}
 @media(max-width:640px){.vs-divider{display:none}}
 .sp-card{background:linear-gradient(135deg,var(--ink-2) 0%,var(--ink-3) 100%);border:1px solid var(--rule);border-radius:3px;padding:10px 12px;border-top:3px solid var(--team-primary-hi)}
-.sp-side{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px}
+.sp-side{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sp-side .sp-side-ab{letter-spacing:.14em}
 .sp-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:18px;font-weight:700;color:var(--paper)}
 .sp-season{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
 .sp-log{min-width:auto !important;margin-top:4px}
@@ -685,7 +686,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="nx-venue">Citi Field </div>
         <div class="nx-meta"><span class="nx-opp-rec">NYM: 7-7, 4th NL East (L3)</span> &middot; <span class="nx-series">Season series: 1-0</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Athletics</span> <player-card pid="682052">Jacob Lopez</player-card><div class="nx-pline">6.48 ERA &middot; 0-1 &middot; 8.1 IP &middot; 6 K &middot; 2.28 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-121"/></svg>NYM</span> Kodai Senga<div class="nx-pline">3.09 ERA &middot; 0-1 &middot; 11.2 IP &middot; 16 K &middot; 1.20 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">Athletics</span> <player-card pid="682052">Jacob Lopez</player-card><div class="nx-pline">6.48 ERA &middot; 0-1 &middot; 8.1 IP &middot; 6 K &middot; 2.28 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-121"/></svg>NYM</span> Kodai Senga<div class="nx-pline">3.00 ERA &middot; 0-1 &middot; 12.0 IP &middot; 16 K &middot; 1.25 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="671732">Butler</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="701762">Kurtz</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="669127">Langeliers</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="691016">Soderstrom</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="805779">Wilson</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="643446">McNeil</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="691777">Muncy</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="666126">Cortes</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="672016">Clarke</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> SNY &middot; NBCSCA</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> Audacy Mets Radio WHSQ 880AM &middot; Talk 650 KSTE &middot; A&#x27;s Cast</div>
         <div class="nx-wx">63°F &middot; Clear &middot; 14 mph NW</div>
@@ -715,7 +716,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="691777">Muncy</player-card></span><span class="s">.414 / 1 HR / 1.104 OPS</span></li><li><span class="n"><player-card pid="666126">Cortes</player-card></span><span class="s">.385 / 0 HR / 1.038 OPS</span></li><li><span class="n"><player-card pid="643446">McNeil</player-card></span><span class="s">.409 / 0 HR / .980 OPS</span></li><li><span class="n"><player-card pid="701762">Kurtz</player-card></span><span class="s">.308 / 0 HR / .840 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="691777">Muncy</player-card></span><span class="s">.414 / 1 HR / 1.104 OPS</span></li><li><span class="n"><player-card pid="666126">Cortes</player-card></span><span class="s">.385 / 0 HR / 1.038 OPS</span></li><li><span class="n"><player-card pid="643446">McNeil</player-card></span><span class="s">.409 / 0 HR / .980 OPS</span></li><li><span class="n"><player-card pid="701762">Kurtz</player-card></span><span class="s">.348 / 0 HR / .918 OPS</span></li></ul></div>
       <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="642851">Wynns</player-card></span><span class="s">.111 / 0 HR / .222 OPS</span></li><li><span class="n"><player-card pid="672016">Clarke</player-card></span><span class="s">.176 / 0 HR / .398 OPS</span></li><li><span class="n"><player-card pid="628451">Ibáñez</player-card></span><span class="s">.167 / 0 HR / .398 OPS</span></li></ul></div>
     </div>
     <div class="two">
@@ -732,10 +733,10 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="tag">Today&rsquo;s Matchup</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="scout-ctx"><span>at NYM &middot; 3:10 CT</span><span>Citi Field</span></div>
+    <div class="scout-ctx"><span>at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-121"/></svg><span class="ab">NYM</span> &middot; 3:10 CT</span><span>Citi Field</span></div>
     <div class="matchup-vs">
         <div class="sp-card">
-        <div class="sp-side">Athletics</div>
+        <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-133"/></svg><span class="sp-side-ab">Athletics</span></div>
         <div class="sp-name"><player-card pid="682052">Jacob Lopez</player-card></div>
         <div class="sp-season">6.48 ERA &middot; 0-1 &middot; 8.1 IP &middot; 6 K &middot; 2.28 WHIP</div>
         <h4>Last 2 Starts</h4><table class="data sp-log">
@@ -744,12 +745,12 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
-        <div class="sp-side">NYM</div>
+        <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-121"/></svg><span class="sp-side-ab">NYM</span></div>
         <div class="sp-name">Kodai Senga</div>
-        <div class="sp-season">3.09 ERA &middot; 0-1 &middot; 11.2 IP &middot; 16 K &middot; 1.20 WHIP</div>
-        <h4>Last 2 Starts</h4><table class="data sp-log">
+        <div class="sp-season">3.00 ERA &middot; 0-1 &middot; 12.0 IP &middot; 16 K &middot; 1.25 WHIP</div>
+        <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>03-31</td><td class="opp">vs St. Louis Cardinals</td><td class="num">6.0</td><td class="num">2</td><td class="num">9</td><td class="num">4</td><td class="num">3</td></tr><tr><td>04-05</td><td class="opp">vs San Francisco Giants</td><td class="num">5.2</td><td class="num">2</td><td class="num">7</td><td class="num">5</td><td class="num">2</td></tr></tbody></table>
+            <tbody><tr><td>03-31</td><td class="opp">vs St. Louis Cardinals</td><td class="num">6.0</td><td class="num">2</td><td class="num">9</td><td class="num">4</td><td class="num">3</td></tr><tr><td>04-05</td><td class="opp">vs San Francisco Giants</td><td class="num">5.2</td><td class="num">2</td><td class="num">7</td><td class="num">5</td><td class="num">2</td></tr><tr><td>04-11</td><td class="opp">vs Athletics</td><td class="num">1.0</td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">0</td></tr></tbody></table>
         </div>
     </div>
   </section>
@@ -1045,7 +1046,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Oakland Coliseum Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 15:09 CT</span>
+  <span>Filed 04/11/26 15:20 CT</span>
 </footer>
 
 <script>

@@ -17,6 +17,13 @@ def _abbr(tmap, team_id):
     return tmap.get(team_id, {}).get("abbreviation", "???")
 
 
+def _logo(team_id, size="sm"):
+    if not team_id:
+        return ""
+    return (f'<svg class="ml-logo {size}" aria-hidden="true" focusable="false">'
+            f'<use href="#team-{team_id}"/></svg>')
+
+
 def _fmt_time_ct(iso_z):
     dt = datetime.strptime(iso_z, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
     ct = dt.astimezone(_CT)
@@ -37,9 +44,11 @@ def render(briefing):
     if not cubs_sp and not opp_sp:
         return ""
 
-    def _sp_card(sp, side_label, is_own=False):
+    def _sp_card(sp, side_label, is_own=False, side_team_id=None):
+        side_logo = _logo(side_team_id, "md") if side_team_id else ""
+        side_html = f'<div class="sp-side">{side_logo}<span class="sp-side-ab">{side_label}</span></div>'
         if not sp:
-            return f'<div class="sp-card"><div class="sp-side">{side_label}</div><div class="sp-name">TBD</div></div>'
+            return f'<div class="sp-card">{side_html}<div class="sp-name">TBD</div></div>'
         log_rows = []
         for g in sp.get("log", [])[:3]:
             d = g.get("date", "")
@@ -62,7 +71,7 @@ def render(briefing):
             if is_own and sp_pid else sp_name
         )
         return f"""<div class="sp-card">
-        <div class="sp-side">{side_label}</div>
+        {side_html}
         <div class="sp-name">{sp_name_html}</div>
         <div class="sp-season">{sp.get("season","")}</div>
         {f'<h4>Last {len(sp.get("log",[]))} Starts</h4>{log_html}' if log_html else ''}
@@ -70,20 +79,25 @@ def render(briefing):
 
     # Game context line
     game_ctx = ""
+    opp_team_id = None
     if next_games:
         tg = next_games[0]
         home_id = tg["teams"]["home"]["team"]["id"]
         away_id = tg["teams"]["away"]["team"]["id"]
         is_home = home_id == team_id
-        opp_abbr = _abbr(tmap, away_id if is_home else home_id)
+        opp_team_id = away_id if is_home else home_id
+        opp_abbr = _abbr(tmap, opp_team_id)
         venue = tg.get("venue", {}).get("name", "")
         time_str = _fmt_time_ct(tg.get("gameDate", ""))
         ha = "vs" if is_home else "at"
-        game_ctx = f'<div class="scout-ctx"><span>{ha} {opp_abbr} &middot; {time_str}</span><span>{escape(venue)}</span></div>'
+        game_ctx = (f'<div class="scout-ctx">'
+                    f'<span>{ha} {_logo(opp_team_id, "sm")}<span class="ab">{opp_abbr}</span> &middot; {time_str}</span>'
+                    f'<span>{escape(venue)}</span></div>')
 
+    opp_label = _abbr(tmap, opp_team_id) if opp_team_id else "OPP"
     return f"""{game_ctx}
     <div class="matchup-vs">
-        {_sp_card(cubs_sp, team_name, is_own=True)}
+        {_sp_card(cubs_sp, team_name, is_own=True, side_team_id=team_id)}
         <div class="vs-divider">VS</div>
-        {_sp_card(opp_sp, _abbr(tmap, next_games[0]["teams"]["away" if next_games[0]["teams"]["home"]["team"]["id"] == team_id else "home"]["team"]["id"]) if next_games else "OPP")}
+        {_sp_card(opp_sp, opp_label, side_team_id=opp_team_id)}
     </div>"""

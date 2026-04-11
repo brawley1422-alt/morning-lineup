@@ -316,7 +316,8 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .vs-divider{font-family:var(--serif);font-style:italic;font-weight:900;font-size:24px;color:var(--gold);align-self:center;text-align:center;padding:0 6px}
 @media(max-width:640px){.vs-divider{display:none}}
 .sp-card{background:linear-gradient(135deg,var(--ink-2) 0%,var(--ink-3) 100%);border:1px solid var(--rule);border-radius:3px;padding:10px 12px;border-top:3px solid var(--team-primary-hi)}
-.sp-side{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px}
+.sp-side{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sp-side .sp-side-ab{letter-spacing:.14em}
 .sp-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:18px;font-weight:700;color:var(--paper)}
 .sp-season{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
 .sp-log{min-width:auto !important;margin-top:4px}
@@ -685,10 +686,10 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="nx-venue">Great American Ball Park </div>
         <div class="nx-meta"><span class="nx-opp-rec">CIN: 8-6, 4th NL Central (L3)</span> &middot; <span class="nx-series">Season series: 1-0</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Angels</span> <player-card pid="691946">George Klassen</player-card><div class="nx-pline">6.75 ERA &middot; 0-0 &middot; 2.2 IP &middot; 4 K &middot; 3.00 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-113"/></svg>CIN</span> Brandon Williamson<div class="nx-pline">4.76 ERA &middot; 1-1 &middot; 11.1 IP &middot; 7 K &middot; 1.06 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">Angels</span> <player-card pid="691946">George Klassen</player-card><div class="nx-pline">6.75 ERA &middot; 0-0 &middot; 2.2 IP &middot; 4 K &middot; 3.00 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-113"/></svg>CIN</span> Brandon Williamson<div class="nx-pline">4.50 ERA &middot; 1-1 &middot; 12.0 IP &middot; 8 K &middot; 1.08 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="687263">Neto</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="545361">Trout</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="666176">Adell</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="624585">Soler</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="694384">Schanuel</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="687093">Grissom</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="681351">O&#x27;Hoppe</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="660162">Moncada</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="669326">Teodosio</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Reds.TV &middot; FanDuel Sports Network West</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KLAA 830 &middot; WLW 700</div>
-        <div class="nx-wx">67°F &middot; Mostly Clear &middot; 3 mph ENE</div>
+        <div class="nx-wx">67°F &middot; Clear &middot; 3 mph ENE</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-113"/></svg><span class="ab">CIN</span></div>
@@ -715,8 +716,8 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="624585">Soler</player-card></span><span class="s">.348 / 3 HR / 1.190 OPS</span></li><li><span class="n"><player-card pid="624428">Frazier</player-card></span><span class="s">.308 / 0 HR / .885 OPS</span></li><li><span class="n"><player-card pid="687263">Neto</player-card></span><span class="s">.258 / 3 HR / .862 OPS</span></li><li><span class="n"><player-card pid="666176">Adell</player-card></span><span class="s">.321 / 1 HR / .750 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="694384">Schanuel</player-card></span><span class="s">.100 / 0 HR / .292 OPS</span></li><li><span class="n"><player-card pid="518595">d&#x27;Arnaud</player-card></span><span class="s">.100 / 0 HR / .300 OPS</span></li><li><span class="n"><player-card pid="545361">Trout</player-card></span><span class="s">.077 / 0 HR / .341 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="624585">Soler</player-card></span><span class="s">.400 / 3 HR / 1.400 OPS</span></li><li><span class="n"><player-card pid="687263">Neto</player-card></span><span class="s">.286 / 3 HR / .953 OPS</span></li><li><span class="n"><player-card pid="624428">Frazier</player-card></span><span class="s">.308 / 0 HR / .885 OPS</span></li><li><span class="n"><player-card pid="666176">Adell</player-card></span><span class="s">.385 / 1 HR / .885 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="518595">d&#x27;Arnaud</player-card></span><span class="s">.100 / 0 HR / .300 OPS</span></li><li><span class="n"><player-card pid="694384">Schanuel</player-card></span><span class="s">.115 / 0 HR / .335 OPS</span></li><li><span class="n"><player-card pid="545361">Trout</player-card></span><span class="s">.083 / 0 HR / .339 OPS</span></li></ul></div>
     </div>
     <div class="two">
       <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="605447">Romano</player-card></span><span class="s">5.0 IP &middot; 0.00 ERA &middot; 7 K</span></li><li><span class="n"><player-card pid="667755">Soriano</player-card></span><span class="s">20.0 IP &middot; 0.45 ERA &middot; 21 K</span></li><li><span class="n"><player-card pid="696147">Bachman</player-card></span><span class="s">6.2 IP &middot; 1.35 ERA &middot; 8 K</span></li></ul></div>
@@ -732,24 +733,24 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="tag">Today&rsquo;s Matchup</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="scout-ctx"><span>at CIN &middot; 3:10 CT</span><span>Great American Ball Park</span></div>
+    <div class="scout-ctx"><span>at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-113"/></svg><span class="ab">CIN</span> &middot; 3:10 CT</span><span>Great American Ball Park</span></div>
     <div class="matchup-vs">
         <div class="sp-card">
-        <div class="sp-side">Angels</div>
+        <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-108"/></svg><span class="sp-side-ab">Angels</span></div>
         <div class="sp-name"><player-card pid="691946">George Klassen</player-card></div>
         <div class="sp-season">6.75 ERA &middot; 0-0 &middot; 2.2 IP &middot; 4 K &middot; 3.00 WHIP</div>
-        <h4>Last 1 Starts</h4><table class="data sp-log">
+        <h4>Last 2 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>04-05</td><td class="opp">vs Seattle Mariners</td><td class="num">2.2</td><td class="num">2</td><td class="num">4</td><td class="num">3</td><td class="num">5</td></tr></tbody></table>
+            <tbody><tr><td>04-05</td><td class="opp">vs Seattle Mariners</td><td class="num">2.2</td><td class="num">2</td><td class="num">4</td><td class="num">3</td><td class="num">5</td></tr><tr><td>04-11</td><td class="opp">vs Cincinnati Reds</td><td class="num">0.0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr></tbody></table>
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
-        <div class="sp-side">CIN</div>
+        <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-113"/></svg><span class="sp-side-ab">CIN</span></div>
         <div class="sp-name">Brandon Williamson</div>
-        <div class="sp-season">4.76 ERA &middot; 1-1 &middot; 11.1 IP &middot; 7 K &middot; 1.06 WHIP</div>
-        <h4>Last 2 Starts</h4><table class="data sp-log">
+        <div class="sp-season">4.50 ERA &middot; 1-1 &middot; 12.0 IP &middot; 8 K &middot; 1.08 WHIP</div>
+        <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>03-31</td><td class="opp">vs Pittsburgh Pirates</td><td class="num">4.2</td><td class="num">6</td><td class="num">3</td><td class="num">6</td><td class="num">2</td></tr><tr><td>04-06</td><td class="opp">vs Miami Marlins</td><td class="num">6.2</td><td class="num">0</td><td class="num">4</td><td class="num">3</td><td class="num">1</td></tr></tbody></table>
+            <tbody><tr><td>03-31</td><td class="opp">vs Pittsburgh Pirates</td><td class="num">4.2</td><td class="num">6</td><td class="num">3</td><td class="num">6</td><td class="num">2</td></tr><tr><td>04-06</td><td class="opp">vs Miami Marlins</td><td class="num">6.2</td><td class="num">0</td><td class="num">4</td><td class="num">3</td><td class="num">1</td></tr><tr><td>04-11</td><td class="opp">vs Los Angeles Angels</td><td class="num">1.0</td><td class="num">0</td><td class="num">1</td><td class="num">1</td><td class="num">1</td></tr></tbody></table>
         </div>
     </div>
   </section>
@@ -1045,7 +1046,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Angel Stadium Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 15:08 CT</span>
+  <span>Filed 04/11/26 15:19 CT</span>
 </footer>
 
 <script>

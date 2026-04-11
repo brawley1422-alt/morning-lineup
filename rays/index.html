@@ -316,7 +316,8 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .vs-divider{font-family:var(--serif);font-style:italic;font-weight:900;font-size:24px;color:var(--gold);align-self:center;text-align:center;padding:0 6px}
 @media(max-width:640px){.vs-divider{display:none}}
 .sp-card{background:linear-gradient(135deg,var(--ink-2) 0%,var(--ink-3) 100%);border:1px solid var(--rule);border-radius:3px;padding:10px 12px;border-top:3px solid var(--team-primary-hi)}
-.sp-side{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px}
+.sp-side{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sp-side .sp-side-ab{letter-spacing:.14em}
 .sp-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:18px;font-weight:700;color:var(--paper)}
 .sp-season{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
 .sp-log{min-width:auto !important;margin-top:4px}
@@ -719,7 +720,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="668723">Vilade</player-card></span><span class="s">.100 / 0 HR / .282 OPS</span></li><li><span class="n"><player-card pid="670764">Walls</player-card></span><span class="s">.167 / 0 HR / .481 OPS</span></li><li><span class="n"><player-card pid="676356">DeLuca</player-card></span><span class="s">.125 / 1 HR / .489 OPS</span></li></ul></div>
     </div>
     <div class="two">
-      <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="641329">Baker</player-card></span><span class="s">5.0 IP &middot; 1.80 ERA &middot; 7 K</span></li><li><span class="n"><player-card pid="607259">Martinez</player-card></span><span class="s">12.0 IP &middot; 2.25 ERA &middot; 7 K</span></li><li><span class="n"><player-card pid="685801">Bigge</player-card></span><span class="s">3.1 IP &middot; 2.70 ERA &middot; 2 K</span></li></ul></div>
+      <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="669947">Scholtens</player-card></span><span class="s">4.2 IP &middot; 0.00 ERA &middot; 4 K</span></li><li><span class="n"><player-card pid="641329">Baker</player-card></span><span class="s">5.0 IP &middot; 1.80 ERA &middot; 7 K</span></li><li><span class="n"><player-card pid="607259">Martinez</player-card></span><span class="s">12.0 IP &middot; 2.25 ERA &middot; 7 K</span></li></ul></div>
       <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="687330">Kelly</player-card></span><span class="s">3.2 IP &middot; 12.27 ERA &middot; 4 K</span></li><li><span class="n"><player-card pid="693855">Seymour</player-card></span><span class="s">5.0 IP &middot; 10.80 ERA &middot; 5 K</span></li></ul></div>
     </div>
     
@@ -732,10 +733,10 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="tag">Today&rsquo;s Matchup</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="scout-ctx"><span>vs NYY &middot; 5:10 CT</span><span>Tropicana Field</span></div>
+    <div class="scout-ctx"><span>vs <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-147"/></svg><span class="ab">NYY</span> &middot; 5:10 CT</span><span>Tropicana Field</span></div>
     <div class="matchup-vs">
         <div class="sp-card">
-        <div class="sp-side">Rays</div>
+        <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-139"/></svg><span class="sp-side-ab">Rays</span></div>
         <div class="sp-name"><player-card pid="607259">Nick Martinez</player-card></div>
         <div class="sp-season">2.25 ERA &middot; 0-0 &middot; 12.0 IP &middot; 7 K &middot; 0.67 WHIP</div>
         <h4>Last 2 Starts</h4><table class="data sp-log">
@@ -744,7 +745,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
-        <div class="sp-side">NYY</div>
+        <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-147"/></svg><span class="sp-side-ab">NYY</span></div>
         <div class="sp-name">Max Fried</div>
         <div class="sp-season">1.35 ERA &middot; 2-0 &middot; 20.0 IP &middot; 14 K &middot; 0.75 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
@@ -784,7 +785,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-11</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">RHP Jonathan Heasley assigned to Tampa Bay Rays.</span></div><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Tampa Bay Rays recalled LHP Joe Rock from Durham Bulls.</span></div><div class="transac-item"><span class="transac-date">04-09</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Tampa Bay Rays optioned RHP Jesse Scholtens to Durham Bulls.</span></div><div class="transac-item"><span class="transac-date">04-08</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Tampa Bay Rays placed RHP Drew Rasmussen on the paternity list.</span></div><div class="transac-item"><span class="transac-date">04-08</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Tampa Bay Rays recalled RHP Jesse Scholtens from Durham Bulls.</span></div><div class="transac-item"><span class="transac-date">04-07</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Tampa Bay Rays sent RHP Edwin Uceta on a rehab assignment to Montgomery Biscuits.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Tampa Bay Rays activated SS Taylor Walls from the 10-day injured list.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Tampa Bay Rays optioned SS Carson Williams to Durham Bulls.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>LF <strong>Gavin Lux</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Edwin Uceta</strong></dd><dd>P <strong>Garrett Cleavinger</strong></dd><dd>P <strong>Ryan Pepiot</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Manuel Rodríguez</strong></dd><dd>P <strong>Steven Wilson</strong></dd><dt>Paternity List</dt><dd>P <strong>Drew Rasmussen</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-11</span><span class="transac-badge act">Status Change</span><span class="transac-desc">RHP Drew Rasmussen roster status changed by Tampa Bay Rays.</span></div><div class="transac-item"><span class="transac-date">04-11</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">RHP Jonathan Heasley assigned to Tampa Bay Rays.</span></div><div class="transac-item"><span class="transac-date">04-11</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Tampa Bay Rays recalled RHP Jesse Scholtens from Durham Bulls.</span></div><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Tampa Bay Rays placed RHP Joe Boyle on the 15-day injured list.</span></div><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Tampa Bay Rays recalled LHP Joe Rock from Durham Bulls.</span></div><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Tampa Bay Rays placed RHP Joe Boyle on the 10-day injured list retroactive to April 10, 2026. Right elbow strain.</span></div><div class="transac-item"><span class="transac-date">04-09</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Tampa Bay Rays optioned RHP Jesse Scholtens to Durham Bulls.</span></div><div class="transac-item"><span class="transac-date">04-08</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Tampa Bay Rays placed RHP Drew Rasmussen on the paternity list.</span></div><div class="transac-item"><span class="transac-date">04-08</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Tampa Bay Rays recalled RHP Jesse Scholtens from Durham Bulls.</span></div><div class="transac-item"><span class="transac-date">04-07</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Tampa Bay Rays sent RHP Edwin Uceta on a rehab assignment to Montgomery Biscuits.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>LF <strong>Gavin Lux</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Edwin Uceta</strong></dd><dd>P <strong>Garrett Cleavinger</strong></dd><dd>P <strong>Joe Boyle</strong></dd><dd>P <strong>Ryan Pepiot</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Manuel Rodríguez</strong></dd><dd>P <strong>Steven Wilson</strong></dd><dt>Family Medical Emergency</dt><dd>P <strong>Drew Rasmussen</strong></dd></dl></div></div>
   </section>
 
   <section id="farm" open>
@@ -1048,7 +1049,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Tropicana Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 15:11 CT</span>
+  <span>Filed 04/11/26 15:22 CT</span>
 </footer>
 
 <script>

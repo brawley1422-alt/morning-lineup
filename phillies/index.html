@@ -316,7 +316,8 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .vs-divider{font-family:var(--serif);font-style:italic;font-weight:900;font-size:24px;color:var(--gold);align-self:center;text-align:center;padding:0 6px}
 @media(max-width:640px){.vs-divider{display:none}}
 .sp-card{background:linear-gradient(135deg,var(--ink-2) 0%,var(--ink-3) 100%);border:1px solid var(--rule);border-radius:3px;padding:10px 12px;border-top:3px solid var(--team-primary-hi)}
-.sp-side{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px}
+.sp-side{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.sp-side .sp-side-ab{letter-spacing:.14em}
 .sp-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:18px;font-weight:700;color:var(--paper)}
 .sp-season{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
 .sp-log{min-width:auto !important;margin-top:4px}
@@ -732,10 +733,10 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="tag">Today&rsquo;s Matchup</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="scout-ctx"><span>vs AZ &middot; 12:05 CT</span><span>Citizens Bank Park</span></div>
+    <div class="scout-ctx"><span>vs <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-109"/></svg><span class="ab">AZ</span> &middot; 12:05 CT</span><span>Citizens Bank Park</span></div>
     <div class="matchup-vs">
         <div class="sp-card">
-        <div class="sp-side">Phillies</div>
+        <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-143"/></svg><span class="sp-side-ab">Phillies</span></div>
         <div class="sp-name"><player-card pid="592836">Taijuan Walker</player-card></div>
         <div class="sp-season">7.36 ERA &middot; 1-2 &middot; 14.2 IP &middot; 12 K &middot; 1.91 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
@@ -744,7 +745,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
-        <div class="sp-side">AZ</div>
+        <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-109"/></svg><span class="sp-side-ab">AZ</span></div>
         <div class="sp-name">Brandon Pfaadt</div>
         <div class="sp-season">5.94 ERA &middot; 0-1 &middot; 16.2 IP &middot; 11 K &middot; 1.38 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
@@ -1048,7 +1049,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Citizens Bank Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 15:11 CT</span>
+  <span>Filed 04/11/26 15:22 CT</span>
 </footer>
 
 <script>
