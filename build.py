@@ -165,6 +165,7 @@ def load_all():
                 for pid in order[:9]:
                     p = feed_players.get(f"ID{pid}", {})
                     today_lineup[side].append({
+                        "id": pid,
                         "name": p.get("fullName", "?"),
                         "pos": p.get("primaryPosition", {}).get("abbreviation", "?"),
                     })
@@ -814,7 +815,7 @@ def page(briefing):
 }})();
 </script>
 <script>var TEAM_ID={TEAM_ID};var TEAM_IDLE_MSG="{CFG['branding']['idle_msg']}";</script>
-<script src="live.js"></script>
+<script src="live.js"></script>{'<script src="player-card.js" defer></script>' if _team_slug == 'cubs' else ''}
 <script>
 window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});
 document.addEventListener("click",function(e){{var tr=e.target.closest("tr.scorecard-link");if(tr){{var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}}}});
@@ -839,6 +840,184 @@ def save_data_ledger(data):
     out = DATA_DIR / f"{day}.json"
     out.write_text(json.dumps(data, default=_json_default, ensure_ascii=False), encoding="utf-8")
     print(f"Saved data ledger → {out.name} ({out.stat().st_size:,} bytes)")
+
+
+# ─── player cards (Phase 1: Cubs lineup + SP) ───────────────────────────────
+
+def compute_temp_strip(game_log, role="hitter"):
+    """Normalize a player's recent-game performance into a 15-element [0..1] array.
+
+    Hitters: rolling OPS per game, clamped to [0, 1.5], rescaled to [0, 1].
+    Pitchers: game ERA (lower = hotter), clamped to [0, 9], inverted to [0, 1].
+    Missing games pad with None (rendered neutral on the card).
+
+    Pure function. Takes the raw `splits` list from MLB's gameLog endpoint.
+    """
+    out = []
+    splits = list(game_log or [])[:15]
+    for sp in splits:
+        st = sp.get("stat", {}) if isinstance(sp, dict) else {}
+        if role == "hitter":
+            try:
+                ab = int(st.get("atBats", 0) or 0)
+                if ab == 0:
+                    out.append(None)
+                    continue
+                ops_str = st.get("ops", "")
+                ops = float(ops_str) if ops_str not in ("", "-", ".---") else 0.0
+                ops = max(0.0, min(1.5, ops))
+                out.append(round(ops / 1.5, 3))
+            except (ValueError, TypeError):
+                out.append(None)
+        else:  # pitcher
+            try:
+                ip_str = str(st.get("inningsPitched", "0") or "0")
+                ip = float(ip_str) if ip_str not in ("", "-") else 0.0
+                if ip <= 0:
+                    out.append(None)
+                    continue
+                er = int(st.get("earnedRuns", 0) or 0)
+                era = (er * 9.0) / ip
+                era = max(0.0, min(9.0, era))
+                out.append(round(1.0 - (era / 9.0), 3))
+            except (ValueError, TypeError):
+                out.append(None)
+    while len(out) < 15:
+        out.append(None)
+    return out[:15]
+
+
+def _fetch_player_record(pid, role, season):
+    """Fetch bio + season line + gameLog for one player. Returns None on failure."""
+    if not pid:
+        return None
+    try:
+        person = fetch(f"/people/{pid}").get("people", [{}])[0]
+    except Exception as e:
+        print(f"  warning: player bio {pid} failed: {e}", flush=True)
+        return None
+
+    group = "pitching" if role == "pitcher" else "hitting"
+    season_stats = {}
+    career = []
+    try:
+        season_data = fetch(
+            f"/people/{pid}/stats",
+            stats="season",
+            season=str(season),
+            group=group,
+        )
+        for s in season_data.get("stats", []):
+            for sp in s.get("splits", []):
+                season_stats = sp.get("stat", {})
+                break
+    except Exception as e:
+        print(f"  warning: player season {pid} failed: {e}", flush=True)
+
+    try:
+        career_data = fetch(
+            f"/people/{pid}/stats",
+            stats="yearByYear",
+            group=group,
+        )
+        for s in career_data.get("stats", []):
+            for sp in s.get("splits", []):
+                if sp.get("sport", {}).get("id") != 1:
+                    continue
+                st = sp.get("stat", {})
+                career.append({
+                    "year": sp.get("season", ""),
+                    "team": sp.get("team", {}).get("abbreviation", ""),
+                    "stat": st,
+                })
+    except Exception as e:
+        print(f"  warning: player career {pid} failed: {e}", flush=True)
+
+    temp = []
+    try:
+        gl_data = fetch(
+            f"/people/{pid}/stats",
+            stats="gameLog",
+            season=str(season),
+            group=group,
+        )
+        splits = []
+        for s in gl_data.get("stats", []):
+            splits = s.get("splits", [])[:15]
+            break
+        temp = compute_temp_strip(splits, role=role)
+    except Exception as e:
+        print(f"  warning: player gameLog {pid} failed: {e}", flush=True)
+        temp = [None] * 15
+
+    pos = person.get("primaryPosition", {}).get("abbreviation", "")
+    return {
+        "id": pid,
+        "name": person.get("fullName", ""),
+        "last_name": person.get("lastName", ""),
+        "first_name": person.get("firstName", ""),
+        "jersey": person.get("primaryNumber", ""),
+        "position": pos,
+        "role": role,
+        "bats": person.get("batSide", {}).get("code", ""),
+        "throws": person.get("pitchHand", {}).get("code", ""),
+        "height": person.get("height", ""),
+        "weight": person.get("weight", 0),
+        "birth_date": person.get("birthDate", ""),
+        "birth_city": person.get("birthCity", ""),
+        "birth_state": person.get("birthStateProvince", ""),
+        "birth_country": person.get("birthCountry", ""),
+        "age": person.get("currentAge", 0),
+        "headshot_url": (
+            f"https://img.mlbstatic.com/mlb-photos/image/upload/"
+            f"d_people:generic:headshot:67:current.png/w_426,q_100/"
+            f"v1/people/{pid}/headshot/67/current"
+        ),
+        "season": season_stats,
+        "career": career,
+        "temp_strip": temp,
+        "advanced": {},  # Phase 1.5: Baseball Savant Statcast
+    }
+
+
+def load_player_cards(lineup, sp_pid, season):
+    """Pull per-player card data for today's lineup + starting pitcher.
+
+    `lineup` is a list of dicts with at least {"id": pid}. `sp_pid` is the
+    integer MLB player ID for the starting pitcher. Returns a dict keyed by
+    string player ID, matching the `<player-card pid="...">` attribute.
+    """
+    players = {}
+    for slot in lineup or []:
+        pid = slot.get("id")
+        if not pid:
+            continue
+        rec = _fetch_player_record(pid, "hitter", season)
+        if rec:
+            players[str(pid)] = rec
+    if sp_pid:
+        rec = _fetch_player_record(sp_pid, "pitcher", season)
+        if rec:
+            players[str(sp_pid)] = rec
+    return players
+
+
+def save_players_cubs(players, today):
+    """Write the player-card JSON alongside the data ledger."""
+    DATA_DIR.mkdir(exist_ok=True)
+    payload = {
+        "generated_at": datetime.now(tz=CT).isoformat(timespec="seconds"),
+        "team": "cubs",
+        "today": today.isoformat(),
+        "players": players,
+    }
+    out = DATA_DIR / "players-cubs.json"
+    out.write_text(
+        json.dumps(payload, default=_json_default, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    print(f"Saved player cards → {out.name} ({out.stat().st_size:,} bytes, {len(players)} players)")
+    return out
 
 def load_data_from_fixture(path):
     """Load a frozen load_all() snapshot from JSON and rehydrate date fields.
@@ -916,6 +1095,59 @@ if __name__ == "__main__":
             print("Fetching MLB data …", flush=True)
             briefing = build_briefing(_team_slug)
             save_data_ledger(briefing.data)
+            # Phase 1: Cubs-only player-card data pipeline.
+            if _team_slug == "cubs":
+                try:
+                    _d = briefing.data
+                    _tl = _d.get("today_lineup", {}) or {}
+                    _ng = _d.get("next_games") or []
+                    _cubs_side_lineup = []
+                    _sp_pid = None
+                    if _ng:
+                        _tg = _ng[0]
+                        _is_home = _tg["teams"]["home"]["team"]["id"] == TEAM_ID
+                        _side = "home" if _is_home else "away"
+                        _cubs_side_lineup = _tl.get(_side, []) or []
+                        _cubs_pp = _tg["teams"][_side].get("probablePitcher") or {}
+                        _sp_pid = _cubs_pp.get("id")
+                    # Fallback: if today's lineup hasn't been posted yet, pick the
+                    # top 9 hitters from the hydrated roster by games played so the
+                    # card experience always has content to show.
+                    if not _cubs_side_lineup:
+                        _roster = _d.get("cubs_hitters", {}) or {}
+                        _candidates = []
+                        for _p in _roster.get("roster", []):
+                            _pos = _p.get("position", {}).get("abbreviation", "")
+                            if _pos == "P":
+                                continue
+                            _person = _p.get("person", {}) or {}
+                            _stats = _person.get("stats", [])
+                            _games = 0
+                            if _stats and _stats[0].get("splits"):
+                                _games = _stats[0]["splits"][0].get("stat", {}).get("gamesPlayed", 0) or 0
+                            _candidates.append({
+                                "id": _person.get("id"),
+                                "name": _person.get("fullName", ""),
+                                "pos": _pos,
+                                "_games": _games,
+                            })
+                        _candidates.sort(key=lambda x: -x.get("_games", 0))
+                        _cubs_side_lineup = _candidates[:9]
+                        print(f"  (using roster fallback — {len(_cubs_side_lineup)} top hitters by games played)", flush=True)
+                        # Feed the fallback lineup back into the briefing so
+                        # the rendered page's "Lineup" section shows it too.
+                        if _ng:
+                            _fallback_side = "home" if _is_home else "away"
+                            _d["today_lineup"] = _d.get("today_lineup") or {"home": [], "away": []}
+                            _d["today_lineup"][_fallback_side] = [
+                                {"id": _c["id"], "name": _c["name"], "pos": _c["pos"]}
+                                for _c in _cubs_side_lineup
+                            ]
+                    print(f"Fetching player cards ({len(_cubs_side_lineup)} hitters + {'SP' if _sp_pid else 'no SP'}) …", flush=True)
+                    _players = load_player_cards(_cubs_side_lineup, _sp_pid, _d["season"])
+                    save_players_cubs(_players, _d["today"])
+                except Exception as _e:
+                    print(f"  warning: player-card pipeline failed: {_e}", flush=True)
         print("Rendering page …", flush=True)
         html = page(briefing)
         out_dir_override = _argv_value("--out-dir")

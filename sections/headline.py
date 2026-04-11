@@ -283,9 +283,16 @@ def _render_next_games(next_games, tmap, team_id, team_name, today_lineup, today
             elif vid in DOME_VENUES:
                 wx_html = '<div class="nx-wx">72°F &middot; Climate controlled</div>'
 
+        def _pitcher_name_html(name, pid):
+            safe = escape(name)
+            # Phase 1: only today's Cubs SP gets a card (team_id 112, first game).
+            if pid and idx == 0 and team_id == 112:
+                return f'<player-card pid="{pid}">{safe}</player-card>'
+            return safe
+
         pitcher_html = ""
         if cubs_p != "TBD":
-            pitcher_html += f'<div class="nx-pitcher"><span class="nx-side">{team_name}</span> {escape(cubs_p)}'
+            pitcher_html += f'<div class="nx-pitcher"><span class="nx-side">{team_name}</span> {_pitcher_name_html(cubs_p, cubs_pid)}'
             if cubs_line: pitcher_html += f'<div class="nx-pline">{cubs_line}</div>'
             pitcher_html += '</div>'
         if opp_p != "TBD":
@@ -308,10 +315,20 @@ def _render_next_games(next_games, tmap, team_id, team_name, today_lineup, today
                 cubs_side = "home" if is_home else "away"
                 cubs_lu = today_lineup.get(cubs_side, [])
                 if cubs_lu:
-                    lu_items = "".join(
-                        f'<span class="lu-slot"><span class="lu-pos">{escape(p["pos"])}</span> {escape(p["name"].split()[-1])}</span>'
-                        for p in cubs_lu
-                    )
+                    def _lu_slot(p):
+                        last = escape(p["name"].split()[-1])
+                        pid = p.get("id")
+                        # Phase 1: only Cubs (team_id 112) gets clickable player cards.
+                        name_html = (
+                            f'<player-card pid="{pid}">{last}</player-card>'
+                            if pid and team_id == 112 else last
+                        )
+                        return (
+                            f'<span class="lu-slot">'
+                            f'<span class="lu-pos">{escape(p["pos"])}</span> '
+                            f'{name_html}</span>'
+                        )
+                    lu_items = "".join(_lu_slot(p) for p in cubs_lu)
                     lineup_html = f'<div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots">{lu_items}</div></div>'
 
         cards.append(f"""<div class="nx-card{' nx-today' if idx == 0 else ''}">

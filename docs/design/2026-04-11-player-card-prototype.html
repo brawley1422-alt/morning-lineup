@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morning Lineup — Player Card Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f4ecd8;
+  --cream-deep: #ead9b4;
+  --ink: #1a1a1a;
+  --red: #c8102e;
+  --red-deep: #8a0a1f;
+  --navy: #0e3386;
+  --rule: #2a2622;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  padding: 2.5rem 1rem 4rem;
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(0,0,0,0.035) 1px, transparent 1.4px),
+    radial-gradient(circle at 72% 58%, rgba(0,0,0,0.025) 1px, transparent 1.4px);
+  background-size: 9px 9px, 13px 13px;
+}
+
+/* demo header */
+.demo-head {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.demo-head .tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 0.3rem 0.75rem;
+  margin-bottom: 0.65rem;
+}
+.demo-head h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.demo-head h1 em {
+  color: var(--red);
+  font-style: italic;
+}
+.demo-head p {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: #5a544a;
+  margin-top: 0.55rem;
+}
+
+/* stage */
+.stage {
+  display: grid;
+  place-items: center;
+  min-height: 72vh;
+  position: relative;
+}
+.stage::before,
+.stage::after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 60%;
+  top: 20%;
+  background: repeating-linear-gradient(to bottom, var(--ink) 0 2px, transparent 2px 6px);
+  opacity: 0.25;
+}
+.stage::before { left: 12%; }
+.stage::after { right: 12%; }
+
+/* ============ CARD ============ */
+.card-wrap {
+  perspective: 1600px;
+  width: min(360px, 92vw);
+  aspect-ratio: 5 / 7;
+  position: relative;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  animation: pull 0.9s cubic-bezier(0.22,1,0.36,1) backwards;
+}
+.card.ready {
+  animation: pull 0.9s cubic-bezier(0.22,1,0.36,1) backwards, float 6s ease-in-out 1s infinite;
+}
+.card.flipped { transform: rotateY(180deg); animation: none; }
+
+@keyframes pull {
+  from {
+    opacity: 0;
+    transform: translateY(80px) rotate(-12deg) scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(-0.5deg) scale(1);
+  }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+  50%      { transform: translateY(-6px) rotate(0.6deg); }
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: rotateY(0deg) translateZ(0.1px);
+  background: var(--cream);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 0 rgba(0,0,0,0.35),
+    0 4px 10px rgba(0,0,0,0.2),
+    0 24px 48px rgba(0,0,0,0.35),
+    inset 0 0 0 1px rgba(0,0,0,0.15);
+}
+.face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='0.35'/></svg>");
+  mix-blend-mode: multiply;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ============ FRONT ============ */
+.front {
+  padding: 12px;
+  background: linear-gradient(135deg, var(--cream) 0%, var(--cream-deep) 100%);
+}
+.front-inner {
+  position: relative;
+  height: 100%;
+  border: 2px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* diagonal banner */
+.banner {
+  position: absolute;
+  top: 14px; left: -10px;
+  background: var(--red);
+  color: var(--cream);
+  font-family: 'Anton', sans-serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  padding: 0.38rem 1.1rem 0.38rem 0.95rem;
+  transform: rotate(-4deg);
+  z-index: 4;
+  box-shadow: 2px 2px 0 var(--ink);
+  text-transform: uppercase;
+}
+.banner::before { content: '★ '; color: var(--cream); }
+
+/* photo */
+.photo {
+  position: relative;
+  flex: 1.1;
+  background:
+    radial-gradient(ellipse 110% 85% at 50% 35%, #e85a70 0%, #c8102e 45%, #6a0818 100%);
+  overflow: hidden;
+  border-bottom: 2px solid var(--ink);
+}
+.photo::before {
+  content: 'C';
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+  font-family: 'Anton', sans-serif;
+  font-size: 22rem;
+  line-height: 0.78;
+  color: rgba(255,255,255,0.09);
+  letter-spacing: -0.06em;
+  z-index: 1;
+  user-select: none;
+}
+.photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+  filter: grayscale(0.25) contrast(1.08) brightness(1) saturate(1.1);
+  z-index: 2;
+}
+.photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.3) 0.8px, transparent 1.2px);
+  background-size: 4px 4px;
+  mix-blend-mode: multiply;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* jersey num */
+.jersey {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-family: 'Anton', sans-serif;
+  color: var(--cream);
+  font-size: 3.4rem;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  text-shadow: 3px 3px 0 var(--ink);
+  z-index: 3;
+}
+
+/* position chip */
+.pos-chip {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: var(--navy);
+  color: var(--cream);
+  font-family: 'Anton', sans-serif;
+  letter-spacing: 0.12em;
+  font-size: 0.95rem;
+  padding: 0.32rem 0.65rem;
+  border: 2px solid var(--cream);
+  box-shadow: 3px 3px 0 var(--ink);
+  z-index: 3;
+}
+
+/* info strip */
+.info-strip {
+  background: var(--cream);
+  padding: 9px 11px 8px;
+  position: relative;
+  z-index: 2;
+}
+.team-line {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  color: var(--red);
+  text-transform: uppercase;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 4px;
+  margin-bottom: 6px;
+}
+.team-line span:last-child { color: #5a544a; }
+.player-name {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.55rem;
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.player-name small {
+  display: block;
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 0.75rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #5a544a;
+  margin-top: 5px;
+}
+
+/* slash */
+.slash {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 8px;
+  border: 2px solid var(--ink);
+  background: var(--cream-deep);
+}
+.slash > div {
+  padding: 5px 0 4px;
+  text-align: center;
+  border-right: 1px solid var(--ink);
+}
+.slash > div:last-child { border-right: none; }
+.slash label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  color: #5a544a;
+  text-transform: uppercase;
+}
+.slash strong {
+  display: block;
+  font-family: 'Anton', sans-serif;
+  font-size: 1.15rem;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  margin-top: 1px;
+}
+
+/* temp strip */
+.temp {
+  margin-top: 9px;
+  padding-bottom: 4px;
+}
+.temp-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.temp-label strong {
+  color: var(--red);
+  font-size: 0.6rem;
+}
+.temp-bar {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  gap: 2px;
+  height: 14px;
+}
+.temp-bar span {
+  background: #ccc;
+  border: 1px solid var(--ink);
+  transform-origin: bottom;
+  animation: rise 0.5s ease-out backwards;
+}
+@keyframes rise {
+  from { transform: scaleY(0.05); }
+  to   { transform: scaleY(1); }
+}
+
+/* bottom rail */
+.rail {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 5px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.rail em { color: var(--red); font-style: normal; letter-spacing: 0.18em; }
+
+/* ============ BACK ============ */
+.back {
+  transform: rotateY(180deg) translateZ(0.1px);
+  padding: 12px;
+  background: linear-gradient(180deg, var(--cream) 0%, var(--cream-deep) 100%);
+}
+.back-inner {
+  border: 2px solid var(--ink);
+  height: 100%;
+  padding: 11px 12px 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.back-head {
+  border-bottom: 3px double var(--ink);
+  padding-bottom: 7px;
+}
+.back-head .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  color: var(--red);
+  text-transform: uppercase;
+}
+.back-head h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  margin-top: 2px;
+}
+.back-head p {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 0.68rem;
+  color: #5a544a;
+  margin-top: 3px;
+}
+
+/* career table */
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+}
+.stats-table thead th {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 3px 1px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+.stats-table tbody td {
+  padding: 3px 1px;
+  text-align: center;
+  border-bottom: 1px dashed rgba(0,0,0,0.28);
+}
+.stats-table tbody tr:last-child td {
+  border-bottom: 2px solid var(--ink);
+  font-weight: 700;
+  background: rgba(200,16,46,0.1);
+}
+
+/* advanced */
+.adv-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 4px;
+  margin-bottom: 6px;
+}
+.adv-head h3 {
+  font-family: 'Anton', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  color: var(--red);
+}
+.adv-head span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.48rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #5a544a;
+}
+.adv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+}
+.metric { display: flex; flex-direction: column; gap: 3px; }
+.metric-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.metric-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.metric-value {
+  font-family: 'Anton', sans-serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.metric-bar {
+  height: 5px;
+  background: #d6c9a8;
+  border: 1px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.metric-bar i {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: repeating-linear-gradient(90deg, var(--red) 0 3px, var(--red-deep) 3px 4px);
+  animation: fill 1.2s cubic-bezier(0.22,1,0.36,1) 0.3s backwards;
+}
+@keyframes fill {
+  from { width: 0 !important; }
+}
+
+/* footnote */
+.footnote {
+  margin-top: auto;
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 0.72rem;
+  line-height: 1.42;
+  color: var(--ink);
+  border-top: 1px solid var(--ink);
+  padding-top: 7px;
+}
+.footnote::before {
+  content: '"';
+  font-size: 1.6rem;
+  line-height: 0;
+  vertical-align: -0.35em;
+  margin-right: 2px;
+  color: var(--red);
+}
+.footnote .sig {
+  display: block;
+  text-align: right;
+  font-size: 0.55rem;
+  color: #5a544a;
+  font-style: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* flip hint */
+.flip-hint {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #5a544a;
+  white-space: nowrap;
+}
+.flip-hint kbd {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 2px 5px;
+  border-radius: 2px;
+  font-family: inherit;
+  font-size: 0.52rem;
+}
+
+@media (max-width: 420px) {
+  .card-wrap { width: 88vw; }
+  .player-name { font-size: 1.35rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="demo-head">
+  <span class="tag">The Morning Lineup · Prototype · 04.11.26</span>
+  <h1>The <em>Player Card</em>.</h1>
+  <p>Click the card to flip — Topps × newsprint</p>
+</div>
+
+<div class="stage">
+  <div class="card-wrap">
+    <div class="card ready" id="card">
+
+      <!-- FRONT -->
+      <div class="face front">
+        <div class="front-inner">
+          <div class="banner">Chicago Cubs</div>
+
+          <div class="photo">
+            <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_100/v1/people/691718/headshot/67/current" alt="Pete Crow-Armstrong" onerror="this.style.display='none'">
+            <div class="jersey">52</div>
+            <div class="pos-chip">CF</div>
+          </div>
+
+          <div class="info-strip">
+            <div class="team-line">
+              <span>Season 2026</span>
+              <span>L · L · 6'0"</span>
+            </div>
+            <div class="player-name">
+              Pete Crow-<br>Armstrong
+              <small>24 yrs — center field — #52</small>
+            </div>
+            <div class="slash">
+              <div><label>AVG</label><strong>.291</strong></div>
+              <div><label>OBP</label><strong>.352</strong></div>
+              <div><label>SLG</label><strong>.512</strong></div>
+            </div>
+            <div class="temp">
+              <div class="temp-label">
+                <span>Last 15 Games</span>
+                <strong>Hot</strong>
+              </div>
+              <div class="temp-bar" id="tempBar"></div>
+            </div>
+          </div>
+
+          <div class="rail">
+            <span>№ 052 / 40M</span>
+            <em>FLIP →</em>
+            <span>ML · 2026</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BACK -->
+      <div class="face back">
+        <div class="back-inner">
+          <div class="back-head">
+            <div class="label">No. 052 — Chicago Cubs</div>
+            <h2>Crow-Armstrong, Pete</h2>
+            <p>Center Field · Bats/Throws L · Born 03.25.2002, Sherman Oaks, CA</p>
+          </div>
+
+          <table class="stats-table">
+            <thead>
+              <tr>
+                <th>YR</th><th>G</th><th>AB</th><th>R</th><th>H</th><th>HR</th><th>RBI</th><th>SB</th><th>AVG</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>2023</td><td>13</td><td>14</td><td>3</td><td>1</td><td>0</td><td>0</td><td>2</td><td>.071</td></tr>
+              <tr><td>2024</td><td>123</td><td>410</td><td>51</td><td>98</td><td>10</td><td>47</td><td>27</td><td>.239</td></tr>
+              <tr><td>2025</td><td>151</td><td>551</td><td>85</td><td>142</td><td>22</td><td>79</td><td>38</td><td>.258</td></tr>
+              <tr><td>2026</td><td>14</td><td>55</td><td>11</td><td>16</td><td>4</td><td>12</td><td>5</td><td>.291</td></tr>
+            </tbody>
+          </table>
+
+          <div class="advanced">
+            <div class="adv-head">
+              <h3>Advanced · 2026</h3>
+              <span>% rank</span>
+            </div>
+            <div class="adv-grid">
+              <div class="metric">
+                <div class="metric-top"><span class="metric-label">wRC+</span><span class="metric-value">142</span></div>
+                <div class="metric-bar"><i style="width:88%"></i></div>
+              </div>
+              <div class="metric">
+                <div class="metric-top"><span class="metric-label">xwOBA</span><span class="metric-value">.378</span></div>
+                <div class="metric-bar"><i style="width:81%"></i></div>
+              </div>
+              <div class="metric">
+                <div class="metric-top"><span class="metric-label">Barrel%</span><span class="metric-value">12.4</span></div>
+                <div class="metric-bar"><i style="width:76%"></i></div>
+              </div>
+              <div class="metric">
+                <div class="metric-top"><span class="metric-label">HardHit%</span><span class="metric-value">48.1</span></div>
+                <div class="metric-bar"><i style="width:72%"></i></div>
+              </div>
+              <div class="metric">
+                <div class="metric-top"><span class="metric-label">Sprint</span><span class="metric-value">29.8</span></div>
+                <div class="metric-bar"><i style="width:97%"></i></div>
+              </div>
+              <div class="metric">
+                <div class="metric-top"><span class="metric-label">OAA</span><span class="metric-value">+6</span></div>
+                <div class="metric-bar"><i style="width:94%"></i></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="footnote">
+            Gold-glove center field with an elite sprint-speed tail. The xwOBA gap says the hot start is real contact, not BABIP smoke — watch him hunt fastballs in the zone.
+            <span class="sig">— The Morning Lineup scouting desk</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="flip-hint">click card or press <kbd>F</kbd> to flip</div>
+  </div>
+</div>
+
+<script>
+// temp bar — interpolate navy → red across 15 games
+const game_temp = [0.25, 0.2, 0.45, 0.55, 0.4, 0.7, 0.58, 0.78, 0.82, 0.62, 0.75, 0.9, 0.82, 0.96, 0.88];
+const cold = [14, 51, 134];
+const hot  = [200, 16, 46];
+const barEl = document.getElementById('tempBar');
+game_temp.forEach((v, i) => {
+  const b = document.createElement('span');
+  const r  = Math.round(cold[0] + (hot[0]-cold[0]) * v);
+  const g  = Math.round(cold[1] + (hot[1]-cold[1]) * v);
+  const bl = Math.round(cold[2] + (hot[2]-cold[2]) * v);
+  b.style.background = `rgb(${r}, ${g}, ${bl})`;
+  b.style.animationDelay = (0.45 + i * 0.045) + 's';
+  barEl.appendChild(b);
+});
+
+// flip
+const card = document.getElementById('card');
+card.addEventListener('click', () => card.classList.toggle('flipped'));
+document.addEventListener('keydown', (e) => {
+  if (e.key.toLowerCase() === 'f') card.classList.toggle('flipped');
+  if (e.key === 'Escape') card.classList.remove('flipped');
+});
+if (location.hash === '#back') {
+  card.classList.remove('ready');
+  card.style.animation = 'none';
+  card.classList.add('flipped');
+}
+</script>
+</body>
+</html>

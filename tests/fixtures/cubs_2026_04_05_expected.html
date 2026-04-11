@@ -674,7 +674,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="nx-venue">Wrigley Field </div>
         <div class="nx-meta"><span class="nx-opp-rec">???: 7-5, 3rd NL Central (L1)</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Cubs</span> Shota Imanaga<div class="nx-pline">0.00 ERA &middot; 0-0 &middot; 0.0 IP &middot; 0 K &middot; 0.00 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">???</span> Carmen Mlodzinski<div class="nx-pline">0.00 ERA &middot; 0-0 &middot; 0.0 IP &middot; 0 K &middot; 0.00 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">Cubs</span> <player-card pid="684007">Shota Imanaga</player-card><div class="nx-pline">0.00 ERA &middot; 0-0 &middot; 0.0 IP &middot; 0 K &middot; 0.00 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">???</span> Carmen Mlodzinski<div class="nx-pline">0.00 ERA &middot; 0-0 &middot; 0.0 IP &middot; 0 K &middot; 0.00 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Marquee Sports Network &middot; SportsNet Pittsburgh </div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 104.3 The Score &middot; 100.1 FM/KDKA-AM 1020</div>
         <div class="nx-wx">70°F &middot; Clear &middot; 5 mph N</div>
@@ -998,7 +998,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=112;var TEAM_IDLE_MSG="No Cubs game in progress";</script>
-<script src="live.js"></script>
+<script src="live.js"></script><script src="player-card.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});

@@ -674,10 +674,10 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="nx-venue">Wrigley Field </div>
         <div class="nx-meta"><span class="nx-opp-rec">PIT: 8-5, 1st NL Central (W1)</span> &middot; <span class="nx-series">Season series: 0-1</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Cubs</span> Edward Cabrera<div class="nx-pline">0.00 ERA &middot; 1-0 &middot; 11.2 IP &middot; 9 K &middot; 0.69 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">PIT</span> Braxton Ashcraft<div class="nx-pline">2.25 ERA &middot; 1-1 &middot; 12.0 IP &middot; 11 K &middot; 1.00 WHIP</div></div>
-        
+        <div class="nx-pitcher"><span class="nx-side">Cubs</span> <player-card pid="665795">Edward Cabrera</player-card><div class="nx-pline">0.00 ERA &middot; 1-0 &middot; 11.2 IP &middot; 9 K &middot; 0.69 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">PIT</span> Braxton Ashcraft<div class="nx-pline">2.25 ERA &middot; 1-1 &middot; 12.0 IP &middot; 11 K &middot; 1.00 WHIP</div></div>
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="608324">Bregman</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="608348">Kelly</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="621020">Swanson</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="664023">Happ</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="807713">Shaw</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="683737">Busch</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="624424">Conforto</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="665804">Amaya</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="694208">Ballesteros</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> SportsNet Pittsburgh &middot; Marquee Sports Network</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 104.3 The Score &middot; Sports Radio 93.7 KDKA The Fan</div>
-        <div class="nx-wx">39°F &middot; Foggy &middot; 6 mph ESE <span class="nx-wrigley">&mdash; Crosswind R→L</span></div>
+        <div class="nx-wx">45°F &middot; Clear &middot; 9 mph ESE <span class="nx-wrigley">&mdash; Crosswind R→L</span></div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sun, Apr 12 &middot; vs PIT</div>
@@ -977,7 +977,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Friendly Confines Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 08:54 CT</span>
+  <span>Filed 04/11/26 09:57 CT</span>
 </footer>
 
 <script>
@@ -1007,7 +1007,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=112;var TEAM_IDLE_MSG="No Cubs game in progress";</script>
-<script src="live.js"></script>
+<script src="live.js"></script><script src="player-card.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var tr=e.target.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h)window.open(h,"_blank")}});
