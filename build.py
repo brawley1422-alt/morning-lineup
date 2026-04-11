@@ -928,102 +928,228 @@ def _extract_last_10_games(splits, role):
     return list(reversed(out))
 
 
+def _float(val, default=0.0):
+    try:
+        return float(val)
+    except (ValueError, TypeError):
+        return default
+
+
+def _int(val, default=0):
+    try:
+        return int(val)
+    except (ValueError, TypeError):
+        return default
+
+
 def _select_prediction(rec):
     """Pick a contextual daily prediction question for one player record.
-    Walks rules in priority order and returns the first that fires.
+    Walks rules in priority order; each rule fires only when its triggers
+    match real signal in the record. Falls through to a pid-rotated
+    generic pool so even quiet players get varied questions.
     Returns {question_text, resolution_rule, role_tag, context_tag}."""
     role = rec.get("role", "hitter")
     name = rec.get("name", "the player")
     last = rec.get("last_name", "") or name.split()[-1]
     last_10 = rec.get("last_10_games", []) or []
     season = rec.get("season", {}) or {}
+    pid = rec.get("id", 0) or 0
 
     # Hitter rule set
     if role == "hitter":
-        # Rule: milestone-watch (within 2 of round HR total)
-        try:
-            hr = int(season.get("homeRuns", 0) or 0)
-            for milestone in (10, 20, 30, 40, 50):
-                if 0 < (milestone - hr) <= 2:
-                    return {
-                        "question_text": f"Will {last} hit HR #{milestone} today?",
-                        "resolution_rule": {"stat": "homeRuns", "op": ">=", "value": milestone - hr},
-                        "role_tag": "hitter",
-                        "context_tag": "milestone-watch",
-                    }
-        except (ValueError, TypeError):
-            pass
+        avg = _float(season.get("avg"), 0.0)
+        ops = _float(season.get("ops"), 0.0)
+        hr = _int(season.get("homeRuns"))
+        rbi = _int(season.get("rbi"))
+        sb = _int(season.get("stolenBases"))
+        games = _int(season.get("gamesPlayed"))
+        recent = [g["value"] for g in last_10 if g.get("value") is not None]
+        last3 = recent[:3]  # last_10 is newest-first
+        last3_avg = sum(last3) / len(last3) if last3 else 0.0
 
-        # Rule: slump-snap (BA < .200 looking at last 10 game OPS values)
-        recent_values = [g["value"] for g in last_10 if g.get("value") is not None]
-        if len(recent_values) >= 5:
-            avg_ops = sum(recent_values) / len(recent_values)
-            if avg_ops < 0.500:
+        # Rule: HR milestone watch (tight window)
+        for milestone in (5, 10, 20, 30, 40, 50):
+            if 0 < (milestone - hr) <= 2:
                 return {
-                    "question_text": f"Will {last} snap out of it with a hit today?",
-                    "resolution_rule": {"stat": "hits", "op": ">=", "value": 1},
+                    "question_text": f"Will {last} hit HR #{milestone} today?",
+                    "resolution_rule": {"stat": "homeRuns", "op": ">=", "value": milestone - hr},
                     "role_tag": "hitter",
-                    "context_tag": "slump-snap",
+                    "context_tag": "milestone-watch",
                 }
 
-        # Rule: hot-streak (avg OPS > 1.000 over last 10)
-        if len(recent_values) >= 5:
-            avg_ops = sum(recent_values) / len(recent_values)
-            if avg_ops > 1.000:
-                return {
-                    "question_text": f"Can {last} keep the heater going — multi-hit game?",
-                    "resolution_rule": {"stat": "hits", "op": ">=", "value": 2},
-                    "role_tag": "hitter",
-                    "context_tag": "hot-streak",
-                }
+        # Rule: ice-cold last 3
+        if len(last3) >= 2 and last3_avg < 0.450:
+            return {
+                "question_text": f"Can {last} end the cold snap with a hit?",
+                "resolution_rule": {"stat": "hits", "op": ">=", "value": 1},
+                "role_tag": "hitter",
+                "context_tag": "cold-snap",
+            }
 
-        # Generic fallback
+        # Rule: red-hot last 3
+        if len(last3) >= 2 and last3_avg > 0.900:
+            return {
+                "question_text": f"Can {last} keep the heater going — multi-hit game?",
+                "resolution_rule": {"stat": "hits", "op": ">=", "value": 2},
+                "role_tag": "hitter",
+                "context_tag": "red-hot",
+            }
+
+        # Rule: Mendoza watch (season BA below .200, enough games)
+        if games >= 8 and 0 < avg < 0.200:
+            return {
+                "question_text": f"Will {last} climb back above the Mendoza line?",
+                "resolution_rule": {"stat": "hits", "op": ">=", "value": 2},
+                "role_tag": "hitter",
+                "context_tag": "mendoza",
+            }
+
+        # Rule: season-hot (BA above .320)
+        if games >= 8 and avg >= 0.320:
+            return {
+                "question_text": f"Can {last} stay scorching — another multi-hit game?",
+                "resolution_rule": {"stat": "hits", "op": ">=", "value": 2},
+                "role_tag": "hitter",
+                "context_tag": "season-hot",
+            }
+
+        # Rule: power threat (HR per game >= 0.15, nibbled threshold for early season)
+        if games >= 5 and hr >= 1 and (hr / max(games, 1)) >= 0.15:
+            return {
+                "question_text": f"Is {last} leaving the yard today?",
+                "resolution_rule": {"stat": "homeRuns", "op": ">=", "value": 1},
+                "role_tag": "hitter",
+                "context_tag": "power-threat",
+            }
+
+        # Rule: speed threat (3+ SB already)
+        if sb >= 3:
+            return {
+                "question_text": f"Will {last} swipe another bag today?",
+                "resolution_rule": {"stat": "stolenBases", "op": ">=", "value": 1},
+                "role_tag": "hitter",
+                "context_tag": "speed-threat",
+            }
+
+        # Rule: RBI machine (0.8+ RBI per game)
+        if games >= 5 and (rbi / max(games, 1)) >= 0.80:
+            return {
+                "question_text": f"Will {last} drive in a run today?",
+                "resolution_rule": {"stat": "rbi", "op": ">=", "value": 1},
+                "role_tag": "hitter",
+                "context_tag": "rbi-machine",
+            }
+
+        # Generic fallback — rotate by pid so different players get different
+        # flavors even when no narrative rule fires.
+        pool = [
+            (f"Will {last} get a hit today?",
+             {"stat": "hits", "op": ">=", "value": 1}),
+            (f"Will {last} post a multi-hit game?",
+             {"stat": "hits", "op": ">=", "value": 2}),
+            (f"Will {last} drive in a run today?",
+             {"stat": "rbi", "op": ">=", "value": 1}),
+            (f"Will {last} go yard today?",
+             {"stat": "homeRuns", "op": ">=", "value": 1}),
+        ]
+        q, rule = pool[pid % len(pool)]
         return {
-            "question_text": f"Will {last} get a hit today?",
-            "resolution_rule": {"stat": "hits", "op": ">=", "value": 1},
+            "question_text": q,
+            "resolution_rule": rule,
             "role_tag": "hitter",
             "context_tag": "generic",
         }
 
     # Pitcher rule set
     else:
-        # Rule: milestone-watch (within 5 K of a round number)
-        try:
-            so = int(season.get("strikeOuts", 0) or 0)
-            for milestone in (50, 100, 150, 200, 250):
-                if 0 < (milestone - so) <= 5:
-                    return {
-                        "question_text": f"Will {last} reach {milestone} K today?",
-                        "resolution_rule": {"stat": "strikeOuts", "op": ">=", "value": milestone - so},
-                        "role_tag": "pitcher",
-                        "context_tag": "milestone-watch",
-                    }
-        except (ValueError, TypeError):
-            pass
+        era = _float(season.get("era"), 99.0)
+        whip = _float(season.get("whip"), 9.0)
+        so = _int(season.get("strikeOuts"))
+        gs = _int(season.get("gamesStarted"))
+        gp = _int(season.get("gamesPlayed"))
+        wins = _int(season.get("wins"))
+        k_per_start = (so / gs) if gs > 0 else 0.0
+        recent = [g["value"] for g in last_10 if g.get("value") is not None]
+        last3 = recent[:3]
+        last3_gs = sum(last3) / len(last3) if last3 else 0.0
 
-        # Rule: hot-streak (recent GameScore avg > 60)
-        recent_values = [g["value"] for g in last_10[-3:] if g.get("value") is not None]
-        if len(recent_values) >= 2:
-            avg_gs = sum(recent_values) / len(recent_values)
-            if avg_gs > 60:
+        # Rule: K milestone watch
+        for milestone in (25, 50, 100, 150, 200, 250):
+            if 0 < (milestone - so) <= 5:
                 return {
-                    "question_text": f"Will {last} carve them up — 7+ K today?",
-                    "resolution_rule": {"stat": "strikeOuts", "op": ">=", "value": 7},
+                    "question_text": f"Will {last} reach {milestone} K today?",
+                    "resolution_rule": {"stat": "strikeOuts", "op": ">=", "value": milestone - so},
                     "role_tag": "pitcher",
-                    "context_tag": "hot-streak",
-                }
-            if avg_gs < 35:
-                return {
-                    "question_text": f"Can {last} get back on track — quality start today?",
-                    "resolution_rule": {"stat": "qualityStart", "op": "==", "value": True},
-                    "role_tag": "pitcher",
-                    "context_tag": "slump-snap",
+                    "context_tag": "milestone-watch",
                 }
 
-        # Generic pitcher fallback
+        # Rule: dominant form (recent GameScore > 55)
+        if len(last3) >= 2 and last3_gs > 55:
+            return {
+                "question_text": f"Can {last} keep carving — 7+ K today?",
+                "resolution_rule": {"stat": "strikeOuts", "op": ">=", "value": 7},
+                "role_tag": "pitcher",
+                "context_tag": "dominant",
+            }
+
+        # Rule: shaky form (recent GameScore < 40)
+        if len(last3) >= 2 and last3_gs < 40:
+            return {
+                "question_text": f"Can {last} bounce back with a quality start?",
+                "resolution_rule": {"stat": "qualityStart", "op": "==", "value": True},
+                "role_tag": "pitcher",
+                "context_tag": "bounce-back",
+            }
+
+        # Rule: ace-season (ERA sub-3.00, enough innings)
+        if gs >= 3 and 0 < era < 3.00:
+            return {
+                "question_text": f"Will {last} stay dominant — quality start?",
+                "resolution_rule": {"stat": "qualityStart", "op": "==", "value": True},
+                "role_tag": "pitcher",
+                "context_tag": "ace-season",
+            }
+
+        # Rule: K artist (7+ K per start)
+        if gs >= 2 and k_per_start >= 7.0:
+            return {
+                "question_text": f"Is {last} punching out 7+ again today?",
+                "resolution_rule": {"stat": "strikeOuts", "op": ">=", "value": 7},
+                "role_tag": "pitcher",
+                "context_tag": "k-artist",
+            }
+
+        # Rule: command guy (WHIP below 1.10)
+        if gs >= 2 and 0 < whip < 1.10:
+            return {
+                "question_text": f"Will {last} paint corners — quality start today?",
+                "resolution_rule": {"stat": "qualityStart", "op": "==", "value": True},
+                "role_tag": "pitcher",
+                "context_tag": "command",
+            }
+
+        # Rule: high-ERA watch (struggling — can he get back on track)
+        if gs >= 2 and era >= 5.00:
+            return {
+                "question_text": f"Can {last} turn it around — quality start?",
+                "resolution_rule": {"stat": "qualityStart", "op": "==", "value": True},
+                "role_tag": "pitcher",
+                "context_tag": "struggling",
+            }
+
+        # Generic fallback — rotate by pid for variety
+        pool = [
+            (f"Will {last} record 5+ K today?",
+             {"stat": "strikeOuts", "op": ">=", "value": 5}),
+            (f"Will {last} deliver a quality start?",
+             {"stat": "qualityStart", "op": "==", "value": True}),
+            (f"Will {last} punch out 7 today?",
+             {"stat": "strikeOuts", "op": ">=", "value": 7}),
+        ]
+        q, rule = pool[pid % len(pool)]
         return {
-            "question_text": f"Will {last} record 5+ K today?",
-            "resolution_rule": {"stat": "strikeOuts", "op": ">=", "value": 5},
+            "question_text": q,
+            "resolution_rule": rule,
             "role_tag": "pitcher",
             "context_tag": "generic",
         }

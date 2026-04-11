@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>PC test</title></head>
+<body>
+<p>Click test: <player-card pid="665795">Edward Cabrera</player-card></p>
+<div id="status">Waiting…</div>
+<script src="../cubs/player-card.js"></script>
+<script>
+window.addEventListener('load', async () => {
+  await new Promise(r => setTimeout(r, 200));
+  const el = document.querySelector('player-card');
+  const isUpgraded = el && el.constructor && el.constructor.name !== 'HTMLElement';
+  document.getElementById('status').textContent =
+    'el found: ' + !!el +
+    ' | upgraded: ' + isUpgraded +
+    ' | role: ' + (el ? el.getAttribute('role') : 'n/a');
+});
+</script>
+</body>
+</html>

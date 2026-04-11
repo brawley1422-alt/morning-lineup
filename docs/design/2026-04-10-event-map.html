@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Morning Lineup — Event Map</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Oswald:wght@500;700&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --paper: #ece4d0;
+    --ink: #0d0f14;
+    --ink-soft: #1a1d26;
+    --rule: #2a2e3a;
+    --rule-hi: #3d4150;
+    --gold: #c9a24a;
+    --gold-bright: #e4bc5e;
+    --red: #a63a3a;
+    --muted: #8a8e9c;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: "Lora", Georgia, serif;
+    font-size: 17px;
+    line-height: 1.6;
+    padding: 48px 24px 120px;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+
+  /* masthead */
+  .masthead {
+    border-top: 4px double var(--gold);
+    border-bottom: 1px solid var(--rule-hi);
+    padding: 28px 0 18px;
+    margin-bottom: 36px;
+  }
+  .kicker {
+    font-family: "Oswald", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 900;
+    font-size: 54px;
+    line-height: 1.05;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .dateline {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 700;
+    font-size: 32px;
+    margin: 56px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule-hi);
+  }
+  h2 .num {
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    color: var(--gold);
+    font-size: 18px;
+    margin-right: 10px;
+    letter-spacing: 2px;
+  }
+  h3 {
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    margin: 32px 0 10px;
+  }
+  h4 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 700;
+    font-size: 22px;
+    margin: 22px 0 6px;
+  }
+  p { margin: 0 0 14px; }
+  strong { color: var(--gold-bright); }
+  em { color: var(--paper); }
+  code {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    background: var(--ink-soft);
+    color: var(--gold-bright);
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--rule);
+  }
+
+  /* lede */
+  .lede {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 22px;
+    line-height: 1.5;
+    font-style: italic;
+    color: var(--paper);
+    border-left: 3px solid var(--gold);
+    padding: 4px 0 4px 22px;
+    margin: 24px 0 40px;
+  }
+
+  /* mermaid frame */
+  .diagram-frame {
+    background: var(--ink-soft);
+    border: 1px solid var(--rule-hi);
+    border-radius: 4px;
+    padding: 28px;
+    margin: 18px 0 36px;
+    overflow-x: auto;
+  }
+  .mermaid { background: transparent !important; }
+  .diagram-legend {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 14px;
+    letter-spacing: 0.3px;
+  }
+  .diagram-legend strong { color: var(--gold); }
+
+  /* tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 28px;
+    font-size: 14px;
+  }
+  thead th {
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    font-size: 11px;
+    color: var(--gold);
+    border-bottom: 2px solid var(--gold);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: bottom;
+  }
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tbody tr:hover { background: var(--ink-soft); }
+  tbody strong { color: var(--paper); font-weight: 700; }
+  td code { font-size: 12px; }
+
+  /* gap cards */
+  .gaps { display: grid; grid-template-columns: 1fr; gap: 18px; margin: 18px 0 40px; }
+  .gap {
+    background: var(--ink-soft);
+    border: 1px solid var(--rule-hi);
+    border-left: 4px solid var(--gold);
+    padding: 20px 24px;
+    border-radius: 2px;
+  }
+  .gap.high { border-left-color: var(--red); }
+  .gap.med { border-left-color: var(--gold); }
+  .gap.low { border-left-color: var(--muted); }
+  .gap-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .gap-num {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .gap-title {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--paper);
+    flex: 1;
+  }
+  .gap-tag {
+    font-family: "Oswald", sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-weight: 700;
+  }
+  .gap-tag.high { background: var(--red); color: var(--paper); }
+  .gap-tag.med { background: var(--gold); color: var(--ink); }
+  .gap-tag.low { background: var(--rule-hi); color: var(--paper); }
+  .gap p { margin: 6px 0; font-size: 15px; }
+  .gap p strong { color: var(--gold-bright); font-weight: 700; }
+
+  /* numbered architecture patterns */
+  .patterns { counter-reset: pattern; }
+  .pattern {
+    counter-increment: pattern;
+    position: relative;
+    padding: 18px 0 18px 72px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .pattern:last-child { border-bottom: none; }
+  .pattern::before {
+    content: counter(pattern);
+    position: absolute;
+    left: 0;
+    top: 10px;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .pattern h4 { margin-top: 0; color: var(--gold-bright); }
+
+  /* next moves */
+  .next {
+    background: var(--ink-soft);
+    border: 1px solid var(--rule-hi);
+    padding: 24px 28px;
+    margin: 24px 0 40px;
+    border-radius: 2px;
+  }
+  .next ul { margin: 0; padding-left: 20px; }
+  .next li { margin-bottom: 10px; }
+
+  /* footer */
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.3px;
+  }
+
+  @media (max-width: 720px) {
+    body { padding: 24px 16px 80px; font-size: 16px; }
+    h1 { font-size: 36px; }
+    h2 { font-size: 26px; }
+    .gap { padding: 16px; }
+    .pattern { padding-left: 56px; }
+    .pattern::before { font-size: 38px; }
+    table { font-size: 13px; }
+    thead th, tbody td { padding: 8px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="kicker">Morning Lineup · Architecture</div>
+    <h1>The Event Map</h1>
+    <div class="dateline">VOL. I · 2026-04-10 · LIVING DOCUMENT</div>
+  </header>
+
+  <p class="lede">
+    Every "how often should this refresh?" question is really "what event should trigger this?" in disguise.
+    If something upstream already observes the state change, the downstream doesn't need its own timer —
+    it just needs to be kicked. Map the events first, then wire the consumers.
+  </p>
+
+  <h2><span class="num">I</span>The Map</h2>
+
+  <div class="diagram-frame">
+    <pre class="mermaid">
+flowchart LR
+    classDef source fill:#1a1d26,stroke:#c9a24a,stroke-width:1.5px,color:#ece4d0,font-family:"IBM Plex Mono",font-size:12px
+    classDef consumer fill:#0d0f14,stroke:#3d4150,stroke-width:1px,color:#ece4d0,font-family:"IBM Plex Mono",font-size:12px
+    classDef wired stroke:#c9a24a,stroke-width:2px
+    classDef unwired stroke:#a63a3a,stroke-width:2px,stroke-dasharray:5 5
+
+    subgraph SOURCES["SOURCE EVENTS"]
+        A1["Game Preview → Live"]
+        A2["Game Live → Final"]
+        A3["Score change mid-game"]
+        A4["At-bat / pitch"]
+        A5["Lineup posted ~1hr pregame"]
+        A6["Probable pitcher change"]
+        A7["MLB transaction posted"]
+        A8["Injury list update"]
+        A9["Prospect promoted/demoted"]
+        A10["Weather update pregame"]
+        B1["Morning build 5am"]
+        B2["Evening rebuild Cubs Final"]
+        B3["Date rollover midnight"]
+        B4["Pregame window -60min"]
+        C1["Page load"]
+        C2["Tab visibility resume"]
+        C3["Scorebook game nav"]
+    end
+
+    subgraph CONSUMERS["CONSUMERS"]
+        D1["Slate cards"]
+        D2["Cubs widget"]
+        D3["Scorebook"]
+        D4["Division standings"]
+        D5["All-division blocks"]
+        D6["Yesterday scoreboard"]
+        D7["Rival results"]
+        D8["Form guide hot/cold"]
+        D9["Scouting report"]
+        D10["Pressbox transactions"]
+        D11["Pressbox injured list"]
+        D12["Farm / prospects"]
+        D13["Three stars"]
+        D14["Headline hero"]
+        D15["Editorial lede"]
+        D16["Stretch W/L + Pyth"]
+        D17["Next games"]
+        D18["Weather panel"]
+    end
+
+    A2 --> D1
+    A2 --> D4
+    A2 --> D5
+    A2 --> D6
+    A2 --> D7
+    A2 --> D8
+    A2 --> D13
+    A2 --> D14
+    A2 --> D16
+    A3 --> D1
+    A3 --> D2
+    A3 --> D3
+    A4 --> D2
+    A4 --> D3
+    A5 -.->|unwired| D9
+    A5 -.->|unwired| D2
+    A6 -.->|unwired| D9
+    A6 -.->|unwired| D1
+    A6 -.->|unwired| D2
+    A7 -.->|unwired| D10
+    A7 -.->|unwired| D12
+    A8 -.->|unwired| D11
+    A8 -.->|unwired| D8
+    A8 -.->|unwired| D9
+    A9 -.->|unwired| D12
+    A9 -.->|unwired| D10
+    A10 -.->|unwired| D18
+    B1 --> D15
+    B1 --> D17
+    B2 --> D14
+    B2 --> D13
+    B2 --> D15
+    C2 --> D1
+    C2 --> D2
+    C2 --> D3
+
+    class A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,B1,B2,B3,B4,C1,C2,C3 source
+    class D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14,D15,D16,D17,D18 consumer
+    </pre>
+    <div class="diagram-legend">
+      <strong>GOLD solid</strong> = wired (or landing with unified-live-core ship) &nbsp;·&nbsp;
+      <strong>RED dashed</strong> = event exists, nobody listens &nbsp;·&nbsp; These are the gaps.
+    </div>
+  </div>
+
+  <h2><span class="num">II</span>Polled MLB API Events</h2>
+  <table>
+    <thead>
+      <tr><th>Event</th><th>Source</th><th>Observed by</th><th>Informs today</th><th>Could also inform</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Game Preview → Live</strong></td><td><code>/v1/schedule</code></td><td>slate subscriber</td><td>slate card, Cubs widget</td><td>—</td></tr>
+      <tr><td><strong>Game Live → Final</strong></td><td><code>/v1/schedule</code></td><td>slate subscriber (post-ship)</td><td>slate, standings kick, late-finals</td><td>form guide, three stars, Pyth, next games, headline</td></tr>
+      <tr><td><strong>Score change mid-game</strong></td><td><code>feed/live</code></td><td>Cubs widget, scorebook</td><td>widget, scorebook</td><td>slate card (coarser)</td></tr>
+      <tr><td><strong>At-bat / pitch</strong></td><td><code>feed/live</code></td><td>Cubs widget, scorebook</td><td>situation bar, diamonds</td><td>—</td></tr>
+      <tr><td><strong>Lineup posted (~1hr pregame)</strong></td><td><code>feed/live → boxscore.battingOrder</code></td><td><code>fetchPreviewExtras</code> one-shot</td><td>preview widget extras</td><td><strong>scouting report refresh</strong> — currently frozen at 5am morning build</td></tr>
+      <tr><td><strong>Probable pitcher change</strong></td><td><code>/v1/schedule?hydrate=probablePitcher</code></td><td><em>nothing</em></td><td>—</td><td>scouting report, slate, widget</td></tr>
+      <tr><td><strong>Transaction posted</strong></td><td><code>/v1/transactions?date={today}</code></td><td>morning build only</td><td>pressbox</td><td>farm section, notification</td></tr>
+      <tr><td><strong>Injury list update</strong></td><td><code>/v1/teams/{id}/roster?rosterType=injuryList</code></td><td>morning build only</td><td>pressbox IL</td><td>form guide, scouting report</td></tr>
+      <tr><td><strong>Prospect promoted/demoted</strong></td><td>transactions feed</td><td>morning build only</td><td>pressbox</td><td>farm tracker</td></tr>
+      <tr><td><strong>Weather pregame</strong></td><td>MLB venue weather</td><td>morning build only</td><td>slate weather line</td><td>pregame panel refresh</td></tr>
+      <tr><td><strong>Standings change</strong></td><td><code>/v1/standings</code></td><td>standings subscriber (post-ship, derived)</td><td>division + all-division</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">III</span>Time-Based Events</h2>
+  <table>
+    <thead><tr><th>Event</th><th>Trigger</th><th>Observed by</th><th>Gap</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Morning build</strong></td><td>5am CT cron</td><td><code>build.py</code></td><td>—  no gap, static build is source of truth</td></tr>
+      <tr><td><strong>Evening rebuild</strong></td><td>Cubs Final</td><td><code>evening.py</code></td><td>could trigger on any today-Final for tighter three-stars</td></tr>
+      <tr><td><strong>Date rollover</strong></td><td>midnight</td><td><em>nothing</em></td><td><strong>Real gap.</strong> Tab opened at 11:55pm still shows yesterday at 12:05am</td></tr>
+      <tr><td><strong>Pregame T-60min</strong></td><td>time-of-day</td><td><em>nothing</em></td><td>could trigger lineup refresh, scouting report, weather, "starts in an hour" nudge</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">IV</span>Client / Frame Events</h2>
+  <table>
+    <thead><tr><th>Event</th><th>Observed by</th><th>Gap</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Page load</strong></td><td>all subscribers at subscribe()</td><td>—</td></tr>
+      <tr><td><strong>Tab visibility resume</strong></td><td><code>live-core</code> (post-ship)</td><td>—</td></tr>
+      <tr><td><strong>Scorebook game nav</strong></td><td><code>scorecard/app.js</code></td><td>—</td></tr>
+      <tr><td><strong>Theme toggle</strong></td><td><code>app.js</code></td><td>—</td></tr>
+      <tr><td><strong>Settings changed</strong> (future)</td><td>no event bus yet</td><td>when custom-home lands, should ripple without reload</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">V</span>The Gap List</h2>
+  <h3>Ranked by reader-value-per-effort</h3>
+
+  <div class="gaps">
+    <div class="gap high">
+      <div class="gap-head">
+        <span class="gap-num">01</span>
+        <span class="gap-title">Lineup posting → scouting report refresh</span>
+        <span class="gap-tag high">High</span>
+      </div>
+      <p><strong>Event:</strong> <code>boxscore.battingOrder</code> becomes non-empty on today's game feed (~1 hour before first pitch).</p>
+      <p><strong>Today:</strong> scouting report is rendered at 5am morning build from probable-pitcher data only. No starting lineups yet. Frozen all day.</p>
+      <p><strong>Could do:</strong> subscribe to the Cubs game feed (already running post-ship for the widget) and when a lineup appears, refresh the scouting report's "opposition lineup" card. One new derived subscriber, kicked by the Cubs widget — same timerless pattern as standings.</p>
+      <p><strong>Why it matters:</strong> lineups are the single most reader-interesting pregame information. Getting them live changes the briefing from "morning preview" to "game-day companion."</p>
+    </div>
+
+    <div class="gap med">
+      <div class="gap-head">
+        <span class="gap-num">02</span>
+        <span class="gap-title">Date rollover → slate reset</span>
+        <span class="gap-tag med">Medium</span>
+      </div>
+      <p><strong>Event:</strong> clock ticks past midnight local time while a tab is open.</p>
+      <p><strong>Today:</strong> tab opened at 11:55pm shows yesterday's slate forever. User has to refresh.</p>
+      <p><strong>Could do:</strong> tiny time-watcher that fires once at midnight and calls <code>slateHandle.refreshNow()</code>. The slate's endpoint function already uses <code>today()</code> so the next fetch hits the new date automatically. Plus: standings kicks once, late-finals unsubscribes and a new one subscribes for the new "yesterday."</p>
+      <p><strong>Why it matters:</strong> low-probability scenario but the fix is ~10 lines and removes a hidden footgun.</p>
+    </div>
+
+    <div class="gap med">
+      <div class="gap-head">
+        <span class="gap-num">03</span>
+        <span class="gap-title">Transaction feed → pressbox live</span>
+        <span class="gap-tag med">Medium</span>
+      </div>
+      <p><strong>Event:</strong> <code>/v1/transactions?date={today}</code> gets new entries during the day.</p>
+      <p><strong>Today:</strong> pressbox is frozen at morning build. A 2pm trade announcement doesn't show until tomorrow.</p>
+      <p><strong>Could do:</strong> low-frequency subscriber (every 10 min) polling today's transactions and patching the pressbox table. Farm section becomes a derived listener for call-ups/send-downs.</p>
+      <p><strong>Why it matters:</strong> transactions are bursty; you don't want to miss the Cubs making a move. Absolute win over "reload tomorrow morning" is smaller than #1 but still real.</p>
+    </div>
+
+    <div class="gap med">
+      <div class="gap-head">
+        <span class="gap-num">04</span>
+        <span class="gap-title">Injury list → pressbox + form guide</span>
+        <span class="gap-tag med">Medium</span>
+      </div>
+      <p><strong>Event:</strong> <code>/v1/teams/{id}/roster?rosterType=injuryList</code> returns new entries.</p>
+      <p><strong>Today:</strong> morning build only.</p>
+      <p><strong>Could do:</strong> same low-frequency subscriber as #3, piggybacking on the transactions poll cadence. Pressbox IL side updates. If a hot form-guide hitter lands on the IL, flag him.</p>
+      <p><strong>Why it matters:</strong> injuries propagate slower than transactions but the freeze is most user-hostile here — you find out your guy is hurt when you open the app tomorrow.</p>
+    </div>
+
+    <div class="gap low">
+      <div class="gap-head">
+        <span class="gap-num">05</span>
+        <span class="gap-title">Probable pitcher change → scouting + slate</span>
+        <span class="gap-tag low">Low</span>
+      </div>
+      <p><strong>Event:</strong> <code>/v1/schedule?hydrate=probablePitcher</code> diff from what morning build captured.</p>
+      <p><strong>Today:</strong> nothing watches. A 10am pitcher swap means the 5am scouting report is wrong all day.</p>
+      <p><strong>Could do:</strong> piggyback on the existing slate subscriber — it already hydrates <code>probablePitcher</code>. Diff check in the slate's <code>onData</code>; if any <code>gamePk</code>'s probable pitcher changed, kick a scouting-report refresh subscriber.</p>
+      <p><strong>Why it matters:</strong> rare event. But when it happens, the current state is embarrassingly wrong — so leverage per incident is high even if frequency is low.</p>
+    </div>
+
+    <div class="gap low">
+      <div class="gap-head">
+        <span class="gap-num">06</span>
+        <span class="gap-title">Weather update → pregame panel</span>
+        <span class="gap-tag low">Low</span>
+      </div>
+      <p><strong>Event:</strong> venue weather changes between morning build and first pitch.</p>
+      <p><strong>Today:</strong> morning build only. Rain at 5pm with 7pm first pitch still shows "clear 72°."</p>
+      <p><strong>Could do:</strong> 30-min pre-game subscriber that refreshes weather from MLB's venue endpoint.</p>
+      <p><strong>Why it matters:</strong> rarely decisive; most readers will see actual conditions by first pitch. Lowest leverage of the gaps.</p>
+    </div>
+  </div>
+
+  <h2><span class="num">VI</span>Three Patterns the Map Surfaces</h2>
+
+  <div class="patterns">
+    <div class="pattern">
+      <h4>The slate is an event fountain</h4>
+      <p>It already polls once, sees every today-game transition, and can kick an arbitrary number of derived subscribers. Standings is the first consumer. Scouting-report-on-lineup and rival-results on transitions should both reuse the same pattern. The slate's <code>onData</code> is becoming the central event dispatcher for today-game events.</p>
+    </div>
+    <div class="pattern">
+      <h4>The morning build is an event too</h4>
+      <p>Just a one-shot, full-page variant. Anything it populates is, in principle, a candidate for live refresh by finding the upstream source event. The question "should this be live?" becomes "is the upstream event worth watching at client-side cadence?"</p>
+    </div>
+    <div class="pattern">
+      <h4>Some sections have no live source at all</h4>
+      <p>History, This Day In, Editorial Lede. These are correctly frozen. The map helps distinguish "frozen because there's no event" from "frozen because nobody wired the event yet." Don't waste effort trying to make the first category live.</p>
+    </div>
+  </div>
+
+  <h2><span class="num">VII</span>Next Moves</h2>
+  <div class="next">
+    <ul>
+      <li>Ship unified-live-core first (<code>docs/plans/2026-04-10-005-feat-unified-live-core-plan.md</code>).</li>
+      <li>After ship, pick gap #1 (lineup → scouting) and #2 (date rollover). Both cheap; #1 is high reader value, #2 closes a real footgun.</li>
+      <li>Gaps #3–6 are backlog material. Re-read this map when planning the next editorial pass and see which ones have climbed in value.</li>
+    </ul>
+  </div>
+
+  <footer>
+    MORNING LINEUP · DOCS/DESIGN · EVENT-MAP · 2026-04-10 · LIVING DOCUMENT · UPDATE AS GAPS CLOSE
+  </footer>
+
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      background: '#1a1d26',
+      primaryColor: '#1a1d26',
+      primaryTextColor: '#ece4d0',
+      primaryBorderColor: '#c9a24a',
+      lineColor: '#c9a24a',
+      secondaryColor: '#0d0f14',
+      tertiaryColor: '#0d0f14',
+      fontFamily: 'IBM Plex Mono, monospace',
+      fontSize: '13px',
+      clusterBkg: '#0d0f14',
+      clusterBorder: '#3d4150',
+      edgeLabelBackground: '#1a1d26'
+    },
+    flowchart: {
+      curve: 'basis',
+      padding: 20,
+      nodeSpacing: 30,
+      rankSpacing: 60
+    }
+  });
+</script>
+</body>
+</html>

@@ -5,6 +5,10 @@ Multi-team static site generator that produces daily MLB briefings for all 30 te
 **Live:** https://brawley1422-alt.github.io/morning-lineup/
 **Landing page:** Team picker with live standings, scores, and game status.
 
+## When brainstorming or planning new features
+
+**Read `docs/design/2026-04-10-event-map.md` first.** It catalogs every event Morning Lineup can observe (MLB API, time-based, client-side), what each one currently informs, and the unwired gaps ranked by reader-value-per-effort. The design principle: instead of asking "how often should X refresh?", ask "what event should trigger X?" — usually the event is already observed by another subscriber and the new consumer can be timerless and event-kicked. Use the map to check whether a feature idea has an existing upstream event source before sketching a new polling loop.
+
 ## Tech stack
 
 - Python 3.12, stdlib only (no pip dependencies)
