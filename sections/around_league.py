@@ -24,8 +24,8 @@ def _abbr(tmap, team_id):
 def _logo(team_id, size="sm"):
     if not team_id:
         return ""
-    return (f'<img class="ml-logo {size}" alt="" aria-hidden="true" '
-            f'src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/{team_id}.svg">')
+    return (f'<svg class="ml-logo {size}" aria-hidden="true" focusable="false">'
+            f'<use href="#team-{team_id}"/></svg>')
 
 
 def _team_name(tmap, team_id):

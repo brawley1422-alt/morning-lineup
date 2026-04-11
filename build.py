@@ -567,6 +567,72 @@ CSS = _css_raw.replace("--team-primary:#0E3386;--team-primary-hi:#2a56c4;", f"--
 CSS = CSS.replace("--team-accent:#CC3433;--team-accent-hi:#e8544f;", f"--team-accent:{_colors['accent']};--team-accent-hi:{_colors['accent_hi']};")
 
 
+# ─── team-cap SVG sprite ───────────────────────────────────────────────
+# Fetch every team's team-cap-on-dark SVG once, combine into a single
+# inline <svg> block with <symbol id="team-NNN"> entries, and inject at
+# the top of <body>. Sections reference via <svg><use href="#team-NNN"/>
+# which eliminates N per-page CDN requests and works offline (PWA).
+
+import re as _re_sprite
+
+def _fetch_cap_svg(team_id):
+    """Return raw SVG text for a team's cap-on-dark logo, cached to disk."""
+    cache_dir = DATA_DIR / ".sprite-cache"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cached = cache_dir / f"cap-{team_id}.svg"
+    if cached.exists():
+        return cached.read_text(encoding="utf-8")
+    url = f"https://www.mlbstatic.com/team-logos/team-cap-on-dark/{team_id}.svg"
+    try:
+        import urllib.request as _ur
+        req = _ur.Request(url, headers={"User-Agent": "morning-lineup-build/1.0"})
+        with _ur.urlopen(req, timeout=10) as r:
+            body = r.read().decode("utf-8")
+        cached.write_text(body, encoding="utf-8")
+        return body
+    except Exception as e:
+        print(f"  warning: sprite fetch team {team_id} failed: {e}", flush=True)
+        return ""
+
+
+def _build_team_sprite():
+    """Scan teams/*.json for team IDs, fetch each cap SVG, build one sprite."""
+    teams_dir = ROOT / "teams"
+    symbols = []
+    seen = set()
+    for cfg_file in sorted(teams_dir.glob("*.json")):
+        try:
+            with open(cfg_file, encoding="utf-8") as f:
+                cfg = json.load(f)
+        except Exception:
+            continue
+        tid = cfg.get("id")
+        if not tid or tid in seen:
+            continue
+        seen.add(tid)
+        raw = _fetch_cap_svg(tid)
+        if not raw:
+            continue
+        m_vb = _re_sprite.search(r'viewBox="([^"]+)"', raw)
+        vb = m_vb.group(1) if m_vb else "0 0 300 300"
+        inner = _re_sprite.sub(r"^<svg[^>]*>", "", raw.strip(), count=1)
+        inner = _re_sprite.sub(r"</svg>\s*$", "", inner, count=1)
+        inner = _re_sprite.sub(r"<title>.*?</title>", "", inner, flags=_re_sprite.DOTALL)
+        symbols.append(f'<symbol id="team-{tid}" viewBox="{vb}">{inner.strip()}</symbol>')
+    if not symbols:
+        return ""
+    return (
+        '<svg xmlns="http://www.w3.org/2000/svg" class="ml-sprite" '
+        'aria-hidden="true" style="position:absolute;width:0;height:0;'
+        'overflow:hidden">'
+        + "".join(symbols)
+        + "</svg>"
+    )
+
+
+TEAM_SPRITE = _build_team_sprite()
+
+
 def page(briefing):
     data = briefing.data
     t = data["today"]; y = data["yest"]
@@ -641,6 +707,7 @@ def page(briefing):
 <style>{CSS}</style>
 </head>
 <body data-team="{_team_slug}">
+{TEAM_SPRITE}
 
 <header class="masthead">
   <div class="nav-btns">
@@ -659,7 +726,7 @@ def page(briefing):
     <span>Est. 2024</span>
   </div>
   <h1>
-    <img src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/{TEAM_ID}.svg" alt="{TEAM_NAME}" class="mast-logo">
+    <svg class="mast-logo" aria-label="{TEAM_NAME}" role="img" focusable="false"><use href="#team-{TEAM_ID}"/></svg>
     <span class="mast-text"><span class="the">The</span><span class="lineup">Morning <em style="font-style:italic">Lineup</em></span></span>
   </h1>
   <div class="dek">

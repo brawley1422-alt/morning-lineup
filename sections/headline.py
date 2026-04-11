@@ -26,11 +26,11 @@ def _abbr(tmap, team_id):
 
 
 def _logo(team_id, size="sm"):
-    """MLB team cap logo (dark-theme variant). Inline-safe <img> tag."""
+    """Reference the page-level sprite via <use href>. Zero network cost."""
     if not team_id:
         return ""
-    return (f'<img class="ml-logo {size}" alt="" aria-hidden="true" '
-            f'src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/{team_id}.svg">')
+    return (f'<svg class="ml-logo {size}" aria-hidden="true" focusable="false">'
+            f'<use href="#team-{team_id}"/></svg>')
 
 
 def _fmt_time_ct(iso_z):
