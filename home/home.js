@@ -486,41 +486,81 @@ const ABBR_TO_SLUG = {
 function renderMyPlayersSection(players, statsMap) {
   const section = document.createElement("section");
   section.id = "my-players";
-  section.className = "home-my-players";
+  section.className = "home-my-players binder-section";
   section.setAttribute("open", "");
-  const heading = document.createElement("div");
-  heading.className = "my-players-head";
-  heading.innerHTML = `<h2>My Players</h2><span class="my-players-sub">Your fantasy roster</span>`;
-  section.appendChild(heading);
+
+  const todayLabel = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const count = String(players.length).padStart(2, "0");
+
+  section.innerHTML = `
+    <div class="binder">
+      <div class="binder-punch"><span></span></div>
+      <header class="binder-head">
+        <h2 class="bh-title">My <em>Players</em><span class="bh-sub">Binder Page · Personal Roster</span></h2>
+        <div class="bh-meta">
+          <strong>${count}</strong> followed<br>
+          ${todayLabel} · Live<br>
+          <span class="bh-stamp">Approved</span>
+        </div>
+      </header>
+      <div class="binder-rule"></div>
+      <div class="binder-grid"></div>
+      <div class="binder-foot">
+        <span class="hint">Tap a card to flip</span>
+        <a href="../settings/">Manage roster →</a>
+      </div>
+    </div>
+  `;
+
+  const grid = section.querySelector(".binder-grid");
 
   if (!players.length) {
-    const empty = document.createElement("p");
-    empty.className = "my-players-empty";
-    empty.innerHTML = `No players followed yet. <a href="../settings/">Add some</a> in settings.`;
-    section.appendChild(empty);
+    grid.innerHTML = `<p class="binder-empty">No players followed yet. <a href="../settings/">Add some</a> in settings.</p>`;
     return section;
   }
 
-  const list = document.createElement("ul");
-  list.className = "my-players-list";
-  for (const p of players) {
-    const li = document.createElement("li");
-    const stats = statsMap[p.mlbam_id];
-    const posTeam = [p.primary_position, p.mlb_team_abbr].filter(Boolean).join(" · ") || "—";
+  // Build pockets immediately so the layout renders, then mount cards async.
+  players.forEach((p, idx) => {
+    const pocket = document.createElement("div");
+    pocket.className = "pocket";
+    pocket.style.animationDelay = `${0.05 + idx * 0.07}s`;
+
+    const cardHost = document.createElement("div");
+    pocket.appendChild(cardHost);
+
     const slug = ABBR_TO_SLUG[p.mlb_team_abbr] || "";
-    const nameHtml = (p.mlbam_id && slug)
-      ? `<player-card pid="${p.mlbam_id}" team="${slug}">${p.full_name}</player-card>`
-      : p.full_name;
-    li.innerHTML = `
-      <div class="player-row-head">
-        <span class="player-row-name">${nameHtml}</span>
-        <span class="player-row-meta">${posTeam}</span>
-      </div>
-      <div class="player-row-stats">${formatPlayerLine(p, stats)}</div>
-    `;
-    list.appendChild(li);
-  }
-  section.appendChild(list);
+    const slot = String(idx + 1).padStart(2, "0");
+    const label = document.createElement("div");
+    label.className = "pocket-label";
+    label.innerHTML = `<span class="slot">Slot ${slot}</span> · ${p.mlb_team_abbr || "—"}`;
+    pocket.appendChild(label);
+
+    grid.appendChild(pocket);
+
+    // Mount the real card via the exposed API. If component isn't ready yet,
+    // wait for it.
+    const tryMount = () => {
+      const ML = window.MorningLineupPC;
+      if (!ML) {
+        cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">${p.primary_position || ""} · ${p.mlb_team_abbr || ""}</div></div>`;
+        return;
+      }
+      if (!p.mlbam_id || !slug) {
+        cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">No card data</div></div>`;
+        return;
+      }
+      ML.mountInline(cardHost, p.mlbam_id, slug).catch((e) => {
+        console.warn("binder mount failed", p, e);
+      });
+    };
+    if (window.MorningLineupPC) {
+      tryMount();
+    } else {
+      // player-card.js still loading — retry shortly
+      setTimeout(tryMount, 200);
+    }
+  });
+
   return section;
 }
 

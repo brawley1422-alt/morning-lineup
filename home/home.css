@@ -548,3 +548,345 @@ body.theme-paper .home-columnists-wrap {
   background: rgba(236, 228, 208, 0.5);
   border-color: #cfc39a;
 }
+
+/* ================================================================
+   My Players — Dark Binder
+   ================================================================ */
+.binder-section {
+  display: block;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 22px 0 30px;
+}
+
+.binder {
+  --binder-paper:    #f4ecd8;
+  --binder-navy-deep:#060a1a;
+  --binder-navy:     #0d1530;
+  --binder-navy-2:   #14203f;
+  --binder-gold:     #c9a24a;
+  --binder-gold-foil:#f0d57a;
+  --binder-red:      #e63040;
+
+  position: relative;
+  background:
+    repeating-linear-gradient(45deg, transparent 0, transparent 2px, rgba(255,255,255,.012) 2px, rgba(255,255,255,.012) 4px),
+    repeating-linear-gradient(-45deg, transparent 0, transparent 3px, rgba(0,0,0,.06) 3px, rgba(0,0,0,.06) 6px),
+    linear-gradient(180deg, var(--binder-navy-2) 0%, var(--binder-navy) 50%, var(--binder-navy-deep) 100%);
+  border: 1px solid var(--binder-gold);
+  border-radius: 3px;
+  box-shadow:
+    inset 0 0 0 1px rgba(232,200,120,.18),
+    inset 0 0 60px rgba(0,0,0,.6),
+    0 0 0 1px var(--binder-navy-deep),
+    0 0 0 6px var(--binder-navy),
+    0 0 0 7px var(--binder-gold),
+    0 50px 100px -40px rgba(0,0,0,.85),
+    0 20px 40px -20px rgba(0,0,0,.6);
+  padding: 32px 38px 38px;
+  color: var(--binder-paper);
+  font-family: var(--body, 'Lora', Georgia, serif);
+}
+
+/* Embossed gold corner ornaments */
+.binder::before,
+.binder::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--binder-gold);
+  pointer-events: none;
+}
+.binder::before {
+  top: 12px;
+  left: 12px;
+  border-right: none;
+  border-bottom: none;
+}
+.binder::after {
+  top: 12px;
+  right: 12px;
+  border-left: none;
+  border-bottom: none;
+}
+
+/* 3-hole punch */
+.binder-punch {
+  position: absolute;
+  left: 14px;
+  top: 70px;
+  bottom: 70px;
+  width: 14px;
+  pointer-events: none;
+}
+.binder-punch::before,
+.binder-punch::after,
+.binder-punch span {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #000 0%, #000 60%, var(--binder-navy-deep) 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(0,0,0,.9),
+    0 1px 0 rgba(232,200,120,.4);
+}
+.binder-punch::before { top: 0; }
+.binder-punch::after  { bottom: 0; }
+.binder-punch span    { top: 50%; margin-top: -6px; }
+
+/* Header */
+.binder-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--binder-gold);
+  padding: 0 0 16px 36px;
+  margin-bottom: 8px;
+  position: relative;
+}
+.binder-head::after {
+  content: '';
+  position: absolute;
+  left: 36px;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: var(--binder-gold);
+  opacity: .35;
+}
+.bh-title {
+  font-family: var(--display, 'Playfair Display', Georgia, serif);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 44px;
+  line-height: .9;
+  margin: 0;
+  letter-spacing: -.02em;
+  color: var(--binder-paper);
+  text-shadow: 0 1px 0 rgba(0,0,0,.6), 0 0 24px rgba(232,200,120,.15);
+}
+.bh-title em {
+  font-style: normal;
+  color: var(--binder-gold-foil);
+  text-shadow: 0 1px 0 rgba(0,0,0,.7), 0 0 18px rgba(232,200,120,.5);
+}
+.bh-sub {
+  display: block;
+  font-family: var(--mono, 'IBM Plex Mono', Menlo, monospace);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  color: var(--binder-gold);
+  margin-top: 10px;
+  font-style: normal;
+  font-weight: 400;
+}
+.bh-meta {
+  text-align: right;
+  font-family: var(--mono, 'IBM Plex Mono', Menlo, monospace);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--binder-gold);
+  line-height: 1.6;
+}
+.bh-meta strong {
+  color: var(--binder-paper);
+  font-size: 24px;
+  font-family: var(--display, 'Playfair Display', Georgia, serif);
+  font-style: italic;
+  font-weight: 800;
+  text-shadow: 0 0 16px rgba(232,200,120,.3);
+}
+.bh-meta .bh-stamp {
+  display: inline-block;
+  margin-top: 8px;
+  border: 1.5px solid var(--binder-red);
+  color: var(--binder-red);
+  padding: 3px 10px;
+  font-family: var(--cond, 'Oswald', Impact, sans-serif);
+  font-weight: 600;
+  letter-spacing: .22em;
+  transform: rotate(-2deg);
+  text-shadow: 0 0 8px rgba(230,48,64,.4);
+  box-shadow: 0 0 18px rgba(230,48,64,.18);
+}
+.binder-rule {
+  height: 6px;
+  border-top: 1px solid var(--binder-gold);
+  border-bottom: 1px solid var(--binder-gold);
+  margin: 6px 0 30px 36px;
+  background: linear-gradient(90deg, transparent, rgba(232,200,120,.08), transparent);
+}
+
+/* Pocket grid */
+.binder-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px 24px;
+  padding-left: 36px;
+  perspective: 1400px;
+}
+@media (max-width: 820px) {
+  .binder-grid { grid-template-columns: repeat(2, 1fr); gap: 30px 18px; }
+}
+@media (max-width: 520px) {
+  .binder-grid { grid-template-columns: 1fr; }
+}
+
+.binder-grid .pocket {
+  position: relative;
+  animation: binder-deal-in .7s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes binder-deal-in {
+  0%   { opacity: 0; transform: translateY(20px) rotateZ(-3deg); }
+  100% { opacity: 1; transform: translateY(0) rotateZ(0); }
+}
+
+/* Pocket recess — vellum sleeve in the dark binder */
+.binder-grid .pocket::before {
+  content: '';
+  position: absolute;
+  inset: -10px -8px -16px -8px;
+  border: 1px solid rgba(232,200,120,.22);
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.55) 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(0,0,0,.6),
+    inset 0 -1px 0 rgba(232,200,120,.1);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Override the modal-sized .pc-wrap inside a binder pocket */
+.binder-grid .pocket .pc-wrap {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  position: relative;
+  z-index: 1;
+}
+.binder-grid .pocket .pc-card {
+  box-shadow:
+    0 24px 48px -18px rgba(0,0,0,.8),
+    0 8px 18px -8px rgba(0,0,0,.6),
+    0 0 0 1px rgba(232,200,120,.15) !important;
+}
+.binder-grid .pocket:hover .pc-card:not(.flipped) {
+  transform: translateY(-6px) rotateZ(-.5deg) !important;
+  box-shadow:
+    0 32px 64px -18px rgba(0,0,0,.85),
+    0 12px 24px -10px rgba(0,0,0,.7),
+    0 0 0 1px var(--binder-gold-foil),
+    0 0 30px rgba(232,200,120,.18) !important;
+}
+.binder-grid .pocket:hover .pc-card.flipped {
+  transform: translateY(-6px) rotateY(180deg) rotateZ(.5deg) !important;
+}
+
+/* Pocket label */
+.binder-grid .pocket-label {
+  position: absolute;
+  bottom: -28px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--mono, 'IBM Plex Mono', Menlo, monospace);
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  color: var(--binder-gold);
+  z-index: 2;
+}
+.binder-grid .pocket-label .slot {
+  color: var(--binder-paper);
+  font-weight: 600;
+  font-style: italic;
+  font-family: var(--display, 'Playfair Display', Georgia, serif);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-shadow: 0 0 10px rgba(232,200,120,.3);
+}
+
+/* Fallback when card data isn't available */
+.binder-card-fallback {
+  aspect-ratio: 5 / 7;
+  background: linear-gradient(180deg, var(--binder-navy-2), var(--binder-navy));
+  border: 1px solid rgba(232,200,120,.3);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  text-align: center;
+}
+.binder-card-fallback .bcf-name {
+  font-family: var(--display, 'Playfair Display', Georgia, serif);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--binder-paper);
+}
+.binder-card-fallback .bcf-meta {
+  font-family: var(--mono, 'IBM Plex Mono', Menlo, monospace);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  color: var(--binder-gold);
+  margin-top: 8px;
+}
+
+/* Footer */
+.binder-foot {
+  margin: 56px 0 0 36px;
+  padding-top: 16px;
+  border-top: 1px solid var(--binder-gold);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono, 'IBM Plex Mono', Menlo, monospace);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  color: var(--binder-gold);
+}
+.binder-foot .hint {
+  font-style: italic;
+  font-family: var(--body, 'Lora', Georgia, serif);
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--binder-paper);
+  opacity: .75;
+}
+.binder-foot a {
+  color: var(--binder-gold-foil);
+  border-bottom: 1px dotted var(--binder-gold);
+  text-decoration: none;
+}
+.binder-foot a:hover {
+  color: var(--binder-paper);
+  border-bottom-color: var(--binder-paper);
+}
+
+.binder-empty {
+  text-align: center;
+  font-family: var(--mono, 'IBM Plex Mono', Menlo, monospace);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  color: var(--binder-gold);
+  padding: 30px;
+}
+.binder-empty a {
+  color: var(--binder-gold-foil);
+  border-bottom: 1px dotted var(--binder-gold);
+  text-decoration: none;
+}

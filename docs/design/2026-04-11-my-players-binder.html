@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>My Players — Binder Page</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,700&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:        #f4ecd8;
+    --paper-2:      #ece2c6;
+    --paper-3:      #e2d6b3;
+    --paper-edge:   #c8b988;
+    --ink:          #0d0f14;
+    --ink-2:        #1c2028;
+    --ink-mute:     #5a5750;
+    --rule:         #2a2620;
+    --red:          #c8102e;
+    --red-deep:     #8a0a1d;
+    --gold:         #c9a24a;
+    --gold-bright:  #e8c878;
+    --hot:          #d9410f;
+    --cold:         #2860a8;
+    --navy:         #0e3386;
+
+    --display: 'Playfair Display', Georgia, serif;
+    --condensed: 'Oswald', Impact, sans-serif;
+    --mono: 'IBM Plex Mono', Menlo, monospace;
+    --body: 'Lora', Georgia, serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Newsprint grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.07;
+    mix-blend-mode: multiply;
+    background-image:
+      radial-gradient(circle at 25% 35%, #000 0, transparent 1px),
+      radial-gradient(circle at 75% 65%, #000 0, transparent 1px),
+      radial-gradient(circle at 50% 80%, #000 0, transparent 1px);
+    background-size: 3px 3px, 5px 5px, 7px 7px;
+  }
+
+  .stage {
+    max-width: 920px;
+    margin: 50px auto;
+    padding: 0 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ========== BINDER FRAME ========== */
+  .binder {
+    background:
+      linear-gradient(180deg, var(--paper-2) 0%, var(--paper) 8%, var(--paper) 92%, var(--paper-2) 100%);
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+    box-shadow:
+      0 0 0 1px var(--paper),
+      0 0 0 4px var(--ink),
+      0 38px 80px -38px rgba(13,15,20,.55),
+      0 12px 24px -14px rgba(13,15,20,.3);
+    padding: 30px 36px 36px;
+    position: relative;
+  }
+
+  /* Three-hole punch — left edge of the binder page */
+  .binder::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: 0;
+    bottom: 0;
+    width: 22px;
+    background-image:
+      radial-gradient(circle at center, var(--ink) 0 5px, transparent 6px);
+    background-size: 22px 33%;
+    background-repeat: no-repeat;
+    background-position: center 18%, center 50%, center 82%;
+    background-image:
+      radial-gradient(circle at center, var(--ink-2) 0 4px, transparent 5px),
+      radial-gradient(circle at center, var(--ink-2) 0 4px, transparent 5px),
+      radial-gradient(circle at center, var(--ink-2) 0 4px, transparent 5px);
+    background-position: center 18%, center 50%, center 82%;
+  }
+
+  /* ========== HEADER ========== */
+  .binder-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ink);
+    padding: 0 0 14px 32px;
+    margin-bottom: 4px;
+  }
+
+  .bh-title {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 900;
+    font-size: 42px;
+    line-height: .9;
+    margin: 0;
+    letter-spacing: -.02em;
+  }
+  .bh-title em {
+    font-style: normal;
+    color: var(--red);
+  }
+  .bh-sub {
+    display: block;
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    color: var(--ink-mute);
+    margin-top: 8px;
+    font-style: normal;
+  }
+
+  .bh-meta {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: var(--ink-mute);
+    line-height: 1.6;
+  }
+  .bh-meta strong {
+    color: var(--red);
+    font-size: 18px;
+    font-family: var(--display);
+    letter-spacing: -.01em;
+    font-style: italic;
+    font-weight: 800;
+  }
+  .bh-meta .stamp {
+    display: inline-block;
+    margin-top: 6px;
+    border: 1.5px solid var(--red);
+    color: var(--red);
+    padding: 3px 9px;
+    font-family: var(--condensed);
+    font-weight: 600;
+    letter-spacing: .2em;
+    transform: rotate(-2deg);
+  }
+
+  /* Double rule */
+  .binder-rule {
+    height: 4px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    margin: 6px 0 24px 32px;
+  }
+
+  /* ========== POCKET GRID ========== */
+  .pocket-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px 18px;
+    padding-left: 32px;
+    perspective: 1400px;
+  }
+
+  @media (max-width: 760px) {
+    .pocket-grid { grid-template-columns: repeat(2, 1fr); gap: 18px 14px; }
+  }
+  @media (max-width: 480px) {
+    .pocket-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Each pocket = a slot in the binder, with a slight inset shadow */
+  .pocket {
+    aspect-ratio: 5 / 7;
+    position: relative;
+    cursor: pointer;
+  }
+
+  /* The card itself, flippable */
+  .card {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    transition: transform .8s cubic-bezier(.2,.8,.2,1);
+    will-change: transform;
+  }
+  .pocket.flipped .card {
+    transform: rotateY(180deg);
+  }
+  .pocket:hover .card {
+    transform: translateY(-3px) rotateZ(-.3deg);
+  }
+  .pocket.flipped:hover .card {
+    transform: translateY(-3px) rotateY(180deg) rotateZ(.3deg);
+  }
+
+  .face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border: 2px solid var(--ink);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--paper);
+    box-shadow:
+      0 14px 28px -14px rgba(13,15,20,.5),
+      0 4px 10px -6px rgba(13,15,20,.3),
+      inset 0 0 0 1px rgba(255,255,255,.4);
+  }
+
+  /* ========== FRONT FACE ========== */
+  .front {
+    transform: rotateY(0deg) translateZ(0.1px);
+    display: flex;
+    flex-direction: column;
+    background:
+      linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
+  }
+
+  .front-banner {
+    background: var(--red);
+    color: var(--paper);
+    font-family: var(--condensed);
+    font-weight: 700;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    padding: 5px 10px;
+    text-align: center;
+    border-bottom: 2px solid var(--ink);
+    position: relative;
+  }
+  .front-banner::before,
+  .front-banner::after {
+    content: '★';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 8px;
+    color: var(--gold-bright);
+  }
+  .front-banner::before { left: 8px; }
+  .front-banner::after  { right: 8px; }
+
+  .photo-frame {
+    position: relative;
+    flex: 1;
+    background:
+      radial-gradient(ellipse at center top, rgba(255,255,255,.7) 0%, transparent 60%),
+      linear-gradient(180deg, var(--paper-2) 0%, var(--paper-3) 100%);
+    overflow: hidden;
+    border-bottom: 2px solid var(--ink);
+  }
+  .photo-frame img {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 88%;
+    filter: contrast(1.06) saturate(.95) drop-shadow(2px 4px 6px rgba(0,0,0,.3));
+  }
+
+  .photo-frame .jersey {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--ink);
+    -webkit-text-stroke: 1px var(--paper);
+    text-shadow: 0 1px 0 var(--paper);
+  }
+  .photo-frame .pos-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: var(--ink);
+    color: var(--gold);
+    font-family: var(--condensed);
+    font-weight: 700;
+    font-size: 10px;
+    padding: 3px 6px;
+    letter-spacing: .12em;
+    border-radius: 1px;
+  }
+
+  .name-plate {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 8px 10px 9px;
+    text-align: center;
+    border-top: 2px solid var(--gold);
+    position: relative;
+  }
+  .name-first {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: .22em;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+  .name-last {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 900;
+    font-size: 22px;
+    line-height: 1;
+    letter-spacing: -.01em;
+  }
+
+  .slash-strip {
+    background: var(--paper);
+    padding: 6px 8px 4px;
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid var(--ink);
+  }
+  .slash-cell {
+    text-align: center;
+    line-height: 1;
+  }
+  .slash-num {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .slash-lbl {
+    display: block;
+    font-family: var(--mono);
+    font-size: 7px;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: var(--ink-mute);
+    margin-top: 2px;
+  }
+
+  /* Hot/cold strip */
+  .temp-strip {
+    display: flex;
+    height: 6px;
+    border-top: 1px solid var(--ink);
+  }
+  .temp-cell {
+    flex: 1;
+  }
+
+  /* ========== BACK FACE ========== */
+  .back {
+    transform: rotateY(180deg) translateZ(0.1px);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 12px 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  .back::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid var(--gold);
+    pointer-events: none;
+    border-radius: 2px;
+  }
+
+  .back-head {
+    text-align: center;
+    border-bottom: 1px dashed var(--gold);
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+  .back-name {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 900;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--paper);
+  }
+  .back-sub {
+    font-family: var(--mono);
+    font-size: 7px;
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    color: var(--gold);
+    margin-top: 4px;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 10px;
+    flex: 1;
+  }
+  .stat-cell {
+    border-bottom: 1px dotted rgba(201,162,74,.3);
+    padding-bottom: 3px;
+  }
+  .stat-cell .lbl {
+    font-family: var(--mono);
+    font-size: 7px;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: var(--gold);
+  }
+  .stat-cell .val {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--paper);
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .back-foot {
+    text-align: center;
+    border-top: 1px dashed var(--gold);
+    padding-top: 6px;
+    margin-top: 6px;
+    font-family: var(--mono);
+    font-size: 7px;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: var(--gold);
+  }
+  .back-foot strong {
+    color: var(--paper);
+    font-weight: 600;
+  }
+
+  /* Pocket label below each card */
+  .pocket-label {
+    position: absolute;
+    bottom: -16px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    color: var(--ink-mute);
+  }
+
+  /* Staggered entrance */
+  .pocket {
+    animation: deal-in .7s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .pocket:nth-child(1) { animation-delay: .05s; }
+  .pocket:nth-child(2) { animation-delay: .12s; }
+  .pocket:nth-child(3) { animation-delay: .19s; }
+  .pocket:nth-child(4) { animation-delay: .26s; }
+  .pocket:nth-child(5) { animation-delay: .33s; }
+  .pocket:nth-child(6) { animation-delay: .40s; }
+
+  @keyframes deal-in {
+    0%   { opacity: 0; transform: translateY(20px) rotateZ(-3deg); }
+    100% { opacity: 1; transform: translateY(0) rotateZ(0); }
+  }
+
+  /* Footer */
+  .binder-foot {
+    margin: 36px 0 0 32px;
+    padding-top: 14px;
+    border-top: 1px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    color: var(--ink-mute);
+  }
+  .binder-foot .hint {
+    font-style: italic;
+    font-family: var(--body);
+    font-size: 11px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink-mute);
+  }
+  .binder-foot a {
+    color: var(--red);
+    border-bottom: 1px dotted var(--red);
+    text-decoration: none;
+  }
+
+  .annotation {
+    margin-top: 30px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .annotation strong { color: var(--red); }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <section class="binder">
+
+    <header class="binder-head">
+      <h2 class="bh-title">
+        My <em>Players</em>
+        <span class="bh-sub">Binder Page · Personal Roster</span>
+      </h2>
+      <div class="bh-meta">
+        <strong>06</strong> followed<br>
+        Apr 11 · Live<br>
+        <span class="stamp">Approved</span>
+      </div>
+    </header>
+
+    <div class="binder-rule"></div>
+
+    <div class="pocket-grid">
+
+      <!-- ========== Pete Crow-Armstrong ========== -->
+      <div class="pocket" data-pid="691718" data-team="cubs">
+        <div class="card">
+          <div class="face front">
+            <div class="front-banner">Chicago Cubs</div>
+            <div class="photo-frame">
+              <span class="jersey">52</span>
+              <span class="pos-badge">CF</span>
+              <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_100/v1/people/691718/headshot/67/current" alt="Pete Crow-Armstrong">
+            </div>
+            <div class="name-plate">
+              <div class="name-first">Pete</div>
+              <div class="name-last">Crow-Armstrong</div>
+            </div>
+            <div class="slash-strip">
+              <div class="slash-cell"><span class="slash-num">.318</span><span class="slash-lbl">AVG</span></div>
+              <div class="slash-cell"><span class="slash-num">.372</span><span class="slash-lbl">OBP</span></div>
+              <div class="slash-cell"><span class="slash-num">.541</span><span class="slash-lbl">SLG</span></div>
+            </div>
+            <div class="temp-strip">
+              <div class="temp-cell" style="background:#5e8edd"></div>
+              <div class="temp-cell" style="background:#7a92c8"></div>
+              <div class="temp-cell" style="background:#a08c95"></div>
+              <div class="temp-cell" style="background:#c08070"></div>
+              <div class="temp-cell" style="background:#d97050"></div>
+              <div class="temp-cell" style="background:#d9410f"></div>
+              <div class="temp-cell" style="background:#d9410f"></div>
+              <div class="temp-cell" style="background:#cc3a08"></div>
+            </div>
+          </div>
+          <div class="face back">
+            <div class="back-head">
+              <div class="back-name">P. Crow-Armstrong</div>
+              <div class="back-sub">Advanced · 2026</div>
+            </div>
+            <div class="stat-grid">
+              <div class="stat-cell"><div class="lbl">wRC+</div><div class="val">147</div></div>
+              <div class="stat-cell"><div class="lbl">xwOBA</div><div class="val">.398</div></div>
+              <div class="stat-cell"><div class="lbl">Barrel%</div><div class="val">14.2</div></div>
+              <div class="stat-cell"><div class="lbl">EV</div><div class="val">91.4</div></div>
+              <div class="stat-cell"><div class="lbl">K%</div><div class="val">19.8</div></div>
+              <div class="stat-cell"><div class="lbl">BB%</div><div class="val">8.1</div></div>
+            </div>
+            <div class="back-foot">No. 052 — <strong>Chicago Cubs</strong></div>
+          </div>
+        </div>
+        <div class="pocket-label">Slot 01 · CHC</div>
+      </div>
+
+      <!-- ========== Aaron Judge ========== -->
+      <div class="pocket" data-pid="592450" data-team="yankees">
+        <div class="card">
+          <div class="face front">
+            <div class="front-banner">New York Yankees</div>
+            <div class="photo-frame">
+              <span class="jersey">99</span>
+              <span class="pos-badge">RF</span>
+              <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_100/v1/people/592450/headshot/67/current" alt="Aaron Judge">
+            </div>
+            <div class="name-plate">
+              <div class="name-first">Aaron</div>
+              <div class="name-last">Judge</div>
+            </div>
+            <div class="slash-strip">
+              <div class="slash-cell"><span class="slash-num">.302</span><span class="slash-lbl">AVG</span></div>
+              <div class="slash-cell"><span class="slash-num">.428</span><span class="slash-lbl">OBP</span></div>
+              <div class="slash-cell"><span class="slash-num">.638</span><span class="slash-lbl">SLG</span></div>
+            </div>
+            <div class="temp-strip">
+              <div class="temp-cell" style="background:#a08c95"></div>
+              <div class="temp-cell" style="background:#c08070"></div>
+              <div class="temp-cell" style="background:#d97050"></div>
+              <div class="temp-cell" style="background:#d9410f"></div>
+              <div class="temp-cell" style="background:#d9410f"></div>
+              <div class="temp-cell" style="background:#cc3a08"></div>
+              <div class="temp-cell" style="background:#cc3a08"></div>
+              <div class="temp-cell" style="background:#cc3a08"></div>
+            </div>
+          </div>
+          <div class="face back">
+            <div class="back-head">
+              <div class="back-name">A. Judge</div>
+              <div class="back-sub">Advanced · 2026</div>
+            </div>
+            <div class="stat-grid">
+              <div class="stat-cell"><div class="lbl">wRC+</div><div class="val">189</div></div>
+              <div class="stat-cell"><div class="lbl">xwOBA</div><div class="val">.451</div></div>
+              <div class="stat-cell"><div class="lbl">Barrel%</div><div class="val">22.6</div></div>
+              <div class="stat-cell"><div class="lbl">EV</div><div class="val">96.2</div></div>
+              <div class="stat-cell"><div class="lbl">K%</div><div class="val">26.4</div></div>
+              <div class="stat-cell"><div class="lbl">BB%</div><div class="val">17.9</div></div>
+            </div>
+            <div class="back-foot">No. 099 — <strong>New York Yankees</strong></div>
+          </div>
+        </div>
+        <div class="pocket-label">Slot 02 · NYY</div>
+      </div>
+
+      <!-- ========== Mookie Betts ========== -->
+      <div class="pocket" data-pid="605141" data-team="dodgers">
+        <div class="card">
+          <div class="face front">
+            <div class="front-banner">Los Angeles Dodgers</div>
+            <div class="photo-frame">
+              <span class="jersey">50</span>
+              <span class="pos-badge">SS</span>
+              <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_100/v1/people/605141/headshot/67/current" alt="Mookie Betts">
+            </div>
+            <div class="name-plate">
+              <div class="name-first">Mookie</div>
+              <div class="name-last">Betts</div>
+            </div>
+            <div class="slash-strip">
+              <div class="slash-cell"><span class="slash-num">.265</span><span class="slash-lbl">AVG</span></div>
+              <div class="slash-cell"><span class="slash-num">.358</span><span class="slash-lbl">OBP</span></div>
+              <div class="slash-cell"><span class="slash-num">.442</span><span class="slash-lbl">SLG</span></div>
+            </div>
+            <div class="temp-strip">
+              <div class="temp-cell" style="background:#7a92c8"></div>
+              <div class="temp-cell" style="background:#a08c95"></div>
+              <div class="temp-cell" style="background:#a08c95"></div>
+              <div class="temp-cell" style="background:#c08070"></div>
+              <div class="temp-cell" style="background:#a08c95"></div>
+              <div class="temp-cell" style="background:#c08070"></div>
+              <div class="temp-cell" style="background:#a08c95"></div>
+              <div class="temp-cell" style="background:#c08070"></div>
+            </div>
+          </div>
+          <div class="face back">
+            <div class="back-head">
+              <div class="back-name">M. Betts</div>
+              <div class="back-sub">Advanced · 2026</div>
+            </div>
+            <div class="stat-grid">
+              <div class="stat-cell"><div class="lbl">wRC+</div><div class="val">118</div></div>
+              <div class="stat-cell"><div class="lbl">xwOBA</div><div class="val">.351</div></div>
+              <div class="stat-cell"><div class="lbl">Barrel%</div><div class="val">9.4</div></div>
+              <div class="stat-cell"><div class="lbl">EV</div><div class="val">89.7</div></div>
+              <div class="stat-cell"><div class="lbl">K%</div><div class="val">15.1</div></div>
+              <div class="stat-cell"><div class="lbl">BB%</div><div class="val">12.8</div></div>
+            </div>
+            <div class="back-foot">No. 050 — <strong>Los Angeles Dodgers</strong></div>
+          </div>
+        </div>
+        <div class="pocket-label">Slot 03 · LAD</div>
+      </div>
+
+      <!-- ========== Tarik Skubal ========== -->
+      <div class="pocket" data-pid="669373" data-team="tigers">
+        <div class="card">
+          <div class="face front">
+            <div class="front-banner">Detroit Tigers</div>
+            <div class="photo-frame">
+              <span class="jersey">29</span>
+              <span class="pos-badge">SP</span>
+              <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_100/v1/people/669373/headshot/67/current" alt="Tarik Skubal">
+            </div>
+            <div class="name-plate">
+              <div class="name-first">Tarik</div>
+              <div class="name-last">Skubal</div>
+            </div>
+            <div class="slash-strip">
+              <div class="slash-cell"><span class="slash-num">1.42</span><span class="slash-lbl">ERA</span></div>
+              <div class="slash-cell"><span class="slash-num">0.78</span><span class="slash-lbl">WHIP</span></div>
+              <div class="slash-cell"><span class="slash-num">28</span><span class="slash-lbl">K</span></div>
+            </div>
+            <div class="temp-strip">
+              <div class="temp-cell" style="background:#7a92c8"></div>
+              <div class="temp-cell" style="background:#a08c95"></div>
+              <div class="temp-cell" style="background:#c08070"></div>
+              <div class="temp-cell" style="background:#d9410f"></div>
+              <div class="temp-cell" style="background:#cc3a08"></div>
+              <div class="temp-cell" style="background:#cc3a08"></div>
+              <div class="temp-cell" style="background:#cc3a08"></div>
+              <div class="temp-cell" style="background:#cc3a08"></div>
+            </div>
+          </div>
+          <div class="face back">
+            <div class="back-head">
+              <div class="back-name">T. Skubal</div>
+              <div class="back-sub">Advanced · 2026</div>
+            </div>
+            <div class="stat-grid">
+              <div class="stat-cell"><div class="lbl">Stuff+</div><div class="val">142</div></div>
+              <div class="stat-cell"><div class="lbl">xERA</div><div class="val">2.05</div></div>
+              <div class="stat-cell"><div class="lbl">K/9</div><div class="val">12.4</div></div>
+              <div class="stat-cell"><div class="lbl">FIP</div><div class="val">2.14</div></div>
+              <div class="stat-cell"><div class="lbl">CSW%</div><div class="val">33.1</div></div>
+              <div class="stat-cell"><div class="lbl">Velo</div><div class="val">96.8</div></div>
+            </div>
+            <div class="back-foot">No. 029 — <strong>Detroit Tigers</strong></div>
+          </div>
+        </div>
+        <div class="pocket-label">Slot 04 · DET</div>
+      </div>
+
+      <!-- ========== Bobby Witt Jr. ========== -->
+      <div class="pocket" data-pid="677951" data-team="royals">
+        <div class="card">
+          <div class="face front">
+            <div class="front-banner">Kansas City Royals</div>
+            <div class="photo-frame">
+              <span class="jersey">7</span>
+              <span class="pos-badge">SS</span>
+              <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_100/v1/people/677951/headshot/67/current" alt="Bobby Witt Jr.">
+            </div>
+            <div class="name-plate">
+              <div class="name-first">Bobby</div>
+              <div class="name-last">Witt Jr.</div>
+            </div>
+            <div class="slash-strip">
+              <div class="slash-cell"><span class="slash-num">.198</span><span class="slash-lbl">AVG</span></div>
+              <div class="slash-cell"><span class="slash-num">.241</span><span class="slash-lbl">OBP</span></div>
+              <div class="slash-cell"><span class="slash-num">.318</span><span class="slash-lbl">SLG</span></div>
+            </div>
+            <div class="temp-strip">
+              <div class="temp-cell" style="background:#5e8edd"></div>
+              <div class="temp-cell" style="background:#5e8edd"></div>
+              <div class="temp-cell" style="background:#2860a8"></div>
+              <div class="temp-cell" style="background:#5e8edd"></div>
+              <div class="temp-cell" style="background:#7a92c8"></div>
+              <div class="temp-cell" style="background:#5e8edd"></div>
+              <div class="temp-cell" style="background:#a08c95"></div>
+              <div class="temp-cell" style="background:#7a92c8"></div>
+            </div>
+          </div>
+          <div class="face back">
+            <div class="back-head">
+              <div class="back-name">B. Witt Jr.</div>
+              <div class="back-sub">Advanced · 2026</div>
+            </div>
+            <div class="stat-grid">
+              <div class="stat-cell"><div class="lbl">wRC+</div><div class="val">82</div></div>
+              <div class="stat-cell"><div class="lbl">xwOBA</div><div class="val">.302</div></div>
+              <div class="stat-cell"><div class="lbl">Barrel%</div><div class="val">7.1</div></div>
+              <div class="stat-cell"><div class="lbl">EV</div><div class="val">88.3</div></div>
+              <div class="stat-cell"><div class="lbl">K%</div><div class="val">22.6</div></div>
+              <div class="stat-cell"><div class="lbl">BB%</div><div class="val">5.4</div></div>
+            </div>
+            <div class="back-foot">No. 007 — <strong>Kansas City Royals</strong></div>
+          </div>
+        </div>
+        <div class="pocket-label">Slot 05 · KC</div>
+      </div>
+
+      <!-- ========== Spencer Strider ========== -->
+      <div class="pocket" data-pid="675911" data-team="braves">
+        <div class="card">
+          <div class="face front">
+            <div class="front-banner">Atlanta Braves</div>
+            <div class="photo-frame">
+              <span class="jersey">99</span>
+              <span class="pos-badge">SP</span>
+              <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_100/v1/people/675911/headshot/67/current" alt="Spencer Strider">
+            </div>
+            <div class="name-plate">
+              <div class="name-first">Spencer</div>
+              <div class="name-last">Strider</div>
+            </div>
+            <div class="slash-strip">
+              <div class="slash-cell"><span class="slash-num">3.21</span><span class="slash-lbl">ERA</span></div>
+              <div class="slash-cell"><span class="slash-num">1.04</span><span class="slash-lbl">WHIP</span></div>
+              <div class="slash-cell"><span class="slash-num">19</span><span class="slash-lbl">K</span></div>
+            </div>
+            <div class="temp-strip">
+              <div class="temp-cell" style="background:#a08c95"></div>
+              <div class="temp-cell" style="background:#7a92c8"></div>
+              <div class="temp-cell" style="background:#a08c95"></div>
+              <div class="temp-cell" style="background:#c08070"></div>
+              <div class="temp-cell" style="background:#a08c95"></div>
+              <div class="temp-cell" style="background:#c08070"></div>
+              <div class="temp-cell" style="background:#d97050"></div>
+              <div class="temp-cell" style="background:#a08c95"></div>
+            </div>
+          </div>
+          <div class="face back">
+            <div class="back-head">
+              <div class="back-name">S. Strider</div>
+              <div class="back-sub">Advanced · 2026</div>
+            </div>
+            <div class="stat-grid">
+              <div class="stat-cell"><div class="lbl">Stuff+</div><div class="val">128</div></div>
+              <div class="stat-cell"><div class="lbl">xERA</div><div class="val">3.42</div></div>
+              <div class="stat-cell"><div class="lbl">K/9</div><div class="val">11.8</div></div>
+              <div class="stat-cell"><div class="lbl">FIP</div><div class="val">2.96</div></div>
+              <div class="stat-cell"><div class="lbl">CSW%</div><div class="val">31.4</div></div>
+              <div class="stat-cell"><div class="lbl">Velo</div><div class="val">97.2</div></div>
+            </div>
+            <div class="back-foot">No. 099 — <strong>Atlanta Braves</strong></div>
+          </div>
+        </div>
+        <div class="pocket-label">Slot 06 · ATL</div>
+      </div>
+
+    </div>
+
+    <div class="binder-foot">
+      <span class="hint">Tap a card to flip · Click name plate for full detail</span>
+      <a href="#">Manage roster →</a>
+    </div>
+
+  </section>
+
+  <p class="annotation">
+    Mockup · <strong>My Players Binder Page</strong> · Morning Lineup home
+  </p>
+
+</div>
+
+<script>
+  // Click any pocket → flip the card
+  document.querySelectorAll('.pocket').forEach((pocket) => {
+    pocket.addEventListener('click', () => {
+      pocket.classList.toggle('flipped');
+    });
+  });
+</script>
+
+</body>
+</html>

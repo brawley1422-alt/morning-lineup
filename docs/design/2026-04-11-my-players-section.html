@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>My Players — Section Design</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,700&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:        #f4ecd8;
+    --paper-2:      #ece2c6;
+    --paper-edge:   #d9cdab;
+    --ink:          #0d0f14;
+    --ink-2:        #1c2028;
+    --ink-mute:     #5a5750;
+    --rule:         #2a2620;
+    --rule-soft:    #b8a878;
+    --red:          #c8102e;
+    --red-deep:     #8a0a1d;
+    --gold:         #c9a24a;
+    --gold-bright:  #e8c878;
+    --hot:          #d9410f;
+    --cold:         #2860a8;
+
+    --display: 'Playfair Display', Georgia, serif;
+    --condensed: 'Oswald', Impact, sans-serif;
+    --mono: 'IBM Plex Mono', Menlo, monospace;
+    --body: 'Lora', Georgia, serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Newsprint paper texture — subtle grain so it doesn't feel like flat CSS */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.06;
+    mix-blend-mode: multiply;
+    background-image:
+      radial-gradient(circle at 25% 35%, #000 0, transparent 1px),
+      radial-gradient(circle at 75% 65%, #000 0, transparent 1px),
+      radial-gradient(circle at 50% 80%, #000 0, transparent 1px);
+    background-size: 3px 3px, 5px 5px, 7px 7px;
+  }
+
+  .stage {
+    max-width: 760px;
+    margin: 60px auto;
+    padding: 0 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ========== SECTION FRAME ========== */
+  .my-players {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 1px;
+    box-shadow:
+      0 0 0 1px var(--paper),
+      0 0 0 3px var(--ink),
+      0 30px 60px -32px rgba(13,15,20,.45),
+      0 8px 18px -10px rgba(13,15,20,.25);
+    padding: 28px 30px 24px;
+    position: relative;
+  }
+
+  /* Decorative torn-edge corners */
+  .my-players::before,
+  .my-players::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    transform: rotate(45deg);
+  }
+  .my-players::before { top: -11px; left: 50%; margin-left: -9px; }
+  .my-players::after  { bottom: -11px; left: 50%; margin-left: -9px; }
+
+  /* ========== HEADER ========== */
+  .mp-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 14px;
+    margin-bottom: 4px;
+    position: relative;
+  }
+
+  .mp-title {
+    font-family: var(--display);
+    font-weight: 900;
+    font-style: italic;
+    font-size: 38px;
+    line-height: .9;
+    letter-spacing: -.02em;
+    color: var(--ink);
+    margin: 0;
+    position: relative;
+  }
+  .mp-title em {
+    font-style: normal;
+    color: var(--red);
+  }
+
+  .mp-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: var(--ink-mute);
+    text-align: right;
+    line-height: 1.5;
+  }
+  .mp-meta strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Sub-rule under header — double rule, editorial */
+  .mp-rule {
+    height: 4px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    margin: 6px 0 18px;
+  }
+
+  /* Tiny manager-ish marginalia */
+  .mp-marginalia {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    color: var(--ink-mute);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .mp-marginalia .col-labels {
+    display: flex;
+    gap: 18px;
+  }
+
+  /* ========== PLAYER LIST ========== */
+  .mp-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: roster;
+  }
+
+  .mp-row {
+    counter-increment: roster;
+    display: grid;
+    grid-template-columns: 38px 56px 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 4px 14px 0;
+    border-bottom: 1px dashed var(--rule-soft);
+    position: relative;
+    animation: roster-in .55s cubic-bezier(.2,.7,.2,1) both;
+  }
+
+  .mp-row:nth-child(1) { animation-delay: .04s; }
+  .mp-row:nth-child(2) { animation-delay: .10s; }
+  .mp-row:nth-child(3) { animation-delay: .16s; }
+  .mp-row:nth-child(4) { animation-delay: .22s; }
+  .mp-row:nth-child(5) { animation-delay: .28s; }
+  .mp-row:nth-child(6) { animation-delay: .34s; }
+
+  @keyframes roster-in {
+    0%   { opacity: 0; transform: translateY(6px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .mp-row:last-child {
+    border-bottom: 1px solid var(--ink);
+  }
+
+  /* Slot number — like a roster spot in a manager's notebook */
+  .slot-num {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--ink);
+    line-height: 1;
+    text-align: right;
+    position: relative;
+    padding-right: 4px;
+  }
+  .slot-num::before {
+    content: counter(roster, decimal-leading-zero);
+  }
+  .slot-num::after {
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 0 1px var(--ink);
+  }
+
+  /* Headshot — slight rotation on alternating rows for hand-pasted feel */
+  .headshot {
+    width: 56px;
+    height: 56px;
+    position: relative;
+  }
+  .headshot::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border: 1px solid var(--ink);
+    background: var(--paper-2);
+    transform: rotate(-1.5deg);
+    z-index: 0;
+  }
+  .mp-row:nth-child(even) .headshot::before { transform: rotate(1.2deg); }
+  .headshot img {
+    position: relative;
+    z-index: 1;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--ink-2);
+    object-fit: cover;
+    border: 2px solid var(--ink);
+    filter: contrast(1.05) saturate(.92);
+  }
+
+  /* The hot/cold pip on the headshot */
+  .pip {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 1px var(--ink);
+    z-index: 2;
+  }
+  .pip.hot  { background: var(--hot); }
+  .pip.cold { background: var(--cold); }
+  .pip.neutral { background: var(--ink-mute); }
+
+  /* Name block */
+  .name-block {
+    min-width: 0;
+    line-height: 1.05;
+  }
+  .first-name {
+    display: block;
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 3px;
+  }
+  .last-name {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: -.01em;
+    color: var(--ink);
+    text-decoration: none;
+    background:
+      linear-gradient(var(--red), var(--red)) left bottom / 0% 2px no-repeat;
+    transition: background-size .35s cubic-bezier(.2,.7,.2,1), color .2s;
+    cursor: pointer;
+    padding-bottom: 1px;
+  }
+  .last-name:hover {
+    background-size: 100% 2px;
+    color: var(--red-deep);
+  }
+  .last-name::after {
+    content: ' ↗';
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity .2s;
+    vertical-align: top;
+  }
+  .last-name:hover::after { opacity: 1; }
+
+  .meta-line {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 4px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .pos-tag {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1px 5px;
+    font-weight: 600;
+    letter-spacing: .14em;
+  }
+  .team-abbr {
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: .14em;
+  }
+  .role-tag {
+    border: 1px solid var(--ink-mute);
+    padding: 1px 5px;
+    font-size: 8px;
+    letter-spacing: .16em;
+  }
+
+  /* Stat strip — right side */
+  .stat-strip {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    text-align: right;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1;
+  }
+  .stat-val {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: -.01em;
+  }
+  .stat-val.big { font-size: 26px; }
+  .stat-lbl {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-top: 4px;
+  }
+
+  /* Row hover — subtle paper-shift */
+  .mp-row:hover {
+    background: linear-gradient(90deg, transparent, rgba(201,162,74,.12) 12%, rgba(201,162,74,.12) 88%, transparent);
+  }
+  .mp-row:hover .slot-num::after {
+    background: var(--red);
+    box-shadow: 0 0 0 1px var(--ink), 0 0 6px var(--red);
+  }
+
+  /* ========== FOOTER ========== */
+  .mp-footer {
+    margin-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    color: var(--ink-mute);
+    border-top: 1px solid var(--ink);
+    padding-top: 12px;
+  }
+  .mp-footer a {
+    color: var(--red);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--red);
+  }
+  .mp-footer .stamp {
+    border: 1.5px solid var(--red);
+    color: var(--red);
+    padding: 4px 10px;
+    transform: rotate(-2deg);
+    font-weight: 600;
+    letter-spacing: .2em;
+    font-family: var(--condensed);
+    font-size: 11px;
+  }
+
+  /* Annotation note */
+  .annotation {
+    margin-top: 38px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    color: var(--ink-mute);
+  }
+  .annotation strong {
+    color: var(--red);
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <section class="my-players">
+    <header class="mp-head">
+      <h2 class="mp-title">My <em>Players</em></h2>
+      <div class="mp-meta">
+        Personal Roster<br>
+        <strong>06 followed</strong> · Apr 11
+      </div>
+    </header>
+    <div class="mp-rule"></div>
+
+    <div class="mp-marginalia">
+      <span>Manager's Card</span>
+      <div class="col-labels">
+        <span>Slash / Era</span>
+        <span>Form</span>
+      </div>
+    </div>
+
+    <ol class="mp-list">
+
+      <li class="mp-row">
+        <div class="slot-num"></div>
+        <div class="headshot">
+          <span class="pip hot" title="Hot streak"></span>
+          <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_100/v1/people/691718/headshot/67/current" alt="Pete Crow-Armstrong">
+        </div>
+        <div class="name-block">
+          <span class="first-name">Pete</span>
+          <a class="last-name" href="../../cubs/#p/691718">Crow-Armstrong</a>
+          <div class="meta-line">
+            <span class="pos-tag">CF</span>
+            <span class="team-abbr">CHC</span>
+            <span class="role-tag">Hitter</span>
+          </div>
+        </div>
+        <div class="stat-strip">
+          <div class="stat"><span class="stat-val">.318</span><span class="stat-lbl">AVG</span></div>
+          <div class="stat"><span class="stat-val">5</span><span class="stat-lbl">HR</span></div>
+          <div class="stat"><span class="stat-val big">147</span><span class="stat-lbl">wRC+</span></div>
+        </div>
+      </li>
+
+      <li class="mp-row">
+        <div class="slot-num"></div>
+        <div class="headshot">
+          <span class="pip hot"></span>
+          <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_100/v1/people/592450/headshot/67/current" alt="Aaron Judge">
+        </div>
+        <div class="name-block">
+          <span class="first-name">Aaron</span>
+          <a class="last-name" href="../../yankees/#p/592450">Judge</a>
+          <div class="meta-line">
+            <span class="pos-tag">RF</span>
+            <span class="team-abbr">NYY</span>
+            <span class="role-tag">Hitter</span>
+          </div>
+        </div>
+        <div class="stat-strip">
+          <div class="stat"><span class="stat-val">.302</span><span class="stat-lbl">AVG</span></div>
+          <div class="stat"><span class="stat-val">7</span><span class="stat-lbl">HR</span></div>
+          <div class="stat"><span class="stat-val big">189</span><span class="stat-lbl">wRC+</span></div>
+        </div>
+      </li>
+
+      <li class="mp-row">
+        <div class="slot-num"></div>
+        <div class="headshot">
+          <span class="pip neutral"></span>
+          <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_100/v1/people/605141/headshot/67/current" alt="Mookie Betts">
+        </div>
+        <div class="name-block">
+          <span class="first-name">Mookie</span>
+          <a class="last-name" href="../../dodgers/#p/605141">Betts</a>
+          <div class="meta-line">
+            <span class="pos-tag">SS</span>
+            <span class="team-abbr">LAD</span>
+            <span class="role-tag">Hitter</span>
+          </div>
+        </div>
+        <div class="stat-strip">
+          <div class="stat"><span class="stat-val">.265</span><span class="stat-lbl">AVG</span></div>
+          <div class="stat"><span class="stat-val">3</span><span class="stat-lbl">HR</span></div>
+          <div class="stat"><span class="stat-val big">118</span><span class="stat-lbl">wRC+</span></div>
+        </div>
+      </li>
+
+      <li class="mp-row">
+        <div class="slot-num"></div>
+        <div class="headshot">
+          <span class="pip hot"></span>
+          <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_100/v1/people/669373/headshot/67/current" alt="Tarik Skubal">
+        </div>
+        <div class="name-block">
+          <span class="first-name">Tarik</span>
+          <a class="last-name" href="../../tigers/#p/669373">Skubal</a>
+          <div class="meta-line">
+            <span class="pos-tag">SP</span>
+            <span class="team-abbr">DET</span>
+            <span class="role-tag">Pitcher</span>
+          </div>
+        </div>
+        <div class="stat-strip">
+          <div class="stat"><span class="stat-val">1.42</span><span class="stat-lbl">ERA</span></div>
+          <div class="stat"><span class="stat-val">28</span><span class="stat-lbl">K</span></div>
+          <div class="stat"><span class="stat-val big">142</span><span class="stat-lbl">Stuff+</span></div>
+        </div>
+      </li>
+
+      <li class="mp-row">
+        <div class="slot-num"></div>
+        <div class="headshot">
+          <span class="pip cold"></span>
+          <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_100/v1/people/677951/headshot/67/current" alt="Bobby Witt Jr.">
+        </div>
+        <div class="name-block">
+          <span class="first-name">Bobby</span>
+          <a class="last-name" href="../../royals/#p/677951">Witt Jr.</a>
+          <div class="meta-line">
+            <span class="pos-tag">SS</span>
+            <span class="team-abbr">KC</span>
+            <span class="role-tag">Hitter</span>
+          </div>
+        </div>
+        <div class="stat-strip">
+          <div class="stat"><span class="stat-val">.198</span><span class="stat-lbl">AVG</span></div>
+          <div class="stat"><span class="stat-val">2</span><span class="stat-lbl">HR</span></div>
+          <div class="stat"><span class="stat-val big">82</span><span class="stat-lbl">wRC+</span></div>
+        </div>
+      </li>
+
+      <li class="mp-row">
+        <div class="slot-num"></div>
+        <div class="headshot">
+          <span class="pip neutral"></span>
+          <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_100/v1/people/675911/headshot/67/current" alt="Spencer Strider">
+        </div>
+        <div class="name-block">
+          <span class="first-name">Spencer</span>
+          <a class="last-name" href="../../braves/#p/675911">Strider</a>
+          <div class="meta-line">
+            <span class="pos-tag">SP</span>
+            <span class="team-abbr">ATL</span>
+            <span class="role-tag">Pitcher</span>
+          </div>
+        </div>
+        <div class="stat-strip">
+          <div class="stat"><span class="stat-val">3.21</span><span class="stat-lbl">ERA</span></div>
+          <div class="stat"><span class="stat-val">19</span><span class="stat-lbl">K</span></div>
+          <div class="stat"><span class="stat-val big">128</span><span class="stat-lbl">Stuff+</span></div>
+        </div>
+      </li>
+
+    </ol>
+
+    <footer class="mp-footer">
+      <span>Tap a name → opens player card</span>
+      <span class="stamp">Approved</span>
+      <a href="#">Manage roster →</a>
+    </footer>
+  </section>
+
+  <p class="annotation">
+    Mockup · <strong>My Players</strong> section · Morning Lineup home page
+  </p>
+
+</div>
+
+</body>
+</html>

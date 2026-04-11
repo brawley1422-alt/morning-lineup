@@ -813,6 +813,43 @@
 
   customElements.define("player-card", PlayerCard);
 
+  // Expose render API for inline use (e.g. binder/grid layouts that want
+  // a real card embedded in the page rather than the click-to-open modal).
+  window.MorningLineupPC = {
+    loadData: loadData,
+    renderFront: renderFront,
+    renderBack: renderBack,
+    renderStub: renderStub,
+    injectStyles: injectStylesOnce,
+    seedCache: function (slug, data) {
+      _cacheBySlug[slug] = data;
+    },
+    mountInline: function (container, pid, slug) {
+      injectStylesOnce();
+      return loadData(slug).then(function (data) {
+        var teamName = (data && data.team_full_name) || "MLB";
+        var rec = data.players ? data.players[String(pid)] : null;
+        container.innerHTML = "";
+        var wrap = document.createElement("div");
+        wrap.className = "pc-wrap";
+        var card = document.createElement("div");
+        card.className = "pc-card";
+        if (rec) {
+          card.innerHTML = renderFront(rec, teamName) + renderBack(rec, teamName);
+        } else {
+          card.innerHTML = renderStub(pid, teamName);
+        }
+        card.addEventListener("click", function (e) {
+          e.stopPropagation();
+          card.classList.toggle("flipped");
+        });
+        wrap.appendChild(card);
+        container.appendChild(wrap);
+        return card;
+      });
+    },
+  };
+
   // Deep link: #p/PID auto-opens that player's card on load.
   function openFromHash() {
     const m = /^#p\/(\d+)$/.exec(location.hash || "");
