@@ -38,6 +38,11 @@ def _render_line_score(game, tmap, team_id, team_name, game_date=None, yest=None
     home_id = game["teams"]["home"]["team"]["id"]
     away_ab = _abbr(tmap, away_id)
     home_ab = _abbr(tmap, home_id)
+    away_full = game["teams"]["away"]["team"].get("name", away_ab)
+    home_full = game["teams"]["home"]["team"].get("name", home_ab)
+    # Shorten "Chicago Cubs" → "Chicago" etc. for the linescore row label.
+    away_label = away_full.rsplit(" ", 1)[0] if " " in away_full else away_full
+    home_label = home_full.rsplit(" ", 1)[0] if " " in home_full else home_full
     away_score = game["teams"]["away"].get("score", 0)
     home_score = game["teams"]["home"].get("score", 0)
     cubs_won = (away_id == team_id and away_score > home_score) or \
@@ -51,14 +56,16 @@ def _render_line_score(game, tmap, team_id, team_name, game_date=None, yest=None
 
     def row(label, tid, innings_side, totals):
         cells = ''.join(
-            f'<td>{"" if i.get(innings_side, {}).get("runs") in (None,"") else i[innings_side].get("runs",0)}</td>'
+            f'<td>{"—" if i.get(innings_side, {}).get("runs") in (None,"") else i[innings_side].get("runs",0)}</td>'
             for i in innings
         )
-        won_cls = ' class="won"' if ((tid == away_id and away_score > home_score) or (tid == home_id and home_score > away_score)) else ''
-        return (f'<tr{won_cls}><td class="team">{escape(label)}</td>{cells}'
-                f'<td class="rhe">{totals["runs"]}</td>'
-                f'<td class="rhe">{totals["hits"]}</td>'
-                f'<td class="rhe">{totals["errors"]}</td></tr>')
+        is_winner = (tid == away_id and away_score > home_score) or (tid == home_id and home_score > away_score)
+        row_cls = ' class="win-row"' if is_winner else ''
+        rhe_cls = ' class="rhe-total gold"' if is_winner else ' class="rhe-total"'
+        return (f'<tr{row_cls}><td>{escape(label)}</td>{cells}'
+                f'<td{rhe_cls}>{totals["runs"]}</td>'
+                f'<td{rhe_cls}>{totals["hits"]}</td>'
+                f'<td{rhe_cls}>{totals["errors"]}</td></tr>')
 
     inn_hdrs = ''.join(f'<th>{i+1}</th>' for i in range(len(innings)))
     venue = game.get("venue", {}).get("name", "")
@@ -76,10 +83,21 @@ def _render_line_score(game, tmap, team_id, team_name, game_date=None, yest=None
     lp = decisions.get("loser", {}).get("fullName", "")
     sv = decisions.get("save", {}).get("fullName", "")
 
-    pitcher_bits = []
-    if wp: pitcher_bits.append(f'<span><strong>W</strong><span class="w">{escape(wp)}</span></span>')
-    if lp: pitcher_bits.append(f'<span><strong>L</strong><span class="l">{escape(lp)}</span></span>')
-    if sv: pitcher_bits.append(f'<span><strong>S</strong><span class="s">{escape(sv)}</span></span>')
+    wp_bits = []
+    if wp: wp_bits.append(f'<span><span class="lbl">WP</span>{escape(wp)}</span>')
+    if lp: wp_bits.append(f'<span><span class="lbl">LP</span>{escape(lp)}</span>')
+    if sv: wp_bits.append(f'<span><span class="lbl">SV</span>{escape(sv)}</span>')
+    wp_line_html = f'<div class="wp-line">{"".join(wp_bits)}</div>' if wp_bits else ""
+
+    # Result badge — W/L in persona colors, score, inning count.
+    if cubs_won:
+        team_score = away_score if away_id == team_id else home_score
+        opp_score = home_score if away_id == team_id else away_score
+        result_badge = f'<span class="result win">W {team_score}&ndash;{opp_score}</span>'
+    else:
+        team_score = away_score if away_id == team_id else home_score
+        opp_score = home_score if away_id == team_id else away_score
+        result_badge = f'<span class="result loss">L {team_score}&ndash;{opp_score}</span>'
 
     summary_tag = f'W {away_score}-{home_score} at {home_ab}' if (away_id == team_id and cubs_won) else \
                   f'L {away_score}-{home_score} at {home_ab}' if away_id == team_id else \
@@ -90,19 +108,19 @@ def _render_line_score(game, tmap, team_id, team_name, game_date=None, yest=None
     if game_date and yest and game_date != yest:
         date_note = f" &middot; {game_date.strftime('%a %b ')}{game_date.day}"
     html = f"""
-    <div class="scoreboard" aria-label="Line score">
-      <div class="meta">
-        <span>{escape(venue)} &middot; {start_time}{date_note}</span>
-        <span class="fin">{final_label}</span>
+    <div class="game-result" aria-label="Line score">
+      <div class="game-status">
+        <span>{escape(venue)} &middot; {start_time}{date_note} &middot; {final_label}</span>
+        {result_badge}
       </div>
-      <table>
-        <thead><tr><th></th>{inn_hdrs}<th>R</th><th>H</th><th>E</th></tr></thead>
+      <table class="linescore">
+        <thead><tr><th></th>{inn_hdrs}<th class="rhe">R</th><th class="rhe">H</th><th class="rhe">E</th></tr></thead>
         <tbody>
-          {row(away_ab, away_id, 'away', away_tot)}
-          {row(home_ab, home_id, 'home', home_tot)}
+          {row(away_label, away_id, 'away', away_tot)}
+          {row(home_label, home_id, 'home', home_tot)}
         </tbody>
       </table>
-      <div class="pitchers">{''.join(pitcher_bits)}</div>
+      {wp_line_html}
     </div>
     """
     return html, summary_tag
@@ -110,7 +128,7 @@ def _render_line_score(game, tmap, team_id, team_name, game_date=None, yest=None
 
 def _render_three_stars(boxscore, game, tmap, team_id):
     if not boxscore or not game:
-        return '<p class="slang"><em>Three stars unavailable.</em></p>'
+        return '<div class="three-stars"><div class="stars-head"><h3 class="h">Three Stars</h3><span class="tag">&#9733; &#9733; &#9733;</span></div><p class="slang"><em>Three stars unavailable.</em></p></div>'
     cubs_side = "away" if game["teams"]["away"]["team"]["id"] == team_id else "home"
     players = boxscore["teams"][cubs_side]["players"]
     hitters = []
@@ -132,14 +150,16 @@ def _render_three_stars(boxscore, game, tmap, team_id):
         pitchers.append((ip * 2 + k - er * 3, p, ps))
     pitchers.sort(key=lambda x: -x[0])
 
+    def _pos(player_dict):
+        return (player_dict.get("position") or {}).get("abbreviation", "")
+
     stars = []
     if pitchers:
         p, ps = pitchers[0][1], pitchers[0][2]
-        line = f"{ps.get('inningsPitched')} IP, {ps.get('hits',0)} H, {ps.get('earnedRuns',0)} ER, {ps.get('baseOnBalls',0)} BB, {ps.get('strikeOuts',0)} K"
-        stars.append((p['person']['fullName'], line, ""))
+        line = f"{ps.get('inningsPitched')} IP &middot; {ps.get('hits',0)} H &middot; {ps.get('earnedRuns',0)} ER &middot; {ps.get('strikeOuts',0)} K"
+        stars.append((p['person']['fullName'], line, _pos(p) or "P"))
     if hitters:
         p, s = hitters[0][1], hitters[0][2]
-        line = f"{s.get('hits',0)}-{s.get('atBats',0)}"
         extras = []
         if s.get('doubles', 0): extras.append(f"{s['doubles']} 2B")
         if s.get('triples', 0): extras.append(f"{s['triples']} 3B")
@@ -147,8 +167,8 @@ def _render_three_stars(boxscore, game, tmap, team_id):
         if s.get('rbi', 0): extras.append(f"{s['rbi']} RBI")
         if s.get('stolenBases', 0): extras.append(f"{s['stolenBases']} SB")
         if s.get('baseOnBalls', 0): extras.append(f"{s['baseOnBalls']} BB")
-        line = f"{s.get('hits',0)}-{s.get('atBats',0)}" + ("" if not extras else ", " + ", ".join(extras))
-        stars.append((p['person']['fullName'], line, ""))
+        line = f"{s.get('hits',0)}-for-{s.get('atBats',0)}" + ("" if not extras else " &middot; " + " &middot; ".join(extras))
+        stars.append((p['person']['fullName'], line, _pos(p)))
     if len(hitters) > 1:
         p, s = hitters[1][1], hitters[1][2]
         extras = []
@@ -156,20 +176,30 @@ def _render_three_stars(boxscore, game, tmap, team_id):
         if s.get('homeRuns', 0): extras.append(f"{s['homeRuns']} HR")
         if s.get('rbi', 0): extras.append(f"{s['rbi']} RBI")
         if s.get('stolenBases', 0): extras.append(f"{s['stolenBases']} SB")
-        line = f"{s.get('hits',0)}-{s.get('atBats',0)}" + ("" if not extras else ", " + ", ".join(extras))
-        stars.append((p['person']['fullName'], line, ""))
+        line = f"{s.get('hits',0)}-for-{s.get('atBats',0)}" + ("" if not extras else " &middot; " + " &middot; ".join(extras))
+        stars.append((p['person']['fullName'], line, _pos(p)))
 
     if hitters and hitters[0][0] >= 6:
         stars = [stars[1], stars[0], stars[2]] if len(stars) >= 3 else stars
 
     cards = []
-    for i, (name, line, note) in enumerate(stars[:3]):
+    for i, (name, line, pos_badge) in enumerate(stars[:3]):
+        badge_html = f'<div class="star-badge">{escape(pos_badge)}</div>' if pos_badge else ''
         cards.append(f"""<div class="star">
-        <div class="rank">{i+1}</div>
-        <div class="name">{escape(name)}</div>
-        <div class="line">{escape(line)}</div>
+        <div class="star-rank">{i+1}</div>
+        <div class="star-body">
+          <div class="star-name">{escape(name)}</div>
+          <div class="star-stat">{line}</div>
+        </div>
+        {badge_html}
       </div>""")
-    return f'<div class="stars">{"".join(cards)}</div>'
+    return f"""<div class="three-stars">
+      <div class="stars-head">
+        <h3 class="h">Three Stars</h3>
+        <span class="tag">&#9733; &#9733; &#9733;</span>
+      </div>
+      {"".join(cards)}
+    </div>"""
 
 
 def _render_key_plays(plays_data, game, tmap):
@@ -465,9 +495,10 @@ def render(briefing):
     )
     hot_cold_html = _render_hot_cold(data["cubs_hitters"], data["cubs_pitchers"])
 
-    inner = f"""{line_score_html}
-    <h3>Three Stars</h3>
-    {three_stars}
+    inner = f"""<div class="hero-grid">
+      {line_score_html}
+      {three_stars}
+    </div>
     {key_plays}
     {scorecard_embed}
     <h3>{team_name} Leaders</h3>
