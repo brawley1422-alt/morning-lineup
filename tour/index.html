@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Tour — Morning Lineup</title>
+<meta name="description" content="A daily-updating, auth-gated, LLM-augmented sports publication covering all 30 MLB teams.">
+<link rel="icon" href="/morning-lineup/icons/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,900&family=Oswald:wght@400;600&family=Lora:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+.tour-ticker {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 11px;
+  color: var(--paper-dim);
+  padding: 8px 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+.tour-ticker strong { color: var(--gold); }
+
+.tour-mast {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 28px 20px 18px;
+  text-align: center;
+  border-bottom: 1px solid var(--rule);
+}
+.tour-mast .kicker {
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 11px;
+  color: var(--paper-dim);
+  margin-bottom: 8px;
+}
+.tour-mast h1 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 900;
+  font-size: clamp(48px, 9vw, 104px);
+  line-height: 0.95;
+  margin: 0;
+  color: var(--paper);
+}
+.tour-mast h1 .the {
+  display: block;
+  font-size: 0.28em;
+  font-style: normal;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.tour-mast .dek {
+  font-family: var(--body);
+  font-style: italic;
+  color: var(--paper-dim);
+  font-size: 15px;
+  margin: 14px auto 0;
+  max-width: 620px;
+  line-height: 1.5;
+}
+
+.tour-shell {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+}
+
+.tour-hero {
+  margin: 0 0 50px;
+}
+.tour-hero img {
+  width: 100%;
+  display: block;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+.tour-hero figcaption {
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 10px;
+  color: var(--paper-dim);
+  margin-top: 10px;
+  text-align: right;
+}
+
+.tour-story {
+  max-width: 680px;
+  margin: 0 auto 60px;
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--paper);
+}
+.tour-story p { margin: 0 0 18px; }
+.tour-story p.lede::first-letter {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 72px;
+  float: left;
+  line-height: 0.85;
+  padding: 6px 10px 0 0;
+  color: var(--gold);
+}
+
+.tour-section-head {
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 12px;
+  color: var(--gold);
+  text-align: center;
+  margin: 60px 0 8px;
+}
+.tour-section-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 900;
+  font-size: clamp(28px, 5vw, 44px);
+  text-align: center;
+  color: var(--paper);
+  margin: 0 0 30px;
+}
+
+.tour-cap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin: 0 0 60px;
+}
+.tour-cap {
+  background: var(--ink);
+  padding: 22px 20px;
+}
+.tour-cap .num {
+  font-family: var(--cond);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--gold-dim);
+}
+.tour-cap h3 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--paper);
+  margin: 4px 0 10px;
+}
+.tour-cap p {
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--paper-dim);
+  margin: 0;
+}
+
+.tour-shots {
+  display: grid;
+  gap: 40px;
+  margin: 0 0 60px;
+}
+.tour-shot figure { margin: 0; }
+.tour-shot img {
+  width: 100%;
+  display: block;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+.tour-shot figcaption {
+  margin-top: 12px;
+  font-family: var(--body);
+}
+.tour-shot .shot-kicker {
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 10px;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 2px;
+}
+.tour-shot .shot-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--paper);
+  display: block;
+  margin-bottom: 4px;
+}
+.tour-shot .shot-note {
+  font-size: 14px;
+  color: var(--paper-dim);
+  line-height: 1.5;
+}
+
+.tour-stack {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 0 0 60px;
+}
+.tour-stack div {
+  border: 1px solid var(--rule);
+  padding: 14px 16px;
+}
+.tour-stack .label {
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 10px;
+  color: var(--gold-dim);
+  display: block;
+  margin-bottom: 4px;
+}
+.tour-stack .val {
+  font-family: var(--body);
+  font-size: 14px;
+  color: var(--paper);
+  line-height: 1.5;
+}
+
+.tour-cta {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin: 40px 0;
+}
+.tour-cta h2 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 900;
+  font-size: clamp(28px, 5vw, 44px);
+  color: var(--paper);
+  margin: 0 0 16px;
+}
+.tour-cta p {
+  font-family: var(--body);
+  color: var(--paper-dim);
+  max-width: 480px;
+  margin: 0 auto 22px;
+  line-height: 1.6;
+}
+.tour-cta-row {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.tour-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 12px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  text-decoration: none;
+  transition: background .15s, color .15s;
+}
+.tour-btn:hover { background: var(--gold); color: var(--ink); }
+.tour-btn.primary {
+  background: var(--gold);
+  color: var(--ink);
+}
+.tour-btn.primary:hover { background: var(--paper); border-color: var(--paper); }
+
+.tour-foot {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 24px 20px 40px;
+  text-align: center;
+  font-family: var(--cond);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 10px;
+  color: var(--paper-dim);
+}
+.tour-foot a { color: var(--gold); text-decoration: none; }
+.tour-foot a:hover { color: var(--paper); }
+</style>
+</head>
+<body>
+
+<div class="tour-ticker">
+  <span>Vol. I · <strong>The Tour</strong></span>
+  <span>Public Preview · Members-only reading room behind the gate</span>
+  <span>Built solo in a week</span>
+</div>
+
+<header class="tour-mast">
+  <div class="kicker">A Portfolio Walkthrough</div>
+  <h1>
+    <span class="the">Welcome to</span>
+    Morning Lineup
+  </h1>
+  <p class="dek">A daily-updating, auth-gated, LLM-augmented baseball publication covering all 30 MLB teams — with a companion interactive scoring app. Built solo, in about a week, on vanilla Python and vanilla JS.</p>
+</header>
+
+<main class="tour-shell">
+
+  <figure class="tour-hero">
+    <img src="../docs/images/landing-authed.png" alt="Morning Lineup authenticated landing page">
+    <figcaption>The authed landing — your reader view after sign-in</figcaption>
+  </figure>
+
+  <section class="tour-story">
+    <p class="lede">Morning Lineup started as a replacement for a Gmail-delivered Cubs briefing — an email I kept forgetting to read. It grew, fast, into a thirty-team editorial sports publication with its own voice, its own design system, and its own autonomous publishing pipeline.</p>
+    <p>Every morning at six in the morning Central Time, a scheduled Claude agent wakes up, pulls fresh data from the MLB Stats API, rebuilds every team's page, regenerates three LLM-authored columnist columns per team, and deploys the whole site to GitHub Pages. Nobody touches it. The site you're reading right now was not edited by hand — it was rebuilt while you were still asleep.</p>
+    <p>It is also a companion to <em>The Scorecard Book</em>, a standalone digital scorer's book: SVG diamond, play-by-play journey, strike zone overlay, multi-game finder, per-team theming. The briefing is the publication. The scorecard is the pen.</p>
+  </section>
+
+  <p class="tour-section-head">The Capabilities</p>
+  <h2 class="tour-section-title">What it actually does</h2>
+
+  <div class="tour-cap-grid">
+    <div class="tour-cap">
+      <span class="num">Nº 01</span>
+      <h3>Thirty teams, one system</h3>
+      <p>Per-team JSON config drives colors, branding, affiliates, rivals, and columnist personas. Every team gets a fully branded page from the same 900-line Python orchestrator.</p>
+    </div>
+    <div class="tour-cap">
+      <span class="num">Nº 02</span>
+      <h3>Autonomous daily rebuild</h3>
+      <p>A scheduled Claude agent runs <code>build.py</code> and <code>deploy.py</code> at 6 AM Central. The site is never stale. It is also never touched by hand after initial setup.</p>
+    </div>
+    <div class="tour-cap">
+      <span class="num">Nº 03</span>
+      <h3>LLM columnist pipeline</h3>
+      <p>Three personas × thirty teams × daily generation. Ollama local-first (<code>qwen3:8b</code>), Anthropic API fallback, per-persona caching to keep costs sane.</p>
+    </div>
+    <div class="tour-cap">
+      <span class="num">Nº 04</span>
+      <h3>Editorial design system</h3>
+      <p>Playfair italics, Oswald heads, Lora body, kicker stats, hero grids. Dark newspaper aesthetic with team-specific accent colors injected via CSS variables.</p>
+    </div>
+    <div class="tour-cap">
+      <span class="num">Nº 05</span>
+      <h3>The Scorecard Book</h3>
+      <p>Eleven JS modules. SVG diamond renderer with journey-aware basepaths. Live MLB feed parser, strike zone overlay, dark/paper theme toggle, multi-game finder.</p>
+    </div>
+    <div class="tour-cap">
+      <span class="num">Nº 06</span>
+      <h3>Real auth</h3>
+      <p>Supabase email and OAuth sign-in, followed-teams sync, per-user section preferences, custom density modes. Not a login stub — a working personalization layer.</p>
+    </div>
+    <div class="tour-cap">
+      <span class="num">Nº 07</span>
+      <h3>PWA &amp; offline</h3>
+      <p>Service worker with cache versioning, per-team manifests, installable on mobile. Briefings work offline once read.</p>
+    </div>
+    <div class="tour-cap">
+      <span class="num">Nº 08</span>
+      <h3>Zero dependencies</h3>
+      <p><code>build.py</code> runs on Python stdlib only. Vanilla JS, no framework, no build step. Boots on a clean box with one command.</p>
+    </div>
+  </div>
+
+  <p class="tour-section-head">The Rooms</p>
+  <h2 class="tour-section-title">A walk through the gate</h2>
+
+  <div class="tour-shots">
+    <figure class="tour-shot">
+      <img src="../docs/images/briefing-cubs.png" alt="A team briefing page showing the columnists accordion and a line score">
+      <figcaption>
+        <span class="shot-kicker">The Briefing</span>
+        <span class="shot-title">Per-team editorial page</span>
+        <span class="shot-note">Yesterday's recap, scouting report, the stretch, pressbox, farm system, today's slate, division, around the league, history. Three LLM columnists sit at the top in a collapsed accordion. Everything is team-colored and team-branded via CSS variable injection.</span>
+      </figcaption>
+    </figure>
+
+    <figure class="tour-shot">
+      <img src="../docs/images/scorecard-finder.png" alt="The Scorecard Book slate view with all of today's games">
+      <figcaption>
+        <span class="shot-kicker">The Scorecard Book</span>
+        <span class="shot-title">The press box you carry</span>
+        <span class="shot-note">The slate view of the companion scoring app. Pick any game, any day, any team — get a full interactive scorecard with SVG diamond, play-by-play journey, strike zone overlay, and stat panels. Standalone app, also embedded inside every team briefing.</span>
+      </figcaption>
+    </figure>
+
+    <figure class="tour-shot">
+      <img src="../docs/images/landing-authed.png" alt="The authenticated landing page with standings and today's slate">
+      <figcaption>
+        <span class="shot-kicker">The Landing</span>
+        <span class="shot-title">Your reader view</span>
+        <span class="shot-note">Personalized greeting, live standings across both leagues, today's game count, hot and cold streak indicators, jump links to any team. Built from a parallel <code>build_landing()</code> pass in the same orchestrator.</span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <p class="tour-section-head">The Stack</p>
+  <h2 class="tour-section-title">Under the hood</h2>
+
+  <div class="tour-stack">
+    <div><span class="label">Backend</span><span class="val">Python 3.12 stdlib only — urllib, json, zoneinfo, html, pathlib</span></div>
+    <div><span class="label">Frontend</span><span class="val">Vanilla JS, no framework, no build step, no node_modules</span></div>
+    <div><span class="label">Hosting</span><span class="val">GitHub Pages (static) + Supabase (auth, profiles, followed teams)</span></div>
+    <div><span class="label">Data</span><span class="val">MLB Stats API v1/v1.1 + Open-Meteo weather — no auth keys required</span></div>
+    <div><span class="label">LLMs</span><span class="val">Ollama local-first (qwen3:8b) with Anthropic API fallback</span></div>
+    <div><span class="label">Automation</span><span class="val">Scheduled Claude agent trigger for daily rebuild + evening post-game watcher</span></div>
+    <div><span class="label">PWA</span><span class="val">Service worker, per-team manifests, offline caching, cache versioning</span></div>
+    <div><span class="label">Testing</span><span class="val">Golden snapshot harness + Playwright screenshot verification with fake-auth injection</span></div>
+  </div>
+
+  <div class="tour-cta">
+    <h2>Come inside.</h2>
+    <p>The public tour ends here. The reading room — personalized briefings, the full Scorecard Book, preferences, history — lives behind a free sign-in.</p>
+    <div class="tour-cta-row">
+      <a href="../auth/" class="tour-btn primary">Sign in / Sign up</a>
+      <a href="../" class="tour-btn">Browse all teams</a>
+      <a href="https://github.com/brawley1422-alt/morning-lineup" class="tour-btn">View the source</a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="tour-foot">
+  <p>Morning Lineup · Built by <a href="https://github.com/brawley1422-alt">JB Brawley</a> · A personal project, no MLB affiliation</p>
+  <p>Data: MLB Stats API · Weather: Open-Meteo · LLMs: Ollama + Anthropic · Hosting: GitHub Pages + Supabase</p>
+</footer>
+
+</body>
+</html>
