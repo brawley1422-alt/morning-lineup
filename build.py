@@ -1050,6 +1050,30 @@ def load_team_players(team_id, season, today, max_workers=4):
     return players
 
 
+def save_player_index():
+    """Rebuild the global pid→slug index by scanning every players-*.json.
+    Used by the home page binder to look up which team a followed player
+    belongs to when the followed_players row is missing mlb_team_abbr."""
+    out = {}
+    for f in sorted(DATA_DIR.glob("players-*.json")):
+        try:
+            slug = f.stem.replace("players-", "")
+            d = json.loads(f.read_text(encoding="utf-8"))
+            for pid in (d.get("players") or {}).keys():
+                out[pid] = slug
+        except Exception as e:
+            print(f"  warning: index scan {f.name} failed: {e}", flush=True)
+    payload = {
+        "generated_at": datetime.now(tz=CT).isoformat(timespec="seconds"),
+        "count": len(out),
+        "index": out,
+    }
+    (DATA_DIR / "player-index.json").write_text(
+        json.dumps(payload, default=_json_default, ensure_ascii=False),
+        encoding="utf-8",
+    )
+
+
 def save_players(team_slug, players, today):
     """Write per-team player-card JSON to data/players-<slug>.json."""
     DATA_DIR.mkdir(exist_ok=True)
@@ -1191,6 +1215,7 @@ if __name__ == "__main__":
                 print(f"Fetching player cards for {_team_slug} (active roster) …", flush=True)
                 _team_players = load_team_players(TEAM_ID, _d2["season"], _d2["today"])
                 save_players(_team_slug, _team_players, _d2["today"])
+                save_player_index()
             except Exception as _e2:
                 print(f"  warning: team player-card pipeline failed: {_e2}", flush=True)
             # Phase 1 holdover: Cubs-only lineup fallback (feeds today_lineup

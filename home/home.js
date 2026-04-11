@@ -483,6 +483,26 @@ const ABBR_TO_SLUG = {
   "NYY": "yankees",
 };
 
+// Lazy-loaded global pid→slug index. Used when followed_players is missing
+// mlb_team_abbr (or has an unknown abbreviation).
+let _playerIndex = null;
+let _playerIndexPromise = null;
+function loadPlayerIndex() {
+  if (_playerIndex) return Promise.resolve(_playerIndex);
+  if (_playerIndexPromise) return _playerIndexPromise;
+  _playerIndexPromise = fetch("../data/player-index.json", { cache: "no-cache" })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((j) => {
+      _playerIndex = (j && j.index) || {};
+      return _playerIndex;
+    })
+    .catch(() => {
+      _playerIndex = {};
+      return _playerIndex;
+    });
+  return _playerIndexPromise;
+}
+
 function renderMyPlayersSection(players, statsMap) {
   const section = document.createElement("section");
   section.id = "my-players";
@@ -537,11 +557,11 @@ function renderMyPlayersSection(players, statsMap) {
 
     grid.appendChild(pocket);
 
-    // Mount the real card via the exposed API. If component isn't ready yet,
-    // wait for it.
-    const tryMount = () => {
+    // Mount the real card via the exposed API. Resolves the team slug
+    // from the followed_players row if present, otherwise falls back to
+    // the global pid→slug index. If the component isn't ready yet, retries.
+    const tryMount = async () => {
       const ML = window.MorningLineupPC;
-      console.log("[binder] mounting", { name: p.full_name, pid: p.mlbam_id, abbr: p.mlb_team_abbr, slug, hasML: !!ML });
       if (!ML) {
         cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">component not loaded</div></div>`;
         return;
@@ -550,21 +570,28 @@ function renderMyPlayersSection(players, statsMap) {
         cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">missing pid</div></div>`;
         return;
       }
-      if (!slug) {
-        cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">unknown team: "${p.mlb_team_abbr || "—"}"</div></div>`;
+      let resolvedSlug = slug;
+      if (!resolvedSlug) {
+        const index = await loadPlayerIndex();
+        resolvedSlug = index[String(p.mlbam_id)];
+      }
+      if (!resolvedSlug) {
+        cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">player not on any active roster</div></div>`;
         return;
       }
-      ML.mountInline(cardHost, p.mlbam_id, slug)
+      // Update the slot label with the resolved abbreviation
+      const labelTeam = pocket.querySelector(".pocket-label");
+      if (labelTeam && (!p.mlb_team_abbr || p.mlb_team_abbr === "")) {
+        labelTeam.innerHTML = `<span class="slot">Slot ${slot}</span> · ${resolvedSlug.toUpperCase()}`;
+      }
+      ML.mountInline(cardHost, p.mlbam_id, resolvedSlug)
         .then(() => {
-          // Check if we got a stub (player not in that team's roster JSON)
           const stub = cardHost.querySelector(".pc-stub");
           if (stub) {
-            console.warn("[binder] pid not in team JSON", { name: p.full_name, pid: p.mlbam_id, slug });
-            cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">pid ${p.mlbam_id} not in ${slug} roster</div></div>`;
+            cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">pid ${p.mlbam_id} not in ${resolvedSlug} roster</div></div>`;
           }
         })
-        .catch((e) => {
-          console.warn("[binder] mount failed", p, e);
+        .catch(() => {
           cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">load error</div></div>`;
         });
     };
