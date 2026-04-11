@@ -807,4 +807,20 @@
   }
 
   customElements.define("player-card", PlayerCard);
+
+  // Deep link: #p/PID auto-opens that player's card on load.
+  function openFromHash() {
+    const m = /^#p\/(\d+)$/.exec(location.hash || "");
+    if (!m) return;
+    const pid = m[1];
+    const match = document.querySelector('player-card[pid="' + pid + '"]');
+    const name = match ? match.textContent.trim() : pid;
+    openOverlay(pid, name);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", openFromHash);
+  } else {
+    openFromHash();
+  }
+  window.addEventListener("hashchange", openFromHash);
 })();
