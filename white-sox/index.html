@@ -46,6 +46,14 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offs
 .masthead .kicker .vol{color:var(--gold)}
 .masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);display:flex;align-items:center;gap:16px}
 .mast-logo{width:clamp(48px,10vw,80px);height:auto;flex-shrink:0;opacity:.9;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.ml-logo{display:inline-block;vertical-align:middle;flex-shrink:0;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.ml-logo.xs{width:14px;height:14px}
+.ml-logo.sm{width:18px;height:18px}
+.ml-logo.md{width:26px;height:26px}
+.ml-logo.lg{width:40px;height:40px}
+.ml-logo.xl{width:56px;height:56px}
+.ml-logo-pair{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.ml-logo-pair .ab{font-family:var(--cond);letter-spacing:.08em;color:inherit}
 .masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
 .masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .masthead .dek{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;}
@@ -572,7 +580,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
   </h1>
   <div class="dek">
     <span class="item"><span class="label">Sat</span><span class="val">Apr 11, 2026</span></span>
-    <span class="item"><span class="label">White Sox</span><span class="rec">5&ndash;9 &middot; 4th AL Central</span></span>
+    <span class="item"><span class="label">White Sox</span><span class="rec">5&ndash;9 &middot; 5th AL Central</span></span>
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
@@ -623,8 +631,8 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <table class="linescore">
         <thead><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th class="rhe">R</th><th class="rhe">H</th><th class="rhe">E</th></tr></thead>
         <tbody>
-          <tr><td>Chicago White</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="rhe-total">0</td><td class="rhe-total">2</td><td class="rhe-total">0</td></tr>
-          <tr class="win-row"><td>Kansas City</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>—</td><td class="rhe-total gold">2</td><td class="rhe-total gold">7</td><td class="rhe-total gold">0</td></tr>
+          <tr><td class="team-label"><span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/145.svg"><span class="ab">Chicago White</span></span></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="rhe-total">0</td><td class="rhe-total">2</td><td class="rhe-total">0</td></tr>
+          <tr class="win-row"><td class="team-label"><span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/118.svg"><span class="ab">Kansas City</span></span></td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>—</td><td class="rhe-total gold">2</td><td class="rhe-total gold">7</td><td class="rhe-total gold">0</td></tr>
         </tbody>
       </table>
       <div class="wp-line"><span><span class="lbl">WP</span>Kris Bubic</span><span><span class="lbl">LP</span>Davis Martin</span><span><span class="lbl">SV</span>Lucas Erceg</span></div>
@@ -671,29 +679,29 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Next Games</h3>
     <div class="next-games"><div class="nx-card nx-today">
         <div class="nx-head">
-          <div class="nx-day">Sat, Apr 11 &middot; at KC</div>
+          <div class="nx-day">Sat, Apr 11 &middot; at <img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/118.svg"><span class="ab">KC</span></div>
           <div class="nx-time">3:10 CT</div>
         </div>
         <div class="nx-venue">Kauffman Stadium </div>
         <div class="nx-meta"><span class="nx-opp-rec">KC: 6-8, 3rd AL Central (W1)</span> &middot; <span class="nx-series">Season series: 1-1</span></div>
-        <div class="nx-pitcher"><span class="nx-side">White Sox</span> <player-card pid="607200">Erick Fedde</player-card><div class="nx-pline">4.09 ERA &middot; 0-2 &middot; 11.0 IP &middot; 8 K &middot; 1.18 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">KC</span> Michael Wacha<div class="nx-pline">0.69 ERA &middot; 1-0 &middot; 13.0 IP &middot; 10 K &middot; 0.77 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">White Sox</span> <player-card pid="607200">Erick Fedde</player-card><div class="nx-pline">4.09 ERA &middot; 0-2 &middot; 11.0 IP &middot; 8 K &middot; 1.18 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/118.svg">KC</span> Michael Wacha<div class="nx-pline">0.69 ERA &middot; 1-0 &middot; 13.0 IP &middot; 10 K &middot; 0.77 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="805367">Meidroth</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="808959">Murakami</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="643217">Benintendi</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="695657">Montgomery</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="672820">Sosa</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="687957">Harris</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="671976">Peters</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="695020">Murray</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="624512">McGuire</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Royals.TV &middot; Chicago Sports Network Plus</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> ESPN Chicago WMVP 1000 AM &middot; 96.5 The Fan &middot; Royals Radio Network</div>
-        <div class="nx-wx">70°F &middot; Mostly Clear &middot; 11 mph SSE</div>
+        <div class="nx-wx">72°F &middot; Overcast &middot; 11 mph SSE</div>
       </div><div class="nx-card">
         <div class="nx-head">
-          <div class="nx-day">Sun, Apr 12 &middot; at KC</div>
+          <div class="nx-day">Sun, Apr 12 &middot; at <img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/118.svg"><span class="ab">KC</span></div>
           <div class="nx-time">1:10 CT</div>
         </div>
         <div class="nx-venue">Kauffman Stadium </div>
         
-        <div class="nx-pitcher"><span class="nx-side">KC</span> Noah Cameron<div class="nx-pline">1.69 ERA &middot; 1-0 &middot; 10.2 IP &middot; 10 K &middot; 1.13 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/118.svg">KC</span> Noah Cameron<div class="nx-pline">1.69 ERA &middot; 1-0 &middot; 10.2 IP &middot; 10 K &middot; 1.13 WHIP</div></div>
         
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Chicago Sports Network &middot; Royals.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> ESPN Chicago WMVP 1000 AM &middot; 96.5 The Fan &middot; Royals Radio Network</div>
         
       </div><div class="nx-card">
         <div class="nx-head">
-          <div class="nx-day">Tue, Apr 14 &middot; vs TB</div>
+          <div class="nx-day">Tue, Apr 14 &middot; vs <img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/139.svg"><span class="ab">TB</span></div>
           <div class="nx-time">6:40 CT</div>
         </div>
         <div class="nx-venue">Rate Field </div>
@@ -756,7 +764,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <span class="pulse-wl">5&ndash;9</span>
         <span class="pulse-pct">.357</span>
         <span class="pulse-gb">3.0 GB</span>
-        <span class="pulse-rank">4th AL Central</span>
+        <span class="pulse-rank">5th AL Central</span>
         <span class="pulse-streak">L1</span>
     </div>
     <div class="pulse-diff">
@@ -812,77 +820,137 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="chev">&#9656;</span>
     </summary>
     <div class="slate"><div class="g" data-gpk="823480">
-        <div class="matchup">AZ @ PHI</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/109.svg"><span class="ab">AZ</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/143.svg"><span class="ab">PHI</span></span>
+        </div>
         <div class="time">12:05 CT</div>
         <div class="probs">Pfaadt vs Walker</div>
         <div class="bc">NBCSP · FS1 · Dbacks.TV · FS1</div>
       </div><div class="g" data-gpk="824294">
-        <div class="matchup">MIA @ DET</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/146.svg"><span class="ab">MIA</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/116.svg"><span class="ab">DET</span></span>
+        </div>
         <div class="time">12:10 CT</div>
         <div class="probs">Junk vs Mize</div>
         <div class="bc">Marlins.TV · Detroit SportsNet</div>
       </div><div class="g" data-gpk="824697">
-        <div class="matchup">PIT @ CHC</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/134.svg"><span class="ab">PIT</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/112.svg"><span class="ab">CHC</span></span>
+        </div>
         <div class="time">1:20 CT</div>
         <div class="probs">Ashcraft vs Cabrera</div>
         <div class="bc">SportsNet Pittsburgh · Marquee Sports Network</div>
       </div><div class="g" data-gpk="822830">
-        <div class="matchup">MIN @ TOR</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/142.svg"><span class="ab">MIN</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/141.svg"><span class="ab">TOR</span></span>
+        </div>
         <div class="time">2:07 CT</div>
         <div class="probs">Ryan vs Lauer</div>
         <div class="bc">Sportsnet · Twins.TV Presented by Progressive</div>
       </div><div class="g" data-gpk="824535">
-        <div class="matchup">LAA @ CIN</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/108.svg"><span class="ab">LAA</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/113.svg"><span class="ab">CIN</span></span>
+        </div>
         <div class="time">3:10 CT</div>
         <div class="probs">Klassen vs Williamson</div>
         <div class="bc">Reds.TV · FanDuel Sports Network West</div>
       </div><div class="g" data-gpk="823644">
-        <div class="matchup">ATH @ NYM</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/133.svg"><span class="ab">ATH</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/121.svg"><span class="ab">NYM</span></span>
+        </div>
         <div class="time">3:10 CT</div>
         <div class="probs">Lopez vs Senga</div>
         <div class="bc">SNY · NBCSCA</div>
       </div><div class="g" data-gpk="824129">
-        <div class="matchup">CWS @ KC</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/145.svg"><span class="ab">CWS</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/118.svg"><span class="ab">KC</span></span>
+        </div>
         <div class="time">3:10 CT</div>
         <div class="probs">Fedde vs Wacha</div>
         <div class="bc">Royals.TV · Chicago Sports Network Plus</div>
       </div><div class="g" data-gpk="822996">
-        <div class="matchup">NYY @ TB</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/147.svg"><span class="ab">NYY</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/139.svg"><span class="ab">TB</span></span>
+        </div>
         <div class="time">5:10 CT</div>
         <div class="probs">Fried vs Martinez</div>
         <div class="bc">YES · Rays.TV</div>
       </div><div class="g" data-gpk="823805">
-        <div class="matchup">WSH @ MIL</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/120.svg"><span class="ab">WSH</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/158.svg"><span class="ab">MIL</span></span>
+        </div>
         <div class="time">6:10 CT</div>
         <div class="probs">Griffin vs Harrison</div>
         <div class="bc">Brewers.TV · Nationals.TV</div>
       </div><div class="g" data-gpk="824857">
-        <div class="matchup">SF @ BAL</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/137.svg"><span class="ab">SF</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/110.svg"><span class="ab">BAL</span></span>
+        </div>
         <div class="time">6:15 CT</div>
         <div class="probs">Webb vs Bassitt</div>
         <div class="bc">FOX · FOX</div>
       </div><div class="g" data-gpk="823074">
-        <div class="matchup">BOS @ STL</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/111.svg"><span class="ab">BOS</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/138.svg"><span class="ab">STL</span></span>
+        </div>
         <div class="time">6:15 CT</div>
         <div class="probs">Suarez vs Leahy</div>
         <div class="bc">FOX · FOX</div>
       </div><div class="g" data-gpk="824939">
-        <div class="matchup">CLE @ ATL</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/114.svg"><span class="ab">CLE</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/144.svg"><span class="ab">ATL</span></span>
+        </div>
         <div class="time">6:15 CT</div>
         <div class="probs">Messick vs Pérez</div>
         <div class="bc">Guardians.TV Presented by Progressive · BravesVision</div>
       </div><div class="g" data-gpk="823316">
-        <div class="matchup">COL @ SD</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/115.svg"><span class="ab">COL</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/135.svg"><span class="ab">SD</span></span>
+        </div>
         <div class="time">7:40 CT</div>
         <div class="probs">Feltner vs Márquez</div>
         <div class="bc">Rockies.TV · Padres.TV Presented by UC San Diego Health · KFMB 8.1 (CBS)</div>
       </div><div class="g" data-gpk="823967">
-        <div class="matchup">TEX @ LAD</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/140.svg"><span class="ab">TEX</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/119.svg"><span class="ab">LAD</span></span>
+        </div>
         <div class="time">8:10 CT</div>
         <div class="probs">Leiter vs Sheehan</div>
         <div class="bc">SportsNet LA · Rangers Sports Network</div>
       </div><div class="g" data-gpk="823155">
-        <div class="matchup">HOU @ SEA</div>
+        <div class="matchup">
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/117.svg"><span class="ab">HOU</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/136.svg"><span class="ab">SEA</span></span>
+        </div>
         <div class="time">8:40 CT</div>
         <div class="probs">Jr. vs Castillo</div>
         <div class="bc">Space City Home Network · Mariners.TV</div>
@@ -901,19 +969,19 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
     <th style="text-align:right">PCT</th><th style="text-align:right">GB</th>
     <th style="text-align:right">L10</th></tr></thead>
-    <tbody><tr><td class="team">Guardians</td><td class="num">8</td><td class="num">6</td><td class="num pct">.571</td><td class="num">&mdash;</td><td class="num">6-4</td></tr><tr><td class="team">Twins</td><td class="num">7</td><td class="num">7</td><td class="num pct">.500</td><td class="num">1.0</td><td class="num">6-4</td></tr><tr><td class="team">Royals</td><td class="num">6</td><td class="num">8</td><td class="num pct">.429</td><td class="num">2.0</td><td class="num">4-6</td></tr><tr class="my-team"><td class="team">White Sox</td><td class="num">5</td><td class="num">9</td><td class="num pct">.357</td><td class="num">3.0</td><td class="num">4-6</td></tr><tr><td class="team">Tigers</td><td class="num">5</td><td class="num">9</td><td class="num pct">.357</td><td class="num">3.0</td><td class="num">3-7</td></tr></tbody></table></div>
+    <tbody><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/114.svg"><span class="ab">Guardians</span></span></td><td class="num">8</td><td class="num">6</td><td class="num pct">.571</td><td class="num">&mdash;</td><td class="num">6-4</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/142.svg"><span class="ab">Twins</span></span></td><td class="num">7</td><td class="num">7</td><td class="num pct">.500</td><td class="num">1.0</td><td class="num">6-4</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/118.svg"><span class="ab">Royals</span></span></td><td class="num">6</td><td class="num">8</td><td class="num pct">.429</td><td class="num">2.0</td><td class="num">4-6</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/116.svg"><span class="ab">Tigers</span></span></td><td class="num">6</td><td class="num">9</td><td class="num pct">.400</td><td class="num">2.5</td><td class="num">4-6</td></tr><tr class="my-team"><td class="team"><span class="ml-logo-pair"><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/145.svg"><span class="ab">White Sox</span></span></td><td class="num">5</td><td class="num">9</td><td class="num pct">.357</td><td class="num">3.0</td><td class="num">4-6</td></tr></tbody></table></div>
     <h3>Rivals &middot; Yesterday</h3>
     <div class="rivals"><div class="rival">
-        <h4>Tigers <span class="score">W 2-0 vs MIA</span></h4>
+        <h4><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/116.svg"> Tigers <span class="score">W 2-0 vs <img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/146.svg"><span class="ab">MIA</span></span></h4>
         <p>WP: Keider Montero · LP: Chris Paddack</p>
       </div><div class="rival">
-        <h4>Twins <span class="score">L 4-10 at TOR</span></h4>
+        <h4><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/142.svg"> Twins <span class="score">L 4-10 at <img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/141.svg"><span class="ab">TOR</span></span></h4>
         <p>WP: Joe Mantiply · LP: Simeon Woods Richardson</p>
       </div><div class="rival">
-        <h4>Guardians <span class="score">L 5-11 at ATL</span></h4>
+        <h4><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/114.svg"> Guardians <span class="score">L 5-11 at <img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/144.svg"><span class="ab">ATL</span></span></h4>
         <p>WP: Tyler Kinley · LP: Slade Cecconi</p>
       </div><div class="rival">
-        <h4>Royals <span class="score">W 2-0 vs CWS</span></h4>
+        <h4><img class="ml-logo sm" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/118.svg"> Royals <span class="score">W 2-0 vs <img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/145.svg"><span class="ab">CWS</span></span></h4>
         <p>WP: Kris Bubic · LP: Davis Martin</p>
       </div></div>
   </section>
@@ -930,36 +998,36 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Yesterday&rsquo;s Scoreboard</h3>
     <div class="tblwrap"><table class="data">
     <thead><tr><th>Away</th><th></th><th>Home</th><th></th><th>W</th><th>WP</th></tr></thead>
-    <tbody><tr class="scorecard-link" data-href="scorecard/?game=824695"><td class="name">PIT</td><td class="num">2</td><td class="name">CHC</td><td class="num">0</td><td class="num w">PIT</td><td>Montgomery</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823482"><td class="name">AZ</td><td class="num">5</td><td class="name">PHI</td><td class="num">4</td><td class="num w">AZ</td><td>Soroka</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824297"><td class="name">MIA</td><td class="num">0</td><td class="name">DET</td><td class="num">2</td><td class="num w">DET</td><td>Montero</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824534"><td class="name">LAA</td><td class="num">10</td><td class="name">CIN</td><td class="num">2</td><td class="num w">LAA</td><td>Kochanowicz</td></tr><tr class="scorecard-link" data-href="scorecard/?game=822829"><td class="name">MIN</td><td class="num">4</td><td class="name">TOR</td><td class="num">10</td><td class="num w">TOR</td><td>Mantiply</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823643"><td class="name">ATH</td><td class="num">4</td><td class="name">NYM</td><td class="num">0</td><td class="num w">ATH</td><td>Perkins</td></tr><tr class="scorecard-link" data-href="scorecard/?game=822997"><td class="name">NYY</td><td class="num">3</td><td class="name">TB</td><td class="num">5</td><td class="num w">TB</td><td>Matz</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824858"><td class="name">SF</td><td class="num">6</td><td class="name">BAL</td><td class="num">3</td><td class="num w">SF</td><td>Roupp</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824941"><td class="name">CLE</td><td class="num">5</td><td class="name">ATL</td><td class="num">11</td><td class="num w">ATL</td><td>Kinley</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824128"><td class="name">CWS</td><td class="num">0</td><td class="name">KC</td><td class="num">2</td><td class="num w">KC</td><td>Bubic</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823808"><td class="name">WSH</td><td class="num">7</td><td class="name">MIL</td><td class="num">3</td><td class="num w">WSH</td><td>Poulin</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823076"><td class="name">BOS</td><td class="num">2</td><td class="name">STL</td><td class="num">3</td><td class="num w">STL</td><td>May</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823318"><td class="name">COL</td><td class="num">2</td><td class="name">SD</td><td class="num">5</td><td class="num w">SD</td><td>Miller</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823156"><td class="name">HOU</td><td class="num">6</td><td class="name">SEA</td><td class="num">9</td><td class="num w">SEA</td><td>Hancock</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823968"><td class="name">TEX</td><td class="num">7</td><td class="name">LAD</td><td class="num">8</td><td class="num w">LAD</td><td>Díaz</td></tr></tbody></table></div>
+    <tbody><tr class="scorecard-link" data-href="scorecard/?game=824695"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/134.svg"><span class="ab">PIT</span></span></td><td class="num">2</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/112.svg"><span class="ab">CHC</span></span></td><td class="num">0</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/134.svg"><span class="ab">PIT</span></span></td><td>Montgomery</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823482"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/109.svg"><span class="ab">AZ</span></span></td><td class="num">5</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/143.svg"><span class="ab">PHI</span></span></td><td class="num">4</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/109.svg"><span class="ab">AZ</span></span></td><td>Soroka</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824297"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/146.svg"><span class="ab">MIA</span></span></td><td class="num">0</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/116.svg"><span class="ab">DET</span></span></td><td class="num">2</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/116.svg"><span class="ab">DET</span></span></td><td>Montero</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824534"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/108.svg"><span class="ab">LAA</span></span></td><td class="num">10</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/113.svg"><span class="ab">CIN</span></span></td><td class="num">2</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/108.svg"><span class="ab">LAA</span></span></td><td>Kochanowicz</td></tr><tr class="scorecard-link" data-href="scorecard/?game=822829"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/142.svg"><span class="ab">MIN</span></span></td><td class="num">4</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/141.svg"><span class="ab">TOR</span></span></td><td class="num">10</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/141.svg"><span class="ab">TOR</span></span></td><td>Mantiply</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823643"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/133.svg"><span class="ab">ATH</span></span></td><td class="num">4</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/121.svg"><span class="ab">NYM</span></span></td><td class="num">0</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/133.svg"><span class="ab">ATH</span></span></td><td>Perkins</td></tr><tr class="scorecard-link" data-href="scorecard/?game=822997"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/147.svg"><span class="ab">NYY</span></span></td><td class="num">3</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/139.svg"><span class="ab">TB</span></span></td><td class="num">5</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/139.svg"><span class="ab">TB</span></span></td><td>Matz</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824858"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/137.svg"><span class="ab">SF</span></span></td><td class="num">6</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/110.svg"><span class="ab">BAL</span></span></td><td class="num">3</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/137.svg"><span class="ab">SF</span></span></td><td>Roupp</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824941"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/114.svg"><span class="ab">CLE</span></span></td><td class="num">5</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/144.svg"><span class="ab">ATL</span></span></td><td class="num">11</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/144.svg"><span class="ab">ATL</span></span></td><td>Kinley</td></tr><tr class="scorecard-link" data-href="scorecard/?game=824128"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/145.svg"><span class="ab">CWS</span></span></td><td class="num">0</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/118.svg"><span class="ab">KC</span></span></td><td class="num">2</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/118.svg"><span class="ab">KC</span></span></td><td>Bubic</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823808"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/120.svg"><span class="ab">WSH</span></span></td><td class="num">7</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/158.svg"><span class="ab">MIL</span></span></td><td class="num">3</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/120.svg"><span class="ab">WSH</span></span></td><td>Poulin</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823076"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/111.svg"><span class="ab">BOS</span></span></td><td class="num">2</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/138.svg"><span class="ab">STL</span></span></td><td class="num">3</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/138.svg"><span class="ab">STL</span></span></td><td>May</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823318"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/115.svg"><span class="ab">COL</span></span></td><td class="num">2</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/135.svg"><span class="ab">SD</span></span></td><td class="num">5</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/135.svg"><span class="ab">SD</span></span></td><td>Miller</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823156"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/117.svg"><span class="ab">HOU</span></span></td><td class="num">6</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/136.svg"><span class="ab">SEA</span></span></td><td class="num">9</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/136.svg"><span class="ab">SEA</span></span></td><td>Hancock</td></tr><tr class="scorecard-link" data-href="scorecard/?game=823968"><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/140.svg"><span class="ab">TEX</span></span></td><td class="num">7</td><td class="name"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/119.svg"><span class="ab">LAD</span></span></td><td class="num">8</td><td class="num w"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/119.svg"><span class="ab">LAD</span></span></td><td>Díaz</td></tr></tbody></table></div>
     <a href="scorecard/" class="scorecard-btn">Browse All Scorecards &rsaquo;</a>
     <h3>Standings &mdash; All Six Divisions</h3>
     <div class="two"><div><h4>AL East</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Yankees</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Rays</td><td class="num">6</td><td class="num">7</td><td class="num">2.0</td></tr><tr><td class="team">Orioles</td><td class="num">6</td><td class="num">7</td><td class="num">2.0</td></tr><tr><td class="team">Blue Jays</td><td class="num">6</td><td class="num">7</td><td class="num">2.0</td></tr><tr><td class="team">Red Sox</td><td class="num">4</td><td class="num">9</td><td class="num">4.0</td></tr></tbody></table></div><h4>AL Central</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/147.svg"><span class="ab">Yankees</span></span></td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/139.svg"><span class="ab">Rays</span></span></td><td class="num">6</td><td class="num">7</td><td class="num">2.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/110.svg"><span class="ab">Orioles</span></span></td><td class="num">6</td><td class="num">7</td><td class="num">2.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/141.svg"><span class="ab">Blue Jays</span></span></td><td class="num">6</td><td class="num">7</td><td class="num">2.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/111.svg"><span class="ab">Red Sox</span></span></td><td class="num">4</td><td class="num">9</td><td class="num">4.0</td></tr></tbody></table></div><h4>AL Central</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Guardians</td><td class="num">8</td><td class="num">6</td><td class="num">&mdash;</td></tr><tr><td class="team">Twins</td><td class="num">7</td><td class="num">7</td><td class="num">1.0</td></tr><tr><td class="team">Royals</td><td class="num">6</td><td class="num">8</td><td class="num">2.0</td></tr><tr class="my-team"><td class="team">White Sox</td><td class="num">5</td><td class="num">9</td><td class="num">3.0</td></tr><tr><td class="team">Tigers</td><td class="num">5</td><td class="num">9</td><td class="num">3.0</td></tr></tbody></table></div><h4>AL West</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/114.svg"><span class="ab">Guardians</span></span></td><td class="num">8</td><td class="num">6</td><td class="num">&mdash;</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/142.svg"><span class="ab">Twins</span></span></td><td class="num">7</td><td class="num">7</td><td class="num">1.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/118.svg"><span class="ab">Royals</span></span></td><td class="num">6</td><td class="num">8</td><td class="num">2.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/116.svg"><span class="ab">Tigers</span></span></td><td class="num">6</td><td class="num">9</td><td class="num">2.5</td></tr><tr class="my-team"><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/145.svg"><span class="ab">White Sox</span></span></td><td class="num">5</td><td class="num">9</td><td class="num">3.0</td></tr></tbody></table></div><h4>AL West</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Rangers</td><td class="num">7</td><td class="num">6</td><td class="num">&mdash;</td></tr><tr><td class="team">Angels</td><td class="num">7</td><td class="num">7</td><td class="num">0.5</td></tr><tr><td class="team">Athletics</td><td class="num">6</td><td class="num">7</td><td class="num">1.0</td></tr><tr><td class="team">Astros</td><td class="num">6</td><td class="num">8</td><td class="num">1.5</td></tr><tr><td class="team">Mariners</td><td class="num">5</td><td class="num">9</td><td class="num">2.5</td></tr></tbody></table></div></div><div><h4>NL East</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/140.svg"><span class="ab">Rangers</span></span></td><td class="num">7</td><td class="num">6</td><td class="num">&mdash;</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/108.svg"><span class="ab">Angels</span></span></td><td class="num">7</td><td class="num">7</td><td class="num">0.5</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/133.svg"><span class="ab">Athletics</span></span></td><td class="num">6</td><td class="num">7</td><td class="num">1.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/117.svg"><span class="ab">Astros</span></span></td><td class="num">6</td><td class="num">8</td><td class="num">1.5</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/136.svg"><span class="ab">Mariners</span></span></td><td class="num">5</td><td class="num">9</td><td class="num">2.5</td></tr></tbody></table></div></div><div><h4>NL East</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Braves</td><td class="num">9</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Marlins</td><td class="num">8</td><td class="num">6</td><td class="num">1.0</td></tr><tr><td class="team">Mets</td><td class="num">7</td><td class="num">7</td><td class="num">2.0</td></tr><tr><td class="team">Phillies</td><td class="num">6</td><td class="num">7</td><td class="num">2.5</td></tr><tr><td class="team">Nationals</td><td class="num">5</td><td class="num">8</td><td class="num">3.5</td></tr></tbody></table></div><h4>NL Central</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/144.svg"><span class="ab">Braves</span></span></td><td class="num">9</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/146.svg"><span class="ab">Marlins</span></span></td><td class="num">8</td><td class="num">7</td><td class="num">1.5</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/143.svg"><span class="ab">Phillies</span></span></td><td class="num">7</td><td class="num">7</td><td class="num">2.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/121.svg"><span class="ab">Mets</span></span></td><td class="num">7</td><td class="num">7</td><td class="num">2.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/120.svg"><span class="ab">Nationals</span></span></td><td class="num">5</td><td class="num">8</td><td class="num">3.5</td></tr></tbody></table></div><h4>NL Central</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Pirates</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Cardinals</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Brewers</td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team">Reds</td><td class="num">8</td><td class="num">6</td><td class="num">0.5</td></tr><tr><td class="team">Cubs</td><td class="num">6</td><td class="num">7</td><td class="num">2.0</td></tr></tbody></table></div><h4>NL West</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/134.svg"><span class="ab">Pirates</span></span></td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/138.svg"><span class="ab">Cardinals</span></span></td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/158.svg"><span class="ab">Brewers</span></span></td><td class="num">8</td><td class="num">5</td><td class="num">&mdash;</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/113.svg"><span class="ab">Reds</span></span></td><td class="num">8</td><td class="num">6</td><td class="num">0.5</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/112.svg"><span class="ab">Cubs</span></span></td><td class="num">6</td><td class="num">7</td><td class="num">2.0</td></tr></tbody></table></div><h4>NL West</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team">Dodgers</td><td class="num">10</td><td class="num">3</td><td class="num">&mdash;</td></tr><tr><td class="team">Padres</td><td class="num">8</td><td class="num">6</td><td class="num">2.5</td></tr><tr><td class="team">D-backs</td><td class="num">8</td><td class="num">6</td><td class="num">2.5</td></tr><tr><td class="team">Giants</td><td class="num">6</td><td class="num">8</td><td class="num">4.5</td></tr><tr><td class="team">Rockies</td><td class="num">6</td><td class="num">8</td><td class="num">4.5</td></tr></tbody></table></div></div></div>
+        <tbody><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/119.svg"><span class="ab">Dodgers</span></span></td><td class="num">10</td><td class="num">3</td><td class="num">&mdash;</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/135.svg"><span class="ab">Padres</span></span></td><td class="num">8</td><td class="num">6</td><td class="num">2.5</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/109.svg"><span class="ab">D-backs</span></span></td><td class="num">8</td><td class="num">7</td><td class="num">3.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/137.svg"><span class="ab">Giants</span></span></td><td class="num">6</td><td class="num">8</td><td class="num">4.5</td></tr><tr><td class="team"><span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/115.svg"><span class="ab">Rockies</span></span></td><td class="num">6</td><td class="num">8</td><td class="num">4.5</td></tr></tbody></table></div></div></div>
     <h3>League Leaders</h3>
     <div class="two">
     <div><h4>Batting</h4><div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>AVG</td><td class="name">Andy Pages (LAD)</td><td class="num">.449</td></tr><tr><td>HR</td><td class="name">Yordan Alvarez (HOU)</td><td class="num">5</td></tr><tr><td>RBI</td><td class="name">Drake Baldwin (ATL)</td><td class="num">16</td></tr><tr><td>SB</td><td class="name">Bobby Witt Jr. (KC)</td><td class="num">8</td></tr><tr><td>OPS</td><td class="name">Yordan Alvarez (HOU)</td><td class="num">1.266</td></tr></tbody></table></div></div>
+    <tbody><tr><td>AVG</td><td class="name">Andy Pages <span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/119.svg"><span class="ab">LAD</span></span></td><td class="num">.449</td></tr><tr><td>HR</td><td class="name">Yordan Alvarez <span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/117.svg"><span class="ab">HOU</span></span></td><td class="num">5</td></tr><tr><td>RBI</td><td class="name">Drake Baldwin <span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/144.svg"><span class="ab">ATL</span></span></td><td class="num">16</td></tr><tr><td>SB</td><td class="name">Bobby Witt Jr. <span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/118.svg"><span class="ab">KC</span></span></td><td class="num">8</td></tr><tr><td>OPS</td><td class="name">Yordan Alvarez <span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/117.svg"><span class="ab">HOU</span></span></td><td class="num">1.266</td></tr></tbody></table></div></div>
     <div><h4>Pitching</h4><div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>ERA</td><td class="name">José Soriano (LAA)</td><td class="num">0.45</td></tr><tr><td>SV</td><td class="name">David Bednar (NYY)</td><td class="num">5</td></tr><tr><td>W</td><td class="name">Aaron Ashby (MIL)</td><td class="num">3</td></tr></tbody></table></div></div>
+    <tbody><tr><td>ERA</td><td class="name">José Soriano <span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/108.svg"><span class="ab">LAA</span></span></td><td class="num">0.45</td></tr><tr><td>SV</td><td class="name">David Bednar <span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/147.svg"><span class="ab">NYY</span></span></td><td class="num">5</td></tr><tr><td>W</td><td class="name">Aaron Ashby <span class="ml-logo-pair"><img class="ml-logo xs" alt="" aria-hidden="true" src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/158.svg"><span class="ab">MIL</span></span></td><td class="num">3</td></tr></tbody></table></div></div>
     </div>
   </section>
 
@@ -979,7 +1047,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Guaranteed Rate Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/11/26 14:00 CT</span>
+  <span>Filed 04/11/26 15:02 CT</span>
 </footer>
 
 <script>

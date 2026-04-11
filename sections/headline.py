@@ -25,6 +25,14 @@ def _abbr(tmap, team_id):
     return tmap.get(team_id, {}).get("abbreviation", "???")
 
 
+def _logo(team_id, size="sm"):
+    """MLB team cap logo (dark-theme variant). Inline-safe <img> tag."""
+    if not team_id:
+        return ""
+    return (f'<img class="ml-logo {size}" alt="" aria-hidden="true" '
+            f'src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/{team_id}.svg">')
+
+
 def _fmt_time_ct(iso_z):
     dt = datetime.strptime(iso_z, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
     ct = dt.astimezone(_CT)
@@ -62,7 +70,8 @@ def _render_line_score(game, tmap, team_id, team_name, game_date=None, yest=None
         is_winner = (tid == away_id and away_score > home_score) or (tid == home_id and home_score > away_score)
         row_cls = ' class="win-row"' if is_winner else ''
         rhe_cls = ' class="rhe-total gold"' if is_winner else ' class="rhe-total"'
-        return (f'<tr{row_cls}><td>{escape(label)}</td>{cells}'
+        label_html = f'<span class="ml-logo-pair">{_logo(tid, "sm")}<span class="ab">{escape(label)}</span></span>'
+        return (f'<tr{row_cls}><td class="team-label">{label_html}</td>{cells}'
                 f'<td{rhe_cls}>{totals["runs"]}</td>'
                 f'<td{rhe_cls}>{totals["hits"]}</td>'
                 f'<td{rhe_cls}>{totals["errors"]}</td></tr>')
@@ -237,7 +246,9 @@ def _render_next_games(next_games, tmap, team_id, team_name, today_lineup, today
         is_home = home_id == team_id
         opp_id = away_id if is_home else home_id
         opp_ab = _abbr(tmap, opp_id)
-        vs = f"vs {opp_ab}" if is_home else f"at {opp_ab}"
+        opp_logo = _logo(opp_id, "sm")
+        vs = (f"vs {opp_logo}<span class=\"ab\">{opp_ab}</span>" if is_home
+              else f"at {opp_logo}<span class=\"ab\">{opp_ab}</span>")
         try:
             gd = datetime.strptime(g["gameDate"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
             ct = gd.astimezone(_CT)
@@ -298,7 +309,7 @@ def _render_next_games(next_games, tmap, team_id, team_name, today_lineup, today
             if cubs_line: pitcher_html += f'<div class="nx-pline">{cubs_line}</div>'
             pitcher_html += '</div>'
         if opp_p != "TBD":
-            pitcher_html += f'<div class="nx-pitcher"><span class="nx-side">{escape(opp_ab)}</span> {escape(opp_p)}'
+            pitcher_html += f'<div class="nx-pitcher"><span class="nx-side">{opp_logo}{escape(opp_ab)}</span> {escape(opp_p)}'
             if opp_line: pitcher_html += f'<div class="nx-pline">{opp_line}</div>'
             pitcher_html += '</div>'
 

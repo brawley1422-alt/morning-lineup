@@ -21,6 +21,13 @@ def _abbr(tmap, team_id):
     return tmap.get(team_id, {}).get("abbreviation", "???")
 
 
+def _logo(team_id, size="sm"):
+    if not team_id:
+        return ""
+    return (f'<img class="ml-logo {size}" alt="" aria-hidden="true" '
+            f'src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/{team_id}.svg">')
+
+
 def _team_name(tmap, team_id):
     return tmap.get(team_id, {}).get("teamName", "???")
 
@@ -38,10 +45,11 @@ def _render_scoreboard_yest(games_y, tmap):
         winner_ab = aa if as_ > hs else ha
         wp = g.get("decisions", {}).get("winner", {}).get("fullName", "").split()[-1] if g.get("decisions") else ""
         pk = g.get("gamePk", "")
+        winner_logo = _logo(away_id if as_ > hs else home_id, "xs")
         rows.append(f'<tr class="scorecard-link" data-href="scorecard/?game={pk}">'
-                    f'<td class="name">{escape(aa)}</td><td class="num">{as_}</td>'
-                    f'<td class="name">{escape(ha)}</td><td class="num">{hs}</td>'
-                    f'<td class="num w">{escape(winner_ab)}</td><td>{escape(wp)}</td></tr>')
+                    f'<td class="name"><span class="ml-logo-pair">{_logo(away_id, "xs")}<span class="ab">{escape(aa)}</span></span></td><td class="num">{as_}</td>'
+                    f'<td class="name"><span class="ml-logo-pair">{_logo(home_id, "xs")}<span class="ab">{escape(ha)}</span></span></td><td class="num">{hs}</td>'
+                    f'<td class="num w"><span class="ml-logo-pair">{winner_logo}<span class="ab">{escape(winner_ab)}</span></span></td><td>{escape(wp)}</td></tr>')
     return f"""<div class="tblwrap"><table class="data">
     <thead><tr><th>Away</th><th></th><th>Home</th><th></th><th>W</th><th>WP</th></tr></thead>
     <tbody>{"".join(rows)}</tbody></table></div>"""
@@ -61,7 +69,7 @@ def _render_all_divisions(standings_data, tmap, team_id):
             tn = _team_name(tmap, tid)
             gb = tr.get("gamesBack", "-")
             if gb in ("-", "0.0"): gb = "&mdash;"
-            rows.append(f'<tr{cls}><td class="team">{escape(tn)}</td>'
+            rows.append(f'<tr{cls}><td class="team"><span class="ml-logo-pair">{_logo(tid, "xs")}<span class="ab">{escape(tn)}</span></span></td>'
                         f'<td class="num">{tr["wins"]}</td><td class="num">{tr["losses"]}</td>'
                         f'<td class="num">{gb}</td></tr>')
         return f"""<h4>{name}</h4><div class="tblwrap"><table class="data standings">
@@ -93,7 +101,7 @@ def _render_leaders(lh, lp, tmap):
             tid = L["team"]["id"]
             ab = _abbr(tmap, tid)
             val = L["value"]
-            out.append(f'<tr><td>{CAT_LABELS.get(cat,cat)}</td><td class="name">{escape(name)} ({escape(ab)})</td><td class="num">{escape(str(val))}</td></tr>')
+            out.append(f'<tr><td>{CAT_LABELS.get(cat,cat)}</td><td class="name">{escape(name)} <span class="ml-logo-pair">{_logo(tid, "xs")}<span class="ab">{escape(ab)}</span></span></td><td class="num">{escape(str(val))}</td></tr>')
         return "".join(out)
 
     hit = rows(lh, ["battingAverage", "homeRuns", "runsBattedIn", "stolenBases", "onBasePlusSlugging"])

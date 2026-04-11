@@ -34,6 +34,14 @@ a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offs
 .masthead .kicker .vol{color:var(--gold)}
 .masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(44px,9vw,108px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4);display:flex;align-items:center;gap:16px}
 .mast-logo{width:clamp(48px,10vw,80px);height:auto;flex-shrink:0;opacity:.9;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.ml-logo{display:inline-block;vertical-align:middle;flex-shrink:0;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.ml-logo.xs{width:14px;height:14px}
+.ml-logo.sm{width:18px;height:18px}
+.ml-logo.md{width:26px;height:26px}
+.ml-logo.lg{width:40px;height:40px}
+.ml-logo.xl{width:56px;height:56px}
+.ml-logo-pair{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.ml-logo-pair .ab{font-family:var(--cond);letter-spacing:.08em;color:inherit}
 .masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase;}
 .masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
 .masthead .dek{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;}

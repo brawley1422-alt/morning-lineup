@@ -14,6 +14,13 @@ def _abbr(tmap, team_id):
     return tmap.get(team_id, {}).get("abbreviation", "???")
 
 
+def _logo(team_id, size="sm"):
+    if not team_id:
+        return ""
+    return (f'<img class="ml-logo {size}" alt="" aria-hidden="true" '
+            f'src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/{team_id}.svg">')
+
+
 def render(briefing):
     games_t = briefing.data["games_t"]
     tmap = briefing.data["tmap"]
@@ -39,7 +46,11 @@ def render(briefing):
                 bc_parts.append(escape(b.get("name", "")))
         bc_str = f'<div class="bc">{" · ".join(bc_parts)}</div>' if bc_parts else ""
         cards.append(f"""<div class="g" data-gpk="{g['gamePk']}">
-        <div class="matchup">{aa} @ {ha}</div>
+        <div class="matchup">
+          <span class="ml-logo-pair">{_logo(aid, "sm")}<span class="ab">{aa}</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair">{_logo(hid, "sm")}<span class="ab">{ha}</span></span>
+        </div>
         <div class="time">{time_str}</div>
         <div class="probs">{escape(ap_n)} vs {escape(hp_n)}</div>
         {bc_str}

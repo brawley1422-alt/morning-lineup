@@ -10,6 +10,13 @@ def _abbr(tmap, team_id):
     return tmap.get(team_id, {}).get("abbreviation", "???")
 
 
+def _logo(team_id, size="sm"):
+    if not team_id:
+        return ""
+    return (f'<img class="ml-logo {size}" alt="" aria-hidden="true" '
+            f'src="https://www.mlbstatic.com/team-logos/team-cap-on-dark/{team_id}.svg">')
+
+
 def _render_standings(standings_data, tmap, div_id, team_id):
     recs = []
     for rec in standings_data["records"]:
@@ -25,7 +32,7 @@ def _render_standings(standings_data, tmap, div_id, team_id):
         l10_str = f'{l10.get("wins",0)}-{l10.get("losses",0)}' if l10 else "–"
         gb = tr.get("gamesBack", "-")
         if gb in ("-", "0.0"): gb = "&mdash;"
-        rows.append(f'<tr{cls}><td class="team">{escape(name)}</td>'
+        rows.append(f'<tr{cls}><td class="team"><span class="ml-logo-pair">{_logo(tid, "sm")}<span class="ab">{escape(name)}</span></span></td>'
                     f'<td class="num">{tr["wins"]}</td><td class="num">{tr["losses"]}</td>'
                     f'<td class="num pct">{tr["winningPercentage"]}</td>'
                     f'<td class="num">{gb}</td><td class="num">{l10_str}</td></tr>')
@@ -55,12 +62,15 @@ def _render_rivals(games_y, tmap, rivals_cfg, team_id, div_name):
         my_score = g["teams"]["away" if is_away else "home"].get("score", 0)
         opp_score = g["teams"]["home" if is_away else "away"].get("score", 0)
         won = my_score > opp_score
-        result = f'{"W" if won else "L"} {my_score}-{opp_score} {"at" if is_away else "vs"} {opp_ab}'
+        opp_logo = _logo(opp_id, "xs")
+        vs_prefix = "at" if is_away else "vs"
+        result = (f'{"W" if won else "L"} {my_score}-{opp_score} '
+                  f'{vs_prefix} {opp_logo}<span class="ab">{opp_ab}</span>')
         wp = g.get("decisions", {}).get("winner", {}).get("fullName", "") if g.get("decisions") else ""
         lp = g.get("decisions", {}).get("loser", {}).get("fullName", "") if g.get("decisions") else ""
         blurb = f'WP: {wp}' + (f' · LP: {lp}' if lp else '')
         cards.append(f"""<div class="rival">
-        <h4>{escape(name)} <span class="score">{result}</span></h4>
+        <h4>{_logo(tid, "sm")} {escape(name)} <span class="score">{result}</span></h4>
         <p>{escape(blurb)}</p>
       </div>""")
     if not cards:
