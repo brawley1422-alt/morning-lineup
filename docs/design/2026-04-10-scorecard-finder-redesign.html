@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Scorecard Book — The Morning Lineup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0d0f14;--ink-2:#141823;--ink-3:#1c2230;--ink-4:#232b3d;--paper:#ece4d0;--paper-dim:#c9bfa6;--paper-mute:#8b836d;--rule:#2a3142;--rule-hi:#3a4360;--gold:#c9a24a;--gold-hi:#e6bf62;--gold-dim:#8a6f32;--crimson:#c0554f;--win:#6ea86a;--loss:#c0554f;--serif:"Playfair Display",Georgia,serif;--body:"Lora","Source Serif Pro",Georgia,serif;--cond:"Oswald","Bebas Neue",Impact,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ink);color:var(--paper);min-height:100%}
+body{font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;background:radial-gradient(1200px 600px at 10% -10%,rgba(14,51,134,.22),transparent 60%),radial-gradient(900px 500px at 110% 10%,rgba(201,162,74,.10),transparent 55%),linear-gradient(180deg,#0a0c12 0%,#0d0f14 40%,#0b0d12 100%);background-attachment:fixed;position:relative;min-height:100vh;padding-bottom:40px}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.06;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+
+/* MASTHEAD */
+.masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:22px 32px 16px;max-width:1180px;margin:0 auto;text-align:center}
+.mast-back{position:absolute;top:20px;left:32px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim);transition:color .15s,border-color .15s}
+.mast-back:hover{color:var(--paper);border-bottom-color:var(--paper)}
+.mast-kicker{font-family:var(--cond);font-weight:600;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;text-shadow:0 1px 0 rgba(0,0,0,.4)}
+.mast-main{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(42px,7vw,88px);line-height:.88;margin:0;letter-spacing:-.015em;background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 70%,var(--paper-mute) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 2px 0 rgba(0,0,0,.4)}
+.mast-main em{font-style:italic}
+.mast-sub{font-family:var(--cond);text-transform:uppercase;letter-spacing:.28em;font-size:11px;color:var(--paper-mute);margin-top:10px}
+.mast-sub .g{color:var(--gold)}
+
+/* CONTROLS BAR */
+.controls{position:relative;z-index:2;max-width:1180px;margin:20px auto 0;padding:0 32px}
+.controls-inner{background:var(--ink-2);border:1px solid var(--rule-hi);border-top:2px solid var(--gold);border-radius:2px;padding:16px 20px;display:grid;grid-template-columns:auto auto 1fr auto;gap:24px;align-items:center;box-shadow:0 20px 50px -20px rgba(0,0,0,.6)}
+.ctrl{display:flex;flex-direction:column;gap:6px}
+.ctrl label{font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:6px}
+.ctrl label::before{content:"◆";color:var(--gold-dim);font-size:7px}
+.ctrl .val{font-family:var(--cond);font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:var(--paper);background:var(--ink);border:1px solid var(--rule);border-radius:1px;padding:9px 14px;min-width:180px}
+.ctrl .val.date{font-family:var(--mono);font-size:13px}
+.ctrl-stats{display:flex;gap:16px;justify-content:flex-end;font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute)}
+.ctrl-stats .stat{text-align:right}
+.ctrl-stats .stat .n{display:block;font-family:var(--serif);font-style:italic;font-weight:900;font-size:22px;line-height:1;color:var(--gold);margin-bottom:2px}
+.ctrl-stats .stat.live .n{color:var(--crimson)}
+
+/* SECTION HEADERS */
+.slate{position:relative;z-index:2;max-width:1180px;margin:28px auto 0;padding:0 32px}
+.slate-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;background-image:linear-gradient(90deg,var(--paper) 0%,var(--gold) 50%,var(--paper) 100%);background-size:100% 2px;background-repeat:no-repeat;background-position:top;padding-top:14px;border-bottom:1px solid var(--rule);padding-bottom:10px}
+.slate-head .num{font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.1em;border:1px solid var(--gold-dim);padding:3px 7px;border-radius:2px;background:rgba(201,162,74,.08)}
+.slate-head .h{font-family:var(--cond);text-transform:uppercase;font-size:18px;font-weight:700;letter-spacing:.06em;color:var(--paper);flex:1;line-height:1}
+.slate-head .tag{font-family:var(--mono);font-size:9px;letter-spacing:.24em;color:var(--paper-mute);text-transform:uppercase}
+
+/* GAME CARDS */
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:32px}
+.game{background:var(--ink-2);border:1px solid var(--rule);border-top:2px solid var(--rule-hi);border-radius:2px;padding:14px 16px 12px;text-decoration:none;color:inherit;position:relative;transition:transform .15s,border-color .15s,box-shadow .15s;display:block}
+.game:hover{border-color:var(--gold);transform:translateY(-1px);box-shadow:0 12px 30px -12px rgba(0,0,0,.6),0 0 0 1px rgba(201,162,74,.1)}
+.game.live{border-top-color:var(--crimson);box-shadow:0 0 0 1px rgba(192,85,79,.2),0 12px 24px -12px rgba(192,85,79,.15)}
+.game.final{border-top-color:var(--gold-dim)}
+
+.game-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-mute)}
+.game.live .game-head .status{color:var(--crimson);display:flex;align-items:center;gap:6px;font-weight:600}
+.game.live .game-head .status::before{content:"";width:6px;height:6px;background:var(--crimson);border-radius:50%;box-shadow:0 0 8px var(--crimson);animation:pulse 1.6s ease-in-out infinite}
+.game.final .game-head .status{color:var(--gold)}
+@keyframes pulse{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
+
+.game-matchup{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.game-row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:4px 0}
+.game-row .logo{width:26px;height:26px;border-radius:50%;background:var(--ink-3);border:1px solid var(--rule-hi);display:flex;align-items:center;justify-content:center;font-family:var(--cond);font-size:10px;font-weight:700;color:var(--paper-dim)}
+.game-row.winner .logo{border-color:var(--gold);color:var(--gold)}
+.game-row .name{font-family:var(--cond);text-transform:uppercase;font-size:14px;letter-spacing:.06em;font-weight:600;color:var(--paper-dim);line-height:1}
+.game-row .name .rec{display:block;font-family:var(--mono);font-size:9px;color:var(--paper-mute);letter-spacing:.06em;margin-top:2px;font-weight:400;text-transform:none}
+.game-row.winner .name{color:var(--paper)}
+.game-row .score{font-family:var(--serif);font-style:italic;font-weight:900;font-size:28px;line-height:1;color:var(--paper-mute);letter-spacing:-.02em}
+.game-row.winner .score{color:var(--gold)}
+
+.game-foot{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px dashed var(--rule);font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--paper-mute);text-transform:uppercase}
+.game-foot .detail{color:var(--paper-dim)}
+.game-foot .g{color:var(--gold)}
+.game-foot .link{color:var(--gold);border-bottom:1px dotted var(--gold-dim)}
+
+.game.upcoming{opacity:.75}
+.game.upcoming .game-row .score{font-size:14px;font-family:var(--mono);color:var(--paper-mute);font-style:normal}
+.game.upcoming .game-foot .detail{color:var(--paper-mute)}
+
+/* FOOTER */
+.site-foot{position:relative;z-index:2;max-width:1180px;margin:30px auto 0;padding:20px 32px 0;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--paper-mute)}
+.site-foot .g{color:var(--gold)}
+.site-foot a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
+.site-foot a:hover{color:var(--paper);border-bottom-color:var(--paper)}
+
+@media (max-width:760px){.mast-back{position:static;display:block;margin-bottom:10px}.masthead{padding:16px 20px 12px}.controls-inner{grid-template-columns:1fr;gap:14px}.ctrl-stats{justify-content:flex-start}.controls,.slate,.site-foot{padding:0 20px}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <a href="../" class="mast-back">← The Morning Lineup</a>
+  <div class="mast-kicker">◆ Members Desk · Digital Scorer's Book ◆</div>
+  <h1 class="mast-main">The <em>Scorecard</em> Book</h1>
+  <div class="mast-sub">A Seat In The Press Box <span class="g">·</span> Pencil &amp; Paper For Every Game</div>
+</header>
+
+<div class="controls">
+  <div class="controls-inner">
+    <div class="ctrl">
+      <label>Date</label>
+      <div class="val date">Thu · Apr 09 · 2026</div>
+    </div>
+    <div class="ctrl">
+      <label>Team Filter</label>
+      <div class="val">All Teams</div>
+    </div>
+    <div></div>
+    <div class="ctrl-stats">
+      <div class="stat live"><span class="n">2</span>Live Now</div>
+      <div class="stat"><span class="n">13</span>Final</div>
+      <div class="stat"><span class="n">0</span>Upcoming</div>
+    </div>
+  </div>
+</div>
+
+<main class="slate">
+  <div class="slate-head">
+    <span class="num">01</span>
+    <span class="h">Today's Slate</span>
+    <span class="tag">15 Games · 2 Live · 13 Final</span>
+  </div>
+
+  <div class="games">
+
+    <a class="game live" href="#">
+      <div class="game-head">
+        <span>Yankee Stadium</span>
+        <span class="status">Live · T6</span>
+      </div>
+      <div class="game-matchup">
+        <div class="game-row">
+          <div class="logo">OAK</div>
+          <div class="name">Oakland Athletics<span class="rec">4-9 · AL West</span></div>
+          <div class="score">1</div>
+        </div>
+        <div class="game-row winner">
+          <div class="logo">NYY</div>
+          <div class="name">New York Yankees<span class="rec">10-3 · AL East</span></div>
+          <div class="score">3</div>
+        </div>
+      </div>
+      <div class="game-foot">
+        <span class="detail">Bases: 1st <span class="g">·</span> 2 Out</span>
+        <span class="link">Open Scorecard →</span>
+      </div>
+    </a>
+
+    <a class="game live" href="#">
+      <div class="game-head">
+        <span>Citi Field</span>
+        <span class="status">Live · B3</span>
+      </div>
+      <div class="game-matchup">
+        <div class="game-row">
+          <div class="logo">ARI</div>
+          <div class="name">Arizona Diamondbacks<span class="rec">6-7 · NL West</span></div>
+          <div class="score">0</div>
+        </div>
+        <div class="game-row winner">
+          <div class="logo">NYM</div>
+          <div class="name">New York Mets<span class="rec">7-6 · NL East</span></div>
+          <div class="score">1</div>
+        </div>
+      </div>
+      <div class="game-foot">
+        <span class="detail">Senga vs Gallen <span class="g">·</span> 1 Out</span>
+        <span class="link">Open Scorecard →</span>
+      </div>
+    </a>
+
+    <a class="game final" href="#">
+      <div class="game-head">
+        <span>loanDepot Park</span>
+        <span class="status">Final</span>
+      </div>
+      <div class="game-matchup">
+        <div class="game-row">
+          <div class="logo">CIN</div>
+          <div class="name">Cincinnati Reds<span class="rec">6-7 · NL Central</span></div>
+          <div class="score">1</div>
+        </div>
+        <div class="game-row winner">
+          <div class="logo">MIA</div>
+          <div class="name">Miami Marlins<span class="rec">4-9 · NL East</span></div>
+          <div class="score">8</div>
+        </div>
+      </div>
+      <div class="game-foot">
+        <span class="detail">WP: Alcantara <span class="g">·</span> LP: Abbott</span>
+        <span class="link">Scorecard →</span>
+      </div>
+    </a>
+
+    <a class="game final" href="#">
+      <div class="game-head">
+        <span>Comerica Park</span>
+        <span class="status">Final</span>
+      </div>
+      <div class="game-matchup">
+        <div class="game-row">
+          <div class="logo">DET</div>
+          <div class="name">Detroit Tigers<span class="rec">9-4 · AL Central</span></div>
+          <div class="score">1</div>
+        </div>
+        <div class="game-row winner">
+          <div class="logo">MIN</div>
+          <div class="name">Minnesota Twins<span class="rec">6-7 · AL Central</span></div>
+          <div class="score">3</div>
+        </div>
+      </div>
+      <div class="game-foot">
+        <span class="detail">WP: Ryan <span class="g">·</span> HR: Buxton (3)</span>
+        <span class="link">Scorecard →</span>
+      </div>
+    </a>
+
+    <a class="game final" href="#">
+      <div class="game-head">
+        <span>Kauffman Stadium</span>
+        <span class="status">Final</span>
+      </div>
+      <div class="game-matchup">
+        <div class="game-row winner">
+          <div class="logo">CWS</div>
+          <div class="name">Chicago White Sox<span class="rec">3-10 · AL Central</span></div>
+          <div class="score">2</div>
+        </div>
+        <div class="game-row">
+          <div class="logo">KC</div>
+          <div class="name">Kansas City Royals<span class="rec">8-5 · AL Central</span></div>
+          <div class="score">0</div>
+        </div>
+      </div>
+      <div class="game-foot">
+        <span class="detail">WP: Crochet <span class="g">·</span> SV: Banks (3)</span>
+        <span class="link">Scorecard →</span>
+      </div>
+    </a>
+
+    <a class="game final" href="#">
+      <div class="game-head">
+        <span>Petco Park</span>
+        <span class="status">Final</span>
+      </div>
+      <div class="game-matchup">
+        <div class="game-row">
+          <div class="logo">COL</div>
+          <div class="name">Colorado Rockies<span class="rec">3-10 · NL West</span></div>
+          <div class="score">3</div>
+        </div>
+        <div class="game-row winner">
+          <div class="logo">SD</div>
+          <div class="name">San Diego Padres<span class="rec">8-5 · NL West</span></div>
+          <div class="score">7</div>
+        </div>
+      </div>
+      <div class="game-foot">
+        <span class="detail">HR: Tatis (4), Machado (2)</span>
+        <span class="link">Scorecard →</span>
+      </div>
+    </a>
+
+    <a class="game final" href="#">
+      <div class="game-head">
+        <span>Wrigley Field</span>
+        <span class="status">Final</span>
+      </div>
+      <div class="game-matchup">
+        <div class="game-row">
+          <div class="logo">PIT</div>
+          <div class="name">Pittsburgh Pirates<span class="rec">4-9 · NL Central</span></div>
+          <div class="score">4</div>
+        </div>
+        <div class="game-row winner">
+          <div class="logo">CHC</div>
+          <div class="name">Chicago Cubs<span class="rec">9-4 · NL Central</span></div>
+          <div class="score">6</div>
+        </div>
+      </div>
+      <div class="game-foot">
+        <span class="detail">WP: Taillon <span class="g">·</span> HR: Happ, Bellinger</span>
+        <span class="link">Scorecard →</span>
+      </div>
+    </a>
+
+    <a class="game final" href="#">
+      <div class="game-head">
+        <span>Dodger Stadium</span>
+        <span class="status">Final</span>
+      </div>
+      <div class="game-matchup">
+        <div class="game-row">
+          <div class="logo">SF</div>
+          <div class="name">San Francisco Giants<span class="rec">7-6 · NL West</span></div>
+          <div class="score">2</div>
+        </div>
+        <div class="game-row winner">
+          <div class="logo">LAD</div>
+          <div class="name">Los Angeles Dodgers<span class="rec">10-3 · NL West</span></div>
+          <div class="score">5</div>
+        </div>
+      </div>
+      <div class="game-foot">
+        <span class="detail">HR: Ohtani (5), Betts (4)</span>
+        <span class="link">Scorecard →</span>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<footer class="site-foot">
+  <a href="../">← Back to Morning Lineup</a>
+  <span>Scorecard Book <span class="g">·</span> Vol. I <span class="g">·</span> Press Box</span>
+</footer>
+
+</body>
+</html>

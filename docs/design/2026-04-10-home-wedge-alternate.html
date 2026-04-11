@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Morning Lineup · Members Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d0f14;--ink-2:#141823;--ink-3:#1c2230;--ink-4:#232b3d;
+  --paper:#ece4d0;--paper-dim:#c9bfa6;--paper-mute:#8b836d;
+  --rule:#2a3142;--rule-hi:#3a4360;
+  --gold:#c9a24a;--gold-hi:#e6bf62;--gold-dim:#8a6f32;
+  --crimson:#c0554f;--win:#6ea86a;
+  --serif:"Playfair Display",Georgia,serif;
+  --body:"Lora","Source Serif Pro",Georgia,serif;
+  --cond:"Oswald","Bebas Neue",Impact,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ink);color:var(--paper);min-height:100%}
+body{
+  font-family:var(--body);font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  background:
+    radial-gradient(1200px 600px at 10% -10%,rgba(14,51,134,.22),transparent 60%),
+    radial-gradient(900px 500px at 110% 10%,rgba(201,162,74,.10),transparent 55%),
+    radial-gradient(700px 500px at 50% 120%,rgba(192,85,79,.08),transparent 60%),
+    linear-gradient(180deg,#0a0c12 0%,#0d0f14 40%,#0b0d12 100%);
+  background-attachment:fixed;position:relative;overflow-x:hidden;min-height:100vh;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.06;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* TICKER BAR */
+.ticker{
+  position:relative;z-index:3;
+  background:linear-gradient(180deg,var(--ink-2),var(--ink-3));
+  border-bottom:1px solid var(--rule);
+  font-family:var(--cond);font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--paper-mute);
+  padding:8px 32px;
+  display:flex;justify-content:space-between;align-items:center;gap:20px;
+}
+.ticker .left,.ticker .right{display:flex;gap:18px;align-items:center}
+.ticker .live-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--crimson);
+  box-shadow:0 0 10px var(--crimson);
+  animation:pulse 2s ease-in-out infinite;
+}
+.ticker .g{color:var(--gold)}
+.ticker .paper{color:var(--paper)}
+@keyframes pulse{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
+
+/* MASTHEAD */
+.masthead{
+  position:relative;z-index:2;
+  border-bottom:6px double var(--paper);
+  padding:18px 32px 14px;
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:end;
+}
+.mast-kicker-l,.mast-kicker-r{
+  font-family:var(--cond);text-transform:uppercase;
+  letter-spacing:.22em;font-size:10px;color:var(--paper-mute);
+  display:flex;flex-direction:column;gap:4px;padding-bottom:12px;
+}
+.mast-kicker-l{align-items:flex-start}
+.mast-kicker-r{align-items:flex-end}
+.mast-kicker-l .row,.mast-kicker-r .row{display:flex;gap:10px;align-items:center}
+.mast-kicker-l .val,.mast-kicker-r .val{color:var(--paper);font-family:var(--mono);font-size:11px;letter-spacing:.08em}
+.mast-kicker-r .val.gold{color:var(--gold)}
+.mast-center{text-align:center;padding:0 8px}
+.mast-main{
+  font-family:var(--serif);font-weight:900;font-style:italic;
+  font-size:clamp(48px,9vw,108px);line-height:.88;margin:0;
+  letter-spacing:-.015em;white-space:nowrap;
+  background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 70%,var(--paper-mute) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 2px 0 rgba(0,0,0,.4);
+}
+.mast-main .mast-the{
+  display:block;font-family:var(--cond);font-style:normal;font-weight:600;
+  font-size:.18em;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--gold);-webkit-text-fill-color:var(--gold);
+  margin-bottom:6px;text-shadow:0 1px 0 rgba(0,0,0,.4);
+}
+.mast-main em{font-style:italic;font-weight:900}
+
+/* PAGE */
+.page{
+  position:relative;z-index:2;max-width:1280px;margin:0 auto;
+  padding:32px 32px 24px;
+  display:grid;grid-template-columns:1.25fr .95fr;gap:52px;align-items:start;
+}
+
+/* LEFT: EDITORIAL HERO + CTA */
+.hero{
+  position:relative;
+  animation:slide-in-l .7s cubic-bezier(.22,.61,.36,1) both;
+}
+.hero-kicker{
+  font-family:var(--mono);font-size:10px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--gold);
+  margin:0 0 18px;display:flex;gap:14px;align-items:center;
+}
+.hero-kicker::before{content:"";width:36px;height:1px;background:var(--gold)}
+.hero-kicker .dot{
+  width:6px;height:6px;border-radius:50%;background:var(--crimson);
+  box-shadow:0 0 12px var(--crimson);animation:pulse 2.4s ease-in-out infinite;
+  display:inline-block;
+}
+
+.hero-headline{
+  font-family:var(--serif);font-weight:900;font-style:italic;
+  font-size:clamp(40px,5.2vw,68px);line-height:.96;letter-spacing:-.018em;
+  color:var(--paper);margin:0 0 22px;text-wrap:balance;
+}
+.hero-headline .gold{
+  color:var(--gold);font-style:italic;position:relative;white-space:nowrap;
+}
+.hero-headline .gold::after{
+  content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;
+  background:linear-gradient(90deg,var(--gold-dim),var(--gold),var(--gold-dim));
+}
+
+.hero-lede{
+  font-family:var(--body);font-size:17px;line-height:1.6;
+  color:var(--paper-dim);margin:0 0 28px;max-width:540px;
+}
+.hero-lede strong{color:var(--paper);font-weight:600;font-style:italic}
+
+.hero-cta{
+  display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+  margin:0 0 32px;
+}
+.btn-primary{
+  background:linear-gradient(180deg,var(--gold-hi) 0%,var(--gold) 55%,var(--gold-dim) 100%);
+  border:1px solid var(--gold);color:var(--ink);
+  font-family:var(--cond);text-transform:uppercase;letter-spacing:.22em;
+  font-size:13px;font-weight:700;padding:15px 26px;border-radius:1px;
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:12px;
+  box-shadow:
+    0 10px 24px -10px rgba(201,162,74,.55),
+    inset 0 1px 0 rgba(255,255,255,.3),
+    inset 0 -1px 0 rgba(0,0,0,.25);
+  transition:transform .15s,filter .2s,box-shadow .2s;
+}
+.btn-primary::after{content:"→";font-family:var(--mono);font-size:15px}
+.btn-primary:hover{
+  filter:brightness(1.08);transform:translateY(-1px);
+  box-shadow:
+    0 14px 30px -10px rgba(201,162,74,.7),
+    inset 0 1px 0 rgba(255,255,255,.35),
+    inset 0 -1px 0 rgba(0,0,0,.3);
+}
+.btn-ghost{
+  background:transparent;border:1px solid var(--rule-hi);
+  color:var(--gold);font-family:var(--cond);
+  text-transform:uppercase;letter-spacing:.22em;
+  font-size:12px;font-weight:600;padding:14px 22px;
+  border-radius:1px;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:10px;
+  transition:color .15s,border-color .15s,background .15s;
+}
+.btn-ghost:hover{color:var(--paper);border-color:var(--gold);background:rgba(201,162,74,.06)}
+.btn-ghost .sep{color:var(--paper-mute);font-size:10px}
+.cta-meta{
+  font-family:var(--mono);font-size:10px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--paper-mute);
+}
+.cta-meta .g{color:var(--gold)}
+
+/* VALUE PROPS - three numbered items */
+.props{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  background-image:linear-gradient(90deg,var(--paper) 0%,var(--gold) 50%,var(--paper) 100%);
+  background-size:100% 2px;background-repeat:no-repeat;background-position:top;
+}
+.prop{
+  padding:16px 18px 14px;
+  border-right:1px dashed var(--rule);
+}
+.prop:last-child{border-right:none}
+.prop .n{
+  font-family:var(--mono);font-size:10px;color:var(--gold);
+  letter-spacing:.12em;display:block;margin-bottom:4px;
+}
+.prop .h{
+  font-family:var(--cond);text-transform:uppercase;
+  letter-spacing:.08em;font-size:13px;font-weight:600;
+  color:var(--paper);margin-bottom:4px;line-height:1.15;
+}
+.prop .b{
+  font-family:var(--body);font-size:12px;color:var(--paper-mute);
+  line-height:1.4;font-style:italic;
+}
+
+/* RIGHT: PREVIEW CLIPPING */
+.clip-wrap{
+  position:relative;
+  animation:slide-in-r .7s cubic-bezier(.22,.61,.36,1) both;
+  animation-delay:.12s;
+}
+.clip-wrap::before,.clip-wrap::after{
+  content:"";position:absolute;width:14px;height:14px;
+  border:1.5px solid var(--gold);pointer-events:none;
+}
+.clip-wrap::before{top:-7px;left:-7px;border-right:none;border-bottom:none}
+.clip-wrap::after{top:-7px;right:-7px;border-left:none;border-bottom:none}
+
+.clip-label{
+  position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+  background:var(--ink);padding:0 12px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.26em;
+  color:var(--gold);text-transform:uppercase;z-index:2;
+}
+
+.clip{
+  background:
+    linear-gradient(180deg,rgba(201,162,74,.04),transparent 25%),
+    var(--ink-2);
+  border:1px solid var(--rule-hi);border-top:2px solid var(--gold);
+  border-radius:2px;padding:22px 24px 0;
+  box-shadow:0 30px 70px -24px rgba(0,0,0,.7),0 0 0 1px rgba(201,162,74,.08);
+  position:relative;overflow:hidden;
+}
+.clip-kicker{
+  font-family:var(--cond);text-transform:uppercase;letter-spacing:.22em;
+  font-size:10px;color:var(--paper-mute);margin-bottom:8px;
+  display:flex;justify-content:space-between;
+}
+.clip-kicker .g{color:var(--gold)}
+.clip-team{
+  font-family:var(--serif);font-weight:900;font-style:italic;
+  font-size:38px;line-height:.95;margin:0 0 14px;
+  color:var(--paper);letter-spacing:-.01em;
+}
+.clip-team .team-logo{
+  display:inline-block;width:34px;height:34px;
+  background:var(--ink-3);border:1.5px solid var(--gold);
+  border-radius:50%;vertical-align:-4px;margin-right:10px;
+  font-family:var(--cond);font-style:normal;font-weight:700;font-size:13px;
+  text-align:center;line-height:31px;color:var(--gold);
+}
+
+.clip-linescore{
+  background:var(--ink);border:1px solid var(--rule);
+  border-radius:2px;padding:10px 12px;margin-bottom:14px;
+  font-family:var(--mono);font-size:12px;color:var(--paper);
+}
+.clip-linescore table{width:100%;border-collapse:collapse}
+.clip-linescore th{
+  font-family:var(--cond);text-transform:uppercase;
+  font-size:9px;letter-spacing:.14em;color:var(--paper-mute);
+  font-weight:500;padding:2px 4px;text-align:center;
+}
+.clip-linescore th:first-child{text-align:left;padding-left:0}
+.clip-linescore td{
+  padding:4px 4px;text-align:center;font-size:12px;
+  border-top:1px dashed var(--rule);
+}
+.clip-linescore td:first-child{
+  text-align:left;padding-left:0;
+  font-family:var(--cond);text-transform:uppercase;
+  letter-spacing:.08em;font-weight:600;font-size:11px;
+}
+.clip-linescore .win{color:var(--win);font-weight:600}
+.clip-linescore .total{color:var(--gold);font-weight:700}
+
+.clip-story{
+  font-family:var(--body);font-size:13px;line-height:1.55;
+  color:var(--paper-dim);margin:0 0 12px;
+  font-style:italic;
+}
+.clip-story strong{color:var(--paper);font-style:normal;font-weight:600}
+
+/* THE FOLD - paywall reveal */
+.fold{
+  position:relative;margin:0 -24px;
+  padding:0 24px 24px;
+}
+.fold::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:80px;
+  background:linear-gradient(180deg,transparent 0%,var(--ink-2) 85%);
+  pointer-events:none;z-index:1;
+}
+.fold-rule{
+  display:flex;align-items:center;gap:12px;margin:-4px 0 12px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--gold);
+  position:relative;z-index:2;
+}
+.fold-rule::before,.fold-rule::after{
+  content:"";flex:1;height:1px;
+  background:repeating-linear-gradient(90deg,var(--gold-dim) 0 6px,transparent 6px 10px);
+}
+
+.fold-blur{
+  filter:blur(5px) brightness(.55);
+  opacity:.55;
+  pointer-events:none;
+  user-select:none;
+  padding-bottom:20px;
+  position:relative;
+}
+.fold-blur .ghost{
+  height:12px;background:var(--paper);border-radius:2px;
+  margin-bottom:8px;opacity:.6;
+}
+.fold-blur .ghost.w-80{width:80%}
+.fold-blur .ghost.w-60{width:60%}
+.fold-blur .ghost.w-90{width:90%}
+.fold-blur .ghost.w-50{width:50%}
+.fold-blur .ghost.w-70{width:70%}
+
+.fold-unlock{
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  z-index:3;
+  padding:10px 18px;
+  background:var(--ink);border:1px solid var(--gold);
+  font-family:var(--cond);text-transform:uppercase;
+  letter-spacing:.22em;font-size:11px;font-weight:600;
+  color:var(--gold);border-radius:1px;
+  box-shadow:0 0 40px rgba(201,162,74,.4),0 0 0 4px rgba(13,15,20,.6);
+  white-space:nowrap;
+}
+.fold-unlock::before{content:"🔒 ";opacity:.8}
+
+/* BOTTOM: TEAM PICKER */
+.picker{
+  grid-column:1 / -1;margin-top:30px;
+  padding:22px 0 0;
+  border-top:1px solid var(--rule);
+  animation:fade-up .8s ease both;animation-delay:.3s;
+}
+.picker-head{
+  display:flex;align-items:baseline;gap:14px;
+  margin-bottom:14px;
+  background-image:linear-gradient(90deg,var(--paper) 0%,var(--gold) 50%,var(--paper) 100%);
+  background-size:100% 2px;background-repeat:no-repeat;background-position:top;
+  padding-top:12px;
+}
+.picker-head .num{
+  font-family:var(--mono);font-size:10px;color:var(--gold);
+  letter-spacing:.1em;border:1px solid var(--gold-dim);
+  padding:3px 7px;border-radius:2px;background:rgba(201,162,74,.08);
+}
+.picker-head .h{
+  font-family:var(--cond);text-transform:uppercase;
+  font-size:16px;font-weight:700;letter-spacing:.06em;
+  color:var(--paper);flex:1;
+}
+.picker-head .tag{
+  font-family:var(--mono);font-size:9px;letter-spacing:.24em;
+  color:var(--paper-mute);text-transform:uppercase;
+}
+.picker-grid{
+  display:grid;
+  grid-template-columns:repeat(10,1fr);
+  gap:6px;
+}
+.team-pill{
+  background:var(--ink-2);border:1px solid var(--rule);
+  border-radius:2px;padding:9px 4px 8px;
+  text-align:center;cursor:pointer;text-decoration:none;
+  transition:transform .15s,border-color .15s,background .15s;
+  font-family:var(--cond);font-size:11px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.05em;
+  color:var(--paper-dim);
+  display:block;
+}
+.team-pill:hover{
+  border-color:var(--gold);color:var(--paper);
+  background:var(--ink-3);transform:translateY(-1px);
+}
+
+/* ANIMATIONS */
+@keyframes slide-in-l{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slide-in-r{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fade-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.ticker,.masthead{animation:fade-up .8s ease both}
+.masthead{animation-delay:.05s}
+
+/* RESPONSIVE */
+@media (max-width:900px){
+  .masthead{grid-template-columns:1fr;gap:10px;padding:16px 20px 10px;text-align:center}
+  .mast-kicker-l,.mast-kicker-r{align-items:center;flex-direction:row;justify-content:center;gap:20px;padding-bottom:0}
+  .page{grid-template-columns:1fr;gap:36px;padding:24px 20px 16px}
+  .picker-grid{grid-template-columns:repeat(5,1fr)}
+  .props{grid-template-columns:1fr;gap:0}
+  .prop{border-right:none;border-bottom:1px dashed var(--rule)}
+  .prop:last-child{border-bottom:none}
+  .ticker{flex-wrap:wrap;padding:8px 18px;font-size:9px}
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="left">
+    <span class="live-dot"></span>
+    <span class="paper">LIVE</span>
+    <span>15 Games Today</span>
+    <span class="g">·</span>
+    <span>Members Desk Now Open</span>
+  </div>
+  <div class="right">
+    <span>Vol. I</span>
+    <span class="g">·</span>
+    <span>Issue 247</span>
+    <span class="g">·</span>
+    <span class="paper">APR 10, 2026</span>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="mast-kicker-l">
+    <div class="row"><span>Edition</span><span class="val">Guest Preview</span></div>
+    <div class="row"><span>Reading</span><span class="val">Above the Fold</span></div>
+  </div>
+  <div class="mast-center">
+    <h1 class="mast-main"><span class="mast-the">The</span>Morning <em>Lineup</em></h1>
+  </div>
+  <div class="mast-kicker-r">
+    <div class="row"><span>Access</span><span class="val gold">Free Tier</span></div>
+    <div class="row"><span>Members</span><span class="val">Sign In</span></div>
+  </div>
+</header>
+
+<!-- PAGE -->
+<main class="page">
+
+  <!-- LEFT: EDITORIAL HERO -->
+  <section class="hero">
+    <p class="hero-kicker"><span class="dot"></span>A newspaper for one team · Yours</p>
+
+    <h1 class="hero-headline">
+      Your team's<br>
+      <span class="gold">front page,</span><br>
+      every morning.
+    </h1>
+
+    <p class="hero-lede">
+      A daily briefing for the fan who reads every box score. Line scores, three stars, farm reports, standings, matchups, and <strong>this day in history</strong> — all 30 teams, written fresh each morning before you finish your coffee.
+    </p>
+
+    <div class="hero-cta">
+      <a href="../auth/#signup" class="btn-primary">Claim Free Credentials</a>
+      <a href="../auth/" class="btn-ghost">Already a member<span class="sep">·</span>Sign in</a>
+    </div>
+
+    <div class="props">
+      <div class="prop">
+        <span class="n">01</span>
+        <div class="h">All 30 Teams</div>
+        <div class="b">Briefings every morning, never a day missed.</div>
+      </div>
+      <div class="prop">
+        <span class="n">02</span>
+        <div class="h">Editorial Voice</div>
+        <div class="b">Written by humans &amp; AI. No listicles, no fluff.</div>
+      </div>
+      <div class="prop">
+        <span class="n">03</span>
+        <div class="h">Free Forever</div>
+        <div class="b">Accounts are free. Your data stays yours.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIGHT: PREVIEW CLIPPING -->
+  <div class="clip-wrap">
+    <span class="clip-label">Sample · The Cubs · Today</span>
+    <section class="clip">
+      <div class="clip-kicker">
+        <span>Yesterday <span class="g">·</span> NL Central</span>
+        <span class="g">W 6-4</span>
+      </div>
+
+      <h2 class="clip-team">
+        <span class="team-logo">C</span>The Cubs
+      </h2>
+
+      <div class="clip-linescore">
+        <table>
+          <thead>
+            <tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>R</th><th>H</th><th>E</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>PIT</td><td>0</td><td>1</td><td>0</td><td>2</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td class="total">4</td><td>8</td><td>1</td></tr>
+            <tr><td class="win">CHC</td><td>2</td><td>0</td><td>1</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td><td>—</td><td class="total win">6</td><td>11</td><td>0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="clip-story">
+        <strong>Happ</strong> went 3-for-4 with a pair of doubles as the Cubs handed the Pirates their fourth straight loss at Wrigley. <strong>Taillon</strong> worked six innings of one-run ball before handing it over to a bullpen that finished the job clean.
+      </p>
+
+      <!-- THE FOLD -->
+      <div class="fold">
+        <div class="fold-rule">◆ Below the Fold · Members Only ◆</div>
+        <div class="fold-blur">
+          <div class="ghost w-90"></div>
+          <div class="ghost w-80"></div>
+          <div class="ghost w-60"></div>
+          <div class="ghost w-90"></div>
+          <div class="ghost w-70"></div>
+          <div class="ghost w-50"></div>
+          <div class="ghost w-80"></div>
+          <div class="ghost w-90"></div>
+          <div class="fold-unlock">Unlock All Sections</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- TEAM PICKER -->
+  <section class="picker">
+    <div class="picker-head">
+      <span class="num">02</span>
+      <span class="h">Or pick your team &amp; taste the front page</span>
+      <span class="tag">30 Teams · Free Preview</span>
+    </div>
+    <div class="picker-grid">
+      <a href="#" class="team-pill">Angels</a>
+      <a href="#" class="team-pill">Astros</a>
+      <a href="#" class="team-pill">A's</a>
+      <a href="#" class="team-pill">Blue Jays</a>
+      <a href="#" class="team-pill">Braves</a>
+      <a href="#" class="team-pill">Brewers</a>
+      <a href="#" class="team-pill">Cardinals</a>
+      <a href="#" class="team-pill">Cubs</a>
+      <a href="#" class="team-pill">D-Backs</a>
+      <a href="#" class="team-pill">Dodgers</a>
+      <a href="#" class="team-pill">Giants</a>
+      <a href="#" class="team-pill">Guardians</a>
+      <a href="#" class="team-pill">Mariners</a>
+      <a href="#" class="team-pill">Marlins</a>
+      <a href="#" class="team-pill">Mets</a>
+      <a href="#" class="team-pill">Nationals</a>
+      <a href="#" class="team-pill">Orioles</a>
+      <a href="#" class="team-pill">Padres</a>
+      <a href="#" class="team-pill">Phillies</a>
+      <a href="#" class="team-pill">Pirates</a>
+      <a href="#" class="team-pill">Rangers</a>
+      <a href="#" class="team-pill">Rays</a>
+      <a href="#" class="team-pill">Red Sox</a>
+      <a href="#" class="team-pill">Reds</a>
+      <a href="#" class="team-pill">Rockies</a>
+      <a href="#" class="team-pill">Royals</a>
+      <a href="#" class="team-pill">Tigers</a>
+      <a href="#" class="team-pill">Twins</a>
+      <a href="#" class="team-pill">White Sox</a>
+      <a href="#" class="team-pill">Yankees</a>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

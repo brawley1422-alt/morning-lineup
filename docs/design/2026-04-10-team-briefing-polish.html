@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Cubs — The Morning Lineup (Polish Pass)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0d0f14;--ink-2:#141823;--ink-3:#1c2230;--ink-4:#232b3d;--paper:#ece4d0;--paper-dim:#c9bfa6;--paper-mute:#8b836d;--rule:#2a3142;--rule-hi:#3a4360;--gold:#c9a24a;--gold-hi:#e6bf62;--gold-dim:#8a6f32;--crimson:#c0554f;--win:#6ea86a;--loss:#c0554f;--team-primary:#0E3386;--team-primary-hi:#2a56c4;--team-accent:#CC3433;--team-accent-hi:#e8544f;--serif:"Playfair Display",Georgia,serif;--body:"Lora","Source Serif Pro",Georgia,serif;--cond:"Oswald","Bebas Neue",Impact,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ink);color:var(--paper);min-height:100%}
+body{font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;background:radial-gradient(1200px 600px at 10% -10%,rgba(14,51,134,.22),transparent 60%),radial-gradient(900px 500px at 110% 10%,rgba(204,52,51,.14),transparent 55%),linear-gradient(180deg,#0a0c12 0%,#0d0f14 40%,#0b0d12 100%);background-attachment:fixed;min-height:100vh;position:relative;padding-bottom:40px}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.06;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+
+/* MASTHEAD */
+.masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:18px 32px 14px;max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:end}
+.mast-kicker-l,.mast-kicker-r{font-family:var(--cond);text-transform:uppercase;letter-spacing:.22em;font-size:10px;color:var(--paper-mute);display:flex;flex-direction:column;gap:4px;padding-bottom:12px}
+.mast-kicker-l{align-items:flex-start}.mast-kicker-r{align-items:flex-end}
+.mast-kicker-l .row,.mast-kicker-r .row{display:flex;gap:10px;align-items:center}
+.mast-kicker-l .val,.mast-kicker-r .val{color:var(--paper);font-family:var(--mono);font-size:11px;letter-spacing:.08em}
+.mast-kicker-r .val.gold{color:var(--gold)}
+.mast-center{text-align:center;padding:0 8px}
+.mast-main{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(42px,8vw,96px);line-height:.88;margin:0;letter-spacing:-.015em;white-space:nowrap;background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 70%,var(--paper-mute) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 2px 0 rgba(0,0,0,.4)}
+.mast-main .mast-the{display:block;font-family:var(--cond);font-style:normal;font-weight:600;font-size:.18em;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);-webkit-text-fill-color:var(--gold);margin-bottom:6px;text-shadow:0 1px 0 rgba(0,0,0,.4)}
+.mast-main em{font-style:italic;font-weight:900}
+
+/* COLUMNIST ROW - polished */
+.columnists{position:relative;z-index:2;max-width:1180px;margin:22px auto 0;padding:0 32px}
+.columnists-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;background-image:linear-gradient(90deg,var(--paper) 0%,var(--gold) 50%,var(--paper) 100%);background-size:100% 2px;background-repeat:no-repeat;background-position:top;padding-top:14px;border-bottom:1px solid var(--rule);padding-bottom:8px}
+.columnists-head .h{font-family:var(--serif);font-style:italic;font-weight:900;font-size:22px;letter-spacing:-.005em;color:var(--paper);flex:1;line-height:1}
+.columnists-head .tag{font-family:var(--mono);font-size:9px;letter-spacing:.24em;color:var(--paper-mute);text-transform:uppercase}
+
+.columnists-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.columnist{background:var(--ink-2);border:1px solid var(--rule);border-left:3px solid var(--gold-dim);border-radius:2px;padding:14px 16px;display:grid;grid-template-columns:46px 1fr;gap:14px;align-items:start;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}
+.columnist:hover{border-left-color:var(--gold);transform:translateX(2px)}
+.col-avatar{width:46px;height:46px;background:var(--ink-3);border:1.5px solid var(--gold-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-weight:900;font-size:18px;color:var(--gold)}
+.col-body{min-width:0}
+.col-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:16px;color:var(--paper);margin:0 0 2px;line-height:1.1}
+.col-beat{font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;font-size:9px;color:var(--gold);margin-bottom:6px}
+.col-quote{font-family:var(--body);font-style:italic;font-size:12px;color:var(--paper-dim);line-height:1.4;border-left:2px solid var(--rule);padding-left:8px;margin:0}
+
+/* HERO TEAM SECTION */
+.hero{position:relative;z-index:2;max-width:1180px;margin:24px auto 0;padding:0 32px}
+.hero-head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px;background-image:linear-gradient(90deg,var(--paper) 0%,var(--gold) 50%,var(--paper) 100%);background-size:100% 3px;background-repeat:no-repeat;background-position:top;padding-top:16px;border-bottom:1px solid var(--rule);padding-bottom:10px}
+.hero-head .num{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.1em;border:1px solid var(--gold-dim);padding:3px 8px;border-radius:2px;background:rgba(201,162,74,.08)}
+.hero-head .h{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(28px,3.4vw,42px);letter-spacing:-.01em;color:var(--paper);flex:1;line-height:.95}
+.hero-head .tag{font-family:var(--cond);text-transform:uppercase;font-size:11px;letter-spacing:.2em;color:var(--paper-mute)}
+
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:start}
+
+/* LINESCORE - polished */
+.game-result{background:var(--ink-2);border:1px solid var(--rule-hi);border-left:4px solid var(--team-primary);border-radius:2px;padding:18px 20px;box-shadow:0 20px 50px -20px rgba(14,51,134,.35)}
+.game-status{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper-mute)}
+.game-status .result{font-family:var(--cond);font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--win);background:rgba(110,168,106,.12);border:1px solid var(--win);padding:4px 10px;border-radius:1px}
+
+.linescore{width:100%;border-collapse:collapse;margin-bottom:14px}
+.linescore th{font-family:var(--cond);text-transform:uppercase;font-size:9px;letter-spacing:.12em;color:var(--paper-mute);font-weight:500;padding:4px 5px;text-align:center;border-bottom:1px solid var(--rule)}
+.linescore th:first-child{text-align:left;padding-left:0;width:80px}
+.linescore th.rhe{color:var(--gold);padding:0 8px}
+.linescore td{padding:8px 5px;text-align:center;font-family:var(--mono);font-size:14px;color:var(--paper-dim);border-bottom:1px dashed var(--rule)}
+.linescore td:first-child{text-align:left;padding-left:0;font-family:var(--cond);text-transform:uppercase;font-weight:600;font-size:13px;letter-spacing:.08em;color:var(--paper-dim)}
+.linescore .win-row td{color:var(--paper);font-weight:600}
+.linescore .win-row td:first-child{color:var(--gold)}
+.linescore .rhe-total{font-family:var(--serif);font-style:italic;font-weight:900;font-size:18px;padding:0 10px}
+.linescore .rhe-total.gold{color:var(--gold)}
+
+.wp-line{padding-top:12px;border-top:1px dashed var(--rule);font-family:var(--mono);font-size:11px;color:var(--paper-dim);letter-spacing:.06em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.wp-line .lbl{color:var(--paper-mute);margin-right:4px}
+.wp-line .g{color:var(--gold)}
+
+/* THREE STARS */
+.three-stars{background:var(--ink-2);border:1px solid var(--rule);border-top:2px solid var(--gold);border-radius:2px;padding:18px 18px 14px;box-shadow:0 20px 50px -20px rgba(0,0,0,.6)}
+.stars-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;padding-bottom:8px;border-bottom:1px dashed var(--rule)}
+.stars-head .h{font-family:var(--serif);font-style:italic;font-weight:900;font-size:18px;color:var(--paper);margin:0}
+.stars-head .tag{font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+
+.star{display:grid;grid-template-columns:36px 1fr auto;gap:14px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--rule)}
+.star:last-child{border-bottom:none}
+.star-rank{font-family:var(--serif);font-style:italic;font-weight:900;font-size:36px;line-height:.9;color:var(--gold);text-align:center;letter-spacing:-.04em}
+.star-body{min-width:0}
+.star-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:14px;font-weight:700;color:var(--paper);line-height:1.1}
+.star-stat{font-family:var(--mono);font-size:11px;color:var(--paper-dim);margin-top:3px;letter-spacing:.04em}
+.star-stat .g{color:var(--gold)}
+.star-badge{font-family:var(--cond);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);writing-mode:vertical-rl;transform:rotate(180deg)}
+
+/* SECTION TOC TABS (polished collapse toggles) */
+.toc-bar{position:relative;z-index:2;max-width:1180px;margin:28px auto 0;padding:0 32px}
+.toc-inner{background:var(--ink-2);border:1px solid var(--rule);border-top:2px solid var(--gold);border-radius:2px;padding:14px 18px;display:flex;gap:0;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.toc-head{font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-right:14px}
+.toc-list{display:flex;gap:4px;flex-wrap:wrap;flex:1;justify-content:flex-end}
+.toc-item{display:flex;align-items:center;gap:6px;padding:6px 10px;background:var(--ink-3);border:1px solid var(--rule);border-radius:2px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:11px;font-weight:600;color:var(--paper-dim);text-decoration:none;transition:color .15s,border-color .15s,background .15s;cursor:pointer}
+.toc-item:hover{color:var(--paper);border-color:var(--gold);background:var(--ink-4)}
+.toc-item .n{font-family:var(--mono);font-size:9px;color:var(--gold);font-weight:400}
+.toc-item.active{color:var(--paper);border-color:var(--gold);background:rgba(201,162,74,.08)}
+
+.site-foot{position:relative;z-index:2;max-width:1180px;margin:30px auto 0;padding:20px 32px 0;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--paper-mute)}
+.site-foot .g{color:var(--gold)}
+
+@media (max-width:900px){.masthead{grid-template-columns:1fr;gap:10px;padding:14px 20px 10px;text-align:center}.mast-kicker-l,.mast-kicker-r{flex-direction:row;justify-content:center;gap:18px;padding-bottom:0}.columnists-row{grid-template-columns:1fr}.hero-grid{grid-template-columns:1fr;gap:20px}.columnists,.hero,.toc-bar{padding:0 20px}.toc-inner{flex-direction:column;align-items:flex-start}.toc-list{justify-content:flex-start}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="mast-kicker-l">
+    <div class="row"><span>Edition</span><span class="val">Subscriber</span></div>
+    <div class="row"><span>Team</span><span class="val gold">Cubs</span></div>
+  </div>
+  <div class="mast-center">
+    <h1 class="mast-main"><span class="mast-the">The</span>Morning <em>Lineup</em></h1>
+  </div>
+  <div class="mast-kicker-r">
+    <div class="row"><span>Apr 10</span><span class="val">9-4 · NL Central 2nd</span></div>
+    <div class="row"><span>Vol.</span><span class="val">I</span></div>
+  </div>
+</header>
+
+<!-- COLUMNIST ROW -->
+<div class="columnists">
+  <div class="columnists-head">
+    <span class="h">The Columnists</span>
+    <span class="tag">Three Voices · One Morning</span>
+  </div>
+  <div class="columnists-row">
+    <a class="columnist" href="#">
+      <div class="col-avatar">T</div>
+      <div class="col-body">
+        <div class="col-name">Tony Gedeski</div>
+        <div class="col-beat">◆ The Preseason</div>
+        <p class="col-quote">"Taillon looked like a man with nothing to prove and everything to defend."</p>
+      </div>
+    </a>
+    <a class="columnist" href="#">
+      <div class="col-avatar">W</div>
+      <div class="col-body">
+        <div class="col-name">Walt Kieniewicz</div>
+        <div class="col-beat">◆ The Straight Beat</div>
+        <p class="col-quote">"Happ's bat is the kind of hot you plan around, not the kind you hope to catch."</p>
+      </div>
+    </a>
+    <a class="columnist" href="#">
+      <div class="col-avatar">B</div>
+      <div class="col-body">
+        <div class="col-name">Beatrice "Bee" Vittorini</div>
+        <div class="col-beat">◆ On Offense</div>
+        <p class="col-quote">"A five-run fifth at Wrigley is how April memories get made."</p>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- HERO SECTION -->
+<div class="hero">
+  <div class="hero-head">
+    <span class="num">01</span>
+    <span class="h">The Cubs</span>
+    <span class="tag">Yesterday · Wrigley Field · 41,238</span>
+  </div>
+
+  <div class="hero-grid">
+    <!-- LINESCORE -->
+    <div class="game-result">
+      <div class="game-status">
+        <span>Final · 9 Innings · 2h 47m</span>
+        <span class="result">W 6–4</span>
+      </div>
+
+      <table class="linescore">
+        <thead>
+          <tr>
+            <th></th>
+            <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+            <th class="rhe">R</th><th class="rhe">H</th><th class="rhe">E</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pittsburgh</td>
+            <td>0</td><td>1</td><td>0</td><td>2</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td>
+            <td class="rhe-total">4</td><td class="rhe-total">8</td><td class="rhe-total">1</td>
+          </tr>
+          <tr class="win-row">
+            <td>Chicago</td>
+            <td>2</td><td>0</td><td>1</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td><td>—</td>
+            <td class="rhe-total gold">6</td><td class="rhe-total gold">11</td><td class="rhe-total gold">0</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="wp-line">
+        <span><span class="lbl">WP</span> Taillon <span class="g">·</span> 6 IP / 1 ER / 7 K</span>
+        <span><span class="lbl">SV</span> Alzolay <span class="g">·</span> 2</span>
+      </div>
+    </div>
+
+    <!-- THREE STARS -->
+    <div class="three-stars">
+      <div class="stars-head">
+        <h3 class="h">Three Stars</h3>
+        <span class="tag">★ ★ ★</span>
+      </div>
+      <div class="star">
+        <div class="star-rank">1</div>
+        <div class="star-body">
+          <div class="star-name">Ian Happ</div>
+          <div class="star-stat">3-for-4 · 2 2B · 2 RBI · <span class="g">WPA +0.312</span></div>
+        </div>
+        <div class="star-badge">LF</div>
+      </div>
+      <div class="star">
+        <div class="star-rank">2</div>
+        <div class="star-body">
+          <div class="star-name">Jameson Taillon</div>
+          <div class="star-stat">6 IP · 4 H · 1 ER · 7 K · <span class="g">Game Score 72</span></div>
+        </div>
+        <div class="star-badge">RHP</div>
+      </div>
+      <div class="star">
+        <div class="star-rank">3</div>
+        <div class="star-body">
+          <div class="star-name">Cody Bellinger</div>
+          <div class="star-stat">2-for-4 · HR (4) · 3 RBI · <span class="g">WPA +0.156</span></div>
+        </div>
+        <div class="star-badge">CF</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOC BAR - polished section nav -->
+<div class="toc-bar">
+  <div class="toc-inner">
+    <div class="toc-head">◆ Today's Sections</div>
+    <div class="toc-list">
+      <a class="toc-item active" href="#headline"><span class="n">01</span> The Cubs</a>
+      <a class="toc-item" href="#scouting"><span class="n">02</span> Scouting</a>
+      <a class="toc-item" href="#stretch"><span class="n">03</span> The Stretch</a>
+      <a class="toc-item" href="#pressbox"><span class="n">04</span> Pressbox</a>
+      <a class="toc-item" href="#farm"><span class="n">05</span> The Farm</a>
+      <a class="toc-item" href="#slate"><span class="n">06</span> Slate</a>
+      <a class="toc-item" href="#division"><span class="n">07</span> NL Central</a>
+      <a class="toc-item" href="#around"><span class="n">08</span> League</a>
+      <a class="toc-item" href="#history"><span class="n">09</span> History</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-foot">
+  <span>← Back to Morning Lineup</span>
+  <span>The Cubs <span class="g">·</span> Vol. I <span class="g">·</span> Polish Pass</span>
+</footer>
+
+</body>
+</html>

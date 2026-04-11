@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Morning Lineup — Today's Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0d0f14;--ink-2:#141823;--ink-3:#1c2230;--ink-4:#232b3d;--paper:#ece4d0;--paper-dim:#c9bfa6;--paper-mute:#8b836d;--rule:#2a3142;--rule-hi:#3a4360;--gold:#c9a24a;--gold-hi:#e6bf62;--gold-dim:#8a6f32;--crimson:#c0554f;--win:#6ea86a;--loss:#c0554f;--serif:"Playfair Display",Georgia,serif;--body:"Lora","Source Serif Pro",Georgia,serif;--cond:"Oswald","Bebas Neue",Impact,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ink);color:var(--paper);min-height:100%}
+body{font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;background:radial-gradient(1200px 600px at 10% -10%,rgba(14,51,134,.22),transparent 60%),radial-gradient(900px 500px at 110% 10%,rgba(201,162,74,.10),transparent 55%),radial-gradient(700px 500px at 50% 120%,rgba(192,85,79,.08),transparent 60%),linear-gradient(180deg,#0a0c12 0%,#0d0f14 40%,#0b0d12 100%);background-attachment:fixed;position:relative;overflow-x:hidden;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.06;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+
+/* TICKER */
+.ticker{position:relative;z-index:3;background:linear-gradient(180deg,var(--ink-2),var(--ink-3));border-bottom:1px solid var(--rule);font-family:var(--cond);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--paper-mute);padding:8px 32px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.ticker .left,.ticker .right{display:flex;gap:18px;align-items:center}
+.ticker .live-dot{width:7px;height:7px;border-radius:50%;background:var(--crimson);box-shadow:0 0 10px var(--crimson);animation:pulse 2s ease-in-out infinite}
+.ticker .g{color:var(--gold)}.ticker .paper{color:var(--paper)}.ticker .win{color:var(--win)}
+@keyframes pulse{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
+
+/* MASTHEAD */
+.masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:18px 32px 14px;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:end}
+.mast-kicker-l,.mast-kicker-r{font-family:var(--cond);text-transform:uppercase;letter-spacing:.22em;font-size:10px;color:var(--paper-mute);display:flex;flex-direction:column;gap:4px;padding-bottom:12px}
+.mast-kicker-l{align-items:flex-start}.mast-kicker-r{align-items:flex-end}
+.mast-kicker-l .row,.mast-kicker-r .row{display:flex;gap:10px;align-items:center}
+.mast-kicker-l .val,.mast-kicker-r .val{color:var(--paper);font-family:var(--mono);font-size:11px;letter-spacing:.08em}
+.mast-kicker-r .val.gold{color:var(--gold)}
+.mast-center{text-align:center;padding:0 8px}
+.mast-main{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(48px,9vw,108px);line-height:.88;margin:0;letter-spacing:-.015em;white-space:nowrap;background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 70%,var(--paper-mute) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 2px 0 rgba(0,0,0,.4)}
+.mast-main .mast-the{display:block;font-family:var(--cond);font-style:normal;font-weight:600;font-size:.18em;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);-webkit-text-fill-color:var(--gold);margin-bottom:6px;text-shadow:0 1px 0 rgba(0,0,0,.4)}
+.mast-main em{font-style:italic;font-weight:900}
+
+/* GREETING BAR */
+.greet{position:relative;z-index:2;max-width:1280px;margin:18px auto 0;padding:0 32px;display:grid;grid-template-columns:1.4fr .6fr;gap:36px;align-items:center}
+.greet-head{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(28px,3.6vw,42px);line-height:1;color:var(--paper);margin:0 0 6px}
+.greet-head .reader{color:var(--gold)}
+.greet-sub{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper-mute)}
+.greet-sub .g{color:var(--gold)}
+.greet-sub .paper{color:var(--paper)}
+.greet-meta{display:flex;gap:18px;justify-content:flex-end;font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--paper-mute)}
+.greet-meta .stat{text-align:right}
+.greet-meta .n{display:block;font-family:var(--serif);font-style:italic;font-weight:900;font-size:30px;line-height:1;color:var(--gold);margin-bottom:4px}
+
+/* YOUR TEAM BANNER */
+.your-team{position:relative;z-index:2;max-width:1280px;margin:28px auto 24px;padding:0 32px}
+.yt-card{background:linear-gradient(90deg,rgba(14,51,134,.35) 0%,var(--ink-2) 60%,var(--ink-2) 100%);border:1px solid var(--rule-hi);border-left:4px solid var(--gold);border-radius:2px;padding:22px 26px;display:grid;grid-template-columns:auto 1fr auto;gap:26px;align-items:center;box-shadow:0 20px 60px -20px rgba(0,0,0,.6)}
+.yt-logo{width:72px;height:72px;background:var(--ink-3);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--cond);font-size:28px;font-weight:800;color:var(--gold);flex-shrink:0}
+.yt-meta{min-width:0}
+.yt-kicker{font-family:var(--mono);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.yt-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:32px;line-height:1;color:var(--paper);margin:0 0 6px}
+.yt-line{font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:13px;color:var(--paper-dim)}
+.yt-line .win{color:var(--win);font-weight:600}
+.yt-line .g{color:var(--gold)}
+.yt-cta{display:flex;gap:10px;align-items:center}
+.yt-btn{background:linear-gradient(180deg,var(--gold-hi) 0%,var(--gold) 55%,var(--gold-dim) 100%);border:1px solid var(--gold);color:var(--ink);font-family:var(--cond);text-transform:uppercase;letter-spacing:.22em;font-size:12px;font-weight:700;padding:13px 22px;border-radius:1px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;box-shadow:0 10px 24px -10px rgba(201,162,74,.55),inset 0 1px 0 rgba(255,255,255,.3),inset 0 -1px 0 rgba(0,0,0,.25);transition:transform .15s,filter .2s}
+.yt-btn::after{content:"→";font-family:var(--mono)}
+.yt-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+/* LEAGUES */
+.leagues{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 32px 40px;display:grid;grid-template-columns:1fr 1fr;gap:40px}
+
+.league{position:relative}
+.league-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;background-image:linear-gradient(90deg,var(--paper) 0%,var(--gold) 50%,var(--paper) 100%);background-size:100% 2px;background-repeat:no-repeat;background-position:top;padding-top:14px;border-bottom:1px solid var(--rule);padding-bottom:10px}
+.league-head .num{font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.1em;border:1px solid var(--gold-dim);padding:3px 7px;border-radius:2px;background:rgba(201,162,74,.08)}
+.league-head .h{font-family:var(--serif);font-style:italic;font-weight:900;font-size:28px;letter-spacing:-.01em;color:var(--paper);flex:1;line-height:1}
+.league-head .tag{font-family:var(--mono);font-size:9px;letter-spacing:.24em;color:var(--paper-mute);text-transform:uppercase}
+
+.div-group{margin-bottom:20px}
+.div-label{font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--gold);margin:0 0 8px;padding-left:2px}
+.div-teams{display:flex;flex-direction:column;gap:4px}
+
+.team-card{display:grid;grid-template-columns:32px 1fr auto auto;gap:12px;align-items:center;background:var(--ink-2);border:1px solid var(--rule);border-left:3px solid var(--rule);border-radius:2px;padding:8px 12px 8px 10px;text-decoration:none;transition:border-color .15s,transform .15s,box-shadow .15s,background .15s}
+.team-card:hover{border-color:var(--rule-hi);background:var(--ink-3);transform:translateX(2px)}
+.team-card.has-live{border-color:var(--gold);box-shadow:0 0 16px rgba(201,162,74,.2)}
+.team-card.is-user{border-left-color:var(--gold);background:linear-gradient(90deg,rgba(201,162,74,.08),var(--ink-2) 40%)}
+
+.team-logo{width:28px;height:28px;background:var(--ink-3);border:1px solid var(--rule-hi);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--cond);font-size:12px;font-weight:700;color:var(--paper-dim);flex-shrink:0}
+.team-card.has-live .team-logo{border-color:var(--gold);color:var(--gold)}
+
+.team-info{min-width:0}
+.team-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;font-size:13px;font-weight:600;color:var(--paper);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.1}
+.team-meta{display:flex;gap:8px;align-items:baseline;margin-top:2px}
+.team-rec{font-family:var(--mono);font-size:10px;color:var(--paper-mute)}
+.team-streak{font-family:var(--mono);font-size:9px;color:var(--gold-dim)}
+.team-streak.hot{color:var(--win)}.team-streak.cold{color:var(--loss)}
+
+.team-gb{font-family:var(--mono);font-size:10px;color:var(--paper-mute);letter-spacing:.08em;white-space:nowrap}
+.team-gb .gb-val{color:var(--paper-dim)}
+
+.team-live{font-family:var(--mono);font-size:9px;color:var(--gold);font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:4px;letter-spacing:.06em}
+.team-live::before{content:"";width:5px;height:5px;background:var(--crimson);border-radius:50%;animation:pulse 1.5s ease-in-out infinite}
+.team-final{font-family:var(--mono);font-size:9px;color:var(--paper-mute);white-space:nowrap;letter-spacing:.06em}
+.team-final.w{color:var(--win)}.team-final.l{color:var(--paper-mute)}
+
+.site-foot{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:20px 32px 32px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--paper-mute)}
+.site-foot .g{color:var(--gold)}
+.site-foot a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
+.site-foot a:hover{color:var(--paper);border-bottom-color:var(--paper)}
+
+@media (max-width:900px){
+  .masthead{grid-template-columns:1fr;gap:10px;padding:16px 20px 10px;text-align:center}
+  .mast-kicker-l,.mast-kicker-r{flex-direction:row;justify-content:center;gap:20px;padding-bottom:0}
+  .greet{grid-template-columns:1fr;gap:14px;padding:0 20px}
+  .greet-meta{justify-content:flex-start}
+  .your-team{padding:0 20px}.yt-card{grid-template-columns:auto 1fr;gap:16px}.yt-cta{grid-column:1/-1}
+  .leagues{grid-template-columns:1fr;padding:0 20px 30px;gap:24px}
+  .ticker{flex-wrap:wrap;padding:8px 18px;font-size:9px}
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="left">
+    <span class="live-dot"></span>
+    <span class="paper">4 Live</span>
+    <span class="g">·</span>
+    <span>11 Final</span>
+    <span class="g">·</span>
+    <span>0 Upcoming</span>
+  </div>
+  <div class="right">
+    <span>Vol. I</span>
+    <span class="g">·</span>
+    <span>Issue 247</span>
+    <span class="g">·</span>
+    <span class="paper">FRI · APR 10 · 2026</span>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="mast-kicker-l">
+    <div class="row"><span>Reader</span><span class="val">JB</span></div>
+    <div class="row"><span>Rooting</span><span class="val gold">Cubs</span></div>
+  </div>
+  <div class="mast-center">
+    <h1 class="mast-main"><span class="mast-the">The</span>Morning <em>Lineup</em></h1>
+  </div>
+  <div class="mast-kicker-r">
+    <div class="row"><span>Today</span><span class="val">15 Games</span></div>
+    <div class="row"><span>Status</span><span class="val gold">Members Desk</span></div>
+  </div>
+</header>
+
+<!-- GREETING -->
+<div class="greet">
+  <div>
+    <h2 class="greet-head">Good morning, <span class="reader">JB.</span></h2>
+    <p class="greet-sub">Your briefings are ready <span class="g">·</span> <span class="paper">Cubs won 6–4 at Wrigley</span> <span class="g">·</span> 4 live games right now</p>
+  </div>
+  <div class="greet-meta">
+    <div class="stat"><span class="n">15</span>Games Today</div>
+    <div class="stat"><span class="n">4</span>Live Now</div>
+    <div class="stat"><span class="n">12</span>Days 'til May</div>
+  </div>
+</div>
+
+<!-- YOUR TEAM -->
+<div class="your-team">
+  <div class="yt-card">
+    <div class="yt-logo">C</div>
+    <div class="yt-meta">
+      <div class="yt-kicker">◆ Your Team · Fresh Briefing</div>
+      <h3 class="yt-name">The Cubs</h3>
+      <div class="yt-line">
+        <span class="win">W 6–4</span> vs PIT <span class="g">·</span> Happ 3–4, 2 2B <span class="g">·</span> Taillon 6 IP / 1 ER <span class="g">·</span> <span class="g">NL Central · 2nd</span>
+      </div>
+    </div>
+    <div class="yt-cta">
+      <a href="cubs/" class="yt-btn">Read Today's Briefing</a>
+    </div>
+  </div>
+</div>
+
+<!-- LEAGUES GRID -->
+<main class="leagues">
+
+  <!-- AMERICAN LEAGUE -->
+  <section class="league">
+    <div class="league-head">
+      <span class="num">AL</span>
+      <span class="h">American League</span>
+      <span class="tag">15 Teams</span>
+    </div>
+
+    <div class="div-group">
+      <div class="div-label">AL East</div>
+      <div class="div-teams">
+        <a class="team-card has-live" href="yankees/">
+          <div class="team-logo">NYY</div>
+          <div class="team-info"><div class="team-name">New York Yankees</div><div class="team-meta"><span class="team-rec">10-3</span><span class="team-streak hot">W4</span></div></div>
+          <div class="team-gb"><span class="gb-val">—</span></div>
+          <div class="team-live">3-2 · T6</div>
+        </a>
+        <a class="team-card" href="orioles/">
+          <div class="team-logo">BAL</div>
+          <div class="team-info"><div class="team-name">Baltimore Orioles</div><div class="team-meta"><span class="team-rec">8-5</span><span class="team-streak">L1</span></div></div>
+          <div class="team-gb"><span class="gb-val">2.0</span></div>
+          <div class="team-final w">W 5-2</div>
+        </a>
+        <a class="team-card" href="red-sox/">
+          <div class="team-logo">BOS</div>
+          <div class="team-info"><div class="team-name">Boston Red Sox</div><div class="team-meta"><span class="team-rec">7-6</span><span class="team-streak">W1</span></div></div>
+          <div class="team-gb"><span class="gb-val">3.0</span></div>
+          <div class="team-final w">W 4-1</div>
+        </a>
+        <a class="team-card" href="rays/">
+          <div class="team-logo">TB</div>
+          <div class="team-info"><div class="team-name">Tampa Bay Rays</div><div class="team-meta"><span class="team-rec">6-7</span><span class="team-streak cold">L2</span></div></div>
+          <div class="team-gb"><span class="gb-val">4.0</span></div>
+          <div class="team-final">L 3-6</div>
+        </a>
+        <a class="team-card" href="blue-jays/">
+          <div class="team-logo">TOR</div>
+          <div class="team-info"><div class="team-name">Toronto Blue Jays</div><div class="team-meta"><span class="team-rec">5-8</span><span class="team-streak cold">L3</span></div></div>
+          <div class="team-gb"><span class="gb-val">5.0</span></div>
+          <div class="team-final">OFF</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="div-group">
+      <div class="div-label">AL Central</div>
+      <div class="div-teams">
+        <a class="team-card" href="tigers/">
+          <div class="team-logo">DET</div>
+          <div class="team-info"><div class="team-name">Detroit Tigers</div><div class="team-meta"><span class="team-rec">9-4</span><span class="team-streak hot">W3</span></div></div>
+          <div class="team-gb"><span class="gb-val">—</span></div>
+          <div class="team-final w">W 3-1</div>
+        </a>
+        <a class="team-card" href="royals/">
+          <div class="team-logo">KC</div>
+          <div class="team-info"><div class="team-name">Kansas City Royals</div><div class="team-meta"><span class="team-rec">8-5</span><span class="team-streak">W1</span></div></div>
+          <div class="team-gb"><span class="gb-val">1.0</span></div>
+          <div class="team-final w">W 2-0</div>
+        </a>
+        <a class="team-card has-live" href="guardians/">
+          <div class="team-logo">CLE</div>
+          <div class="team-info"><div class="team-name">Cleveland Guardians</div><div class="team-meta"><span class="team-rec">7-6</span><span class="team-streak">W2</span></div></div>
+          <div class="team-gb"><span class="gb-val">2.0</span></div>
+          <div class="team-live">1-0 · B3</div>
+        </a>
+        <a class="team-card" href="twins/">
+          <div class="team-logo">MIN</div>
+          <div class="team-info"><div class="team-name">Minnesota Twins</div><div class="team-meta"><span class="team-rec">6-7</span><span class="team-streak cold">L1</span></div></div>
+          <div class="team-gb"><span class="gb-val">3.0</span></div>
+          <div class="team-final">L 1-3</div>
+        </a>
+        <a class="team-card" href="white-sox/">
+          <div class="team-logo">CWS</div>
+          <div class="team-info"><div class="team-name">Chicago White Sox</div><div class="team-meta"><span class="team-rec">3-10</span><span class="team-streak cold">L5</span></div></div>
+          <div class="team-gb"><span class="gb-val">6.0</span></div>
+          <div class="team-final">OFF</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="div-group">
+      <div class="div-label">AL West</div>
+      <div class="div-teams">
+        <a class="team-card" href="astros/">
+          <div class="team-logo">HOU</div>
+          <div class="team-info"><div class="team-name">Houston Astros</div><div class="team-meta"><span class="team-rec">9-4</span><span class="team-streak hot">W2</span></div></div>
+          <div class="team-gb"><span class="gb-val">—</span></div>
+          <div class="team-final w">W 7-3</div>
+        </a>
+        <a class="team-card" href="rangers/">
+          <div class="team-logo">TEX</div>
+          <div class="team-info"><div class="team-name">Texas Rangers</div><div class="team-meta"><span class="team-rec">8-5</span><span class="team-streak">W1</span></div></div>
+          <div class="team-gb"><span class="gb-val">1.0</span></div>
+          <div class="team-final w">W 2-1</div>
+        </a>
+        <a class="team-card" href="mariners/">
+          <div class="team-logo">SEA</div>
+          <div class="team-info"><div class="team-name">Seattle Mariners</div><div class="team-meta"><span class="team-rec">7-6</span><span class="team-streak">L1</span></div></div>
+          <div class="team-gb"><span class="gb-val">2.0</span></div>
+          <div class="team-final">L 4-5</div>
+        </a>
+        <a class="team-card" href="angels/">
+          <div class="team-logo">LAA</div>
+          <div class="team-info"><div class="team-name">Los Angeles Angels</div><div class="team-meta"><span class="team-rec">5-8</span><span class="team-streak cold">L2</span></div></div>
+          <div class="team-gb"><span class="gb-val">4.0</span></div>
+          <div class="team-final">OFF</div>
+        </a>
+        <a class="team-card" href="athletics/">
+          <div class="team-logo">ATH</div>
+          <div class="team-info"><div class="team-name">Athletics</div><div class="team-meta"><span class="team-rec">4-9</span><span class="team-streak cold">L4</span></div></div>
+          <div class="team-gb"><span class="gb-val">5.0</span></div>
+          <div class="team-final">OFF</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NATIONAL LEAGUE -->
+  <section class="league">
+    <div class="league-head">
+      <span class="num">NL</span>
+      <span class="h">National League</span>
+      <span class="tag">15 Teams</span>
+    </div>
+
+    <div class="div-group">
+      <div class="div-label">NL East</div>
+      <div class="div-teams">
+        <a class="team-card has-live" href="phillies/">
+          <div class="team-logo">PHI</div>
+          <div class="team-info"><div class="team-name">Philadelphia Phillies</div><div class="team-meta"><span class="team-rec">11-2</span><span class="team-streak hot">W6</span></div></div>
+          <div class="team-gb"><span class="gb-val">—</span></div>
+          <div class="team-live">4-3 · B7</div>
+        </a>
+        <a class="team-card" href="braves/">
+          <div class="team-logo">ATL</div>
+          <div class="team-info"><div class="team-name">Atlanta Braves</div><div class="team-meta"><span class="team-rec">8-5</span><span class="team-streak">W1</span></div></div>
+          <div class="team-gb"><span class="gb-val">3.0</span></div>
+          <div class="team-final w">W 5-4</div>
+        </a>
+        <a class="team-card" href="mets/">
+          <div class="team-logo">NYM</div>
+          <div class="team-info"><div class="team-name">New York Mets</div><div class="team-meta"><span class="team-rec">7-6</span><span class="team-streak">L1</span></div></div>
+          <div class="team-gb"><span class="gb-val">4.0</span></div>
+          <div class="team-final">L 1-7</div>
+        </a>
+        <a class="team-card" href="nationals/">
+          <div class="team-logo">WSH</div>
+          <div class="team-info"><div class="team-name">Washington Nationals</div><div class="team-meta"><span class="team-rec">5-8</span><span class="team-streak cold">L2</span></div></div>
+          <div class="team-gb"><span class="gb-val">6.0</span></div>
+          <div class="team-final">OFF</div>
+        </a>
+        <a class="team-card" href="marlins/">
+          <div class="team-logo">MIA</div>
+          <div class="team-info"><div class="team-name">Miami Marlins</div><div class="team-meta"><span class="team-rec">4-9</span><span class="team-streak cold">L3</span></div></div>
+          <div class="team-gb"><span class="gb-val">7.0</span></div>
+          <div class="team-final">L 1-8</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="div-group">
+      <div class="div-label">NL Central</div>
+      <div class="div-teams">
+        <a class="team-card is-user" href="cubs/">
+          <div class="team-logo">CHC</div>
+          <div class="team-info"><div class="team-name">Chicago Cubs ◆ You</div><div class="team-meta"><span class="team-rec">9-4</span><span class="team-streak hot">W3</span></div></div>
+          <div class="team-gb"><span class="gb-val">—</span></div>
+          <div class="team-final w">W 6-4</div>
+        </a>
+        <a class="team-card" href="brewers/">
+          <div class="team-logo">MIL</div>
+          <div class="team-info"><div class="team-name">Milwaukee Brewers</div><div class="team-meta"><span class="team-rec">8-5</span><span class="team-streak">W1</span></div></div>
+          <div class="team-gb"><span class="gb-val">1.0</span></div>
+          <div class="team-final w">W 3-2</div>
+        </a>
+        <a class="team-card" href="cardinals/">
+          <div class="team-logo">STL</div>
+          <div class="team-info"><div class="team-name">St. Louis Cardinals</div><div class="team-meta"><span class="team-rec">7-6</span><span class="team-streak">L1</span></div></div>
+          <div class="team-gb"><span class="gb-val">2.0</span></div>
+          <div class="team-final">L 2-4</div>
+        </a>
+        <a class="team-card" href="reds/">
+          <div class="team-logo">CIN</div>
+          <div class="team-info"><div class="team-name">Cincinnati Reds</div><div class="team-meta"><span class="team-rec">6-7</span><span class="team-streak cold">L1</span></div></div>
+          <div class="team-gb"><span class="gb-val">3.0</span></div>
+          <div class="team-final">L 1-8</div>
+        </a>
+        <a class="team-card" href="pirates/">
+          <div class="team-logo">PIT</div>
+          <div class="team-info"><div class="team-name">Pittsburgh Pirates</div><div class="team-meta"><span class="team-rec">4-9</span><span class="team-streak cold">L4</span></div></div>
+          <div class="team-gb"><span class="gb-val">5.0</span></div>
+          <div class="team-final">L 4-6</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="div-group">
+      <div class="div-label">NL West</div>
+      <div class="div-teams">
+        <a class="team-card has-live" href="dodgers/">
+          <div class="team-logo">LAD</div>
+          <div class="team-info"><div class="team-name">Los Angeles Dodgers</div><div class="team-meta"><span class="team-rec">10-3</span><span class="team-streak hot">W5</span></div></div>
+          <div class="team-gb"><span class="gb-val">—</span></div>
+          <div class="team-live">5-2 · M5</div>
+        </a>
+        <a class="team-card" href="padres/">
+          <div class="team-logo">SD</div>
+          <div class="team-info"><div class="team-name">San Diego Padres</div><div class="team-meta"><span class="team-rec">8-5</span><span class="team-streak">W2</span></div></div>
+          <div class="team-gb"><span class="gb-val">2.0</span></div>
+          <div class="team-final w">W 7-3</div>
+        </a>
+        <a class="team-card" href="giants/">
+          <div class="team-logo">SF</div>
+          <div class="team-info"><div class="team-name">San Francisco Giants</div><div class="team-meta"><span class="team-rec">7-6</span><span class="team-streak">L1</span></div></div>
+          <div class="team-gb"><span class="gb-val">3.0</span></div>
+          <div class="team-final">L 2-5</div>
+        </a>
+        <a class="team-card" href="dbacks/">
+          <div class="team-logo">ARI</div>
+          <div class="team-info"><div class="team-name">Arizona Diamondbacks</div><div class="team-meta"><span class="team-rec">6-7</span><span class="team-streak">L1</span></div></div>
+          <div class="team-gb"><span class="gb-val">4.0</span></div>
+          <div class="team-final">L 1-7</div>
+        </a>
+        <a class="team-card" href="rockies/">
+          <div class="team-logo">COL</div>
+          <div class="team-info"><div class="team-name">Colorado Rockies</div><div class="team-meta"><span class="team-rec">3-10</span><span class="team-streak cold">L6</span></div></div>
+          <div class="team-gb"><span class="gb-val">7.0</span></div>
+          <div class="team-final">L 3-7</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <a href="#">Scorecard Book →</a>
+  <span>Morning Lineup <span class="g">·</span> Vol. I <span class="g">·</span> Members Desk</span>
+</footer>
+
+</body>
+</html>
