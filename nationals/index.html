@@ -324,35 +324,208 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 
 /* ===== Columnists — three personas per team ===== */
 .columnists{position:relative;z-index:2;max-width:var(--maxw);margin:14px auto 22px;padding:0 20px}
-.columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:14px}
+.columnists-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-top:2px solid var(--team-primary);border-bottom:1px dashed var(--rule);padding:10px 4px 8px;margin-bottom:16px}
 .columnists-head .section-kicker{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(22px,3.2vw,32px);color:var(--paper);letter-spacing:.01em}
 .columnists-head .section-dek{font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;font-size:10px;color:var(--gold)}
-.columnists-grid{display:flex;flex-direction:column;gap:10px}
-.column{background:var(--ink-2);border:1px solid var(--rule);border-left:3px solid var(--team-primary);border-radius:3px;overflow:hidden}
+
+/* Grid — counter resets here so each row auto-numbers No. I / II / III */
+.columnists-grid{display:flex;flex-direction:column;gap:12px;counter-reset:column}
+
+/* Row — each .column is a collapsible <details> */
+.column{
+  counter-increment:column;
+  position:relative;
+  background:linear-gradient(180deg,rgba(255,255,255,.014) 0%,rgba(0,0,0,.05) 100%),var(--ink-2);
+  border:1px solid var(--rule);
+  border-left:3px solid var(--team-primary);
+  border-radius:2px;
+  overflow:hidden;
+  transition:border-color .22s ease, box-shadow .22s ease;
+  animation:columnRise .6s cubic-bezier(.22,.7,.2,1) both;
+}
+.column:nth-of-type(1){animation-delay:.12s}
+.column:nth-of-type(2){animation-delay:.22s}
+.column:nth-of-type(3){animation-delay:.32s}
+@keyframes columnRise{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Persona left-bar colors */
 .column[data-role="straight_beat"]{border-left-color:var(--paper)}
 .column[data-role="optimist"]{border-left-color:var(--gold)}
 .column[data-role="pessimist"]{border-left-color:var(--team-accent)}
-.column > summary.column-byline{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:12px 18px;transition:background .15s ease}
+
+/* Open state — full-width top stripe in persona color + lift shadow */
+.column[open]{box-shadow:inset 0 2px 0 var(--team-primary),0 10px 30px -16px rgba(0,0,0,.55)}
+.column[data-role="straight_beat"][open]{box-shadow:inset 0 2px 0 var(--paper),0 10px 30px -16px rgba(0,0,0,.55)}
+.column[data-role="optimist"][open]{box-shadow:inset 0 2px 0 var(--gold),0 12px 32px -14px rgba(201,162,74,.22)}
+.column[data-role="pessimist"][open]{box-shadow:inset 0 2px 0 var(--team-accent),0 12px 32px -14px rgba(192,85,79,.2)}
+
+/* Summary row — editorial byline strip */
+.column > summary.column-byline{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:14px 20px 13px 20px;
+  transition:background .22s ease;
+}
 .column > summary.column-byline::-webkit-details-marker{display:none}
 .column > summary.column-byline::marker{display:none;content:""}
-.column > summary.column-byline:hover{background:rgba(255,255,255,.03)}
-.column-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--paper);line-height:1.1;flex:0 1 auto}
-.column-role{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;color:var(--gold);flex:1 1 auto}
-.column-toggle{font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;font-size:10px;color:var(--paper-mute);border:1px solid var(--rule);border-radius:2px;padding:3px 8px;flex:0 0 auto}
-.column[open] .column-toggle::before{content:"Close"}
-.column:not([open]) .column-toggle::before{content:"Read"}
-.column-toggle{font-size:0}
-.column-toggle::before{font-size:10px}
-.column-body{font-family:var(--body);font-size:14.5px;line-height:1.62;color:var(--paper-dim);padding:4px 18px 18px;border-top:1px dashed var(--rule)}
-.column-body p{margin:0 0 10px}
+
+/* Hover — persona-tinted gold wash from the left */
+.column:not([open]) > summary.column-byline:hover{background:linear-gradient(90deg,rgba(201,162,74,.08),transparent 55%)}
+.column[data-role="pessimist"]:not([open]) > summary.column-byline:hover{background:linear-gradient(90deg,rgba(192,85,79,.08),transparent 55%)}
+.column[data-role="straight_beat"]:not([open]) > summary.column-byline:hover{background:linear-gradient(90deg,rgba(236,228,208,.05),transparent 55%)}
+
+/* Column number — "No. I" / "No. II" / "No. III" — CSS counter, no markup */
+.column > summary.column-byline::before{
+  content:"No. " counter(column,upper-roman);
+  flex:0 0 auto;
+  font-family:var(--mono);
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gold-dim);
+  padding:5px 10px 4px;
+  border:1px solid var(--rule);
+  border-radius:1px;
+  background:rgba(201,162,74,.04);
+  line-height:1;
+  transition:color .22s ease, border-color .22s ease, background .22s ease;
+}
+.column:hover > summary.column-byline::before,
+.column[open] > summary.column-byline::before{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,162,74,.08)}
+
+/* Columnist name — italic Playfair byline */
+.column-name{
+  flex:0 0 auto;
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:900;
+  font-size:22px;
+  color:var(--paper);
+  line-height:1;
+  letter-spacing:-.005em;
+}
+
+/* Role label — persona sigil + uppercase */
+.column-role{
+  flex:0 1 auto;
+  font-family:var(--cond);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  font-size:10.5px;
+  color:var(--gold);
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+}
+.column-role::before{
+  display:inline-block;
+  font-family:var(--serif);
+  font-style:normal;
+  font-size:14px;
+  line-height:1;
+  transform:translateY(-1px);
+  color:currentColor;
+}
+.column[data-role="straight_beat"] .column-role{color:var(--paper)}
+.column[data-role="straight_beat"] .column-role::before{content:"§"}
+.column[data-role="optimist"] .column-role{color:var(--gold)}
+.column[data-role="optimist"] .column-role::before{content:"✦"}
+.column[data-role="pessimist"] .column-role{color:var(--team-accent)}
+.column[data-role="pessimist"] .column-role::before{content:"†"}
+
+/* Read / Close chip — editorial stamp, dashed gold edge.
+   The inner text node from Python ("Read") is collapsed via font-size:0
+   so only the ::before pseudo renders. */
+.column-toggle{
+  flex:0 0 auto;
+  margin-left:auto;
+  font-size:0;
+  color:var(--gold);
+  border:1px dashed var(--gold-dim);
+  border-radius:1px;
+  padding:6px 11px 5px;
+  background:rgba(201,162,74,.04);
+  line-height:1;
+  transition:border-style .22s ease, background .22s ease, color .22s ease;
+}
+.column-toggle::before{
+  font-family:var(--mono);
+  font-weight:500;
+  font-size:9px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  line-height:1;
+}
+.column:not([open]) .column-toggle::before{content:"Read →"}
+.column[open] .column-toggle::before{content:"× Close"}
+.column > summary.column-byline:hover .column-toggle{border-style:solid;background:rgba(201,162,74,.1);color:var(--paper)}
+.column[open] .column-toggle{border-style:solid;color:var(--paper-mute);border-color:var(--rule);background:rgba(255,255,255,.02)}
+
+/* Body — generous indent, dashed rule separator, 72ch max read width */
+.column-body{
+  font-family:var(--body);
+  font-size:15px;
+  line-height:1.68;
+  color:var(--paper-dim);
+  padding:18px 32px 24px 32px;
+  border-top:1px dashed var(--rule-hi);
+}
+.column-body p{margin:0 0 12px;max-width:72ch}
 .column-body p:last-child{margin-bottom:0}
-.column-body .column-off{color:var(--paper-mute);font-size:13px}
-body.theme-paper .column{background:#f3ecd7;border-color:#cfc39a}
-body.theme-paper .column > summary.column-byline:hover{background:rgba(0,0,0,.03)}
-body.theme-paper .column-toggle{border-color:#cfc39a;color:#6b6550}
+
+/* Drop cap on first real paragraph — persona-colored */
+.column[open] .column-body p:not(.column-off):first-of-type::first-letter{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:900;
+  font-size:3.4em;
+  float:left;
+  line-height:.82;
+  padding:6px 10px 0 0;
+  color:var(--gold);
+}
+.column[data-role="straight_beat"][open] .column-body p:not(.column-off):first-of-type::first-letter{color:var(--paper)}
+.column[data-role="optimist"][open] .column-body p:not(.column-off):first-of-type::first-letter{color:var(--gold)}
+.column[data-role="pessimist"][open] .column-body p:not(.column-off):first-of-type::first-letter{color:var(--team-accent)}
+
+.column-body .column-off{color:var(--paper-mute);font-size:13px;font-style:italic}
+
+@media(max-width:680px){
+  .column > summary.column-byline{flex-wrap:wrap;gap:10px 12px}
+  .column-toggle{margin-left:0}
+  .column-body{padding:16px 22px 20px 22px}
+  .column[open] .column-body p:not(.column-off):first-of-type::first-letter{font-size:2.8em}
+}
+
+/* Paper theme overrides */
+body.theme-paper .column{
+  background:linear-gradient(180deg,rgba(0,0,0,.018) 0%,rgba(0,0,0,.07) 100%),#f3ecd7;
+  border-color:#cfc39a;
+}
+body.theme-paper .column > summary.column-byline::before{
+  color:#8a7234;
+  border-color:#cfc39a;
+  background:rgba(201,162,74,.07);
+}
+body.theme-paper .column-toggle{
+  color:#8a7234;
+  border-color:#8a7234;
+  background:rgba(201,162,74,.07);
+}
+body.theme-paper .column > summary.column-byline:hover .column-toggle{color:var(--ink);background:rgba(201,162,74,.14)}
 body.theme-paper .column-name{color:var(--ink)}
-body.theme-paper .column-body{color:#3a3626}
+body.theme-paper .column-body{color:#3a3626;border-top-color:#cfc39a}
 body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
+body.theme-paper .column[data-role="straight_beat"] .column-role{color:#2d2826}
+body.theme-paper .column:not([open]) > summary.column-byline:hover{background:linear-gradient(90deg,rgba(201,162,74,.14),transparent 55%)}
 </style>
 </head>
 <body>
@@ -458,7 +631,7 @@ body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
     <h3>Nationals Leaders</h3>
     <div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>AVG</td><td class="name">Wiemer <span style="color:var(--paper-mute);font-size:10px">LF</span></td><td class="num">.440</td></tr><tr><td>OBP</td><td class="name">Wiemer <span style="color:var(--paper-mute);font-size:10px">LF</span></td><td class="num">.533</td></tr><tr><td>HR</td><td class="name">Abrams <span style="color:var(--paper-mute);font-size:10px">SS</span></td><td class="num">4</td></tr><tr><td>RBI</td><td class="name">Abrams <span style="color:var(--paper-mute);font-size:10px">SS</span></td><td class="num">14</td></tr><tr><td>SB</td><td class="name">Nuñez <span style="color:var(--paper-mute);font-size:10px">SS</span></td><td class="num">7</td></tr></tbody></table></div>
+    <tbody><tr><td>AVG</td><td class="name">Wiemer <span style="color:var(--paper-mute);font-size:10px">LF</span></td><td class="num">.407</td></tr><tr><td>OBP</td><td class="name">Wiemer <span style="color:var(--paper-mute);font-size:10px">LF</span></td><td class="num">.500</td></tr><tr><td>HR</td><td class="name">Abrams <span style="color:var(--paper-mute);font-size:10px">SS</span></td><td class="num">4</td></tr><tr><td>RBI</td><td class="name">Abrams <span style="color:var(--paper-mute);font-size:10px">SS</span></td><td class="num">15</td></tr><tr><td>SB</td><td class="name">Nuñez <span style="color:var(--paper-mute);font-size:10px">SS</span></td><td class="num">7</td></tr></tbody></table></div>
     <h3>Next Games</h3>
     <div class="next-games"><div class="nx-card nx-today">
         <div class="nx-head">
@@ -467,7 +640,7 @@ body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
         </div>
         <div class="nx-venue">American Family Field <span class="nx-dome">Retractable Roof</span></div>
         <div class="nx-meta"><span class="nx-opp-rec">MIL: 8-4, 1st NL Central (L2)</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Nationals</span> Jake Irvin<div class="nx-pline">8.00 ERA &middot; 1-1 &middot; 9.0 IP &middot; 11 K &middot; 1.56 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">MIL</span> Aaron Ashby<div class="nx-pline">2.79 ERA &middot; 3-0 &middot; 9.2 IP &middot; 14 K &middot; 1.24 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">Nationals</span> Jake Irvin<div class="nx-pline">8.25 ERA &middot; 1-1 &middot; 12.0 IP &middot; 15 K &middot; 1.67 WHIP</div></div><div class="nx-pitcher"><span class="nx-side">MIL</span> Aaron Ashby<div class="nx-pline">3.75 ERA &middot; 3-0 &middot; 12.0 IP &middot; 18 K &middot; 1.25 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">LF</span> Wood</span><span class="lu-slot"><span class="lu-pos">1B</span> Mead</span><span class="lu-slot"><span class="lu-pos">RF</span> Lile</span><span class="lu-slot"><span class="lu-pos">3B</span> House</span><span class="lu-slot"><span class="lu-pos">SS</span> Abrams</span><span class="lu-slot"><span class="lu-pos">LF</span> Wiemer</span><span class="lu-slot"><span class="lu-pos">2B</span> Jr.</span><span class="lu-slot"><span class="lu-pos">2B</span> Vivas</span><span class="lu-slot"><span class="lu-pos">C</span> Ruiz</span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Brewers.TV &middot; Nationals.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WTMJ 620 &middot; WJFK 106.7 The Fan</div>
         <div class="nx-wx">72°F &middot; Climate controlled</div>
@@ -497,8 +670,8 @@ body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Abrams</span><span class="s">.320 / 4 HR / 1.252 OPS</span></li><li><span class="n">Mead</span><span class="s">.333 / 1 HR / 1.079 OPS</span></li><li><span class="n">Wiemer</span><span class="s">.364 / 1 HR / 1.053 OPS</span></li><li><span class="n">Jr.</span><span class="s">.348 / 1 HR / 1.027 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n">Lile</span><span class="s">.167 / 0 HR / .386 OPS</span></li><li><span class="n">Nuñez</span><span class="s">.172 / 0 HR / .398 OPS</span></li><li><span class="n">Millas</span><span class="s">.176 / 0 HR / .476 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n">Abrams</span><span class="s">.391 / 3 HR / 1.326 OPS</span></li><li><span class="n">Wood</span><span class="s">.346 / 3 HR / 1.221 OPS</span></li><li><span class="n">Mead</span><span class="s">.353 / 1 HR / 1.068 OPS</span></li><li><span class="n">Jr.</span><span class="s">.318 / 1 HR / .984 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n">Lile</span><span class="s">.111 / 0 HR / .283 OPS</span></li><li><span class="n">Nuñez</span><span class="s">.172 / 0 HR / .398 OPS</span></li><li><span class="n">Millas</span><span class="s">.176 / 0 HR / .476 OPS</span></li></ul></div>
     </div>
     <div class="two">
       <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n">Cavalli</span><span class="s">14.1 IP &middot; 2.51 ERA &middot; 11 K</span></li><li><span class="n">Griffin</span><span class="s">10.0 IP &middot; 2.70 ERA &middot; 11 K</span></li><li><span class="n">Beeter</span><span class="s">5.2 IP &middot; 3.18 ERA &middot; 3 K</span></li></ul></div>
@@ -519,16 +692,16 @@ body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
         <div class="sp-card">
         <div class="sp-side">Nationals</div>
         <div class="sp-name">Jake Irvin</div>
-        <div class="sp-season">8.00 ERA &middot; 1-1 &middot; 9.0 IP &middot; 11 K &middot; 1.56 WHIP</div>
-        <h4>Last 2 Starts</h4><table class="data sp-log">
+        <div class="sp-season">8.25 ERA &middot; 1-1 &middot; 12.0 IP &middot; 15 K &middot; 1.67 WHIP</div>
+        <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
-            <tbody><tr><td>03-29</td><td class="opp">vs Chicago Cubs</td><td class="num">5.0</td><td class="num">2</td><td class="num">7</td><td class="num">3</td><td class="num">1</td></tr><tr><td>04-04</td><td class="opp">vs Los Angeles Dodgers</td><td class="num">4.0</td><td class="num">6</td><td class="num">4</td><td class="num">8</td><td class="num">2</td></tr></tbody></table>
+            <tbody><tr><td>03-29</td><td class="opp">vs Chicago Cubs</td><td class="num">5.0</td><td class="num">2</td><td class="num">7</td><td class="num">3</td><td class="num">1</td></tr><tr><td>04-04</td><td class="opp">vs Los Angeles Dodgers</td><td class="num">4.0</td><td class="num">6</td><td class="num">4</td><td class="num">8</td><td class="num">2</td></tr><tr><td>04-10</td><td class="opp">vs Milwaukee Brewers</td><td class="num">3.0</td><td class="num">3</td><td class="num">4</td><td class="num">2</td><td class="num">4</td></tr></tbody></table>
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
         <div class="sp-side">MIL</div>
         <div class="sp-name">Aaron Ashby</div>
-        <div class="sp-season">2.79 ERA &middot; 3-0 &middot; 9.2 IP &middot; 14 K &middot; 1.24 WHIP</div>
+        <div class="sp-season">3.75 ERA &middot; 3-0 &middot; 12.0 IP &middot; 18 K &middot; 1.25 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
             <tbody><tr><td>03-26</td><td class="opp">vs Chicago White Sox</td><td class="num">1.0</td><td class="num">0</td><td class="num">2</td><td class="num">0</td><td class="num">0</td></tr><tr><td>03-28</td><td class="opp">vs Chicago White Sox</td><td class="num">1.2</td><td class="num">0</td><td class="num">4</td><td class="num">0</td><td class="num">2</td></tr><tr><td>03-30</td><td class="opp">vs Tampa Bay Rays</td><td class="num">2.0</td><td class="num">1</td><td class="num">3</td><td class="num">2</td><td class="num">0</td></tr></tbody></table>
@@ -631,7 +804,7 @@ body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
         <div class="matchup">ATH @ NYM</div>
         <div class="time">6:10 CT</div>
         <div class="probs">Ginn vs Holmes</div>
-        <div class="bc">NBCSCA · WPIX</div>
+        <div class="bc">WPIX · NBCSCA</div>
       </div><div class="g" data-gpk="822997">
         <div class="matchup">NYY @ TB</div>
         <div class="time">6:10 CT</div>
@@ -741,10 +914,10 @@ body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
     <div class="two">
     <div><h4>Batting</h4><div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>AVG</td><td class="name">Andy Pages (LAD)</td><td class="num">.413</td></tr><tr><td>HR</td><td class="name">Drake Baldwin (ATL)</td><td class="num">5</td></tr><tr><td>RBI</td><td class="name">Drake Baldwin (ATL)</td><td class="num">15</td></tr><tr><td>SB</td><td class="name">Bobby Witt Jr. (KC)</td><td class="num">8</td></tr><tr><td>OPS</td><td class="name">Sal Stewart (CIN)</td><td class="num">1.200</td></tr></tbody></table></div></div>
+    <tbody><tr><td>AVG</td><td class="name">Andy Pages (LAD)</td><td class="num">.413</td></tr><tr><td>HR</td><td class="name">Drake Baldwin (ATL)</td><td class="num">5</td></tr><tr><td>RBI</td><td class="name">CJ Abrams (WSH)</td><td class="num">15</td></tr><tr><td>SB</td><td class="name">Bobby Witt Jr. (KC)</td><td class="num">8</td></tr><tr><td>OPS</td><td class="name">Yordan Alvarez (HOU)</td><td class="num">1.183</td></tr></tbody></table></div></div>
     <div><h4>Pitching</h4><div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>ERA</td><td class="name">Bryce Elder (ATL)</td><td class="num">0.00</td></tr><tr><td>SV</td><td class="name">David Bednar (NYY)</td><td class="num">5</td></tr><tr><td>W</td><td class="name">Aaron Ashby (MIL)</td><td class="num">3</td></tr></tbody></table></div></div>
+    <tbody><tr><td>ERA</td><td class="name">Shohei Ohtani (LAD)</td><td class="num">0.00</td></tr><tr><td>SV</td><td class="name">David Bednar (NYY)</td><td class="num">5</td></tr><tr><td>W</td><td class="name">Aaron Ashby (MIL)</td><td class="num">3</td></tr></tbody></table></div></div>
     </div>
   </section>
 
@@ -764,7 +937,7 @@ body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Nationals Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/10/26 16:31 CT</span>
+  <span>Filed 04/10/26 19:47 CT</span>
 </footer>
 
 <script>
