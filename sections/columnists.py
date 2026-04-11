@@ -234,13 +234,14 @@ def _render_column_card(persona, column_text):
         )
 
     return (
-        f'<article class="column" data-role="{escape(role_key)}">'
-        f'<div class="column-byline">'
+        f'<details class="column" data-role="{escape(role_key)}">'
+        f'<summary class="column-byline">'
         f'<span class="column-name">{name}</span>'
         f'<span class="column-role">{role}</span>'
-        f'</div>'
+        f'<span class="column-toggle" aria-hidden="true">Read</span>'
+        f'</summary>'
         f'<div class="column-body">{body_html}</div>'
-        f'</article>'
+        f'</details>'
     )
 
 
