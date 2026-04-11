@@ -873,7 +873,9 @@ def build_landing():
         teams.append({
             "id": cfg["id"],
             "slug": cfg["slug"],
+            "name": cfg.get("name", ""),
             "full_name": cfg["full_name"],
+            "abbreviation": cfg.get("abbreviation", ""),
             "division_name": cfg["division_name"],
             "colors": cfg["colors"],
         })

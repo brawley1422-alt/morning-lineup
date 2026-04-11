@@ -1,4 +1,4 @@
-const CACHE = "lineup-v5";
+const CACHE = "lineup-v6";
 const SHELL = ["/morning-lineup/", "/morning-lineup/index.html", "/morning-lineup/live.js"];
 
 self.addEventListener("install", function (e) {

@@ -4,120 +4,267 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0d0f14">
-<title>The Morning Lineup</title>
-<script type="module">
-// If a session token exists in localStorage (ml-auth key), skip the redirect.
-// Otherwise bounce to /home which shows the signup CTA. Cheap check — avoids
-// loading the full Supabase client just to decide.
+<title>The Morning Lineup — Today's Edition</title>
+<script>
+// Fast synchronous auth bounce — if no ml-auth token, send guests to /home/.
+// Runs before body parse so unauthed readers never see the landing shell.
 try {
-  const raw = localStorage.getItem("ml-auth");
+  var raw = localStorage.getItem("ml-auth");
   if (!raw) window.location.replace("home/");
   else {
-    const parsed = JSON.parse(raw);
-    const expiresAt = parsed?.expires_at || 0;
-    if (!parsed?.access_token || expiresAt * 1000 < Date.now()) {
+    var parsed = JSON.parse(raw);
+    var expiresAt = (parsed && parsed.expires_at) || 0;
+    if (!parsed || !parsed.access_token || expiresAt * 1000 < Date.now()) {
       window.location.replace("home/");
     }
   }
-} catch { window.location.replace("home/"); }
+} catch (e) { window.location.replace("home/"); }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,800;0,900;1,700&family=Oswald:wght@400;500;600;700&family=Lora:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#0d0f14;--ink-2:#141823;--ink-3:#1c2230;
+  --ink:#0d0f14;--ink-2:#141823;--ink-3:#1c2230;--ink-4:#232b3d;
   --paper:#ece4d0;--paper-dim:#c9bfa6;--paper-mute:#8b836d;
   --rule:#2a3142;--rule-hi:#3a4360;
-  --gold:#c9a24a;--gold-dim:#8a6f32;
-  --win:#6ea86a;--loss:#c0554f;
+  --gold:#c9a24a;--gold-hi:#e6bf62;--gold-dim:#8a6f32;
+  --crimson:#c0554f;--win:#6ea86a;--loss:#c0554f;
   --serif:"Playfair Display",Georgia,serif;
   --body:"Lora","Source Serif Pro",Georgia,serif;
   --cond:"Oswald","Bebas Neue",Impact,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--ink);color:var(--paper);min-height:100vh}
+html,body{margin:0;padding:0;background:var(--ink);color:var(--paper);min-height:100%}
 body{font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
-  background:radial-gradient(1200px 600px at 10% -10%,rgba(14,51,134,.22),transparent 60%),radial-gradient(900px 500px at 110% 10%,rgba(204,52,51,.12),transparent 55%),linear-gradient(180deg,#0a0c12 0%,#0d0f14 40%,#0b0d12 100%);
-  background-attachment:fixed;position:relative}
+  background:radial-gradient(1200px 600px at 10% -10%,rgba(14,51,134,.22),transparent 60%),radial-gradient(900px 500px at 110% 10%,rgba(201,162,74,.10),transparent 55%),radial-gradient(700px 500px at 50% 120%,rgba(192,85,79,.08),transparent 60%),linear-gradient(180deg,#0a0c12 0%,#0d0f14 40%,#0b0d12 100%);
+  background-attachment:fixed;position:relative;overflow-x:hidden;min-height:100vh}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.06;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
-.landing{position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:40px 20px 40px;text-align:center}
-.masthead h1{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(40px,8vw,88px);line-height:.9;margin:0;letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.4)}
-.masthead h1 .the{display:block;font-size:.28em;font-style:normal;font-weight:600;letter-spacing:.4em;color:var(--gold);margin-bottom:4px;text-transform:uppercase}
-.masthead h1 .lineup{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--paper-mute);margin-top:14px}
-.divider{width:40px;height:2px;background:var(--gold);margin:20px auto}
-.pick{font-family:var(--body);font-style:italic;font-size:clamp(16px,2vw,19px);color:var(--paper);margin-bottom:20px}
-.leagues{display:grid;grid-template-columns:1fr 1fr;gap:24px;text-align:left}
-@media(max-width:700px){.leagues{grid-template-columns:1fr;gap:16px}}
-.league-label{font-family:var(--serif);font-style:italic;font-weight:900;font-size:24px;color:var(--paper);margin:0 0 12px;padding-bottom:8px;border-bottom:3px solid var(--gold)}
-.div-group{margin-bottom:16px}
-.div-label{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--gold);margin:0 0 6px;padding-left:2px}
+
+/* TICKER */
+.ticker{position:relative;z-index:3;background:linear-gradient(180deg,var(--ink-2),var(--ink-3));border-bottom:1px solid var(--rule);font-family:var(--cond);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--paper-mute);padding:8px 32px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.ticker .left,.ticker .right{display:flex;gap:18px;align-items:center}
+.ticker .live-dot{width:7px;height:7px;border-radius:50%;background:var(--crimson);box-shadow:0 0 10px var(--crimson);animation:pulse 2s ease-in-out infinite}
+.ticker .g{color:var(--gold)}.ticker .paper{color:var(--paper)}
+@keyframes pulse{0%,100%{opacity:.9;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
+
+/* MASTHEAD */
+.masthead{position:relative;z-index:2;border-bottom:6px double var(--paper);padding:18px 32px 14px;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:end}
+.mast-kicker-l,.mast-kicker-r{font-family:var(--cond);text-transform:uppercase;letter-spacing:.22em;font-size:10px;color:var(--paper-mute);display:flex;flex-direction:column;gap:4px;padding-bottom:12px}
+.mast-kicker-l{align-items:flex-start}.mast-kicker-r{align-items:flex-end}
+.mast-kicker-l .row,.mast-kicker-r .row{display:flex;gap:10px;align-items:center}
+.mast-kicker-l .val,.mast-kicker-r .val{color:var(--paper);font-family:var(--mono);font-size:11px;letter-spacing:.08em}
+.mast-kicker-r .val.gold{color:var(--gold)}
+.mast-center{text-align:center;padding:0 8px}
+.mast-main{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(48px,9vw,108px);line-height:.88;margin:0;letter-spacing:-.015em;white-space:nowrap;background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 70%,var(--paper-mute) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 2px 0 rgba(0,0,0,.4)}
+.mast-main .mast-the{display:block;font-family:var(--cond);font-style:normal;font-weight:600;font-size:.18em;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);-webkit-text-fill-color:var(--gold);margin-bottom:6px;text-shadow:0 1px 0 rgba(0,0,0,.4)}
+.mast-main em{font-style:italic;font-weight:900}
+
+/* GREETING BAR */
+.greet{position:relative;z-index:2;max-width:1280px;margin:18px auto 0;padding:0 32px;display:grid;grid-template-columns:1.4fr .6fr;gap:36px;align-items:center}
+.greet-head{font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(28px,3.6vw,42px);line-height:1;color:var(--paper);margin:0 0 6px}
+.greet-head .reader{color:var(--gold)}
+.greet-sub{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper-mute);margin:0}
+.greet-sub .g{color:var(--gold)}
+.greet-sub .paper{color:var(--paper)}
+.greet-meta{display:flex;gap:18px;justify-content:flex-end;font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--paper-mute)}
+.greet-meta .stat{text-align:right}
+.greet-meta .n{display:block;font-family:var(--serif);font-style:italic;font-weight:900;font-size:30px;line-height:1;color:var(--gold);margin-bottom:4px}
+
+/* YOUR TEAM BANNER */
+.your-team{position:relative;z-index:2;max-width:1280px;margin:28px auto 24px;padding:0 32px}
+.your-team[hidden]{display:none}
+.yt-card{background:linear-gradient(90deg,rgba(14,51,134,.35) 0%,var(--ink-2) 60%,var(--ink-2) 100%);border:1px solid var(--rule-hi);border-left:4px solid var(--gold);border-radius:2px;padding:22px 26px;display:grid;grid-template-columns:auto 1fr auto;gap:26px;align-items:center;box-shadow:0 20px 60px -20px rgba(0,0,0,.6)}
+.yt-logo{width:72px;height:72px;flex-shrink:0;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+.yt-meta{min-width:0}
+.yt-kicker{font-family:var(--mono);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.yt-name{font-family:var(--serif);font-style:italic;font-weight:900;font-size:32px;line-height:1;color:var(--paper);margin:0 0 6px}
+.yt-line{font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-size:13px;color:var(--paper-dim)}
+.yt-line .win{color:var(--win);font-weight:600}
+.yt-line .loss{color:var(--loss);font-weight:600}
+.yt-line .g{color:var(--gold)}
+.yt-cta{display:flex;gap:10px;align-items:center}
+.yt-btn{background:linear-gradient(180deg,var(--gold-hi) 0%,var(--gold) 55%,var(--gold-dim) 100%);border:1px solid var(--gold);color:var(--ink);font-family:var(--cond);text-transform:uppercase;letter-spacing:.22em;font-size:12px;font-weight:700;padding:13px 22px;border-radius:1px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;box-shadow:0 10px 24px -10px rgba(201,162,74,.55),inset 0 1px 0 rgba(255,255,255,.3),inset 0 -1px 0 rgba(0,0,0,.25);transition:transform .15s,filter .2s}
+.yt-btn::after{content:"→";font-family:var(--mono)}
+.yt-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+/* LEAGUES */
+.leagues{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 32px 40px;display:grid;grid-template-columns:1fr 1fr;gap:40px}
+
+.league{position:relative}
+.league-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;background-image:linear-gradient(90deg,var(--paper) 0%,var(--gold) 50%,var(--paper) 100%);background-size:100% 2px;background-repeat:no-repeat;background-position:top;padding-top:14px;border-bottom:1px solid var(--rule);padding-bottom:10px}
+.league-head .num{font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.1em;border:1px solid var(--gold-dim);padding:3px 7px;border-radius:2px;background:rgba(201,162,74,.08)}
+.league-head .h{font-family:var(--serif);font-style:italic;font-weight:900;font-size:28px;letter-spacing:-.01em;color:var(--paper);flex:1;line-height:1;margin:0}
+.league-head .tag{font-family:var(--mono);font-size:9px;letter-spacing:.24em;color:var(--paper-mute);text-transform:uppercase}
+
+.div-group{margin-bottom:20px}
+.div-label{font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--gold);margin:0 0 8px;padding-left:2px}
 .div-teams{display:flex;flex-direction:column;gap:4px}
-.team-card{display:flex;align-items:center;gap:10px;background:var(--ink-2);border:1px solid var(--rule);border-radius:3px;padding:8px 12px;text-decoration:none;transition:border-color .15s,box-shadow .15s,transform .15s;border-left:3px solid var(--rule)}
-.team-card:hover{border-color:var(--rule-hi);box-shadow:0 4px 16px -4px rgba(0,0,0,.5);transform:translateY(-1px)}
-.team-card.has-live{border-color:var(--gold);box-shadow:0 0 8px rgba(201,162,74,.2)}
-.team-logo{width:32px;height:32px;flex-shrink:0;object-fit:contain}
-.team-info{text-align:left;flex:1;min-width:0}
-.team-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:14px;font-weight:600;color:var(--paper);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.team-card{display:grid;grid-template-columns:32px 1fr auto auto;gap:12px;align-items:center;background:var(--ink-2);border:1px solid var(--rule);border-left:3px solid var(--rule);border-radius:2px;padding:8px 12px 8px 10px;text-decoration:none;transition:border-color .15s,transform .15s,box-shadow .15s,background .15s}
+.team-card:hover{border-color:var(--rule-hi);background:var(--ink-3);transform:translateX(2px)}
+.team-card.has-live{border-color:var(--gold);box-shadow:0 0 16px rgba(201,162,74,.2)}
+.team-card.is-user{border-left-color:var(--gold);background:linear-gradient(90deg,rgba(201,162,74,.08),var(--ink-2) 40%)}
+
+.team-logo{width:30px;height:30px;flex-shrink:0;object-fit:contain}
+.team-info{min-width:0}
+.team-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;font-size:13px;font-weight:600;color:var(--paper);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.1}
 .team-meta{display:flex;gap:8px;align-items:baseline;margin-top:2px}
 .team-rec{font-family:var(--mono);font-size:10px;color:var(--paper-mute)}
 .team-streak{font-family:var(--mono);font-size:9px;color:var(--gold-dim)}
-.team-live{font-family:var(--mono);font-size:10px;color:var(--gold);font-weight:600;margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:4px}
-.live-dot{width:6px;height:6px;background:var(--loss);border-radius:50%;animation:pulse 1.5s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.team-final{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-left:auto;white-space:nowrap}
-.foot{font-family:var(--cond);text-transform:uppercase;letter-spacing:.18em;font-size:10px;color:var(--paper-mute);margin-top:30px;padding-top:16px;border-top:1px solid var(--rule);text-align:center}
-.foot .flag{color:var(--gold)}
+.team-streak.hot{color:var(--win)}.team-streak.cold{color:var(--loss)}
+
+.team-gb{font-family:var(--mono);font-size:10px;color:var(--paper-mute);letter-spacing:.08em;white-space:nowrap;min-width:26px;text-align:right}
+
+.team-live{font-family:var(--mono);font-size:9px;color:var(--gold);font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:4px;letter-spacing:.06em}
+.team-live.empty{display:none}
+.team-live .dot{width:5px;height:5px;background:var(--crimson);border-radius:50%;animation:pulse 1.5s ease-in-out infinite}
+.team-final{font-family:var(--mono);font-size:9px;color:var(--paper-mute);white-space:nowrap;letter-spacing:.06em}
+.team-final.w{color:var(--win)}.team-final.l{color:var(--paper-mute)}
+.team-preview{font-family:var(--mono);font-size:9px;color:var(--paper-mute);white-space:nowrap;letter-spacing:.06em}
+
+.site-foot{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:20px 32px 32px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--paper-mute)}
+.site-foot .g{color:var(--gold)}
+.site-foot a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
+.site-foot a:hover{color:var(--paper);border-bottom-color:var(--paper)}
+
+@media (max-width:900px){
+  .masthead{grid-template-columns:1fr;gap:10px;padding:16px 20px 10px;text-align:center}
+  .mast-kicker-l,.mast-kicker-r{flex-direction:row;justify-content:center;gap:20px;padding-bottom:0;align-items:center}
+  .greet{grid-template-columns:1fr;gap:14px;padding:0 20px}
+  .greet-meta{justify-content:flex-start}
+  .your-team{padding:0 20px}
+  .yt-card{grid-template-columns:auto 1fr;gap:16px;padding:18px}
+  .yt-cta{grid-column:1/-1}
+  .yt-name{font-size:26px}
+  .leagues{grid-template-columns:1fr;padding:0 20px 30px;gap:24px}
+  .ticker{flex-wrap:wrap;padding:8px 18px;font-size:9px}
+}
 </style>
 </head>
 <body>
-<div class="landing">
-  <header class="masthead">
-    <h1>
-      <span class="the">The</span>
-      <span class="lineup">Morning Lineup</span>
-    </h1>
-    <div class="sub">A Daily MLB Briefing</div>
-  </header>
-  <div class="divider"></div>
-  <p class="pick">Choose your team</p>
-  <div class="leagues" id="leagues"></div>
-  <div class="foot">The Morning Lineup &middot; <span class="flag">Data: MLB Stats API</span></div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="left">
+    <span class="live-dot" id="ticker-dot" style="display:none"></span>
+    <span class="paper" id="ticker-live">— Live</span>
+    <span class="g">·</span>
+    <span id="ticker-final">— Final</span>
+    <span class="g">·</span>
+    <span id="ticker-preview">— Upcoming</span>
+  </div>
+  <div class="right">
+    <span>Vol. I</span>
+    <span class="g">·</span>
+    <span class="paper" id="ticker-date">—</span>
+  </div>
 </div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="mast-kicker-l">
+    <div class="row"><span>Reader</span><span class="val" id="kick-reader">—</span></div>
+    <div class="row"><span>Rooting</span><span class="val gold" id="kick-team">—</span></div>
+  </div>
+  <div class="mast-center">
+    <h1 class="mast-main"><span class="mast-the">The</span>Morning <em>Lineup</em></h1>
+  </div>
+  <div class="mast-kicker-r">
+    <div class="row"><span>Today</span><span class="val" id="kick-games">—</span></div>
+    <div class="row"><span>Status</span><span class="val gold">Members Desk</span></div>
+  </div>
+</header>
+
+<!-- GREETING -->
+<div class="greet">
+  <div>
+    <h2 class="greet-head">Good morning, <span class="reader" id="greet-reader">Reader.</span></h2>
+    <p class="greet-sub" id="greet-sub">Your briefings are ready</p>
+  </div>
+  <div class="greet-meta">
+    <div class="stat"><span class="n" id="stat-games">—</span>Games Today</div>
+    <div class="stat"><span class="n" id="stat-live">—</span>Live Now</div>
+    <div class="stat"><span class="n" id="stat-final">—</span>Final</div>
+  </div>
+</div>
+
+<!-- YOUR TEAM -->
+<div class="your-team" id="your-team" hidden>
+  <a class="yt-card" id="yt-card" href="#">
+    <img class="yt-logo" id="yt-logo" alt="">
+    <div class="yt-meta">
+      <div class="yt-kicker" id="yt-kicker">◆ Your Team · Fresh Briefing</div>
+      <h3 class="yt-name" id="yt-name">—</h3>
+      <div class="yt-line" id="yt-line">—</div>
+    </div>
+    <div class="yt-cta">
+      <span class="yt-btn">Read Today's Briefing</span>
+    </div>
+  </a>
+</div>
+
+<!-- LEAGUES GRID -->
+<main class="leagues" id="leagues"></main>
+
+<footer class="site-foot">
+  <span>The Morning Lineup</span>
+  <span><span class="g">Data:</span> MLB Stats API</span>
+</footer>
+
 <script>
 var teams = __TEAMS_JSON__;
 var LOGO = "https://www.mlbstatic.com/team-logos/team-cap-on-dark/";
 var API = "https://statsapi.mlb.com/api/v1";
 
 var divOrder = [
-  {league:"American League",divs:["AL East","AL Central","AL West"]},
-  {league:"National League",divs:["NL East","NL Central","NL West"]}
+  {key:"AL",league:"American League",divs:["AL East","AL Central","AL West"]},
+  {key:"NL",league:"National League",divs:["NL East","NL Central","NL West"]}
 ];
 
-// Index teams by ID for fast lookup
 var teamById = {};
-for (var i = 0; i < teams.length; i++) teamById[teams[i].id] = teams[i];
-
-// Group teams by division
-var byDiv = {};
+var teamBySlug = {};
 for (var i = 0; i < teams.length; i++) {
-  var d = teams[i].division_name;
-  if (!byDiv[d]) byDiv[d] = [];
-  byDiv[d].push(teams[i]);
+  teamById[teams[i].id] = teams[i];
+  teamBySlug[teams[i].slug] = teams[i];
 }
 
-// Build the page structure (cards will be updated with live data)
+var byDiv = {};
+for (var i2 = 0; i2 < teams.length; i2++) {
+  var d = teams[i2].division_name;
+  if (!byDiv[d]) byDiv[d] = [];
+  byDiv[d].push(teams[i2]);
+}
+
+// ── MASTHEAD DATE ───────────────────────────────────────────
+(function(){
+  var now = new Date();
+  var opts = { weekday:"short", month:"short", day:"2-digit", year:"numeric" };
+  var s = now.toLocaleDateString("en-US", opts).toUpperCase().replace(/,/g,"").replace(/\s+/g," ");
+  // "FRI APR 10 2026" → "FRI · APR 10 · 2026"
+  var parts = s.split(" ");
+  if (parts.length === 4) s = parts[0] + " · " + parts[1] + " " + parts[2] + " · " + parts[3];
+  document.getElementById("ticker-date").textContent = s;
+})();
+
+// ── LEAGUE GRID BUILD ───────────────────────────────────────
 var container = document.getElementById("leagues");
-var cardEls = {}; // team_id -> card element
 
 for (var li = 0; li < divOrder.length; li++) {
   var lg = divOrder[li];
-  var col = document.createElement("div");
-  col.className = "league-col";
-  col.innerHTML = '<div class="league-label">' + lg.league + '</div>';
+  var teamCount = 0;
+  for (var dc = 0; dc < lg.divs.length; dc++) teamCount += (byDiv[lg.divs[dc]] || []).length;
+
+  var section = document.createElement("section");
+  section.className = "league";
+  section.innerHTML =
+    '<div class="league-head">' +
+      '<span class="num">' + lg.key + '</span>' +
+      '<h2 class="h">' + lg.league + '</h2>' +
+      '<span class="tag">' + teamCount + ' Teams</span>' +
+    '</div>';
 
   for (var di = 0; di < lg.divs.length; di++) {
     var divName = lg.divs[di];
@@ -129,8 +276,7 @@ for (var li = 0; li < divOrder.length; li++) {
     list.className = "div-teams";
     list.id = "div-" + divName.replace(/\s/g, "-");
 
-    var dt = byDiv[divName] || [];
-    // Placeholder sort alphabetically; will re-sort by standings
+    var dt = (byDiv[divName] || []).slice();
     dt.sort(function(a,b){ return a.full_name.localeCompare(b.full_name); });
 
     for (var ti = 0; ti < dt.length; ti++) {
@@ -149,31 +295,26 @@ for (var li = 0; li < divOrder.length; li++) {
             '<span class="team-streak" id="streak-' + t.id + '"></span>' +
           '</div>' +
         '</div>' +
-        '<span class="team-live" id="live-' + t.id + '"></span>';
+        '<span class="team-gb" id="gb-' + t.id + '"></span>' +
+        '<span class="team-live empty" id="live-' + t.id + '"></span>';
       list.appendChild(a);
-      cardEls[t.id] = a;
     }
     group.appendChild(list);
-    col.appendChild(group);
+    section.appendChild(group);
   }
-  container.appendChild(col);
+  container.appendChild(section);
 }
 
-// Fetch standings and sort divisions by rank
+// ── STANDINGS ───────────────────────────────────────────────
 fetch(API + "/standings?leagueId=103,104&season=" + new Date().getFullYear() + "&standingsTypes=regularSeason")
   .then(function(r){ return r.json(); })
   .then(function(data) {
-    var divMap = {
-      201:"AL-East",202:"AL-Central",200:"AL-West",
-      204:"NL-East",205:"NL-Central",203:"NL-West"
-    };
+    var divMap = {201:"AL-East",202:"AL-Central",200:"AL-West",204:"NL-East",205:"NL-Central",203:"NL-West"};
     for (var ri = 0; ri < data.records.length; ri++) {
       var rec = data.records[ri];
-      var divId = rec.division.id;
-      var listEl = document.getElementById("div-" + divMap[divId]);
+      var listEl = document.getElementById("div-" + divMap[rec.division.id]);
       if (!listEl) continue;
 
-      // Sort by division rank and rebuild order
       var sorted = rec.teamRecords.slice().sort(function(a,b){
         return parseInt(a.divisionRank) - parseInt(b.divisionRank);
       });
@@ -183,10 +324,24 @@ fetch(API + "/standings?leagueId=103,104&season=" + new Date().getFullYear() + "
         var tid = tr.team.id;
         var recEl = document.getElementById("rec-" + tid);
         var streakEl = document.getElementById("streak-" + tid);
-        if (recEl) recEl.textContent = tr.wins + "-" + tr.losses;
-        if (streakEl) streakEl.textContent = tr.streak ? tr.streak.streakCode : "";
+        var gbEl = document.getElementById("gb-" + tid);
 
-        // Re-order card in DOM by standings rank
+        if (recEl) recEl.textContent = tr.wins + "-" + tr.losses;
+        if (streakEl) {
+          var sc = tr.streak ? tr.streak.streakCode : "";
+          streakEl.textContent = sc;
+          streakEl.classList.remove("hot","cold");
+          if (sc) {
+            var n = parseInt(sc.slice(1),10) || 0;
+            if (sc[0] === "W" && n >= 3) streakEl.classList.add("hot");
+            else if (sc[0] === "L" && n >= 3) streakEl.classList.add("cold");
+          }
+        }
+        if (gbEl) {
+          var gb = tr.gamesBack;
+          gbEl.textContent = (gb === "-" || gb === "0.0") ? "—" : gb;
+        }
+
         var card = document.getElementById("card-" + tid);
         if (card) listEl.appendChild(card);
       }
@@ -194,60 +349,192 @@ fetch(API + "/standings?leagueId=103,104&season=" + new Date().getFullYear() + "
   })
   .catch(function(){});
 
-// Fetch today's schedule for live scores
+// ── TODAY'S SCHEDULE / LIVE SCORES ──────────────────────────
+var latestGamesByTeam = {}; // team_id → {state, summary object}
+
+function fmtTime(iso){
+  try {
+    var d = new Date(iso);
+    return d.toLocaleTimeString("en-US", {hour:"numeric",minute:"2-digit",timeZone:"America/Chicago"});
+  } catch(e){ return ""; }
+}
+
 fetch(API + "/schedule?sportId=1&date=" + new Date().toISOString().slice(0,10) + "&hydrate=team,linescore")
   .then(function(r){ return r.json(); })
   .then(function(data) {
     var dates = data.dates || [];
-    if (!dates.length) return;
-    var games = dates[0].games || [];
+    var games = dates.length ? (dates[0].games || []) : [];
+
+    var nLive = 0, nFinal = 0, nPreview = 0;
 
     for (var gi = 0; gi < games.length; gi++) {
       var g = games[gi];
       var state = g.status.abstractGameState;
-      var away = g.teams.away;
-      var home = g.teams.home;
-      var aids = [away.team.id, home.team.id];
+      if (state === "Live") nLive++;
+      else if (state === "Final") nFinal++;
+      else nPreview++;
 
-      for (var ai = 0; ai < aids.length; ai++) {
-        var tid = aids[ai];
+      var away = g.teams.away, home = g.teams.home;
+      var pair = [[away.team.id, true, home.team], [home.team.id, false, away.team]];
+
+      for (var pi = 0; pi < pair.length; pi++) {
+        var tid = pair[pi][0];
+        var isAway = pair[pi][1];
+        var opp = pair[pi][2];
+        var isHome = !isAway;
+        var oppAbbr = opp.abbreviation;
+        var prefix = isHome ? "vs" : "@";
         var el = document.getElementById("live-" + tid);
         var card = document.getElementById("card-" + tid);
         if (!el) continue;
-
-        var isHome = tid === home.team.id;
-        var opp = isHome ? away.team.abbreviation : home.team.abbreviation;
-        var prefix = isHome ? "vs" : "@";
+        el.classList.remove("empty");
 
         if (state === "Live") {
           var ls = g.linescore || {};
-          var as = away.score || 0;
-          var hs = home.score || 0;
+          var as = away.score || 0, hs = home.score || 0;
           var inn = ls.currentInningOrdinal || "";
-          var half = ls.isTopInning ? "Top" : "Bot";
-          el.innerHTML = '<span class="live-dot"></span> ' + prefix + ' ' + opp + ' ' + as + '-' + hs + ' ' + half + ' ' + inn;
+          var half = ls.isTopInning ? "T" : "B";
+          el.className = "team-live";
+          el.innerHTML = '<span class="dot"></span>' + as + "-" + hs + " " + half + inn;
           if (card) card.classList.add("has-live");
+          latestGamesByTeam[tid] = { state:"Live", away:away, home:home, linescore:ls, isHome:isHome, opp:oppAbbr };
         } else if (state === "Final") {
-          var as2 = away.score || 0;
-          var hs2 = home.score || 0;
+          var as2 = away.score || 0, hs2 = home.score || 0;
           var myScore = isHome ? hs2 : as2;
           var oppScore = isHome ? as2 : hs2;
-          var wl = myScore > oppScore ? "W" : "L";
-          el.className = "team-final";
-          el.textContent = wl + " " + myScore + "-" + oppScore + " " + prefix + " " + opp;
-        } else if (state === "Preview") {
-          var time = "";
-          try {
-            var d = new Date(g.gameDate);
-            time = d.toLocaleTimeString("en-US", {hour:"numeric",minute:"2-digit",timeZone:"America/Chicago"});
-          } catch(e){}
-          el.className = "team-final";
-          el.textContent = prefix + " " + opp + " " + time;
+          var won = myScore > oppScore;
+          el.className = "team-final " + (won ? "w" : "l");
+          el.textContent = (won ? "W " : "L ") + myScore + "-" + oppScore + " " + prefix + " " + oppAbbr;
+          latestGamesByTeam[tid] = { state:"Final", won:won, myScore:myScore, oppScore:oppScore, prefix:prefix, opp:oppAbbr };
+        } else {
+          var time = fmtTime(g.gameDate);
+          el.className = "team-preview";
+          el.textContent = prefix + " " + oppAbbr + " " + time;
+          latestGamesByTeam[tid] = { state:"Preview", prefix:prefix, opp:oppAbbr, time:time };
         }
       }
     }
+
+    // Ticker + greeting stats
+    document.getElementById("ticker-live").textContent = nLive + " Live";
+    document.getElementById("ticker-final").textContent = nFinal + " Final";
+    document.getElementById("ticker-preview").textContent = nPreview + " Upcoming";
+    document.getElementById("ticker-dot").style.display = nLive > 0 ? "inline-block" : "none";
+    document.getElementById("stat-games").textContent = games.length;
+    document.getElementById("stat-live").textContent = nLive;
+    document.getElementById("stat-final").textContent = nFinal;
+    document.getElementById("kick-games").textContent = games.length + " Games";
+
+    // Greeting subtitle
+    var sub = document.getElementById("greet-sub");
+    if (nLive > 0) sub.innerHTML = 'Your briefings are ready <span class="g">·</span> <span class="paper">' + nLive + ' live game' + (nLive===1?"":"s") + ' right now</span>';
+    else if (games.length) sub.innerHTML = 'Your briefings are ready <span class="g">·</span> <span class="paper">' + games.length + ' games on today\'s slate</span>';
+    else sub.textContent = 'Your briefings are ready — no MLB action today';
+
+    // If hero card already pointed at a team, refresh its line now that we have games
+    if (window.__heroTeamSlug && window.fillHero) window.fillHero(window.__heroTeamSlug);
   })
   .catch(function(){});
+
+// ── YOUR TEAM HERO ──────────────────────────────────────────
+window.fillHero = function(slug){
+  var t = teamBySlug[slug];
+  if (!t) return;
+  var yt = document.getElementById("your-team");
+  var card = document.getElementById("yt-card");
+  var logo = document.getElementById("yt-logo");
+  var name = document.getElementById("yt-name");
+  var line = document.getElementById("yt-line");
+  var kicker = document.getElementById("yt-kicker");
+
+  card.href = t.slug + "/";
+  logo.src = LOGO + t.id + ".svg";
+  var shortName = t.name || t.full_name.split(" ").pop();
+  name.textContent = "The " + shortName;
+  card.style.background = "linear-gradient(90deg," + hexA(t.colors.primary, .38) + " 0%, var(--ink-2) 60%, var(--ink-2) 100%)";
+  card.style.borderLeftColor = t.colors.accent || t.colors.primary;
+
+  var gridCard = document.getElementById("card-" + t.id);
+  if (gridCard) {
+    gridCard.classList.add("is-user");
+    gridCard.style.borderLeftColor = "var(--gold)";
+  }
+  document.getElementById("kick-team").textContent = shortName;
+
+  var g = latestGamesByTeam[t.id];
+  var parts = [];
+  if (g) {
+    if (g.state === "Live") {
+      var ls = g.linescore || {};
+      var as = g.away.score || 0, hs = g.home.score || 0;
+      var inn = ls.currentInningOrdinal || "";
+      var half = ls.isTopInning ? "Top" : "Bot";
+      var myScore = g.isHome ? hs : as;
+      var oppScore = g.isHome ? as : hs;
+      var lead = myScore > oppScore ? "win" : (myScore < oppScore ? "loss" : "g");
+      parts.push('<span class="' + lead + '">LIVE ' + myScore + '–' + oppScore + '</span>');
+      parts.push((g.isHome ? "vs " : "@ ") + g.opp);
+      parts.push(half + " " + inn);
+      kicker.textContent = "◆ Your Team · Live Now";
+    } else if (g.state === "Final") {
+      parts.push('<span class="' + (g.won ? "win" : "loss") + '">' + (g.won ? "W " : "L ") + g.myScore + "–" + g.oppScore + '</span>');
+      parts.push(g.prefix + " " + g.opp);
+      kicker.textContent = "◆ Your Team · Last Game";
+    } else {
+      parts.push("Today " + g.prefix + " " + g.opp);
+      if (g.time) parts.push(g.time);
+      kicker.textContent = "◆ Your Team · Today's Slate";
+    }
+  } else {
+    parts.push("Off day");
+    kicker.textContent = "◆ Your Team · Fresh Briefing";
+  }
+  parts.push('<span class="g">' + (t.division_name || "") + '</span>');
+  line.innerHTML = parts.join(' <span class="g">·</span> ');
+  yt.hidden = false;
+};
+
+function hexA(hex, a){
+  var h = (hex || "#0e3386").replace("#","");
+  if (h.length === 3) h = h.split("").map(function(c){return c+c;}).join("");
+  var r = parseInt(h.slice(0,2),16), gg = parseInt(h.slice(2,4),16), bb = parseInt(h.slice(4,6),16);
+  return "rgba(" + r + "," + gg + "," + bb + "," + a + ")";
+}
+</script>
+
+<!-- Async: fetch reader name + followed teams from Supabase -->
+<script type="module">
+import { getSession, supabase } from "./auth/session.js";
+
+(async function hydrate(){
+  try {
+    const session = await getSession();
+    if (!session) return;
+
+    // Reader name
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("display_name")
+      .eq("id", session.user.id)
+      .maybeSingle();
+    const name = (profile && profile.display_name) || session.user.email?.split("@")[0] || "Reader";
+    document.getElementById("greet-reader").textContent = name + ".";
+    document.getElementById("kick-reader").textContent = name;
+
+    // Primary team = followed_teams with lowest position
+    const { data: followed } = await supabase
+      .from("followed_teams")
+      .select("team_slug, position")
+      .order("position", { ascending: true })
+      .limit(1);
+    if (followed && followed.length) {
+      window.__heroTeamSlug = followed[0].team_slug;
+      if (typeof window.fillHero === "function") window.fillHero(followed[0].team_slug);
+    }
+  } catch (err) {
+    console.warn("landing hydrate failed", err);
+  }
+})();
 </script>
 </body>
 </html>
