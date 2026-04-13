@@ -33,6 +33,10 @@ except (ImportError, KeyError):
 
 ROOT = Path(__file__).parent
 
+# Build ID stamped into sw.js on every build to force service-worker cache
+# rotation. Any change to CACHE name triggers SW activate → old caches deleted.
+BUILD_ID = datetime.now(CT).strftime("%Y%m%d%H%M")
+
 def load_team_config(team_slug="cubs"):
     cfg_path = ROOT / "teams" / f"{team_slug}.json"
     if not cfg_path.exists():
@@ -1661,5 +1665,20 @@ if __name__ == "__main__":
                 _src = ROOT / _asset
                 if _src.exists():
                     shutil.copyfile(_src, out_path.parent / _asset)
+            # sw.js: rewrite cache version to BUILD_ID, stamp root + team copy.
+            # Single source of truth — team dirs are regenerated every build so
+            # they can't drift from root.
+            import re as _re
+            _sw_src = ROOT / "sw.js"
+            if _sw_src.exists():
+                _sw_text = _sw_src.read_text(encoding="utf-8")
+                _sw_text = _re.sub(
+                    r'lineup-[A-Za-z0-9]+',
+                    f'lineup-{BUILD_ID}',
+                    _sw_text,
+                    count=1,
+                )
+                _sw_src.write_text(_sw_text, encoding="utf-8")
+                (out_path.parent / "sw.js").write_text(_sw_text, encoding="utf-8")
         except Exception as _e3:
             print(f"  warning: phase 2 asset copy failed: {_e3}", flush=True)

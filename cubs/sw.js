@@ -1,4 +1,4 @@
-const CACHE = "lineup-v15";
+const CACHE = "lineup-202604130723";
 const SHELL = ["/morning-lineup/", "/morning-lineup/index.html", "/morning-lineup/live.js"];
 
 self.addEventListener("install", function (e) {
@@ -26,7 +26,7 @@ self.addEventListener("activate", function (e) {
 self.addEventListener("fetch", function (e) {
   var url = new URL(e.request.url);
 
-  // Network-first for API calls (live data should be fresh)
+  // Network-first for live API calls — must always be fresh.
   if (url.hostname === "statsapi.mlb.com" || url.hostname === "api.open-meteo.com") {
     e.respondWith(
       fetch(e.request).catch(function () {
@@ -36,21 +36,22 @@ self.addEventListener("fetch", function (e) {
     return;
   }
 
-  // Cache-first for app shell
+  // Network-first for everything else (HTML, JS, CSS). Falls back to cache
+  // only when offline. Updated files always land on refresh — no hard-refresh
+  // required. Cache exists purely as an offline safety net.
   e.respondWith(
-    caches.match(e.request).then(function (cached) {
-      var fetchPromise = fetch(e.request).then(function (response) {
-        if (response && response.status === 200) {
+    fetch(e.request)
+      .then(function (response) {
+        if (response && response.status === 200 && response.type === "basic") {
           var clone = response.clone();
           caches.open(CACHE).then(function (cache) {
             cache.put(e.request, clone);
           });
         }
         return response;
-      }).catch(function () {
-        return cached;
-      });
-      return cached || fetchPromise;
-    })
+      })
+      .catch(function () {
+        return caches.match(e.request);
+      })
   );
 });

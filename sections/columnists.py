@@ -3,9 +3,10 @@ team page. Replaces the old single editorial lede.
 
 Each team's `teams/{slug}.json` config carries a `columnists` array with
 three persona dicts (name, role, backstory, signature_phrase, voice_sample).
-For each persona we generate a ~300-500 word column using Ollama first,
-with an Anthropic Claude Sonnet fallback — mirroring the pattern in
-sections/around_league.generate_lede.
+For each persona we generate a ~300-500 word column using Ollama. If
+MORNING_LINEUP_SKIP_COLUMN_GEN is set in the environment (pass 1 of the
+daily build), generation is skipped entirely and columns render as
+"off today" placeholders — pass 2 fills them in afterwards.
 
 All three writers for a given team share a single cache file at
 data/columnists-{slug}-{YYYY-MM-DD}.json with shape:
@@ -162,56 +163,32 @@ def _try_ollama(prompt):
     return ""
 
 
-def _try_anthropic(prompt):
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        return ""
-    try:
-        body = json.dumps({
-            "model": "claude-sonnet-4-20250514",
-            "max_tokens": 1024,
-            "messages": [{"role": "user", "content": prompt}],
-        }).encode()
-        req = urllib.request.Request(
-            "https://api.anthropic.com/v1/messages",
-            data=body, method="POST",
-            headers={
-                "Content-Type": "application/json",
-                "x-api-key": api_key,
-                "anthropic-version": "2023-06-01",
-            },
-        )
-        with urllib.request.urlopen(req, timeout=30) as r:
-            resp = json.loads(r.read())
-        text = resp["content"][0]["text"].strip()
-        if text and len(text) >= MIN_COLUMN_CHARS:
-            return text
-    except Exception as e:
-        print(f"  Anthropic column failed: {e}", flush=True)
-    return ""
-
-
 def generate_column(briefing, persona, cache):
     """Return the column text for a given persona, using the shared cache
-    dict. Tries Ollama, falls back to Anthropic, returns '' on total failure.
-    Mutates `cache` in place so the caller can save the whole file once."""
+    dict. Tries Ollama, returns '' on failure. Mutates `cache` in place so
+    the caller can save the whole file once.
+
+    Respects MORNING_LINEUP_SKIP_COLUMN_GEN — when set, only the cache is
+    consulted and no Ollama calls are made. Used by pass 1 of daily-build
+    so the games-pass deploys fast without touching the LLM."""
     role_key = _role_key(persona)
     cached = cache.get(role_key, {})
     if cached.get("column"):
         return cached["column"]
+
+    if os.environ.get("MORNING_LINEUP_SKIP_COLUMN_GEN"):
+        cache[role_key] = {"name": persona["name"], "column": ""}
+        return ""
 
     day_context = _build_day_context(briefing)
     prompt = _build_prompt(briefing, persona, day_context)
 
     print(f"  generating column for {persona['name']} ({role_key})...", flush=True)
     text = _try_ollama(prompt)
-    if not text:
-        print(f"    Ollama failed or too short, trying Anthropic...", flush=True)
-        text = _try_anthropic(prompt)
     if text:
         print(f"    ✓ got {len(text)} chars", flush=True)
     else:
-        print(f"    ✗ both providers failed for {persona['name']}", flush=True)
+        print(f"    ✗ Ollama failed for {persona['name']}", flush=True)
 
     cache[role_key] = {
         "name": persona["name"],

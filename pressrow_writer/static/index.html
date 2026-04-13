@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0d0f14">
+<title>Press Row — Writer's Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,700&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+<header class="wr-masthead">
+  <div class="wr-kicker">
+    <span>Press Row</span>
+    <span class="wr-kicker-vol">Writer's Room</span>
+    <span id="wr-llm-status" class="wr-llm-status"></span>
+  </div>
+  <h1 class="wr-title">
+    <span class="wr-the">The</span>
+    <span class="wr-writers">Writer's <em>Room</em></span>
+  </h1>
+</header>
+
+<nav class="wr-progress-bar" id="wr-progress-bar">
+  <button class="wr-task-chip" data-task="task1" data-mode="swipe">
+    <span class="wr-task-label">T1 · Obsessions</span>
+    <span class="wr-task-count">0 / 90</span>
+    <span class="wr-task-meter"><span class="wr-task-fill"></span></span>
+  </button>
+  <button class="wr-task-chip" data-task="task2" data-mode="chat">
+    <span class="wr-task-label">T2 · Shadow Personas</span>
+    <span class="wr-task-count">0 / 30</span>
+    <span class="wr-task-meter"><span class="wr-task-fill"></span></span>
+  </button>
+  <button class="wr-task-chip" data-task="task3" data-mode="chat">
+    <span class="wr-task-label">T3 · Recurring Fans</span>
+    <span class="wr-task-count">0 / 15</span>
+    <span class="wr-task-meter"><span class="wr-task-fill"></span></span>
+  </button>
+  <button class="wr-task-chip" data-task="task4" data-mode="chat">
+    <span class="wr-task-label">T4 · Feuds</span>
+    <span class="wr-task-count">0 / 10</span>
+    <span class="wr-task-meter"><span class="wr-task-fill"></span></span>
+  </button>
+  <button class="wr-task-chip" data-task="task5" data-mode="card">
+    <span class="wr-task-label">T5 · Ghost</span>
+    <span class="wr-task-count">⚪</span>
+    <span class="wr-task-meter"><span class="wr-task-fill"></span></span>
+  </button>
+</nav>
+
+<nav class="wr-mode-switch">
+  <button class="wr-mode-btn is-active" data-mode="home">Home</button>
+  <button class="wr-mode-btn" data-mode="chat">Chat</button>
+  <button class="wr-mode-btn" data-mode="swipe">Swipe</button>
+  <button class="wr-mode-btn" data-mode="card">Card</button>
+</nav>
+
+<main class="wr-stage">
+
+  <section class="wr-mode wr-mode-home is-active" id="wr-home">
+    <div class="wr-home-inner">
+      <p class="wr-home-kicker">Saturday morning, 9:00 AM.</p>
+      <h2 class="wr-home-head">Let's build a universe.</h2>
+      <p class="wr-home-lede">
+        Three rooms, one house. Pick a mode above or click a task chip to jump in.
+        Chat handles personas, fans, and feuds. Swipe handles obsessions.
+        Card handles the ghost.
+      </p>
+      <div class="wr-home-grid">
+        <div class="wr-home-card" data-mode-launch="chat">
+          <div class="wr-home-card-num">01</div>
+          <div class="wr-home-card-name">Chat Mode</div>
+          <div class="wr-home-card-desc">Conversational design for shadow personas, recurring fans, and feuds. Three of five tasks live here.</div>
+        </div>
+        <div class="wr-home-card" data-mode-launch="swipe">
+          <div class="wr-home-card-num">02</div>
+          <div class="wr-home-card-name">Swipe Mode</div>
+          <div class="wr-home-card-desc">Full-screen curation of ~800 pre-generated obsession candidates. Anchor a favorite, radiate the voice.</div>
+        </div>
+        <div class="wr-home-card" data-mode-launch="card">
+          <div class="wr-home-card-num">03</div>
+          <div class="wr-home-card-name">Card Mode</div>
+          <div class="wr-home-card-desc">Ritualistic editor for the Walk-Off Ghost. One entry, focused attention, oracle whispers.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wr-mode wr-mode-chat" id="wr-chat">
+    <div class="wr-chat-container">
+      <div class="wr-chat-task-selector" id="wr-chat-tasks">
+        <button class="wr-chat-task-btn is-active" data-chat-task="shadow_personas">
+          <span class="wr-chat-task-num">T2</span>
+          <span class="wr-chat-task-name">Shadow Personas</span>
+        </button>
+        <button class="wr-chat-task-btn" data-chat-task="recurring_fans">
+          <span class="wr-chat-task-num">T3</span>
+          <span class="wr-chat-task-name">Recurring Fans</span>
+        </button>
+        <button class="wr-chat-task-btn" data-chat-task="feuds">
+          <span class="wr-chat-task-num">T4</span>
+          <span class="wr-chat-task-name">Feuds</span>
+        </button>
+      </div>
+
+      <div class="wr-chat-messages" id="wr-chat-messages">
+        <div class="wr-chat-empty">
+          <p class="wr-chat-empty-head">Let's cast a character.</p>
+          <p class="wr-chat-empty-lede">Pick a task above, then tell me what to pitch. Try: <em>"pitch me a Pirates persona"</em> or <em>"who should Tony feud with?"</em></p>
+        </div>
+      </div>
+
+      <form class="wr-chat-composer" id="wr-chat-composer">
+        <textarea
+          id="wr-chat-input"
+          placeholder="Pitch me a shadow persona for the Pirates..."
+          rows="2"
+          autocomplete="off"
+        ></textarea>
+        <button type="submit" class="wr-chat-send">
+          <span>Send</span>
+          <span class="wr-chat-send-hint">⏎</span>
+        </button>
+      </form>
+      <div class="wr-chat-hint">Enter to send · Shift+Enter for newline · Esc to go home</div>
+    </div>
+  </section>
+
+  <section class="wr-mode wr-mode-swipe" id="wr-swipe">
+    <div class="wr-swipe-container" id="wr-swipe-container">
+      <!-- filled by swipe.js -->
+    </div>
+  </section>
+
+  <section class="wr-mode wr-mode-card" id="wr-card">
+    <div class="wr-card-container" id="wr-card-container">
+      <!-- filled by card.js -->
+    </div>
+  </section>
+
+</main>
+
+<script src="/static/app.js"></script>
+<script src="/static/chat.js"></script>
+<script src="/static/swipe.js"></script>
+<script src="/static/card.js"></script>
+</body>
+</html>
