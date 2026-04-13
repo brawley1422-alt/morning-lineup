@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co https://esm.sh https://statsapi.mlb.com; base-uri 'self'; form-action 'self'">
 <title>Settings — Morning Lineup</title>
 <link rel="icon" href="/morning-lineup/icons/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -117,7 +118,7 @@
   <a href="../">← Back to Morning Lineup</a>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js" integrity="sha384-eeLEhtwdMwD3X9y+8P3Cn7Idl/M+w8H4uZqkgD/2eJVkWIN1yKzEj6XegJ9dL3q0" crossorigin="anonymous"></script>
 <script type="module" src="settings.js"></script>
 </body>
 </html>

@@ -134,6 +134,7 @@ if data_file.exists():
 #    GET current SHA first to allow in-place updates without 422 conflicts.
 STATIC_ASSETS = [
     "sw.js",
+    "auth-bounce.js",
     "config/supabase.js",
     "auth/index.html",
     "auth/reset.html",

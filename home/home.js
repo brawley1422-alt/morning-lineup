@@ -99,7 +99,28 @@ function renderLoading(msg = null) {
   }
 }
 function renderError(msg) {
-  shell.innerHTML = `<div class="home-error"><p>${msg}</p></div>`;
+  shell.textContent = "";
+  const wrap = document.createElement("div");
+  wrap.className = "home-error";
+  const p = document.createElement("p");
+  p.textContent = msg;
+  wrap.appendChild(p);
+  shell.appendChild(wrap);
+}
+
+function renderBinderFallback(host, name, metaText) {
+  host.textContent = "";
+  const wrap = document.createElement("div");
+  wrap.className = "binder-card-fallback";
+  const n = document.createElement("div");
+  n.className = "bcf-name";
+  n.textContent = name || "";
+  const m = document.createElement("div");
+  m.className = "bcf-meta";
+  m.textContent = metaText;
+  wrap.appendChild(n);
+  wrap.appendChild(m);
+  host.appendChild(wrap);
 }
 
 // Guest preview: let them pick one team, show sections 1-3 fully, blur the rest.
@@ -620,7 +641,11 @@ function renderMyPlayersSection(players, statsMap) {
     const slot = String(idx + 1).padStart(2, "0");
     const label = document.createElement("div");
     label.className = "pocket-label";
-    label.innerHTML = `<span class="slot">Slot ${slot}</span> · ${p.mlb_team_abbr || "—"}`;
+    const slotSpan = document.createElement("span");
+    slotSpan.className = "slot";
+    slotSpan.textContent = `Slot ${slot}`;
+    label.appendChild(slotSpan);
+    label.appendChild(document.createTextNode(` · ${p.mlb_team_abbr || "—"}`));
     pocket.appendChild(label);
 
     grid.appendChild(pocket);
@@ -631,11 +656,11 @@ function renderMyPlayersSection(players, statsMap) {
     const tryMount = async () => {
       const ML = window.MorningLineupPC;
       if (!ML) {
-        cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">component not loaded</div></div>`;
+        renderBinderFallback(cardHost, p.full_name, "component not loaded");
         return;
       }
       if (!p.mlbam_id) {
-        cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">missing pid</div></div>`;
+        renderBinderFallback(cardHost, p.full_name, "missing pid");
         return;
       }
       let resolvedSlug = slug;
@@ -644,23 +669,28 @@ function renderMyPlayersSection(players, statsMap) {
         resolvedSlug = index[String(p.mlbam_id)];
       }
       if (!resolvedSlug) {
-        cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">player not on any active roster</div></div>`;
+        renderBinderFallback(cardHost, p.full_name, "player not on any active roster");
         return;
       }
       // Update the slot label with the resolved abbreviation
       const labelTeam = pocket.querySelector(".pocket-label");
       if (labelTeam && (!p.mlb_team_abbr || p.mlb_team_abbr === "")) {
-        labelTeam.innerHTML = `<span class="slot">Slot ${slot}</span> · ${resolvedSlug.toUpperCase()}`;
+        labelTeam.textContent = "";
+        const slotSpan = document.createElement("span");
+        slotSpan.className = "slot";
+        slotSpan.textContent = `Slot ${slot}`;
+        labelTeam.appendChild(slotSpan);
+        labelTeam.appendChild(document.createTextNode(` · ${resolvedSlug.toUpperCase()}`));
       }
       ML.mountInline(cardHost, p.mlbam_id, resolvedSlug)
         .then(() => {
           const stub = cardHost.querySelector(".pc-stub");
           if (stub) {
-            cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">pid ${p.mlbam_id} not in ${resolvedSlug} roster</div></div>`;
+            renderBinderFallback(cardHost, p.full_name, `pid ${p.mlbam_id} not in ${resolvedSlug} roster`);
           }
         })
         .catch(() => {
-          cardHost.innerHTML = `<div class="binder-card-fallback"><div class="bcf-name">${p.full_name}</div><div class="bcf-meta">load error</div></div>`;
+          renderBinderFallback(cardHost, p.full_name, "load error");
         });
     };
     if (window.MorningLineupPC) {

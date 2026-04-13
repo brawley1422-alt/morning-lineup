@@ -8,7 +8,7 @@
 // requireAuth(path)  → returns {session, profile} or redirects to the auth page
 // onAuthChange(cb)   → subscribes to auth state changes (signin, signout, token refresh, cross-tab)
 
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.103.0";
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from "../config/supabase.js";
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {

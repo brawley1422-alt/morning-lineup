@@ -5,21 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0d0f14">
 <title>The Morning Lineup — Today's Edition</title>
-<script>
-// Fast synchronous auth bounce — if no ml-auth token, send guests to /home/.
-// Runs before body parse so unauthed readers never see the landing shell.
-try {
-  var raw = localStorage.getItem("ml-auth");
-  if (!raw) window.location.replace("home/");
-  else {
-    var parsed = JSON.parse(raw);
-    var expiresAt = (parsed && parsed.expires_at) || 0;
-    if (!parsed || !parsed.access_token || expiresAt * 1000 < Date.now()) {
-      window.location.replace("home/");
-    }
-  }
-} catch (e) { window.location.replace("home/"); }
-</script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co https://esm.sh https://statsapi.mlb.com; base-uri 'self'; form-action 'self'">
+<script src="auth-bounce.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Oswald:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
