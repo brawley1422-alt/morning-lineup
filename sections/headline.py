@@ -358,7 +358,41 @@ def _render_next_games(next_games, tmap, team_id, team_name, today_lineup, today
     return f'<div class="next-games">{"".join(cards)}</div>'
 
 
-def _render_hot_cold(hitters_data, pitchers_data):
+def _fmt_savant_xwoba(v):
+    """Savant xwoba arrives as a string like '.389'. Return (display, float) or ('', None)."""
+    if v is None or v == "":
+        return "", None
+    s = str(v)
+    try:
+        f = float(s)
+    except ValueError:
+        return "", None
+    disp = s if s.startswith(".") or s.startswith("-") else f"{f:.3f}".lstrip("0") or s
+    return disp, f
+
+def _fmt_savant_pct(v):
+    """Savant whiff%/brl% arrive as numeric strings like '31.5'. Return (display, float)."""
+    if v is None or v == "":
+        return "", None
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        return "", None
+    return f"{f:.1f}", f
+
+def _fmt_savant_xera(v):
+    if v is None or v == "":
+        return "", None
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        return "", None
+    return f"{f:.2f}", f
+
+def _render_hot_cold(hitters_data, pitchers_data, savant=None):
+    sav_bat = (savant or {}).get("batter", {}) or {}
+    sav_pit = (savant or {}).get("pitcher", {}) or {}
+
     def extract_hitters(roster_data):
         out = []
         for p in roster_data.get("roster", []):
@@ -370,7 +404,16 @@ def _render_hot_cold(hitters_data, pitchers_data):
             st = stats_list[0]["splits"][0]["stat"]
             if st.get("plateAppearances", 0) < 10:
                 continue
-            out.append({"player": p["person"]["fullName"], "stat": st, "pid": p["person"].get("id")})
+            pid = p["person"].get("id")
+            sav = sav_bat.get(str(pid), {}) if pid else {}
+            _, xwoba_f = _fmt_savant_xwoba(sav.get("xwoba"))
+            out.append({
+                "player": p["person"]["fullName"],
+                "stat": st,
+                "pid": pid,
+                "sav": sav,
+                "xwoba_f": xwoba_f,
+            })
         return out
 
     qual = extract_hitters(hitters_data)
@@ -381,7 +424,14 @@ def _render_hot_cold(hitters_data, pitchers_data):
         except:
             return 0.0
 
-    qual.sort(key=get_ops, reverse=True)
+    # Sort by xwOBA when Savant data covers enough of the roster; otherwise
+    # fall back to traditional OPS so the block stays populated on outages.
+    with_xwoba = [s for s in qual if s["xwoba_f"] is not None]
+    if len(with_xwoba) >= max(3, len(qual) // 2):
+        qual.sort(key=lambda s: (s["xwoba_f"] if s["xwoba_f"] is not None else -1), reverse=True)
+    else:
+        qual.sort(key=get_ops, reverse=True)
+
     hot = qual[:4]
     cold = list(reversed(qual[-3:])) if len(qual) >= 4 else []
 
@@ -392,7 +442,20 @@ def _render_hot_cold(hitters_data, pitchers_data):
         avg = st.get("avg", "."); hr = st.get("homeRuns", 0); ops = st.get("ops", "-")
         last = escape(name.split()[-1])
         name_html = f'<player-card pid="{pid}">{last}</player-card>' if pid else last
-        return f'<li><span class="n">{name_html}</span><span class="s">{avg} / {hr} HR / {ops} OPS</span></li>'
+        sav = s.get("sav", {}) or {}
+        xwoba_disp, _ = _fmt_savant_xwoba(sav.get("xwoba"))
+        brl_disp, _ = _fmt_savant_pct(sav.get("brl_percent"))
+        adv_bits = []
+        if xwoba_disp:
+            adv_bits.append(f'{xwoba_disp} xwOBA')
+        if brl_disp:
+            adv_bits.append(f'{brl_disp}% Brl')
+        adv_html = f'<span class="adv">{" &middot; ".join(adv_bits)}</span>' if adv_bits else ""
+        return (
+            f'<li><span class="n">{name_html}</span>'
+            f'<span class="s">{avg} / {hr} HR / {ops} OPS</span>'
+            f'{adv_html}</li>'
+        )
 
     hot_html = "".join(hitter_li(s) for s in hot)
     cold_html = "".join(hitter_li(s) for s in cold)
@@ -408,7 +471,16 @@ def _render_hot_cold(hitters_data, pitchers_data):
             st = stats_list[0]["splits"][0]["stat"]
             if float(st.get("inningsPitched", "0") or 0) < 2:
                 continue
-            out.append({"player": p["person"]["fullName"], "stat": st, "pid": p["person"].get("id")})
+            pid = p["person"].get("id")
+            sav = sav_pit.get(str(pid), {}) if pid else {}
+            _, xera_f = _fmt_savant_xera(sav.get("xera"))
+            out.append({
+                "player": p["person"]["fullName"],
+                "stat": st,
+                "pid": pid,
+                "sav": sav,
+                "xera_f": xera_f,
+            })
         return out
 
     p_qual = extract_pitchers(pitchers_data)
@@ -419,7 +491,12 @@ def _render_hot_cold(hitters_data, pitchers_data):
         except:
             return 99
 
-    p_qual.sort(key=era)
+    with_xera = [s for s in p_qual if s["xera_f"] is not None]
+    if len(with_xera) >= max(3, len(p_qual) // 2):
+        p_qual.sort(key=lambda s: (s["xera_f"] if s["xera_f"] is not None else 99))
+    else:
+        p_qual.sort(key=era)
+
     p_hot = p_qual[:3]
     p_cold = list(reversed(p_qual[-2:])) if len(p_qual) >= 3 else []
 
@@ -430,7 +507,20 @@ def _render_hot_cold(hitters_data, pitchers_data):
         era_v = st.get("era", "-"); k = st.get("strikeOuts", 0); ip = st.get("inningsPitched", "0")
         last = escape(name.split()[-1])
         name_html = f'<player-card pid="{pid}">{last}</player-card>' if pid else last
-        return f'<li><span class="n">{name_html}</span><span class="s">{ip} IP &middot; {era_v} ERA &middot; {k} K</span></li>'
+        sav = s.get("sav", {}) or {}
+        xera_disp, _ = _fmt_savant_xera(sav.get("xera"))
+        whiff_disp, _ = _fmt_savant_pct(sav.get("whiff_percent"))
+        adv_bits = []
+        if xera_disp:
+            adv_bits.append(f'{xera_disp} xERA')
+        if whiff_disp:
+            adv_bits.append(f'{whiff_disp}% Whf')
+        adv_html = f'<span class="adv">{" &middot; ".join(adv_bits)}</span>' if adv_bits else ""
+        return (
+            f'<li><span class="n">{name_html}</span>'
+            f'<span class="s">{ip} IP &middot; {era_v} ERA &middot; {k} K</span>'
+            f'{adv_html}</li>'
+        )
 
     phot_html = "".join(pitcher_li(s) for s in p_hot)
     pcold_html = "".join(pitcher_li(s) for s in p_cold)
@@ -533,7 +623,7 @@ def render(briefing):
         data["next_games"], data["tmap"], team_id, team_name,
         data.get("today_lineup"), data.get("today_series", ""), data.get("today_opp_info", ""),
     )
-    hot_cold_html = _render_hot_cold(data["cubs_hitters"], data["cubs_pitchers"])
+    hot_cold_html = _render_hot_cold(data["cubs_hitters"], data["cubs_pitchers"], data.get("savant"))
 
     inner = f"""<div class="hero-grid">
       {line_score_html}

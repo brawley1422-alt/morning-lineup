@@ -400,6 +400,7 @@ def load_all():
         "leaders_hit": leaders_hit, "leaders_pit": leaders_pit,
         "minors": minors, "prospects": prospects, "history": history,
         "transactions": transactions, "scout_data": scout_data,
+        "savant": fetch_savant_leaderboards(season, today),
     }
 
 # ─── briefing dataclass ─────────────────────────────────────────────────────
@@ -470,6 +471,114 @@ def fmt_date(d):
 DOME_VENUES = {12: "Dome", 32: "Retractable Roof", 680: "Retractable Roof",
                2889: "Retractable Roof", 14: "Retractable Roof",
                2394: "Retractable Roof", 19: "Retractable Roof"}
+
+_SAVANT_CACHE_DIR = None
+_SAVANT_MEM = {}  # process-level memo so 30-team deploys fetch once
+
+def _savant_cache_path(season, today):
+    global _SAVANT_CACHE_DIR
+    if _SAVANT_CACHE_DIR is None:
+        _SAVANT_CACHE_DIR = DATA_DIR / "cache" / "savant"
+        _SAVANT_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    return _SAVANT_CACHE_DIR / f"leaderboards-{season}-{today.isoformat()}.json"
+
+def _parse_savant_csv(text):
+    """Parse a Savant custom-leaderboard CSV into {pid_str: {col: value}}.
+    First column header is quoted 'last_name, first_name' which contains a
+    comma — use csv.reader to handle quoting correctly."""
+    import csv, io
+    out = {}
+    reader = csv.reader(io.StringIO(text.lstrip("\ufeff")))
+    try:
+        header = next(reader)
+    except StopIteration:
+        return out
+    try:
+        pid_idx = header.index("player_id")
+    except ValueError:
+        return out
+    for row in reader:
+        if len(row) <= pid_idx:
+            continue
+        pid = row[pid_idx].strip().strip('"')
+        if not pid:
+            continue
+        rec = {}
+        for i, col in enumerate(header):
+            if i == pid_idx or i >= len(row):
+                continue
+            val = row[i].strip().strip('"')
+            if val == "":
+                continue
+            rec[col] = val
+        out[pid] = rec
+    return out
+
+def fetch_savant_leaderboards(season, today):
+    """Fetch Baseball Savant expected-stats leaderboards for hitters and
+    pitchers and return a {'batter': {pid: {...}}, 'pitcher': {pid: {...}}}
+    map. Cached daily to data/cache/savant/leaderboards-{season}-{date}.json.
+    Any network or parse failure returns {} for that side — the caller must
+    tolerate missing data per player."""
+    global _SAVANT_MEM
+    mem_key = (str(season), today.isoformat())
+    if mem_key in _SAVANT_MEM:
+        return _SAVANT_MEM[mem_key]
+
+    # Golden-snapshot fixture mode: deterministic empty map.
+    if "--fixture" in sys.argv:
+        result = {"batter": {}, "pitcher": {}, "schema": 1}
+        _SAVANT_MEM[mem_key] = result
+        return result
+
+    cache_path = _savant_cache_path(season, today)
+    if cache_path.exists():
+        try:
+            cached = json.loads(cache_path.read_text(encoding="utf-8"))
+            if cached.get("schema") == 1:
+                _SAVANT_MEM[mem_key] = cached
+                return cached
+        except Exception:
+            pass
+
+    base = "https://baseballsavant.mlb.com/leaderboard/custom"
+    batter_url = (
+        f"{base}?year={season}&type=batter&min=0"
+        f"&selections=xwoba,brl_percent,whiff_percent&csv=true"
+    )
+    pitcher_url = (
+        f"{base}?year={season}&type=pitcher&min=0"
+        f"&selections=xera,xwoba,whiff_percent,brl_percent&csv=true"
+    )
+
+    def _get(url):
+        req = urllib.request.Request(url, headers={"User-Agent": "MorningLineup/1.0"})
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                return resp.read().decode("utf-8", errors="replace")
+        except Exception as e:
+            print(f"  warning: savant fetch failed ({url[:60]}...): {e}", flush=True)
+            return ""
+
+    batter_csv = _get(batter_url)
+    pitcher_csv = _get(pitcher_url)
+
+    result = {
+        "schema": 1,
+        "season": str(season),
+        "date": today.isoformat(),
+        "batter": _parse_savant_csv(batter_csv) if batter_csv else {},
+        "pitcher": _parse_savant_csv(pitcher_csv) if pitcher_csv else {},
+    }
+
+    try:
+        cache_path.write_text(json.dumps(result, ensure_ascii=False), encoding="utf-8")
+    except Exception:
+        pass
+
+    _SAVANT_MEM[mem_key] = result
+    return result
+
 
 def fetch_pitcher_line(pid):
     """Fetch a pitcher's season stats. Returns formatted string or empty."""
@@ -1418,6 +1527,10 @@ def load_team_players(team_id, season, today, max_workers=4):
 
     # Phase 2: inject next_game_time + prediction once per team (cheap)
     next_game = _fetch_next_game_time(team_id)
+    # Phase 1.5: inject Savant advanced stats from cached leaderboard map.
+    savant = fetch_savant_leaderboards(season, today)
+    sav_bat = savant.get("batter", {}) or {}
+    sav_pit = savant.get("pitcher", {}) or {}
     for pid_str, rec in players.items():
         rec["next_game_time"] = next_game
         try:
@@ -1425,6 +1538,12 @@ def load_team_players(team_id, season, today, max_workers=4):
         except Exception as e:
             print(f"  warning: prediction selection {pid_str} failed: {e}", flush=True)
             rec["prediction"] = None
+        adv = {}
+        if pid_str in sav_bat:
+            adv["hitter"] = sav_bat[pid_str]
+        if pid_str in sav_pit:
+            adv["pitcher"] = sav_pit[pid_str]
+        rec["advanced"] = adv
 
     return players
 
