@@ -160,10 +160,16 @@ ul.plays .txt strong{color:var(--paper);font-weight:500}
 .tempbox.cold .n{color:#6a9ad4}
 .tempbox h4{margin-top:0}
 .tempbox ul{list-style:none;padding:0;margin:0}
-.tempbox li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dotted var(--rule);font-size:13px;}
+.tempbox li{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;column-gap:12px;row-gap:2px;padding:8px 0;border-bottom:1px dotted var(--rule)}
 .tempbox li:last-child{border-bottom:none}
-.tempbox .n{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
-.tempbox .s{font-family:var(--mono);font-size:11px;color:var(--gold)}
+.tempbox .n{grid-column:1;grid-row:1;font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper);font-size:13px;align-self:baseline}
+.tempbox .primary{grid-column:2;grid-row:1;font-family:var(--mono);font-size:17px;font-weight:600;letter-spacing:-.01em;align-self:baseline;line-height:1;text-align:right}
+.tempbox .primary em{display:inline-block;margin-left:5px;font-style:normal;font-size:9px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);vertical-align:2px}
+.tempbox .primary.t-elite{color:#8bc48f}
+.tempbox .primary.t-solid{color:var(--gold-hi)}
+.tempbox .primary.t-rough{color:#c87a74}
+.tempbox .primary.t-legacy{color:var(--gold)}
+.tempbox .secondary{grid-column:1/-1;grid-row:2;font-family:var(--mono);font-size:10px;color:var(--paper-mute);letter-spacing:.03em;text-align:right}
 .next-games{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px;margin:6px 0}
 .nx-card{background:var(--ink-2);border:1px solid var(--rule);padding:10px 14px;border-radius:3px;border-left:3px solid var(--team-primary-hi);box-shadow:0 2px 8px -2px rgba(0,0,0,.35);transition:border-color .15s,box-shadow .15s,transform .15s;}
 .nx-card:hover{border-color:var(--rule-hi);box-shadow:0 4px 12px -4px rgba(0,0,0,.4);transform:translateY(-1px)}
@@ -323,6 +329,56 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .sp-season{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
 .sp-log{min-width:auto !important;margin-top:4px}
 .sp-log .opp{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
+.sp-arsenal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:6px}
+@media (max-width:600px){.sp-arsenal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pitch-card{background:linear-gradient(180deg,var(--ink-3) 0%,var(--ink-2) 100%);border:1px solid var(--rule);border-top:2px solid var(--gold-dim);border-radius:2px;padding:9px 10px 10px;position:relative;overflow:hidden;min-width:0}
+.pitch-card::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 100% 0%,rgba(201,162,74,.07),transparent 60%);pointer-events:none}
+.pc-code{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--gold);line-height:1;margin-bottom:2px;letter-spacing:.02em;position:relative}
+.pc-velo{font-family:var(--mono);font-size:28px;font-weight:600;letter-spacing:-.02em;color:var(--paper);line-height:1;margin:4px 0 8px;position:relative}
+.pc-velo em{display:inline-block;margin-left:4px;font-style:normal;font-size:9px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);vertical-align:5px}
+.pc-stats{display:grid;grid-template-columns:1fr;gap:3px;position:relative}
+.pc-stat{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:10px;color:var(--paper-dim);letter-spacing:.02em;border-top:1px dotted var(--rule);padding-top:2px}
+.pc-stat:first-child{border-top:none}
+.pc-stat b{font-weight:500;color:var(--paper)}
+.pc-stat em{font-style:normal;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-mute)}
+.pc-whiff.t-elite b{color:#8bc48f}
+.pc-whiff.t-solid b{color:var(--gold-hi)}
+.pc-whiff.t-rough b{color:#c87a74}
+/* Matchup Read — tonight's lineup × opposing arsenal */
+.matchup-read{margin-top:6px}
+.matchup-read .mr-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px}
+.matchup-read .mr-sp{font-family:var(--serif);font-style:italic;font-size:22px;font-weight:700;color:var(--gold)}
+.matchup-read .mr-sub{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute)}
+.mr-arsenal{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin-bottom:10px}
+@media (max-width:600px){.mr-arsenal{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.mr-pc{background:linear-gradient(180deg,var(--ink-3) 0%,var(--ink-2) 100%);border:1px solid var(--rule);border-top:2px solid var(--gold-dim);border-radius:2px;padding:6px 7px 7px;text-align:center;min-width:0}
+.mr-pc-code{font-family:var(--serif);font-style:italic;font-weight:900;font-size:16px;color:var(--gold);line-height:1}
+.mr-pc-velo{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--paper);line-height:1;margin:3px 0 2px}
+.mr-pc-usage{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--paper-mute);text-transform:uppercase}
+.mr-lineup{width:100%;border-collapse:collapse;margin-bottom:8px}
+.mr-lineup td{padding:7px 8px;border-bottom:1px dotted var(--rule);font-family:var(--mono);font-size:12px;color:var(--paper-dim);vertical-align:baseline}
+.mr-lineup .mr-row:last-child td{border-bottom:none}
+.mr-lineup .mr-slot{width:18px;color:var(--paper-mute);font-size:10px;text-align:right}
+.mr-lineup .mr-name{color:var(--paper);font-weight:500;font-size:13px;white-space:nowrap}
+.mr-lineup .mr-pos{color:var(--paper-mute);font-size:9px;letter-spacing:.08em;text-transform:uppercase;width:28px}
+.mr-lineup .mr-read{text-align:left;width:auto}
+.mr-lineup .mr-gcell{text-align:right;width:34px}
+.mr-tag{font-size:11px;letter-spacing:.02em}
+.mr-tag b{color:var(--gold);font-weight:700}
+.mr-vuln{color:var(--paper-dim)}
+.mr-safe{color:var(--paper-dim)}
+.mr-none,.mr-nodata{color:var(--paper-mute)}
+.mr-dots{margin-left:5px;font-size:9px;letter-spacing:.04em}
+.mr-dots.d-vuln{color:#c87a74}
+.mr-dots.d-safe{color:#8bc48f}
+.mr-grade{font-family:var(--serif);font-style:italic;font-size:20px;font-weight:900;color:var(--paper)}
+.mr-grade.t-elite{color:#8bc48f}
+.mr-grade.t-solid{color:var(--gold-hi)}
+.mr-grade.t-rough{color:#c87a74}
+.mr-foot{display:flex;justify-content:space-between;align-items:baseline;padding-top:8px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--paper-mute)}
+.mr-team b{font-family:var(--serif);font-style:italic;font-weight:900;font-size:16px;margin-left:6px;letter-spacing:0}
+.mr-exp b{color:var(--gold);font-weight:700;letter-spacing:.02em}
+.mr-muted{color:var(--paper-mute);text-transform:none;letter-spacing:.02em;font-style:italic}
 .pulse-record{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;padding:10px 0;border-bottom:1px solid var(--rule);margin-bottom:10px}
 .pulse-wl{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--paper)}
 .pulse-pct{font-family:var(--mono);font-size:16px;color:var(--gold)}
@@ -587,7 +643,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><details class="column" data-role="straight_beat"><summary class="column-byline"><span class="column-name">Terrence &#x27;Terry&#x27; Boykin</span><span class="column-role">The Straight Beat</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p class="column-off"><em>Terrence &#x27;Terry&#x27; Boykin is off today.</em></p></div></details><details class="column" data-role="optimist"><summary class="column-byline"><span class="column-name">Miz Dottie Hargrove</span><span class="column-role">The Optimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p class="column-off"><em>Miz Dottie Hargrove is off today.</em></p></div></details><details class="column" data-role="pessimist"><summary class="column-byline"><span class="column-name">Roy Spanulli</span><span class="column-role">The Pessimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p class="column-off"><em>Roy Spanulli is off today.</em></p></div></details></div><script>(function(){
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><details class="column" data-role="straight_beat"><summary class="column-byline"><span class="column-name">Terrence &#x27;Terry&#x27; Boykin</span><span class="column-role">The Straight Beat</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Orioles lost yesterday, 9-7 to the Diamondbacks, and now they’re 9-7, sitting a game behind the Rays in the AL East. That’s the math, and it’s not magic. The box, jar, margin—those are the numbers that matter. You can’t fake a .500 record, and you can’t fake a one-game deficit in a division where every team is fighting for a playoff spot. The question isn’t</p></div></details><details class="column" data-role="optimist"><summary class="column-byline"><span class="column-name">Miz Dottie Hargrove</span><span class="column-role">The Optimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The game was a mess, sure. A 9-7 loss to a team that’s been struggling themselves, and now we’re three-and-a-half games back in the AL East. But here’s the thing, hon—this isn’t the first time the Orioles have looked like a bunch of kids with a playbook full of mistakes. And it won’t be the last.</p><p>Look at those young bucks: Henderson, Holliday, Rutschman. Three names you’re gonna tell your grandkids you saw at Camden in the spring of their legend. They’re not perfect yet, not by a long shot. But you can see it in their eyes, that fire that’s been missing for years. Rutschman, the kid with the arm like a fastball pitcher and the heart of a kid who’s never been paid to win. He’s got the whole season to figure out how to keep a lead, but he’s got the grit to try. Holliday, the slugger who’s still learning how to hit the ball out of the park, but every time he steps up, you can feel the weight of the whole franchise on his shoulders. And Henderson? The guy who’s been called a mess by the media but keeps showing up with that same grin, like he’s got a secret weapon nobody’s seen.</p><p>You know what? Maybe that’s the point. The 1966 team didn’t come together overnight. They had their share of losses, too. But they had players who believed in the dream, even when the odds didn’t. These kids are doing the same thing. They’re not here to win every game. They’re here to build something. To prove that Birdland isn’t just a nickname—it’s a promise.</p><p>Now, I know what you’re thinking. “Dottie, the team’s losing!” Yeah, they are. But here’s the kicker:</p></div></details><details class="column" data-role="pessimist"><summary class="column-byline"><span class="column-name">Roy Spanulli</span><span class="column-role">The Pessimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Orioles lost again. Not in a dramatic way, not with a meltdown or a meltdown of the psyche, but in the way that makes you want to throw your coffee cup at the TV and scream, “Why are we still here?” Arizona didn’t just beat us—they beat us with a sense of purpose we’ve been missing for years. A 7-9 loss, sure, but it’s the kind of loss that feels like a punch to the gut when you’re already nursing a bruise from the last one.</p><p>The record is 9-7, which sounds decent enough. But let’s not fool ourselves—this isn’t a team that’s trending upward. It’s a team that’s trending sideways, like a crab trying to walk in a straight line. The AL East is a gauntlet, but even the worst of the pack has a pulse. The Orioles don’t. They’re stuck in a loop of “almost” and “maybe,” and it’s wearing on the soul. You can’t win a division with a lineup that looks like it was assembled by a kid with a highlighter and a clipboard.</p><p>The front office has been busy, of course</p></div></details></div><script>(function(){
   var grid = document.currentScript && document.currentScript.previousElementSibling;
   if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
   var kids = Array.prototype.slice.call(grid.children);
@@ -603,6 +659,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <ol>
       <li><a href="#team">The Orioles</a></li>
       <li><a href="#scout">Scouting Report</a></li>
+      
       <li><a href="#pulse">The Stretch</a></li>
       <li><a href="#pressbox">The Pressbox</a></li>
       <li><a href="#farm">Down on the Farm</a></li>
@@ -688,9 +745,9 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-venue">Oriole Park at Camden Yards </div>
         <div class="nx-meta"><span class="nx-opp-rec">AZ: 9-8, 3rd NL West (L1)</span> &middot; <span class="nx-series">Season series: 1-0</span></div>
         <div class="nx-pitcher"><span class="nx-side">Orioles</span> <player-card pid="669432">Trevor Rogers</player-card><div class="nx-pline">1.89 ERA &middot; 2-0 &middot; 19.0 IP &middot; 14 K &middot; 1.05 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-109"/></svg>AZ</span> Merrill Kelly</div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="677942">Alexander</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="691723">Mayo</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="681297">Cowser</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="687637">Beavers</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="683002">Henderson</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="669236">Jackson</player-card></span><span class="lu-slot"><span class="lu-pos">OF</span> <player-card pid="665750">Taveras</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="624413">Alonso</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="694212">Basallo</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> MASN &middot; Dbacks.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> ESPN Phoenix 620 &middot; 98 Rock 97.9 FM &middot; WBAL 1090 AM</div>
-        <div class="nx-wx">68°F &middot; Clear &middot; 4 mph SW</div>
+        <div class="nx-wx">88°F &middot; Clear &middot; 11 mph SW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Wed, Apr 15 &middot; vs <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-109"/></svg><span class="ab">AZ</span></div>
@@ -717,12 +774,12 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="669236">Jackson</player-card></span><span class="s">.391 / 3 HR / 1.243 OPS</span></li><li><span class="n"><player-card pid="683002">Henderson</player-card></span><span class="s">.267 / 4 HR / 1.120 OPS</span></li><li><span class="n"><player-card pid="621493">Ward</player-card></span><span class="s">.321 / 0 HR / .960 OPS</span></li><li><span class="n"><player-card pid="665750">Taveras</player-card></span><span class="s">.316 / 0 HR / .771 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="677942">Alexander</player-card></span><span class="s">.100 / 0 HR / .367 OPS</span></li><li><span class="n"><player-card pid="694212">Basallo</player-card></span><span class="s">.080 / 1 HR / .407 OPS</span></li><li><span class="n"><player-card pid="681297">Cowser</player-card></span><span class="s">.176 / 0 HR / .439 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="677942">Alexander</player-card></span><span class="primary t-elite">.374<em>xwOBA</em></span><span class="secondary">.100 &middot; 0 HR &middot; .367 OPS</span></li><li><span class="n"><player-card pid="621493">Ward</player-card></span><span class="primary t-solid">.343<em>xwOBA</em></span><span class="secondary">.321 &middot; 0 HR &middot; .960 OPS</span></li><li><span class="n"><player-card pid="683002">Henderson</player-card></span><span class="primary t-solid">.341<em>xwOBA</em></span><span class="secondary">.267 &middot; 4 HR &middot; 1.120 OPS</span></li><li><span class="n"><player-card pid="669236">Jackson</player-card></span><span class="primary t-solid">.334<em>xwOBA</em></span><span class="secondary">.391 &middot; 3 HR &middot; 1.243 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="691723">Mayo</player-card></span><span class="primary t-rough">.260<em>xwOBA</em></span><span class="secondary">.190 &middot; 0 HR &middot; .482 OPS</span></li><li><span class="n"><player-card pid="694212">Basallo</player-card></span><span class="primary t-rough">.270<em>xwOBA</em></span><span class="secondary">.080 &middot; 1 HR &middot; .407 OPS</span></li><li><span class="n"><player-card pid="681297">Cowser</player-card></span><span class="primary t-rough">.276<em>xwOBA</em></span><span class="secondary">.176 &middot; 0 HR &middot; .439 OPS</span></li></ul></div>
     </div>
     <div class="two">
-      <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="670329">Garcia</player-card></span><span class="s">7.1 IP &middot; 0.00 ERA &middot; 7 K</span></li><li><span class="n"><player-card pid="689296">Nunez</player-card></span><span class="s">7.2 IP &middot; 1.17 ERA &middot; 10 K</span></li><li><span class="n"><player-card pid="669432">Rogers</player-card></span><span class="s">19.0 IP &middot; 1.89 ERA &middot; 14 K</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="605135">Bassitt</player-card></span><span class="s">11.0 IP &middot; 9.00 ERA &middot; 5 K</span></li><li><span class="n"><player-card pid="680694">Bradish</player-card></span><span class="s">13.2 IP &middot; 5.27 ERA &middot; 17 K</span></li></ul></div>
+      <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="689296">Nunez</player-card></span><span class="primary t-elite">1.18<em>xERA</em></span><span class="secondary">7.2 IP &middot; 1.17 ERA &middot; 10 K &middot; 38.9% Whf</span></li><li><span class="n"><player-card pid="670329">Garcia</player-card></span><span class="primary t-elite">1.28<em>xERA</em></span><span class="secondary">7.1 IP &middot; 0.00 ERA &middot; 7 K &middot; 35.9% Whf</span></li><li><span class="n"><player-card pid="669432">Rogers</player-card></span><span class="primary t-elite">2.39<em>xERA</em></span><span class="secondary">19.0 IP &middot; 1.89 ERA &middot; 14 K &middot; 26.1% Whf</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="544150">Suárez</player-card></span><span class="primary t-rough">6.69<em>xERA</em></span><span class="secondary">7.0 IP &middot; 5.14 ERA &middot; 3 K &middot; 19.2% Whf</span></li><li><span class="n"><player-card pid="605135">Bassitt</player-card></span><span class="primary t-rough">6.49<em>xERA</em></span><span class="secondary">11.0 IP &middot; 9.00 ERA &middot; 5 K &middot; 23.2% Whf</span></li></ul></div>
     </div>
     
   </section>
@@ -743,6 +800,39 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
             <tbody><tr><td>03-26</td><td class="opp">vs Minnesota Twins</td><td class="num">7.0</td><td class="num">0</td><td class="num">5</td><td class="num">3</td><td class="num">4</td></tr><tr><td>04-01</td><td class="opp">vs Texas Rangers</td><td class="num">6.0</td><td class="num">2</td><td class="num">3</td><td class="num">6</td><td class="num">1</td></tr><tr><td>04-07</td><td class="opp">vs Chicago White Sox</td><td class="num">6.0</td><td class="num">2</td><td class="num">6</td><td class="num">6</td><td class="num">0</td></tr></tbody></table>
+        <h4>Arsenal</h4><div class="sp-arsenal"><div class="pitch-card" title="4-Seam Fastball">
+          <div class="pc-code">FF</div>
+          <div class="pc-velo">92.3<em>mph</em></div>
+          <div class="pc-stats">
+            <span class="pc-stat"><b>47%</b><em>usage</em></span>
+            <span class="pc-stat pc-whiff t-solid"><b>25%</b><em>whf</em></span>
+            <span class="pc-stat"><b>2435</b><em>rpm</em></span>
+          </div>
+        </div><div class="pitch-card" title="Changeup">
+          <div class="pc-code">CH</div>
+          <div class="pc-velo">86.3<em>mph</em></div>
+          <div class="pc-stats">
+            <span class="pc-stat"><b>21%</b><em>usage</em></span>
+            <span class="pc-stat pc-whiff t-solid"><b>23%</b><em>whf</em></span>
+            <span class="pc-stat"><b>1421</b><em>rpm</em></span>
+          </div>
+        </div><div class="pitch-card" title="Sweeper">
+          <div class="pc-code">ST</div>
+          <div class="pc-velo">77.5<em>mph</em></div>
+          <div class="pc-stats">
+            <span class="pc-stat"><b>12%</b><em>usage</em></span>
+            <span class="pc-stat pc-whiff t-elite"><b>40%</b><em>whf</em></span>
+            <span class="pc-stat"><b>2051</b><em>rpm</em></span>
+          </div>
+        </div><div class="pitch-card" title="Sinker">
+          <div class="pc-code">SI</div>
+          <div class="pc-velo">92.0<em>mph</em></div>
+          <div class="pc-stats">
+            <span class="pc-stat"><b>10%</b><em>usage</em></span>
+            <span class="pc-stat pc-whiff t-rough"><b>13%</b><em>whf</em></span>
+            <span class="pc-stat"><b>2327</b><em>rpm</em></span>
+          </div>
+        </div></div>
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
@@ -750,9 +840,12 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="sp-name">Merrill Kelly</div>
         <div class="sp-season"></div>
         
+        
         </div>
     </div>
   </section>
+
+  
 
   <section id="pulse" open>
     <summary>
@@ -878,7 +971,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="time">6:15 CT</div>
         <div class="probs">Meyer vs López</div>
-        <div class="bc">BravesVision · Marlins.TV · Gray TV</div>
+        <div class="bc">BravesVision · Marlins.TV, presented by Werner, Hoffman, Greig &amp; Garcia · Gray TV</div>
       </div><div class="g" data-gpk="823723">
         <div class="matchup">
           <span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-111"/></svg><span class="ab">BOS</span></span>
@@ -1038,7 +1131,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Oriole Park at Camden Yards Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/14/26 07:34 CT</span>
+  <span>Filed 04/14/26 14:00 CT</span>
 </footer>
 
 <script>
