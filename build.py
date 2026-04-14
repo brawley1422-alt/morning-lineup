@@ -1952,9 +1952,12 @@ if __name__ == "__main__":
                 save_player_index()
             except Exception as _e2:
                 print(f"  warning: team player-card pipeline failed: {_e2}", flush=True)
-            # Phase 1 holdover: Cubs-only lineup fallback (feeds today_lineup
-            # for headline.py rendering when MLB hasn't posted batting order).
-            if _team_slug == "cubs":
+            # Lineup fallback: when MLB hasn't posted tonight's batting
+            # order yet (common for morning builds), pick the top 9
+            # non-pitcher hitters from the active roster so downstream
+            # sections (headline Lineup, Matchup Read) have content to
+            # render. Applied for every team.
+            if True:
                 try:
                     _d = briefing.data
                     _tl = _d.get("today_lineup", {}) or {}
@@ -2002,7 +2005,7 @@ if __name__ == "__main__":
                                 for _c in _cubs_side_lineup
                             ]
                 except Exception as _e:
-                    print(f"  warning: cubs lineup fallback failed: {_e}", flush=True)
+                    print(f"  warning: lineup fallback failed: {_e}", flush=True)
         print("Rendering page …", flush=True)
         html = page(briefing)
         out_dir_override = _argv_value("--out-dir")
