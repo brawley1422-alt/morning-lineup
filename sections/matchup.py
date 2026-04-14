@@ -62,12 +62,20 @@ def _tier_class(grade):
 
 
 def _expected_xwoba(pitcher_arsenal, batter_arsenal_map):
-    """Σ (usage[pt] × batter_xwOBA_vs[pt]) with league-avg fallback."""
+    """Σ (usage[pt] × batter_xwOBA_vs[pt]) with league-avg fallback.
+
+    Safety net: any unaccounted usage slice (pitcher_arsenal summing to
+    less than 100% — common in early April when secondary pitches haven't
+    cleared Savant's min-pitches threshold) falls back to league-average
+    xwOBA. Clamps at 0 when arsenals round to >100%.
+    """
     total = 0.0
+    accounted = 0.0
     for pt in pitcher_arsenal or []:
         usage = pt.get("usage")
         if usage is None:
             continue
+        accounted += usage
         code = pt.get("pitch")
         row = (batter_arsenal_map or {}).get(code) if code else None
         if row and row.get("xwoba") is not None:
@@ -75,6 +83,8 @@ def _expected_xwoba(pitcher_arsenal, batter_arsenal_map):
         else:
             x = LEAGUE_AVG_XWOBA
         total += (usage / 100.0) * x
+    missing = max(0.0, 100.0 - accounted)
+    total += (missing / 100.0) * LEAGUE_AVG_XWOBA
     return total
 
 

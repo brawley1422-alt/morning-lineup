@@ -87,9 +87,39 @@ class TestExpectedXwoba(unittest.TestCase):
             {"pitch": "SL", "usage": None, "name": "SL", "velo": 85,
              "spin": 2500, "whiff": 35, "xwoba_allowed": 0.220},
         ]
-        # Only FF contributes: 0.5 * 0.400 = 0.200
+        # FF contributes 0.5 * 0.400 = 0.200; the None-usage SL slice plus
+        # the other 50% unaccounted slice fall back to league average:
+        # 0.5 * 0.310 = 0.155. Total = 0.355.
         x = matchup._expected_xwoba(arsenal, BATTER_FF_GOOD)
-        self.assertAlmostEqual(x, 0.200, places=3)
+        self.assertAlmostEqual(x, 0.200 + 0.5 * matchup.LEAGUE_AVG_XWOBA, places=3)
+
+    def test_ragans_style_thin_arsenal_uses_league_avg_for_gap(self):
+        # Cole Ragans bug: 2-week-old season, arsenal returns only FF at
+        # 51% usage. The other 49% should fall back to league average,
+        # not vanish. Expected = 0.51 * 0.280 + 0.49 * 0.310 = 0.2947.
+        arsenal = [
+            {"pitch": "FF", "usage": 51.0, "name": "4-Seam Fastball",
+             "velo": 97.0, "spin": 2300, "whiff": 24.0,
+             "xwoba_allowed": 0.280},
+        ]
+        batter = {"FF": {"pa": 200, "xwoba": 0.280, "whiff": 22.0,
+                         "hardhit": 35.0}}
+        x = matchup._expected_xwoba(arsenal, batter)
+        expected = 0.51 * 0.280 + 0.49 * matchup.LEAGUE_AVG_XWOBA
+        self.assertAlmostEqual(x, expected, places=3)
+
+    def test_usage_over_100_clamps_missing_slice(self):
+        # CSV rounding can produce arsenals summing to 101%. Missing-usage
+        # slice must clamp to 0, never subtract from the total.
+        arsenal = [
+            {"pitch": "FF", "usage": 60.0, "name": "FF", "velo": 95,
+             "spin": 2400, "whiff": 25, "xwoba_allowed": 0.250},
+            {"pitch": "SL", "usage": 41.0, "name": "SL", "velo": 85,
+             "spin": 2500, "whiff": 35, "xwoba_allowed": 0.220},
+        ]
+        x = matchup._expected_xwoba(arsenal, BATTER_FF_GOOD)
+        # 0.60 * 0.400 + 0.41 * 0.200 = 0.322, no league-avg top-up
+        self.assertAlmostEqual(x, 0.60 * 0.400 + 0.41 * 0.200, places=3)
 
 
 class TestLetterGrade(unittest.TestCase):

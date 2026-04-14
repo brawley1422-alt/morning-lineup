@@ -515,7 +515,7 @@ def _parse_savant_csv(text):
         out[pid] = rec
     return out
 
-_SAVANT_SCHEMA = 4  # bump invalidates prior-day caches
+_SAVANT_SCHEMA = 5  # bump invalidates prior-day caches
 
 def _parse_batter_arsenal(text):
     """Parse Savant pitch-arsenal-stats?type=batter CSV into
@@ -585,6 +585,55 @@ def _merge_batter_arsenal(current, prior):
         slot = merged.setdefault(pid, {})
         for pt, rec in pitches.items():
             slot[pt] = rec
+    return merged
+
+
+def _merge_pitcher_arsenal(current, prior):
+    """Merge current-year and prior-year pitcher arsenal maps. Each map is
+    {pid: [pitch_dict, ...]} as returned by _build_savant_arsenal. For
+    each pid, prior-year pitches fill gaps; current-year pitches win by
+    pitch code when both years have the same pitch.
+
+    Motivates the Cole Ragans fix: early in any new season the min=10
+    pitches-thrown threshold returns partial arsenals (e.g. only FF at
+    51% usage). Merging last year's arsenal keeps the matchup read useful
+    until current-year samples accumulate. Output list is re-sorted by
+    usage desc to match _build_savant_arsenal output shape."""
+    if not current and not prior:
+        return {}
+    merged_by_code = {}
+    for pid, pitches in (prior or {}).items():
+        merged_by_code[pid] = {
+            p["pitch"]: dict(p) for p in pitches if p.get("pitch")
+        }
+    for pid, pitches in (current or {}).items():
+        slot = merged_by_code.setdefault(pid, {})
+        for p in pitches:
+            code = p.get("pitch")
+            if not code:
+                continue
+            slot[code] = dict(p)
+    out = {}
+    for pid, by_code in merged_by_code.items():
+        pitches = list(by_code.values())
+        pitches.sort(
+            key=lambda x: (x["usage"] if x.get("usage") is not None else -1),
+            reverse=True,
+        )
+        out[pid] = pitches
+    return out
+
+
+def _merge_savant_leaderboard(current, prior):
+    """Merge current-year and prior-year Savant custom-leaderboard maps.
+    Each map is {pid: {stat_field: value}}. Current-year wins per pid
+    (entire row replaced, not merged field-by-field — matches the
+    existing _parse_savant_csv output shape where every row is a snapshot
+    of one season's stats for one player)."""
+    if not current and not prior:
+        return {}
+    merged = dict(prior or {})
+    merged.update(current or {})
     return merged
 
 def _build_savant_arsenal(stats_csv, speed_csv, spin_csv):
@@ -744,6 +793,7 @@ def fetch_savant_leaderboards(season, today):
 
     cbase = "https://baseballsavant.mlb.com/leaderboard/custom"
     lbase = "https://baseballsavant.mlb.com/leaderboard"
+    prev = int(season) - 1
     urls = {
         "batter": (
             f"{cbase}?year={season}&type=batter&min=0"
@@ -753,15 +803,32 @@ def fetch_savant_leaderboards(season, today):
             f"{cbase}?year={season}&type=pitcher&min=0"
             f"&selections=xera,xwoba,whiff_percent,brl_percent&csv=true"
         ),
+        # Prior-year leaderboard fallback — same column set so the merge
+        # can overwrite per-pid cleanly.
+        "batter_prev": (
+            f"{cbase}?year={prev}&type=batter&min=0"
+            f"&selections=xwoba,brl_percent,whiff_percent&csv=true"
+        ),
+        "pitcher_prev": (
+            f"{cbase}?year={prev}&type=pitcher&min=0"
+            f"&selections=xera,xwoba,whiff_percent,brl_percent&csv=true"
+        ),
         "arsenal_stats": f"{lbase}/pitch-arsenal-stats?year={season}&min=10&csv=true",
         "arsenal_speed": f"{lbase}/pitch-arsenals?year={season}&min=0&type=avg_speed&csv=true",
         "arsenal_spin":  f"{lbase}/pitch-arsenals?year={season}&min=0&type=avg_spin&csv=true",
+        # Prior-year pitcher arsenal fallback — the Cole Ragans fix. Early
+        # in a season the min=10-pitches threshold returns partial
+        # arsenals (e.g. only FF at 51% usage). Merging last year's full
+        # arsenal keeps the matchup read honest until current samples land.
+        "arsenal_stats_prev": f"{lbase}/pitch-arsenal-stats?year={prev}&min=10&csv=true",
+        "arsenal_speed_prev": f"{lbase}/pitch-arsenals?year={prev}&min=0&type=avg_speed&csv=true",
+        "arsenal_spin_prev":  f"{lbase}/pitch-arsenals?year={prev}&min=0&type=avg_spin&csv=true",
         "batter_arsenal": f"{lbase}/pitch-arsenal-stats?year={season}&type=batter&min=50&csv=true",
         # Prior-year fallback — early in any new season the current-year
         # min=50 pitches threshold returns ~0 batters. Merge last year's
         # data as a baseline, letting current-year entries take precedence
         # per-pitch when they exist.
-        "batter_arsenal_prev": f"{lbase}/pitch-arsenal-stats?year={int(season)-1}&type=batter&min=50&csv=true",
+        "batter_arsenal_prev": f"{lbase}/pitch-arsenal-stats?year={prev}&type=batter&min=50&csv=true",
     }
 
     def _get(url):
@@ -779,12 +846,25 @@ def fetch_savant_leaderboards(season, today):
         "schema": _SAVANT_SCHEMA,
         "season": str(season),
         "date": today.isoformat(),
-        "batter": _parse_savant_csv(bodies["batter"]) if bodies["batter"] else {},
-        "pitcher": _parse_savant_csv(bodies["pitcher"]) if bodies["pitcher"] else {},
-        "arsenal": _build_savant_arsenal(
-            bodies["arsenal_stats"],
-            bodies["arsenal_speed"],
-            bodies["arsenal_spin"],
+        "batter": _merge_savant_leaderboard(
+            _parse_savant_csv(bodies["batter"]) if bodies["batter"] else {},
+            _parse_savant_csv(bodies["batter_prev"]) if bodies["batter_prev"] else {},
+        ),
+        "pitcher": _merge_savant_leaderboard(
+            _parse_savant_csv(bodies["pitcher"]) if bodies["pitcher"] else {},
+            _parse_savant_csv(bodies["pitcher_prev"]) if bodies["pitcher_prev"] else {},
+        ),
+        "arsenal": _merge_pitcher_arsenal(
+            _build_savant_arsenal(
+                bodies["arsenal_stats"],
+                bodies["arsenal_speed"],
+                bodies["arsenal_spin"],
+            ),
+            _build_savant_arsenal(
+                bodies["arsenal_stats_prev"],
+                bodies["arsenal_speed_prev"],
+                bodies["arsenal_spin_prev"],
+            ),
         ),
         "batter_arsenal": _merge_batter_arsenal(
             _parse_batter_arsenal(bodies["batter_arsenal"]) if bodies["batter_arsenal"] else {},

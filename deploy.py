@@ -6,7 +6,7 @@ then replace index.html with the freshly-built local index.html.
 Env: GITHUB_TOKEN (fine-grained PAT with Contents:RW on this repo).
 Run AFTER build.py, from the folder containing the built index.html.
 """
-import base64, json, os, sys, urllib.request, urllib.error, urllib.parse
+import base64, json, os, sys, time, urllib.request, urllib.error, urllib.parse
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -19,16 +19,16 @@ except (ImportError, KeyError):
 OWNER = "brawley1422-alt"
 REPO  = "morning-lineup"
 
-TOKEN = os.environ.get("GITHUB_TOKEN")
-if not TOKEN:
-    sys.exit("error: GITHUB_TOKEN env var not set")
+TOKEN = os.environ.get("GITHUB_TOKEN", "")
 
 API = f"https://api.github.com/repos/{OWNER}/{REPO}/contents"
+REPO_API = f"https://api.github.com/repos/{OWNER}/{REPO}"
 HDR = {
     "Authorization": f"Bearer {TOKEN}",
     "Accept": "application/vnd.github+json",
     "User-Agent": "morning-lineup-deploy/0.1",
 }
+
 
 def gh(method, path, body=None):
     data = json.dumps(body).encode() if body else None
@@ -38,142 +38,203 @@ def gh(method, path, body=None):
     with urllib.request.urlopen(req, timeout=25) as r:
         return json.loads(r.read())
 
-ROOT = Path(__file__).parent
-today_iso = datetime.now(tz=CT).date().isoformat()
-archive_name = (datetime.now(tz=CT).date() - timedelta(days=1)).isoformat()
 
-# 1) deploy root index.html (landing page) if it exists
-local_root = ROOT / "index.html"
-if local_root.exists() and local_root.read_bytes():
-    try:
-        current = gh("GET", "/index.html")
-        root_sha = current["sha"]
-    except urllib.error.HTTPError:
-        root_sha = None
+def verify_pages_build(max_polls=5, poll_interval=15, sleep=time.sleep):
+    """Poll the GitHub Pages Builds API until the latest build reaches a
+    terminal state or the poll budget is exhausted.
 
-    body = {
-        "message": f"landing page {today_iso}",
-        "content": base64.b64encode(local_root.read_bytes()).decode(),
-    }
-    if root_sha:
-        body["sha"] = root_sha
-    try:
-        resp = gh("PUT", "/index.html", body)
-        print(f"landing   → {resp['commit']['sha'][:7]} ({resp['content']['size']:,} bytes)")
-    except urllib.error.HTTPError as e:
-        print(f"warning: landing page deploy failed: {e.code}")
+    Returns an int exit code:
+        0  build succeeded, or status unknown (timeout / transient failure)
+        2  latest build errored — caller should surface loudly
 
-# 2) deploy all team pages
-teams_dir = ROOT / "teams"
-if teams_dir.is_dir():
-    for cfg_file in sorted(teams_dir.glob("*.json")):
-        slug = cfg_file.stem
-        team_html = ROOT / slug / "index.html"
-        if not team_html.exists():
-            continue
-
-        # get remote SHA if file already exists
+    Silent GH Pages failures caused stale site content on 2026-04-13. This
+    check turns that class of bug into a non-zero exit code the morning
+    cron wrapper will surface.
+    """
+    pages_url = f"{REPO_API}/pages/builds/latest"
+    for attempt in range(max_polls):
+        req = urllib.request.Request(pages_url, headers=HDR)
         try:
-            remote = gh("GET", f"/{slug}/index.html")
-            sha = remote["sha"]
-            # archive previous version
-            archive_b64 = remote["content"].replace("\n", "")
+            with urllib.request.urlopen(req, timeout=25) as r:
+                payload = json.loads(r.read())
+        except urllib.error.HTTPError as e:
+            print(f"warning: pages build GET failed: {e.code} — skipping verification")
+            return 0
+        except urllib.error.URLError as e:
+            print(f"warning: pages build GET network error: {e.reason} — skipping verification")
+            return 0
+
+        status = (payload.get("status") or "").lower()
+        commit = (payload.get("commit") or "")[:7]
+        if status == "built":
+            print(f"pages ok  → build {commit} status=built")
+            return 0
+        if status in ("errored", "failed"):
+            error_url = payload.get("url") or pages_url
+            error_msg = (payload.get("error") or {}).get("message") or "(no message)"
+            print(f"error: pages build {commit} status={status}: {error_msg}")
+            print(f"       inspect: {error_url}")
+            return 2
+        # building / queued / unknown
+        if attempt + 1 < max_polls:
+            print(f"pages     → build {commit} status={status or 'unknown'} (poll {attempt + 1}/{max_polls})")
+            sleep(poll_interval)
+    print(f"warning: pages build still {status or 'pending'} after {max_polls} polls — not blocking")
+    return 0
+
+
+def _main():
+    if not TOKEN:
+        sys.exit("error: GITHUB_TOKEN env var not set")
+    ROOT = Path(__file__).parent
+    today_iso = datetime.now(tz=CT).date().isoformat()
+    archive_name = (datetime.now(tz=CT).date() - timedelta(days=1)).isoformat()
+
+    # 1) deploy root index.html (landing page) if it exists
+    local_root = ROOT / "index.html"
+    if local_root.exists() and local_root.read_bytes():
+        try:
+            current = gh("GET", "/index.html")
+            root_sha = current["sha"]
+        except urllib.error.HTTPError:
+            root_sha = None
+
+        body = {
+            "message": f"landing page {today_iso}",
+            "content": base64.b64encode(local_root.read_bytes()).decode(),
+        }
+        if root_sha:
+            body["sha"] = root_sha
+        try:
+            resp = gh("PUT", "/index.html", body)
+            print(f"landing   → {resp['commit']['sha'][:7]} ({resp['content']['size']:,} bytes)")
+        except urllib.error.HTTPError as e:
+            print(f"warning: landing page deploy failed: {e.code}")
+
+    # 2) deploy all team pages
+    teams_dir = ROOT / "teams"
+    if teams_dir.is_dir():
+        for cfg_file in sorted(teams_dir.glob("*.json")):
+            slug = cfg_file.stem
+            team_html = ROOT / slug / "index.html"
+            if not team_html.exists():
+                continue
+
+            # get remote SHA if file already exists
             try:
-                gh("PUT", f"/archive/{slug}/{archive_name}.html", {
-                    "message": f"archive {slug} {archive_name}",
-                    "content": archive_b64,
-                })
-                print(f"archived  → archive/{slug}/{archive_name}.html")
+                remote = gh("GET", f"/{slug}/index.html")
+                sha = remote["sha"]
+                # archive previous version
+                archive_b64 = remote["content"].replace("\n", "")
+                try:
+                    gh("PUT", f"/archive/{slug}/{archive_name}.html", {
+                        "message": f"archive {slug} {archive_name}",
+                        "content": archive_b64,
+                    })
+                    print(f"archived  → archive/{slug}/{archive_name}.html")
+                except urllib.error.HTTPError as e:
+                    if e.code == 422:
+                        print(f"archive/{slug}/{archive_name}.html already exists; skipping")
+                    else:
+                        print(f"warning: archive {slug} failed: {e.code}")
             except urllib.error.HTTPError as e:
-                if e.code == 422:
-                    print(f"archive/{slug}/{archive_name}.html already exists; skipping")
+                if e.code == 404:
+                    sha = None
                 else:
-                    print(f"warning: archive {slug} failed: {e.code}")
+                    body = e.read().decode(errors="replace")
+                    print(f"error: {slug}/index.html GET failed: {e.code} {body}")
+                    continue
+            except urllib.error.URLError as e:
+                print(f"error: {slug}/index.html GET failed (network): {e.reason}")
+                continue
+
+            body = {
+                "message": f"daily update {slug} {today_iso}",
+                "content": base64.b64encode(team_html.read_bytes()).decode(),
+            }
+            if sha:
+                body["sha"] = sha
+            try:
+                resp = gh("PUT", f"/{slug}/index.html", body)
+                print(f"deployed  → {slug}/index.html ({resp['content']['size']:,} bytes)")
+            except urllib.error.HTTPError as e:
+                body = e.read().decode(errors="replace")
+                print(f"error: {slug}/index.html PUT failed: {e.code} {body}")
+
+    # 3) push data ledger JSON if it exists
+    data_file = ROOT / "data" / f"{today_iso}.json"
+    if data_file.exists():
+        data_b64 = base64.b64encode(data_file.read_bytes()).decode()
+        data_path = f"/data/{today_iso}.json"
+        try:
+            gh("PUT", data_path, {
+                "message": f"data ledger {today_iso}",
+                "content": data_b64,
+            })
+            print(f"ledger    → data/{today_iso}.json")
+        except urllib.error.HTTPError as e:
+            if e.code == 422:
+                print(f"data/{today_iso}.json already exists; skipping")
+            else:
+                print(f"warning: data ledger push failed: {e.code}")
+
+    # 4) push static asset files (auth UI + config). These rarely change so we
+    #    GET current SHA first to allow in-place updates without 422 conflicts.
+    STATIC_ASSETS = [
+        "sw.js",
+        "auth-bounce.js",
+        "config/supabase.js",
+        "auth/index.html",
+        "auth/reset.html",
+        "auth/auth.css",
+        "auth/auth.js",
+        "auth/reset.js",
+        "auth/session.js",
+        "home/index.html",
+        "home/home.js",
+        "home/home.css",
+        "settings/index.html",
+        "settings/settings.js",
+        "settings/settings.css",
+    ]
+    for rel in STATIC_ASSETS:
+        local = ROOT / rel
+        if not local.exists():
+            continue
+        try:
+            remote = gh("GET", f"/{rel}")
+            sha = remote["sha"]
         except urllib.error.HTTPError as e:
             if e.code == 404:
                 sha = None
             else:
-                body = e.read().decode(errors="replace")
-                print(f"error: {slug}/index.html GET failed: {e.code} {body}")
+                print(f"warning: {rel} GET failed: {e.code}")
                 continue
-        except urllib.error.URLError as e:
-            print(f"error: {slug}/index.html GET failed (network): {e.reason}")
-            continue
-
         body = {
-            "message": f"daily update {slug} {today_iso}",
-            "content": base64.b64encode(team_html.read_bytes()).decode(),
+            "message": f"update {rel} {today_iso}",
+            "content": base64.b64encode(local.read_bytes()).decode(),
         }
         if sha:
             body["sha"] = sha
         try:
-            resp = gh("PUT", f"/{slug}/index.html", body)
-            print(f"deployed  → {slug}/index.html ({resp['content']['size']:,} bytes)")
+            resp = gh("PUT", f"/{rel}", body)
+            size = resp["content"]["size"]
+            print(f"asset     → {rel} ({size:,} bytes)")
         except urllib.error.HTTPError as e:
             body = e.read().decode(errors="replace")
-            print(f"error: {slug}/index.html PUT failed: {e.code} {body}")
+            print(f"warning: {rel} PUT failed: {e.code} {body}")
 
-# 3) push data ledger JSON if it exists
-data_file = ROOT / "data" / f"{today_iso}.json"
-if data_file.exists():
-    data_b64 = base64.b64encode(data_file.read_bytes()).decode()
-    data_path = f"/data/{today_iso}.json"
-    try:
-        gh("PUT", data_path, {
-            "message": f"data ledger {today_iso}",
-            "content": data_b64,
-        })
-        print(f"ledger    → data/{today_iso}.json")
-    except urllib.error.HTTPError as e:
-        if e.code == 422:
-            print(f"data/{today_iso}.json already exists; skipping")
-        else:
-            print(f"warning: data ledger push failed: {e.code}")
+    # 5) verify GitHub Pages build. Silent Pages failures on 2026-04-13
+    #    shipped stale content even though every Contents-API PUT above
+    #    reported success. verify_pages_build polls the Pages Builds API
+    #    and exits non-zero if the latest build errored.
+    rc = verify_pages_build()
+    if rc != 0:
+        print(f"error: pages build verification failed (rc={rc}) — site may be stale")
+        sys.exit(rc)
 
-# 4) push static asset files (auth UI + config). These rarely change so we
-#    GET current SHA first to allow in-place updates without 422 conflicts.
-STATIC_ASSETS = [
-    "sw.js",
-    "auth-bounce.js",
-    "config/supabase.js",
-    "auth/index.html",
-    "auth/reset.html",
-    "auth/auth.css",
-    "auth/auth.js",
-    "auth/reset.js",
-    "auth/session.js",
-    "home/index.html",
-    "home/home.js",
-    "home/home.css",
-    "settings/index.html",
-    "settings/settings.js",
-    "settings/settings.css",
-]
-for rel in STATIC_ASSETS:
-    local = ROOT / rel
-    if not local.exists():
-        continue
-    try:
-        remote = gh("GET", f"/{rel}")
-        sha = remote["sha"]
-    except urllib.error.HTTPError as e:
-        if e.code == 404:
-            sha = None
-        else:
-            print(f"warning: {rel} GET failed: {e.code}")
-            continue
-    body = {
-        "message": f"update {rel} {today_iso}",
-        "content": base64.b64encode(local.read_bytes()).decode(),
-    }
-    if sha:
-        body["sha"] = sha
-    try:
-        resp = gh("PUT", f"/{rel}", body)
-        size = resp["content"]["size"]
-        print(f"asset     → {rel} ({size:,} bytes)")
-    except urllib.error.HTTPError as e:
-        body = e.read().decode(errors="replace")
-        print(f"warning: {rel} PUT failed: {e.code} {body}")
+    print(f"live      → https://{OWNER}.github.io/{REPO}/")
 
-print(f"live      → https://{OWNER}.github.io/{REPO}/")
+
+if __name__ == "__main__":
+    _main()

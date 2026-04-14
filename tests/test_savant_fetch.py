@@ -483,6 +483,218 @@ class TestParseBatterArsenal(unittest.TestCase):
         self.assertAlmostEqual(out["999"]["FF"]["whiff"], 25.0)
 
 
+class TestMergePitcherArsenal(unittest.TestCase):
+    def test_current_wins_per_pitch_code(self):
+        current = {"1": [
+            {"pitch": "FF", "name": "4-Seam", "usage": 51.0, "velo": 97.0,
+             "spin": 2300, "whiff": 24.0, "xwoba_allowed": 0.280},
+        ]}
+        prior = {"1": [
+            {"pitch": "FF", "name": "4-Seam", "usage": 48.0, "velo": 96.5,
+             "spin": 2280, "whiff": 22.0, "xwoba_allowed": 0.260},
+            {"pitch": "SL", "name": "Slider", "usage": 30.0, "velo": 87.0,
+             "spin": 2500, "whiff": 35.0, "xwoba_allowed": 0.210},
+            {"pitch": "CH", "name": "Changeup", "usage": 22.0, "velo": 88.0,
+             "spin": 1700, "whiff": 30.0, "xwoba_allowed": 0.250},
+        ]}
+        merged = build._merge_pitcher_arsenal(current, prior)
+        self.assertIn("1", merged)
+        codes = [p["pitch"] for p in merged["1"]]
+        self.assertEqual(set(codes), {"FF", "SL", "CH"})
+        # Current-year FF wins
+        ff = next(p for p in merged["1"] if p["pitch"] == "FF")
+        self.assertAlmostEqual(ff["usage"], 51.0)
+        # Prior-year SL preserved
+        sl = next(p for p in merged["1"] if p["pitch"] == "SL")
+        self.assertAlmostEqual(sl["usage"], 30.0)
+        # Sort by usage desc — FF (51) first, SL (30), CH (22)
+        self.assertEqual(codes, ["FF", "SL", "CH"])
+
+    def test_pid_only_in_prior_preserved(self):
+        current = {}
+        prior = {"777": [
+            {"pitch": "FF", "usage": 60.0, "name": "FF", "velo": 95,
+             "spin": 2400, "whiff": 25, "xwoba_allowed": 0.270},
+        ]}
+        merged = build._merge_pitcher_arsenal(current, prior)
+        self.assertIn("777", merged)
+        self.assertEqual(len(merged["777"]), 1)
+
+    def test_both_empty(self):
+        self.assertEqual(build._merge_pitcher_arsenal({}, {}), {})
+
+    def test_ragans_style_fill(self):
+        # Cole Ragans bug: current year has only FF at 51%, prior year
+        # has full arsenal. Merged arsenal has all 4 pitches from prior
+        # but FF from current.
+        current = {"677957": [
+            {"pitch": "FF", "name": "4-Seam", "usage": 51.3, "velo": 97.5,
+             "spin": 2350, "whiff": 25.0, "xwoba_allowed": 0.290},
+        ]}
+        prior = {"677957": [
+            {"pitch": "FF", "name": "4-Seam", "usage": 48.0, "velo": 97.2,
+             "spin": 2340, "whiff": 23.0, "xwoba_allowed": 0.275},
+            {"pitch": "CH", "name": "Changeup", "usage": 22.0, "velo": 88.0,
+             "spin": 1750, "whiff": 38.0, "xwoba_allowed": 0.230},
+            {"pitch": "SL", "name": "Slider", "usage": 18.0, "velo": 86.5,
+             "spin": 2480, "whiff": 36.0, "xwoba_allowed": 0.215},
+            {"pitch": "SI", "name": "Sinker", "usage": 12.0, "velo": 96.8,
+             "spin": 2200, "whiff": 18.0, "xwoba_allowed": 0.330},
+        ]}
+        merged = build._merge_pitcher_arsenal(current, prior)
+        codes = {p["pitch"] for p in merged["677957"]}
+        self.assertEqual(codes, {"FF", "CH", "SL", "SI"})
+        ff = next(p for p in merged["677957"] if p["pitch"] == "FF")
+        self.assertAlmostEqual(ff["usage"], 51.3)  # current wins
+        self.assertAlmostEqual(ff["xwoba_allowed"], 0.290)
+
+
+class TestMergeSavantLeaderboard(unittest.TestCase):
+    def test_current_wins_full_row(self):
+        current = {"660271": {"xwoba": ".423", "brl_percent": "25.6"}}
+        prior = {"660271": {"xwoba": ".390", "brl_percent": "22.0"}}
+        merged = build._merge_savant_leaderboard(current, prior)
+        self.assertEqual(merged["660271"]["xwoba"], ".423")
+        self.assertEqual(merged["660271"]["brl_percent"], "25.6")
+
+    def test_prior_fills_gaps(self):
+        current = {"660271": {"xwoba": ".423"}}
+        prior = {"592450": {"xwoba": ".380"}}
+        merged = build._merge_savant_leaderboard(current, prior)
+        self.assertIn("660271", merged)
+        self.assertIn("592450", merged)
+
+    def test_both_empty(self):
+        self.assertEqual(build._merge_savant_leaderboard({}, {}), {})
+
+    def test_only_prior(self):
+        prior = {"660271": {"xwoba": ".390"}}
+        merged = build._merge_savant_leaderboard({}, prior)
+        self.assertEqual(merged, prior)
+
+
+class TestFetchLeaderboardsPriorYearIntegration(unittest.TestCase):
+    """End-to-end test that prior-year URLs are fetched, parsed, and merged.
+    Uses distinct data for current vs prior to prove the merge runs."""
+
+    def setUp(self):
+        build._SAVANT_MEM.clear()
+        self._orig_cache_dir = build._SAVANT_CACHE_DIR
+        build._SAVANT_CACHE_DIR = None
+        self._tmp = Path(__file__).parent / "_tmp_savant_prev"
+        if self._tmp.exists():
+            import shutil
+            shutil.rmtree(self._tmp, ignore_errors=True)
+        self._patcher = mock.patch.object(build, "DATA_DIR", self._tmp)
+        self._patcher.start()
+
+    def tearDown(self):
+        self._patcher.stop()
+        build._SAVANT_CACHE_DIR = self._orig_cache_dir
+        build._SAVANT_MEM.clear()
+        if self._tmp.exists():
+            import shutil
+            shutil.rmtree(self._tmp, ignore_errors=True)
+
+    def test_prior_year_pitcher_arsenal_fills_gap(self):
+        # 2026 pitcher arsenal has only FF for our test pitcher.
+        # 2025 arsenal has FF + SL + CH. Merged should have all 3.
+        current_stats = (
+            '\ufeff"last_name, first_name","player_id","team_name_alt","pitch_type","pitch_name",'
+            '"run_value_per_100","run_value","pitches","pitch_usage","pa","ba","slg","woba",'
+            '"whiff_percent","k_percent","put_away","est_ba","est_slg","est_woba","hard_hit_percent"\n'
+            '"Ragans, Cole",677957,"KC","FF","4-Seam Fastball",-0.5,-2,"100",51.3,"25","0.200","0.320","0.280",25,20,15,"0.205","0.325","0.285",32\n'
+        )
+        prior_stats = (
+            '\ufeff"last_name, first_name","player_id","team_name_alt","pitch_type","pitch_name",'
+            '"run_value_per_100","run_value","pitches","pitch_usage","pa","ba","slg","woba",'
+            '"whiff_percent","k_percent","put_away","est_ba","est_slg","est_woba","hard_hit_percent"\n'
+            '"Ragans, Cole",677957,"KC","FF","4-Seam Fastball",-0.6,-10,"1200",48.0,"300","0.195","0.315","0.275",23,19,14,"0.200","0.318","0.280",30\n'
+            '"Ragans, Cole",677957,"KC","CH","Changeup",-1.1,-6,"400",22.0,"100","0.170","0.260","0.220",38,30,22,"0.175","0.265","0.225",24\n'
+            '"Ragans, Cole",677957,"KC","SL","Slider",-0.8,-4,"350",18.0,"90","0.180","0.270","0.230",36,28,20,"0.185","0.275","0.235",26\n'
+        )
+        prior_speed = (
+            '\ufeff"last_name, first_name","pitcher","ff_avg_speed","si_avg_speed","fc_avg_speed",'
+            '"sl_avg_speed","ch_avg_speed","cu_avg_speed","fs_avg_speed","kn_avg_speed",'
+            '"st_avg_speed","sv_avg_speed"\n'
+            '"Ragans, Cole","677957","96.8",,,,"87.1","86.2",,,,\n'
+        )
+        prior_spin = (
+            '\ufeff"last_name, first_name","pitcher","ff_avg_spin","si_avg_spin","fc_avg_spin",'
+            '"sl_avg_spin","ch_avg_spin","cu_avg_spin","fs_avg_spin","kn_avg_spin",'
+            '"st_avg_spin","sv_avg_spin"\n'
+            '"Ragans, Cole","677957","2340",,,"2480","1720",,,,,\n'
+        )
+
+        def fake_urlopen(req, timeout=None):
+            url = req.full_url if hasattr(req, "full_url") else str(req)
+            is_prev = "year=2025" in url
+            if "pitch-arsenal-stats" in url and "type=batter" in url:
+                body = ""
+            elif "pitch-arsenal-stats" in url:
+                body = prior_stats if is_prev else current_stats
+            elif "pitch-arsenals" in url and "avg_speed" in url:
+                body = prior_speed if is_prev else ""
+            elif "pitch-arsenals" in url and "avg_spin" in url:
+                body = prior_spin if is_prev else ""
+            else:
+                body = ""
+            m = mock.MagicMock()
+            m.read.return_value = body.encode("utf-8")
+            m.__enter__.return_value = m
+            m.__exit__.return_value = False
+            return m
+
+        with mock.patch("urllib.request.urlopen", side_effect=fake_urlopen):
+            result = build.fetch_savant_leaderboards(2026, date(2026, 4, 14))
+
+        arsenal = result["arsenal"]
+        self.assertIn("677957", arsenal)
+        pitches = arsenal["677957"]
+        codes = {p["pitch"] for p in pitches}
+        self.assertEqual(codes, {"FF", "CH", "SL"})
+        # Current-year FF wins (51.3, not 48.0)
+        ff = next(p for p in pitches if p["pitch"] == "FF")
+        self.assertAlmostEqual(ff["usage"], 51.3)
+        # Prior-year CH/SL preserved
+        ch = next(p for p in pitches if p["pitch"] == "CH")
+        self.assertAlmostEqual(ch["usage"], 22.0)
+        self.assertAlmostEqual(ch["velo"], 87.1)  # from prior speed csv
+
+    def test_prior_year_batter_leaderboard_fills_gap(self):
+        current_batter = (
+            '\ufeff"last_name, first_name","player_id","year","xwoba","brl_percent","whiff_percent"\n'
+            '"Ohtani, Shohei",660271,2026,".450",28.0,29.0\n'
+        )
+        prior_batter = (
+            '\ufeff"last_name, first_name","player_id","year","xwoba","brl_percent","whiff_percent"\n'
+            '"Ohtani, Shohei",660271,2025,".380",22.0,27.0\n'
+            '"Judge, Aaron",592450,2025,".395",23.5,26.5\n'
+        )
+
+        def fake_urlopen(req, timeout=None):
+            url = req.full_url if hasattr(req, "full_url") else str(req)
+            is_prev = "year=2025" in url
+            if "type=batter" in url and "pitch-arsenal-stats" not in url:
+                body = prior_batter if is_prev else current_batter
+            else:
+                body = ""
+            m = mock.MagicMock()
+            m.read.return_value = body.encode("utf-8")
+            m.__enter__.return_value = m
+            m.__exit__.return_value = False
+            return m
+
+        with mock.patch("urllib.request.urlopen", side_effect=fake_urlopen):
+            result = build.fetch_savant_leaderboards(2026, date(2026, 4, 14))
+
+        # Ohtani: current wins (.450 not .380)
+        self.assertEqual(result["batter"]["660271"]["xwoba"], ".450")
+        # Judge: only in prior, must survive the merge
+        self.assertIn("592450", result["batter"])
+        self.assertEqual(result["batter"]["592450"]["xwoba"], ".395")
+
+
 class TestRenderArsenal(unittest.TestCase):
     def _skenes_pitches(self):
         out = build._build_savant_arsenal(ARSENAL_STATS_CSV, ARSENAL_SPEED_CSV, ARSENAL_SPIN_CSV)
