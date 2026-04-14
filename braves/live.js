@@ -14,6 +14,7 @@
   var anyLive = false; // track if any game is live for slate poll rate
   var lastWidgetHTML = ""; // diff check to prevent flicker on unchanged content
   var lastResumeAt = 0; // debounce visibility changes
+  var lineupRefreshInFlight = false; // prevent overlapping fragment fetches
 
   /* ── helpers ──────────────────────────────────────────────────── */
 
@@ -229,6 +230,64 @@
     return (s || "th");
   }
 
+  /* ── lineup-post → fragment refresh ───────────────────────────── */
+
+  // When MLB posts the starting lineup (typically ~1 hr pregame), the
+  // scouting and matchup sections were rendered at build time with stale
+  // lineup data (or the roster-fallback top 9). Swap in the real thing
+  // without a full page reload so the reader doesn't have to notice.
+  //
+  // Guard with sessionStorage so we only ever do this once per tab per
+  // game. Keyed by gamePk so a new game tomorrow fires fresh.
+  function refreshScoutingAndMatchup(gamePk) {
+    if (lineupRefreshInFlight) return;
+    var key = "ml_lineup_refresh_" + gamePk;
+    try {
+      if (window.sessionStorage && window.sessionStorage.getItem(key)) {
+        return;
+      }
+    } catch (e) { /* sessionStorage blocked — proceed anyway */ }
+
+    lineupRefreshInFlight = true;
+    fetch("./index.html", {cache: "no-store"})
+      .then(function (r) {
+        if (!r.ok) throw new Error("fetch " + r.status);
+        return r.text();
+      })
+      .then(function (text) {
+        var doc = new DOMParser().parseFromString(text, "text/html");
+        var ids = ["scouting", "matchup"];
+        for (var i = 0; i < ids.length; i++) {
+          var fresh = doc.getElementById(ids[i]);
+          var live = document.getElementById(ids[i]);
+          if (fresh && live) {
+            live.innerHTML = fresh.innerHTML;
+          }
+        }
+        try {
+          if (window.sessionStorage) {
+            window.sessionStorage.setItem(key, "1");
+          }
+        } catch (e) { /* ignore */ }
+      })
+      .catch(function (err) {
+        // Non-fatal — leave existing DOM intact. Next poll will try again.
+        if (window.console && console.warn) {
+          console.warn("lineup refresh failed:", err);
+        }
+      })
+      .then(function () {
+        lineupRefreshInFlight = false;
+      });
+  }
+
+  function checkLineupPost(feed, cubsSide, gamePk) {
+    var order = ((((feed.liveData || {}).boxscore || {}).teams || {})[cubsSide] || {}).battingOrder || [];
+    if (order.length >= 9) {
+      refreshScoutingAndMatchup(gamePk);
+    }
+  }
+
   function fetchPreviewExtras(game, callback) {
     var isHome = game.teams.home.team.id === CUBS_ID;
     var oppId = isHome ? game.teams.away.team.id : game.teams.home.team.id;
@@ -248,6 +307,9 @@
           var last = (p.fullName || "?").split(" ").pop();
           extras.lineup.push({name: last, pos: (p.primaryPosition || {}).abbreviation || "?"});
         }
+        // If MLB has posted the real starting lineup, swap in fresh
+        // scouting + matchup HTML without a full page reload.
+        checkLineupPost(feed, cubsSide, game.gamePk);
         done();
       })
       .catch(done);
