@@ -19,6 +19,7 @@ import sections.division
 import sections.farm
 import sections.headline
 import sections.history
+import sections.matchup
 import sections.pressbox
 import sections.scouting
 import sections.slate
@@ -514,7 +515,77 @@ def _parse_savant_csv(text):
         out[pid] = rec
     return out
 
-_SAVANT_SCHEMA = 2  # bump invalidates prior-day caches
+_SAVANT_SCHEMA = 4  # bump invalidates prior-day caches
+
+def _parse_batter_arsenal(text):
+    """Parse Savant pitch-arsenal-stats?type=batter CSV into
+    {pid_str: {pitch_type: {pa, xwoba, whiff, hardhit}}}.
+
+    Unlike _parse_savant_csv which assumes one row per player, this CSV
+    has one row per (batter, pitch_type). Columns used: player_id,
+    pitch_type, pa, est_woba, whiff_percent, hard_hit_percent.
+    """
+    import csv, io
+    out = {}
+    if not text:
+        return out
+    reader = csv.reader(io.StringIO(text.lstrip("\ufeff")))
+    try:
+        header = next(reader)
+    except StopIteration:
+        return out
+    try:
+        idx = {
+            "pid": header.index("player_id"),
+            "pt":  header.index("pitch_type"),
+            "pa":  header.index("pa"),
+            "xw":  header.index("est_woba"),
+            "whf": header.index("whiff_percent"),
+            "hh":  header.index("hard_hit_percent"),
+        }
+    except ValueError:
+        return out
+    max_idx = max(idx.values())
+
+    def _f(s):
+        try:
+            return float(s)
+        except (ValueError, TypeError):
+            return None
+
+    for row in reader:
+        if len(row) <= max_idx:
+            continue
+        pid = row[idx["pid"]].strip().strip('"')
+        pt = row[idx["pt"]].strip().strip('"').upper()
+        if not pid or not pt:
+            continue
+        rec = {
+            "pa":     _f(row[idx["pa"]]),
+            "xwoba":  _f(row[idx["xw"]]),
+            "whiff":  _f(row[idx["whf"]]),
+            "hardhit": _f(row[idx["hh"]]),
+        }
+        out.setdefault(pid, {})[pt] = rec
+    return out
+
+
+def _merge_batter_arsenal(current, prior):
+    """Merge current-year and prior-year batter arsenal maps. Current-year
+    entries take precedence per-pitch; prior-year fills gaps. Early in a
+    season the current-year min=50-pitches threshold returns few rows, so
+    the prior-year fallback keeps the matchup read useful until samples
+    accumulate."""
+    if not current and not prior:
+        return {}
+    merged = {}
+    for pid, pitches in (prior or {}).items():
+        merged[pid] = dict(pitches)
+    for pid, pitches in (current or {}).items():
+        slot = merged.setdefault(pid, {})
+        for pt, rec in pitches.items():
+            slot[pt] = rec
+    return merged
 
 def _build_savant_arsenal(stats_csv, speed_csv, spin_csv):
     """Merge Savant arsenal CSVs into {pid_str: [{pitch, name, usage, velo,
@@ -540,8 +611,10 @@ def _build_savant_arsenal(stats_csv, speed_csv, spin_csv):
         idx = {name: i for i, name in enumerate(header)}
         req = ("player_id", "pitch_type", "pitch_name", "pitch_usage", "whiff_percent")
         if all(k in idx for k in req):
+            max_req = max(idx[k] for k in req)
+            xw_idx = idx.get("est_woba")  # optional: xwOBA allowed per pitch
             for row in reader:
-                if len(row) <= max(idx[k] for k in req):
+                if len(row) <= max_req:
                     continue
                 pid = row[idx["player_id"]].strip().strip('"')
                 if not pid:
@@ -558,6 +631,12 @@ def _build_savant_arsenal(stats_csv, speed_csv, spin_csv):
                     whiff = float(row[idx["whiff_percent"]])
                 except (ValueError, TypeError):
                     whiff = None
+                xwoba_allowed = None
+                if xw_idx is not None and len(row) > xw_idx:
+                    try:
+                        xwoba_allowed = float(row[xw_idx])
+                    except (ValueError, TypeError):
+                        xwoba_allowed = None
                 arsenal.setdefault(pid, []).append({
                     "pitch": pitch,
                     "name": name,
@@ -565,6 +644,7 @@ def _build_savant_arsenal(stats_csv, speed_csv, spin_csv):
                     "whiff": whiff,
                     "velo": None,
                     "spin": None,
+                    "xwoba_allowed": xwoba_allowed,
                 })
 
     # Pass 2 + 3: merge velo + spin from the wide arsenals leaderboards.
@@ -642,7 +722,13 @@ def fetch_savant_leaderboards(season, today):
 
     # Golden-snapshot fixture mode: deterministic empty map.
     if "--fixture" in sys.argv:
-        result = {"batter": {}, "pitcher": {}, "arsenal": {}, "schema": _SAVANT_SCHEMA}
+        result = {
+            "batter": {},
+            "pitcher": {},
+            "arsenal": {},
+            "batter_arsenal": {},
+            "schema": _SAVANT_SCHEMA,
+        }
         _SAVANT_MEM[mem_key] = result
         return result
 
@@ -670,6 +756,12 @@ def fetch_savant_leaderboards(season, today):
         "arsenal_stats": f"{lbase}/pitch-arsenal-stats?year={season}&min=10&csv=true",
         "arsenal_speed": f"{lbase}/pitch-arsenals?year={season}&min=0&type=avg_speed&csv=true",
         "arsenal_spin":  f"{lbase}/pitch-arsenals?year={season}&min=0&type=avg_spin&csv=true",
+        "batter_arsenal": f"{lbase}/pitch-arsenal-stats?year={season}&type=batter&min=50&csv=true",
+        # Prior-year fallback — early in any new season the current-year
+        # min=50 pitches threshold returns ~0 batters. Merge last year's
+        # data as a baseline, letting current-year entries take precedence
+        # per-pitch when they exist.
+        "batter_arsenal_prev": f"{lbase}/pitch-arsenal-stats?year={int(season)-1}&type=batter&min=50&csv=true",
     }
 
     def _get(url):
@@ -693,6 +785,10 @@ def fetch_savant_leaderboards(season, today):
             bodies["arsenal_stats"],
             bodies["arsenal_speed"],
             bodies["arsenal_spin"],
+        ),
+        "batter_arsenal": _merge_batter_arsenal(
+            _parse_batter_arsenal(bodies["batter_arsenal"]) if bodies["batter_arsenal"] else {},
+            _parse_batter_arsenal(bodies["batter_arsenal_prev"]) if bodies["batter_arsenal_prev"] else {},
         ),
     }
 
@@ -896,6 +992,7 @@ def page(briefing):
 
     # New sections
     scout_html = sections.scouting.render(briefing)
+    matchup_html = sections.matchup.render(briefing)
     stretch_html = sections.stretch.render(briefing)
     pressbox_html = sections.pressbox.render(briefing)
     history_html = sections.history.render(briefing)
@@ -908,6 +1005,7 @@ def page(briefing):
     _visible_sections = [
         ("team", headline_html),
         ("scout", scout_html),
+        ("matchup", matchup_html),
         ("pulse", stretch_html),
         ("pressbox", pressbox_html),
         ("farm", minors_html),
@@ -981,6 +1079,7 @@ def page(briefing):
     <ol>
       <li><a href="#team">The {TEAM_NAME}</a></li>
       {'<li><a href="#scout">Scouting Report</a></li>' if scout_html else ''}
+      {'<li><a href="#matchup">Matchup Read</a></li>' if matchup_html else ''}
       <li><a href="#pulse">The Stretch</a></li>
       <li><a href="#pressbox">The Pressbox</a></li>
       <li><a href="#farm">Down on the Farm</a></li>
@@ -1014,6 +1113,16 @@ def page(briefing):
     </summary>
     {scout_html}
   </section>""" if scout_html else ''}
+
+  {f"""<section id="matchup" open>
+    <summary>
+      <span class="num">{_num.get("matchup", "")}</span>
+      <span class="h">Matchup Read</span>
+      <span class="tag">Lineup &times; Arsenal</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    {matchup_html}
+  </section>""" if matchup_html else ''}
 
   <section id="pulse" open>
     <summary>

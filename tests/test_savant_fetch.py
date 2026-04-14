@@ -117,16 +117,24 @@ class TestFetchSavantLeaderboards(unittest.TestCase):
     def test_happy_path_writes_cache(self):
         def fake_urlopen(req, timeout=None):
             url = req.full_url if hasattr(req, "full_url") else str(req)
-            if "type=batter" in url:
-                body = BATTER_CSV
-            elif "type=pitcher" in url and "arsenal" not in url:
-                body = PITCHER_CSV
+            # Order matters — pitch-arsenal-stats URLs can also contain
+            # type=batter, so check the arsenal endpoints first.
+            if "pitch-arsenal-stats" in url and "type=batter" in url:
+                # Distinguish current-year vs prior-year fallback fetch
+                if "year=2025" in url:
+                    body = ""  # prior-year empty in this test
+                else:
+                    body = BATTER_ARSENAL_CSV
             elif "pitch-arsenal-stats" in url:
                 body = ARSENAL_STATS_CSV
             elif "pitch-arsenals" in url and "avg_speed" in url:
                 body = ARSENAL_SPEED_CSV
             elif "pitch-arsenals" in url and "avg_spin" in url:
                 body = ARSENAL_SPIN_CSV
+            elif "type=batter" in url:
+                body = BATTER_CSV
+            elif "type=pitcher" in url:
+                body = PITCHER_CSV
             else:
                 raise AssertionError(f"unexpected url: {url}")
             m = mock.MagicMock()
@@ -142,6 +150,10 @@ class TestFetchSavantLeaderboards(unittest.TestCase):
         self.assertEqual(result["batter"]["660271"]["xwoba"], ".423")
         self.assertIn("694973", result["pitcher"])
         self.assertEqual(result["pitcher"]["694973"]["xera"], "2.45")
+        # Batter arsenal also populated
+        self.assertIn("batter_arsenal", result)
+        self.assertIn("621020", result["batter_arsenal"])
+        self.assertAlmostEqual(result["batter_arsenal"]["621020"]["SL"]["xwoba"], 0.272)
 
         # Cache file written
         cache_file = self._tmp / "cache" / "savant" / "leaderboards-2026-2026-04-14.json"
@@ -149,6 +161,7 @@ class TestFetchSavantLeaderboards(unittest.TestCase):
         on_disk = json.loads(cache_file.read_text(encoding="utf-8"))
         self.assertEqual(on_disk["schema"], build._SAVANT_SCHEMA)
         self.assertIn("660271", on_disk["batter"])
+        self.assertIn("batter_arsenal", on_disk)
 
     def test_cache_hit_skips_network(self):
         # Pre-populate cache file and ensure urlopen is never called.
@@ -162,7 +175,10 @@ class TestFetchSavantLeaderboards(unittest.TestCase):
             "batter": {"111": {"xwoba": ".400"}},
             "pitcher": {"222": {"xera": "3.10"}},
             "arsenal": {"694973": [{"pitch": "FF", "name": "4-Seam Fastball",
-                                     "usage": 50.0, "velo": 99.0, "spin": 2400, "whiff": 30.0}]},
+                                     "usage": 50.0, "velo": 99.0, "spin": 2400,
+                                     "whiff": 30.0, "xwoba_allowed": 0.250}]},
+            "batter_arsenal": {"621020": {"SL": {"pa": 110, "xwoba": 0.272,
+                                                  "whiff": 36.3, "hardhit": 30.0}}},
         }), encoding="utf-8")
 
         with mock.patch("urllib.request.urlopen") as urlopen:
@@ -170,6 +186,34 @@ class TestFetchSavantLeaderboards(unittest.TestCase):
             urlopen.assert_not_called()
         self.assertEqual(result["batter"]["111"]["xwoba"], ".400")
         self.assertEqual(result["pitcher"]["222"]["xera"], "3.10")
+        self.assertEqual(result["batter_arsenal"]["621020"]["SL"]["xwoba"], 0.272)
+
+    def test_schema_bump_invalidates_old_cache(self):
+        cache_dir = self._tmp / "cache" / "savant"
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        cache_file = cache_dir / "leaderboards-2026-2026-04-14.json"
+        # Schema 2 — missing batter_arsenal key — should be rejected
+        cache_file.write_text(json.dumps({
+            "schema": 2,
+            "batter": {"111": {"xwoba": ".999"}},
+            "pitcher": {},
+            "arsenal": {},
+        }), encoding="utf-8")
+
+        calls = []
+        def fake_urlopen(req, timeout=None):
+            calls.append(req.full_url if hasattr(req, "full_url") else str(req))
+            m = mock.MagicMock()
+            m.read.return_value = b""
+            m.__enter__.return_value = m
+            m.__exit__.return_value = False
+            return m
+
+        with mock.patch("urllib.request.urlopen", side_effect=fake_urlopen):
+            result = build.fetch_savant_leaderboards(2026, date(2026, 4, 14))
+        self.assertTrue(len(calls) > 0, "schema mismatch should trigger refetch")
+        self.assertNotIn("111", result["batter"])  # stale cache was discarded
+        self.assertEqual(result["schema"], build._SAVANT_SCHEMA)
 
     def test_network_error_returns_empty_sides(self):
         def boom(req, timeout=None):
@@ -295,6 +339,18 @@ ARSENAL_STATS_CSV = (
     '"Alcantara, Sandy",645261,"MIA","SI","Sinker",-0.3,-2,"320",42.0,"80","0.210","0.300","0.280",18,15,12,"0.220","0.310","0.290",40\n'
 )
 
+# Baseball Savant pitch-arsenal-stats?type=batter — one row per (batter, pitch_type)
+BATTER_ARSENAL_CSV = (
+    '\ufeff"last_name, first_name","player_id","team_name_alt","pitch_type","pitch_name",'
+    '"run_value_per_100","run_value","pitches","pitch_usage","pa","ba","slg","woba",'
+    '"whiff_percent","k_percent","put_away","est_ba","est_slg","est_woba","hard_hit_percent"\n'
+    '"Swanson, Dansby",621020,"CHC","FF","4-Seam Fastball",1,10,"800",36.0,"192","0.260","0.440","0.370",30.4,22.0,15.0,"0.255","0.420","0.372",38.0\n'
+    '"Swanson, Dansby",621020,"CHC","SL","Slider",-2,-8,"400",18.0,"110","0.190","0.290","0.270",36.3,28.0,22.0,"0.185","0.280","0.272",25.0\n'
+    '"Swanson, Dansby",621020,"CHC","CH","Changeup",0,0,"180",8.0,"65","0.210","0.320","0.280",33.3,24.0,18.0,"0.205","0.310","0.283",28.0\n'
+    '"Happ, Ian",664023,"CHC","FF","4-Seam Fastball",0,2,"700",34.0,"170","0.245","0.415","0.345",26.1,20.0,13.0,"0.248","0.405","0.348",35.0\n'
+    '"Happ, Ian",664023,"CHC","SL","Slider",1,4,"350",17.0,"95","0.270","0.400","0.340",29.0,22.0,17.0,"0.268","0.395","0.338",32.0\n'
+)
+
 ARSENAL_SPEED_CSV = (
     '\ufeff"last_name, first_name","pitcher","ff_avg_speed","si_avg_speed","fc_avg_speed",'
     '"sl_avg_speed","ch_avg_speed","cu_avg_speed","fs_avg_speed","kn_avg_speed",'
@@ -327,11 +383,15 @@ class TestBuildSavantArsenal(unittest.TestCase):
         self.assertAlmostEqual(ff["velo"], 99.1)
         self.assertAlmostEqual(ff["spin"], 2410.0)
         self.assertAlmostEqual(ff["whiff"], 30.0)
+        # Unit 2: xwOBA-allowed threaded from est_woba column
+        self.assertAlmostEqual(ff["xwoba_allowed"], 0.250)
         sl = skenes[1]
         self.assertAlmostEqual(sl["velo"], 88.4)
+        self.assertAlmostEqual(sl["xwoba_allowed"], 0.220)
         ch = skenes[2]
         self.assertAlmostEqual(ch["velo"], 89.0)
         self.assertAlmostEqual(ch["spin"], 1820.0)
+        self.assertAlmostEqual(ch["xwoba_allowed"], 0.280)
 
     def test_handles_missing_speed_csv(self):
         out = build._build_savant_arsenal(ARSENAL_STATS_CSV, "", "")
@@ -349,6 +409,78 @@ class TestBuildSavantArsenal(unittest.TestCase):
 
     def test_empty_returns_empty(self):
         self.assertEqual(build._build_savant_arsenal("", "", ""), {})
+
+
+class TestParseBatterArsenal(unittest.TestCase):
+    def test_happy_path_multi_pitch(self):
+        out = build._parse_batter_arsenal(BATTER_ARSENAL_CSV)
+        self.assertIn("621020", out)
+        swanson = out["621020"]
+        self.assertEqual(set(swanson.keys()), {"FF", "SL", "CH"})
+        self.assertAlmostEqual(swanson["FF"]["xwoba"], 0.372)
+        self.assertAlmostEqual(swanson["FF"]["pa"], 192.0)
+        self.assertAlmostEqual(swanson["FF"]["whiff"], 30.4)
+        self.assertAlmostEqual(swanson["FF"]["hardhit"], 38.0)
+        self.assertAlmostEqual(swanson["SL"]["xwoba"], 0.272)
+        self.assertAlmostEqual(swanson["SL"]["whiff"], 36.3)
+
+    def test_multiple_batters(self):
+        out = build._parse_batter_arsenal(BATTER_ARSENAL_CSV)
+        self.assertIn("621020", out)
+        self.assertIn("664023", out)
+        # Happ has 2 pitches in the fixture
+        self.assertEqual(set(out["664023"].keys()), {"FF", "SL"})
+
+    def test_empty_csv(self):
+        self.assertEqual(build._parse_batter_arsenal(""), {})
+
+    def test_header_only(self):
+        header_only = '"player_id","pitch_type","pa","est_woba","whiff_percent","hard_hit_percent"\n'
+        self.assertEqual(build._parse_batter_arsenal(header_only), {})
+
+    def test_missing_required_column(self):
+        bogus = '"player_id","pitch_type","pa"\n"123","FF","50"\n'
+        self.assertEqual(build._parse_batter_arsenal(bogus), {})
+
+    def test_bom_stripped(self):
+        out = build._parse_batter_arsenal(BATTER_ARSENAL_CSV)
+        for pid in out:
+            self.assertTrue(pid.isdigit(), f"non-numeric pid {pid!r}")
+
+    def test_merge_current_over_prior(self):
+        current = {"1": {"FF": {"pa": 100, "xwoba": 0.400, "whiff": 20.0, "hardhit": 35.0}}}
+        prior = {
+            "1": {
+                "FF": {"pa": 250, "xwoba": 0.350, "whiff": 22.0, "hardhit": 33.0},
+                "SL": {"pa": 180, "xwoba": 0.280, "whiff": 30.0, "hardhit": 25.0},
+            },
+            "2": {"FF": {"pa": 200, "xwoba": 0.330, "whiff": 24.0, "hardhit": 32.0}},
+        }
+        merged = build._merge_batter_arsenal(current, prior)
+        # Batter 1's FF comes from current (preferred)
+        self.assertAlmostEqual(merged["1"]["FF"]["xwoba"], 0.400)
+        # Batter 1's SL only exists in prior — should be present
+        self.assertAlmostEqual(merged["1"]["SL"]["xwoba"], 0.280)
+        # Batter 2 only in prior — should be present
+        self.assertAlmostEqual(merged["2"]["FF"]["xwoba"], 0.330)
+
+    def test_merge_both_empty(self):
+        self.assertEqual(build._merge_batter_arsenal({}, {}), {})
+
+    def test_merge_only_prior(self):
+        prior = {"1": {"FF": {"pa": 100, "xwoba": 0.350, "whiff": 22.0, "hardhit": 33.0}}}
+        merged = build._merge_batter_arsenal({}, prior)
+        self.assertAlmostEqual(merged["1"]["FF"]["xwoba"], 0.350)
+
+    def test_empty_est_woba_becomes_none(self):
+        csv_with_gap = (
+            '"player_id","pitch_type","pa","est_woba","whiff_percent","hard_hit_percent"\n'
+            '"999","FF","50",,25.0,30.0\n'
+        )
+        out = build._parse_batter_arsenal(csv_with_gap)
+        self.assertIn("999", out)
+        self.assertIsNone(out["999"]["FF"]["xwoba"])
+        self.assertAlmostEqual(out["999"]["FF"]["whiff"], 25.0)
 
 
 class TestRenderArsenal(unittest.TestCase):
