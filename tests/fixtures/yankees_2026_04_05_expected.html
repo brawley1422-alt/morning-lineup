@@ -211,6 +211,9 @@ dl.transac dd{margin:2px 0 0;color:var(--paper-dim)}
 .minors .res .w{color:var(--win)}
 .minors .res .l{color:var(--loss)}
 .minors .note{font-size:11.5px;color:var(--paper-dim);margin-top:6px;line-height:1.4}
+.minors .lvl-tonight{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-top:4px;letter-spacing:.02em}
+.minors .lvl-tonight .lvl-lbl{font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-right:4px}
+.minors .lvl-standings{font-family:var(--mono);font-size:10px;color:var(--paper-dim);margin-top:2px;letter-spacing:.02em}
 .prospect-tag{font-family:var(--cond);font-size:9px;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:var(--ink);padding:1px 5px;border-radius:2px;margin-left:2px;font-weight:600}
 .prosp-header{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--gold);margin:8px 0 4px;border-top:1px solid var(--rule);padding-top:8px}
 .prosp-tracker{display:flex;flex-direction:column;gap:2px}
@@ -355,6 +358,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .mr-pc-code{font-family:var(--serif);font-style:italic;font-weight:900;font-size:16px;color:var(--gold);line-height:1}
 .mr-pc-velo{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--paper);line-height:1;margin:3px 0 2px}
 .mr-pc-usage{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--paper-mute);text-transform:uppercase}
+.mr-pc-xwoba{font-family:var(--mono);font-size:10px;color:var(--paper-dim);margin-top:2px;letter-spacing:.02em}
 .mr-lineup{width:100%;border-collapse:collapse;margin-bottom:8px}
 .mr-lineup td{padding:7px 8px;border-bottom:1px dotted var(--rule);font-family:var(--mono);font-size:12px;color:var(--paper-dim);vertical-align:baseline}
 .mr-lineup .mr-row:last-child td{border-bottom:none}
@@ -859,18 +863,26 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="aff">Scranton/Wilkes-Barre RailRiders</div>
         <div class="res"><span class="w">W 5&ndash;4</span> vs Bulls</div>
         <div class="note"><strong>Sánchez</strong> 1-5, 1 HR, 1 RBI. <strong>Beck</strong> 5.2 IP, 3 ER, 6 K.</div>
+        <div class="lvl-tonight"><em>off day</em></div>
+        
       </div><div class="lvl w" data-lvl="AA">
         <div class="aff">Somerset Patriots</div>
         <div class="res"><span class="w">W 12&ndash;2</span> at Rumble Ponies</div>
         <div class="note"><strong>Cobb</strong> 2-5, 1 HR, 5 RBI. <strong>Brian</strong> 2.0 IP, 0 ER, 5 K.</div>
+        <div class="lvl-tonight"><em>off day</em></div>
+        
       </div><div class="lvl w" data-lvl="A+">
         <div class="aff">Hudson Valley Renegades</div>
         <div class="res"><span class="w">W 2&ndash;0</span> vs Blue Rocks</div>
         <div class="note"><strong>Wilson</strong> 1-1, 2 RBI. <strong>Serna</strong> 7.0 IP, 0 ER, 10 K.</div>
+        <div class="lvl-tonight"><em>off day</em></div>
+        
       </div><div class="lvl w" data-lvl="A">
         <div class="aff">Tampa Tarpons</div>
         <div class="res"><span class="w">W 2&ndash;1</span> at Threshers</div>
         <div class="note"><strong>Lovich</strong> 1-4, 1 HR, 1 RBI. <strong>Boudreau</strong> 4.1 IP, 1 ER, 9 K.</div>
+        <div class="lvl-tonight"><em>off day</em></div>
+        
       </div></div><h3 class="prosp-header">Prospect Watch</h3><div class="prosp-tracker"><div class="prosp-cols"><span>#</span><span>Name</span><span>Pos</span><span>Lvl</span><span>Line</span></div><div class="prosp-row dnp"><span class="prosp-rank">#1</span><span class="prosp-name">George Lombard Jr.</span><span class="prosp-pos">SS</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#2</span><span class="prosp-name">Carlos Lagrange</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#3</span><span class="prosp-name">Elmer Rodríguez</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#5</span><span class="prosp-name">Ben Hess</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#6</span><span class="prosp-name">Spencer Jones</span><span class="prosp-pos">CF</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#10</span><span class="prosp-name">Pico Kohn</span><span class="prosp-pos">LHP</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#11</span><span class="prosp-name">Kyle Carr</span><span class="prosp-pos">LHP</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#12</span><span class="prosp-name">Core Jackson</span><span class="prosp-pos">SS</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#13</span><span class="prosp-name">Kaeden Kent</span><span class="prosp-pos">SS</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#14</span><span class="prosp-name">Henry Lalane</span><span class="prosp-pos">LHP</span><span class="prosp-lvl a">A</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#16</span><span class="prosp-name">Cade Smith</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#18</span><span class="prosp-name">Wilson Rodriguez</span><span class="prosp-pos">OF</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#20</span><span class="prosp-name">Jace Avina</span><span class="prosp-pos">LF</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#22</span><span class="prosp-name">Brendan Beck</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#23</span><span class="prosp-name">Sean Paul Liñan</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div></div>
   </section>
 

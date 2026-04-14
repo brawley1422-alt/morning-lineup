@@ -6,6 +6,76 @@ for the section header badge.
 from html import escape
 
 
+def _fmt_tonight(today_game, aff_id):
+    """Render a compact tonight-game line: 'vs/at OPP · 7:05 CT' or
+    'off day'. Returns an HTML fragment."""
+    if not today_game:
+        return '<div class="lvl-tonight"><em>off day</em></div>'
+    try:
+        from datetime import datetime
+        try:
+            from zoneinfo import ZoneInfo
+            ct = ZoneInfo("America/Chicago")
+        except Exception:
+            ct = None
+        home_id = today_game["teams"]["home"]["team"]["id"]
+        is_home = home_id == aff_id
+        opp_side = "away" if is_home else "home"
+        opp_name = today_game["teams"][opp_side]["team"].get("teamName", "???")
+        vs_at = "vs" if is_home else "at"
+        iso = today_game.get("gameDate", "")
+        time_s = ""
+        if iso:
+            try:
+                d = datetime.fromisoformat(iso.replace("Z", "+00:00"))
+                if ct:
+                    d = d.astimezone(ct)
+                h = d.hour % 12 or 12
+                ampm = "PM" if d.hour >= 12 else "AM"
+                time_s = f"{h}:{d.minute:02d} {ampm} CT"
+            except Exception:
+                time_s = ""
+        state = today_game.get("status", {}).get("abstractGameState", "")
+        if state == "Final":
+            away = today_game["teams"]["away"].get("score", 0)
+            home = today_game["teams"]["home"].get("score", 0)
+            my = home if is_home else away
+            opp = away if is_home else home
+            res = "W" if my > opp else "L"
+            return (
+                f'<div class="lvl-tonight"><span class="lvl-lbl">today</span> '
+                f'{res} {my}&ndash;{opp} {vs_at} {escape(opp_name)}</div>'
+            )
+        return (
+            f'<div class="lvl-tonight"><span class="lvl-lbl">tonight</span> '
+            f'{vs_at} {escape(opp_name)}'
+            + (f' &middot; {time_s}' if time_s else "")
+            + '</div>'
+        )
+    except Exception:
+        return ""
+
+
+def _fmt_standings(standings):
+    if not standings:
+        return ""
+    w = standings.get("wins", 0)
+    l = standings.get("losses", 0)
+    rank = standings.get("rank")
+    rank_s = f" &middot; {rank}" + _ordinal_suffix(rank) if rank else ""
+    return f'<div class="lvl-standings">{w}&ndash;{l}{rank_s}</div>'
+
+
+def _ordinal_suffix(n):
+    try:
+        n = int(n)
+    except (TypeError, ValueError):
+        return ""
+    if 10 <= n % 100 <= 20:
+        return "th"
+    return {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+
+
 def render(briefing):
     minors_data = briefing.data["minors"]
     prospects = briefing.data.get("prospects", {}) or {}
@@ -15,10 +85,16 @@ def render(briefing):
         aff = m["aff"]
         g = m["game"]
         box = m["boxscore"]
+        today_game = m.get("today_game")
+        standings = m.get("standings")
+        tonight_html = _fmt_tonight(today_game, aff["id"])
+        standings_html = _fmt_standings(standings)
         if not g or g.get("status", {}).get("abstractGameState") != "Final":
             cards.append(f"""<div class="lvl" data-lvl="{aff['level']}">
         <div class="aff">{escape(aff['name'])}</div>
         <div class="res"><em>No game / not final</em></div>
+        {tonight_html}
+        {standings_html}
       </div>""")
             continue
 
@@ -90,6 +166,8 @@ def render(briefing):
         <div class="aff">{escape(aff['name'])}</div>
         <div class="res"><span class="{wl_cls}">{wl} {my_score}&ndash;{opp_score}</span> {vs_at} {escape(opp_name)}</div>
         {f'<div class="note">{note}</div>' if note else ''}
+        {tonight_html}
+        {standings_html}
       </div>""")
 
     if not cards:

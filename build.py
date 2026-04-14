@@ -287,7 +287,8 @@ def load_all():
         leaderCategories="earnedRunAverage,strikeOuts,whip,saves,wins",
     )
 
-    # Minor league affiliate results (yesterday)
+    # Minor league affiliate results (yesterday) + tonight's slate + standings
+    milb_standings = fetch_milb_standings(season, today)
     minors = []
     for aff in AFFILIATES:
         try:
@@ -300,18 +301,39 @@ def load_all():
                     box = fetch(f"/game/{mg['gamePk']}/boxscore")
                 except Exception as e:
                     print(f"  warning: {aff['name']} boxscore failed: {e}", flush=True)
-            minors.append({"aff": aff, "game": mg, "boxscore": box})
         except Exception as e:
             print(f"  warning: {aff['name']} schedule failed: {e}", flush=True)
-            minors.append({"aff": aff, "game": None, "boxscore": None})
+            mg, box = None, None
 
-    # Prospect watchlist
+        # Tonight's game (parallel fetch, tolerant of off-days)
+        today_game = None
+        try:
+            ts = fetch("/schedule", sportId=aff["sport_id"], teamId=aff["id"],
+                        date=today.isoformat(), hydrate="team,linescore")
+            today_game = ts["dates"][0]["games"][0] if ts.get("dates") and ts["dates"][0].get("games") else None
+        except Exception as e:
+            print(f"  warning: {aff['name']} today schedule failed: {e}", flush=True)
+
+        minors.append({
+            "aff": aff,
+            "game": mg,
+            "boxscore": box,
+            "today_game": today_game,
+            "standings": milb_standings.get(aff["id"]),
+        })
+
+    # Prospect watchlist — static JSON provides curated ranks; a live
+    # batch /people fetch refreshes name, position, and level so promotions
+    # and demotions surface without hand-editing the file.
     prospects = {}
     if PROSPECTS_FILE.exists():
         try:
             pdata = json.loads(PROSPECTS_FILE.read_text())
-            prospects = {p["id"]: p for p in pdata}
-        except Exception:
+            aff_level_map = {a["id"]: a["level"] for a in AFFILIATES}
+            refreshed = refresh_prospects(pdata, TEAM_ID, today, aff_level_map)
+            prospects = {p["id"]: p for p in refreshed}
+        except Exception as e:
+            print(f"  warning: prospects load failed: {e}", flush=True)
             prospects = {}
 
     # This Day in Cubs History
@@ -330,11 +352,13 @@ def load_all():
         tx_start = (today - timedelta(days=7)).isoformat()
         tx_resp = fetch("/transactions", teamId=TEAM_ID,
                         startDate=tx_start, endDate=today.isoformat())
-        skip_types = {"SFA"}  # minor league free agent signings
+        # SFA = minor league free agent signings — pure noise, always skip.
+        # Call-ups / demotions / option moves (typeCodes REL, SC, OPT, SU,
+        # DES, etc.) are the MiLB moves we DO want surfaced.
+        skip_types = {"SFA"}
         for tx in tx_resp.get("transactions", []):
             tc = tx.get("typeCode", "")
-            desc = tx.get("description", "")
-            if tc in skip_types and "minor league" in desc.lower():
+            if tc in skip_types:
                 continue
             transactions.append(tx)
     except Exception as e:
@@ -475,6 +499,181 @@ DOME_VENUES = {12: "Dome", 32: "Retractable Roof", 680: "Retractable Roof",
 
 _SAVANT_CACHE_DIR = None
 _SAVANT_MEM = {}  # process-level memo so 30-team deploys fetch once
+
+# MiLB league IDs per sport_id — probed 2026-04-14 from /teams?sportIds=11,12,13,14
+# These drive the /standings fetch in fetch_milb_standings().
+_MILB_LEAGUE_IDS = {
+    11: [112, 117],           # AAA: International League, Pacific Coast League
+    12: [109, 111, 113],      # AA: Eastern, Southern, Texas
+    13: [116, 118, 126],      # A+: Midwest, South Atlantic, Northwest
+    14: [110, 122, 123],      # A: Carolina, Florida State, California
+}
+
+# Process-level memo keyed by (season, date) so 30 team builds share one fetch.
+_MILB_STANDINGS_MEM = {}
+
+# Prospects refresh cache — {(team_id, date): [prospect dicts]}
+_PROSPECTS_MEM = {}
+
+
+def refresh_prospects(static_prospects, team_id, today, aff_id_to_level):
+    """Hydrate a team's static prospect list with current team + position
+    from the MLB Stats API. This closes the "hand-edited prospects.json"
+    gap: ranks stay curated (MLB Pipeline doesn't publish them via the
+    public API), but level changes from promotions/demotions surface
+    automatically.
+
+    Inputs:
+        static_prospects: list of dicts from teams/{slug}/prospects.json
+            (each has id, name, position, rank, level)
+        team_id: parent MLB team ID (used for cache key)
+        today: date — cache key + daily freshness
+        aff_id_to_level: {affiliate_team_id: level_str} built from
+            AFFILIATES for the parent team
+
+    Returns: same-shape list with position + level refreshed where
+    possible. Falls back to static values on any failure. Cached per
+    (team_id, date) so a 30-team deploy only hits the batch endpoint
+    30 times (once per team, not once per prospect).
+    """
+    if not static_prospects:
+        return []
+
+    global _PROSPECTS_MEM
+    mem_key = (team_id, today.isoformat())
+    if mem_key in _PROSPECTS_MEM:
+        return _PROSPECTS_MEM[mem_key]
+
+    # Fixture-mode: pass through static data unchanged for deterministic
+    # snapshot rendering.
+    if "--fixture" in sys.argv:
+        _PROSPECTS_MEM[mem_key] = static_prospects
+        return static_prospects
+
+    # On-disk daily cache (parallel to data/cache/savant/)
+    cache_dir = DATA_DIR / "cache" / "prospects"
+    try:
+        cache_dir.mkdir(parents=True, exist_ok=True)
+    except Exception:
+        cache_dir = None
+    cache_file = cache_dir / f"{team_id}-{today.isoformat()}.json" if cache_dir else None
+    if cache_file and cache_file.exists():
+        try:
+            cached = json.loads(cache_file.read_text(encoding="utf-8"))
+            _PROSPECTS_MEM[mem_key] = cached
+            return cached
+        except Exception:
+            pass
+
+    ids = [p.get("id") for p in static_prospects if p.get("id")]
+    if not ids:
+        _PROSPECTS_MEM[mem_key] = static_prospects
+        return static_prospects
+
+    url = (
+        f"https://statsapi.mlb.com/api/v1/people"
+        f"?personIds={','.join(str(i) for i in ids)}"
+        f"&hydrate=currentTeam"
+    )
+    refreshed_by_id = {}
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "MorningLineup/1.0"})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            data = json.loads(r.read())
+        for p in data.get("people", []) or []:
+            pid = p.get("id")
+            if not pid:
+                continue
+            ct = p.get("currentTeam") or {}
+            pos = (p.get("primaryPosition") or {}).get("abbreviation")
+            refreshed_by_id[pid] = {
+                "name": p.get("fullName"),
+                "position": pos,
+                "team_id": ct.get("id"),
+                "team_name": ct.get("name"),
+            }
+    except Exception as e:
+        print(f"  warning: prospects refresh fetch failed: {e}", flush=True)
+        _PROSPECTS_MEM[mem_key] = static_prospects
+        return static_prospects
+
+    # Merge refreshed values onto static rows; static wins on missing API
+    merged = []
+    for sp in static_prospects:
+        pid = sp.get("id")
+        row = dict(sp)
+        fresh = refreshed_by_id.get(pid)
+        if fresh:
+            if fresh.get("name"):
+                row["name"] = fresh["name"]
+            if fresh.get("position"):
+                row["position"] = fresh["position"]
+            # Level: if the prospect is now on one of our parent team's
+            # affiliates, derive the level from the affiliate map.
+            # Otherwise leave static level (they may have been traded,
+            # called up to MLB, or released — we don't silently change).
+            new_team_id = fresh.get("team_id")
+            if new_team_id in aff_id_to_level:
+                row["level"] = aff_id_to_level[new_team_id]
+            elif new_team_id == team_id:
+                # Promoted to the parent MLB club — flag it
+                row["level"] = "MLB"
+        merged.append(row)
+
+    if cache_file:
+        try:
+            cache_file.write_text(json.dumps(merged, ensure_ascii=False), encoding="utf-8")
+        except Exception:
+            pass
+
+    _PROSPECTS_MEM[mem_key] = merged
+    return merged
+
+
+def fetch_milb_standings(season, today):
+    """Fetch current-season MiLB standings once per process and return a
+    flat {team_id: {wins, losses, rank}} map covering every affiliate.
+
+    Cached per (season, date) so a 30-team deploy only hits the API once.
+    Degrades to empty map on any failure — callers must tolerate missing
+    entries.
+    """
+    global _MILB_STANDINGS_MEM
+    key = (str(season), today.isoformat())
+    if key in _MILB_STANDINGS_MEM:
+        return _MILB_STANDINGS_MEM[key]
+
+    # Fixture-mode short-circuit
+    if "--fixture" in sys.argv:
+        _MILB_STANDINGS_MEM[key] = {}
+        return {}
+
+    all_league_ids = sorted({lid for lids in _MILB_LEAGUE_IDS.values() for lid in lids})
+    url = (
+        f"https://statsapi.mlb.com/api/v1/standings"
+        f"?leagueId={','.join(str(lid) for lid in all_league_ids)}"
+        f"&season={season}&standingsTypes=regularSeason"
+    )
+    out = {}
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "MorningLineup/1.0"})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            data = json.loads(r.read())
+        for rec in data.get("records", []) or []:
+            for t in rec.get("teamRecords", []) or []:
+                tid = t.get("team", {}).get("id")
+                if not tid:
+                    continue
+                out[tid] = {
+                    "wins": t.get("wins", 0),
+                    "losses": t.get("losses", 0),
+                    "rank": t.get("divisionRank"),
+                }
+    except Exception as e:
+        print(f"  warning: MiLB standings fetch failed: {e}", flush=True)
+
+    _MILB_STANDINGS_MEM[key] = out
+    return out
 
 def _savant_cache_path(season, today):
     global _SAVANT_CACHE_DIR
@@ -801,7 +1000,7 @@ def fetch_savant_leaderboards(season, today):
         ),
         "pitcher": (
             f"{cbase}?year={season}&type=pitcher&min=0"
-            f"&selections=xera,xwoba,whiff_percent,brl_percent&csv=true"
+            f"&selections=xera,xwoba,whiff_percent&csv=true"
         ),
         # Prior-year leaderboard fallback — same column set so the merge
         # can overwrite per-pid cleanly.
@@ -811,7 +1010,7 @@ def fetch_savant_leaderboards(season, today):
         ),
         "pitcher_prev": (
             f"{cbase}?year={prev}&type=pitcher&min=0"
-            f"&selections=xera,xwoba,whiff_percent,brl_percent&csv=true"
+            f"&selections=xera,xwoba,whiff_percent&csv=true"
         ),
         "arsenal_stats": f"{lbase}/pitch-arsenal-stats?year={season}&min=10&csv=true",
         "arsenal_speed": f"{lbase}/pitch-arsenals?year={season}&min=0&type=avg_speed&csv=true",

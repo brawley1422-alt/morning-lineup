@@ -200,15 +200,24 @@ def _render_arsenal_strip(arsenal):
     for p in top:
         usage = p.get("usage")
         velo = p.get("velo")
+        xwoba_allowed = p.get("xwoba_allowed")
         code = escape(p.get("pitch", ""))
         full = escape(p.get("name") or p.get("pitch", ""))
         velo_s = f"{velo:.1f}" if isinstance(velo, (int, float)) else "&mdash;"
         usage_s = f"{usage:.0f}%" if isinstance(usage, (int, float)) else "&mdash;"
+        xwoba_s = (
+            f"{xwoba_allowed:.3f}".lstrip("0")
+            if isinstance(xwoba_allowed, (int, float)) else None
+        )
+        xwoba_html = (
+            f'<div class="mr-pc-xwoba">{xwoba_s}</div>' if xwoba_s else ""
+        )
         cards.append(
             f'<div class="mr-pc" title="{full}">'
             f'<div class="mr-pc-code">{code}</div>'
             f'<div class="mr-pc-velo">{velo_s}</div>'
             f'<div class="mr-pc-usage">{usage_s}</div>'
+            f'{xwoba_html}'
             f'</div>'
         )
     return f'<div class="mr-arsenal">{"".join(cards)}</div>'

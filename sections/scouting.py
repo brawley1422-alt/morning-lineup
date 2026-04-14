@@ -56,12 +56,31 @@ def _render_arsenal(arsenal):
                 whiff_cls = "t-rough"
         else:
             whiff_cls = ""
+        xwoba_allowed = p.get("xwoba_allowed")
         velo_s = f"{velo:.1f}" if isinstance(velo, (int, float)) else "&mdash;"
         spin_s = f"{int(round(spin))}" if isinstance(spin, (int, float)) else "&mdash;"
         usage_s = f"{usage:.0f}%" if isinstance(usage, (int, float)) else "&mdash;"
         whiff_s = f"{whiff:.0f}%" if isinstance(whiff, (int, float)) else "&mdash;"
+        xwoba_s = (
+            f"{xwoba_allowed:.3f}".lstrip("0")
+            if isinstance(xwoba_allowed, (int, float)) else None
+        )
         full_name = escape(p.get("name") or p.get("pitch", ""))
         pitch_code = escape(p.get("pitch", ""))
+        # xwOBA-allowed: tinted green when elite (< .280), red when rough (> .340)
+        if isinstance(xwoba_allowed, (int, float)):
+            if xwoba_allowed < 0.280:
+                xwoba_cls = "t-elite"
+            elif xwoba_allowed > 0.340:
+                xwoba_cls = "t-rough"
+            else:
+                xwoba_cls = "t-solid"
+        else:
+            xwoba_cls = ""
+        xwoba_html = (
+            f'<span class="pc-stat pc-xwoba {xwoba_cls}"><b>{xwoba_s}</b><em>xwOBA</em></span>'
+            if xwoba_s else ""
+        )
         cards.append(f'''<div class="pitch-card" title="{full_name}">
           <div class="pc-code">{pitch_code}</div>
           <div class="pc-velo">{velo_s}<em>mph</em></div>
@@ -69,6 +88,7 @@ def _render_arsenal(arsenal):
             <span class="pc-stat"><b>{usage_s}</b><em>usage</em></span>
             <span class="pc-stat pc-whiff {whiff_cls}"><b>{whiff_s}</b><em>whf</em></span>
             <span class="pc-stat"><b>{spin_s}</b><em>rpm</em></span>
+            {xwoba_html}
           </div>
         </div>''')
     return f'<h4>Arsenal</h4><div class="sp-arsenal">{"".join(cards)}</div>'
