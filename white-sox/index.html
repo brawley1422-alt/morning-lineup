@@ -160,10 +160,16 @@ ul.plays .txt strong{color:var(--paper);font-weight:500}
 .tempbox.cold .n{color:#6a9ad4}
 .tempbox h4{margin-top:0}
 .tempbox ul{list-style:none;padding:0;margin:0}
-.tempbox li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dotted var(--rule);font-size:13px;}
+.tempbox li{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;column-gap:12px;row-gap:2px;padding:8px 0;border-bottom:1px dotted var(--rule)}
 .tempbox li:last-child{border-bottom:none}
-.tempbox .n{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
-.tempbox .s{font-family:var(--mono);font-size:11px;color:var(--gold)}
+.tempbox .n{grid-column:1;grid-row:1;font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper);font-size:13px;align-self:baseline}
+.tempbox .primary{grid-column:2;grid-row:1;font-family:var(--mono);font-size:17px;font-weight:600;letter-spacing:-.01em;align-self:baseline;line-height:1;text-align:right}
+.tempbox .primary em{display:inline-block;margin-left:5px;font-style:normal;font-size:9px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);vertical-align:2px}
+.tempbox .primary.t-elite{color:#8bc48f}
+.tempbox .primary.t-solid{color:var(--gold-hi)}
+.tempbox .primary.t-rough{color:#c87a74}
+.tempbox .primary.t-legacy{color:var(--gold)}
+.tempbox .secondary{grid-column:1/-1;grid-row:2;font-family:var(--mono);font-size:10px;color:var(--paper-mute);letter-spacing:.03em;text-align:right}
 .next-games{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px;margin:6px 0}
 .nx-card{background:var(--ink-2);border:1px solid var(--rule);padding:10px 14px;border-radius:3px;border-left:3px solid var(--team-primary-hi);box-shadow:0 2px 8px -2px rgba(0,0,0,.35);transition:border-color .15s,box-shadow .15s,transform .15s;}
 .nx-card:hover{border-color:var(--rule-hi);box-shadow:0 4px 12px -4px rgba(0,0,0,.4);transform:translateY(-1px)}
@@ -323,6 +329,56 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .sp-season{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
 .sp-log{min-width:auto !important;margin-top:4px}
 .sp-log .opp{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
+.sp-arsenal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:6px}
+@media (max-width:600px){.sp-arsenal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pitch-card{background:linear-gradient(180deg,var(--ink-3) 0%,var(--ink-2) 100%);border:1px solid var(--rule);border-top:2px solid var(--gold-dim);border-radius:2px;padding:9px 10px 10px;position:relative;overflow:hidden;min-width:0}
+.pitch-card::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 100% 0%,rgba(201,162,74,.07),transparent 60%);pointer-events:none}
+.pc-code{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--gold);line-height:1;margin-bottom:2px;letter-spacing:.02em;position:relative}
+.pc-velo{font-family:var(--mono);font-size:28px;font-weight:600;letter-spacing:-.02em;color:var(--paper);line-height:1;margin:4px 0 8px;position:relative}
+.pc-velo em{display:inline-block;margin-left:4px;font-style:normal;font-size:9px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);vertical-align:5px}
+.pc-stats{display:grid;grid-template-columns:1fr;gap:3px;position:relative}
+.pc-stat{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:10px;color:var(--paper-dim);letter-spacing:.02em;border-top:1px dotted var(--rule);padding-top:2px}
+.pc-stat:first-child{border-top:none}
+.pc-stat b{font-weight:500;color:var(--paper)}
+.pc-stat em{font-style:normal;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-mute)}
+.pc-whiff.t-elite b{color:#8bc48f}
+.pc-whiff.t-solid b{color:var(--gold-hi)}
+.pc-whiff.t-rough b{color:#c87a74}
+/* Matchup Read — tonight's lineup × opposing arsenal */
+.matchup-read{margin-top:6px}
+.matchup-read .mr-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px}
+.matchup-read .mr-sp{font-family:var(--serif);font-style:italic;font-size:22px;font-weight:700;color:var(--gold)}
+.matchup-read .mr-sub{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute)}
+.mr-arsenal{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin-bottom:10px}
+@media (max-width:600px){.mr-arsenal{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.mr-pc{background:linear-gradient(180deg,var(--ink-3) 0%,var(--ink-2) 100%);border:1px solid var(--rule);border-top:2px solid var(--gold-dim);border-radius:2px;padding:6px 7px 7px;text-align:center;min-width:0}
+.mr-pc-code{font-family:var(--serif);font-style:italic;font-weight:900;font-size:16px;color:var(--gold);line-height:1}
+.mr-pc-velo{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--paper);line-height:1;margin:3px 0 2px}
+.mr-pc-usage{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--paper-mute);text-transform:uppercase}
+.mr-lineup{width:100%;border-collapse:collapse;margin-bottom:8px}
+.mr-lineup td{padding:7px 8px;border-bottom:1px dotted var(--rule);font-family:var(--mono);font-size:12px;color:var(--paper-dim);vertical-align:baseline}
+.mr-lineup .mr-row:last-child td{border-bottom:none}
+.mr-lineup .mr-slot{width:18px;color:var(--paper-mute);font-size:10px;text-align:right}
+.mr-lineup .mr-name{color:var(--paper);font-weight:500;font-size:13px;white-space:nowrap}
+.mr-lineup .mr-pos{color:var(--paper-mute);font-size:9px;letter-spacing:.08em;text-transform:uppercase;width:28px}
+.mr-lineup .mr-read{text-align:left;width:auto}
+.mr-lineup .mr-gcell{text-align:right;width:34px}
+.mr-tag{font-size:11px;letter-spacing:.02em}
+.mr-tag b{color:var(--gold);font-weight:700}
+.mr-vuln{color:var(--paper-dim)}
+.mr-safe{color:var(--paper-dim)}
+.mr-none,.mr-nodata{color:var(--paper-mute)}
+.mr-dots{margin-left:5px;font-size:9px;letter-spacing:.04em}
+.mr-dots.d-vuln{color:#c87a74}
+.mr-dots.d-safe{color:#8bc48f}
+.mr-grade{font-family:var(--serif);font-style:italic;font-size:20px;font-weight:900;color:var(--paper)}
+.mr-grade.t-elite{color:#8bc48f}
+.mr-grade.t-solid{color:var(--gold-hi)}
+.mr-grade.t-rough{color:#c87a74}
+.mr-foot{display:flex;justify-content:space-between;align-items:baseline;padding-top:8px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--paper-mute)}
+.mr-team b{font-family:var(--serif);font-style:italic;font-weight:900;font-size:16px;margin-left:6px;letter-spacing:0}
+.mr-exp b{color:var(--gold);font-weight:700;letter-spacing:.02em}
+.mr-muted{color:var(--paper-mute);text-transform:none;letter-spacing:.02em;font-style:italic}
 .pulse-record{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;padding:10px 0;border-bottom:1px solid var(--rule);margin-bottom:10px}
 .pulse-wl{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--paper)}
 .pulse-pct{font-family:var(--mono);font-size:16px;color:var(--gold)}
@@ -587,7 +643,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><details class="column" data-role="straight_beat"><summary class="column-byline"><span class="column-name">Marty Slutskoff</span><span class="column-role">The Straight Beat</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The White Sox lost again. Not because they’re bad, but because they’re inconsistent. You can’t win a game when your bullpen looks like it’s auditioning for a horror movie and your offense keeps hitting the same wall over and over. Yesterday’s 6-5 defeat to the Royals was a textbook example of why the South Side numbers are still stuck in the 3.5-game hole. It’s not about talent—it’s about execution, and that’s a problem the front office hasn’t figured out yet.</p><p>The bullpen, once a strength, now feels like a liability. You know the script: a lead in the fifth, a shaky relief appearance, and suddenly you’re down a run. Fedde pitched</p></div></details><details class="column" data-role="optimist"><summary class="column-byline"><span class="column-name">Rosie Karamucka</span><span class="column-role">The Optimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The White Sox won yesterday, 6-5, against the Royals. That’s a game. A win. A moment. But here’s the thing: I don’t care about the record. Not really. Not when you’ve got a team that’s been here before, that’s been through the fire, and that’s got the grit of a thousand Butchers’ Row winters. You think I’m worried about a 100-loss season? Honey, I survived the ’70s. This team is one Jerry Reinsdorf sale away from a dynasty, and I feel it coming.</p><p>Let’s talk about that rally towel. Still in my purse, just like it</p></div></details><details class="column" data-role="pessimist"><summary class="column-byline"><span class="column-name">Len Cwiklinski</span><span class="column-role">The Pessimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The White Sox lost again. Not in a way that feels inevitable, not in a way that feels like the natural order of things, but in a way that makes you want to throw your hot dog at the TV and scream until the kernels pop. Six losses in ten games, a 3.5-game gap in the AL Central, and somehow, it all feels like a setup. Jerry Reinsdorf’s fingerprints are on every bad decision, every misstep, every time the team’s potential crumbles into mediocrity. You can’t help but wonder if the White Sox are cursed to finish just short of relevance, like a broken clock that only ticks backward.</p><p>The Royals beat them yesterday, 6-5, in a game that felt like a referendum on the White Sox’s ability to compete. Kansas City’s offense didn’t dominate; they didn’t hit 10 home runs or steal 15 bases. They just… played better. That’s the problem with this team. They’re always one step behind, always reacting instead of leading. The front office talks about building through the draft, but</p></div></details></div><script>(function(){
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><details class="column" data-role="straight_beat"><summary class="column-byline"><span class="column-name">Marty Slutskoff</span><span class="column-role">The Straight Beat</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The White Sox lost again. Not in a dramatic, heartbreaking way—no walk-off grand slam, no last-minute rally—but in the kind of fashion that makes you wonder if the team’s DNA has been altered by some cosmic error. Yesterday’s 6-5 defeat to the Royals wasn’t just another loss; it was a reminder of the South Side numbers that have haunted this club for years. Six wins, ten losses, and a 3.5-game gap in the AL Central. It’s the same old script, just with a different opponent.</p><p>The pitching staff, once a source of pride, now feels like a collection of misfits. Corbin Burnett, supposed to be the backbone of the rotation, lasted just four innings yesterday, surrendering three runs. You’d think a guy with a 4.00 ERA would be able to navigate a Royals lineup that’s about as threatening as a Tuesday night trivia squad. But here we are, watching him struggle</p></div></details><details class="column" data-role="optimist"><summary class="column-byline"><span class="column-name">Rosie Karamucka</span><span class="column-role">The Optimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The game yesterday wasn’t just another loss in the standings—it was a reminder that the White Sox still have the grit to claw back. You think I’m worried about a 100-loss season? Honey, I survived the ’70s. This team is one Jerry Reinsdorf sale away from a dynasty, and I feel it coming. Sure, the record says 6-10, but that’s just the scoreboard. The real story is in the details: the way José Abreu swung that inside pitch for the go-ahead home run, the way Luis Robert chased that fly ball like it was a 1985 playoff game, and the way the bullpen held serve when it counted. You can’t measure heart in wins and losses, but you can see it in the way those guys keep showing up.</p><p>I’ve got that rally towel in my purse, you know. Not for the 2005 World Series alone—it’s for every time the team’s been down and dug deep. That game in Kansas City? The way they rallied from a three-run deficit? It’s the same fire that burned in 2005. Back then, we were a bunch of underdogs with a lot of heart, and we proved it. Now? The same spirit’s still here, even if the results haven’t caught up yet. The front office is tinkering, the trades are happening, and the fans are still in the stands. You</p></div></details><details class="column" data-role="pessimist"><summary class="column-byline"><span class="column-name">Len Cwiklinski</span><span class="column-role">The Pessimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The White Sox beat the Royals yesterday, 6-5, but you won’t hear me celebrating. Not because the win is meaningless, but because it’s a mirage. A hundred and twenty losses is coming. You can feel it in the cheap hot dogs and the cheaper decisions. Reinsdorf should’ve sold in 2006 and retired with dignity.</p><p>The team’s record—6-10, 3.5 games behind—feels like a punchline. You’d think a win would lift the mood, but no. The White Sox are a team in freefall, and the front office is the pilot who’s lost all sense</p></div></details></div><script>(function(){
   var grid = document.currentScript && document.currentScript.previousElementSibling;
   if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
   var kids = Array.prototype.slice.call(grid.children);
@@ -603,6 +659,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <ol>
       <li><a href="#team">The White Sox</a></li>
       <li><a href="#scout">Scouting Report</a></li>
+      <li><a href="#matchup">Matchup Read</a></li>
       <li><a href="#pulse">The Stretch</a></li>
       <li><a href="#pressbox">The Pressbox</a></li>
       <li><a href="#farm">Down on the Farm</a></li>
@@ -688,9 +745,9 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-venue">Rate Field </div>
         <div class="nx-meta"><span class="nx-opp-rec">TB: 8-7, 3rd AL East (W3)</span></div>
         <div class="nx-pitcher"><span class="nx-side">White Sox</span> <player-card pid="702273">Noah Schultz</player-card></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-139"/></svg>TB</span> Shane McClanahan<div class="nx-pline">4.15 ERA &middot; 0-1 &middot; 8.2 IP &middot; 9 K &middot; 1.15 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="643217">Benintendi</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="805367">Meidroth</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="695657">Montgomery</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="656537">Hill</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="700337">Quero</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="682668">Acuña</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="678246">Vargas</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="808959">Murakami</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="624512">McGuire</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Chicago Sports Network &middot; Rays.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WDAE 95.7 FM &middot; ESPN Chicago WMVP 1000 AM</div>
-        <div class="nx-wx">56°F &middot; Light Rain &middot; Calm</div>
+        <div class="nx-wx">78°F &middot; Mostly Clear &middot; 15 mph SSW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Wed, Apr 15 &middot; vs <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-139"/></svg><span class="ab">TB</span></div>
@@ -717,12 +774,12 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="687957">Harris</player-card></span><span class="s">.273 / 0 HR / .793 OPS</span></li><li><span class="n"><player-card pid="695657">Montgomery</player-card></span><span class="s">.167 / 1 HR / .703 OPS</span></li><li><span class="n"><player-card pid="656537">Hill</player-card></span><span class="s">.231 / 0 HR / .606 OPS</span></li><li><span class="n"><player-card pid="643217">Benintendi</player-card></span><span class="s">.158 / 0 HR / .554 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="671976">Peters</player-card></span><span class="s">.063 / 0 HR / .181 OPS</span></li><li><span class="n"><player-card pid="624512">McGuire</player-card></span><span class="s">.125 / 0 HR / .301 OPS</span></li><li><span class="n"><player-card pid="682668">Acuña</player-card></span><span class="s">.167 / 0 HR / .327 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="687957">Harris</player-card></span><span class="primary t-solid">.349<em>xwOBA</em></span><span class="secondary">.273 &middot; 0 HR &middot; .793 OPS</span></li><li><span class="n"><player-card pid="656537">Hill</player-card></span><span class="primary t-solid">.338<em>xwOBA</em></span><span class="secondary">.231 &middot; 0 HR &middot; .606 OPS</span></li><li><span class="n"><player-card pid="808959">Murakami</player-card></span><span class="primary t-solid">.338<em>xwOBA</em></span><span class="secondary">.050 &middot; 0 HR &middot; .346 OPS</span></li><li><span class="n"><player-card pid="678246">Vargas</player-card></span><span class="primary t-rough">.310<em>xwOBA</em></span><span class="secondary">.080 &middot; 0 HR &middot; .393 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="624512">McGuire</player-card></span><span class="primary t-rough">.150<em>xwOBA</em></span><span class="secondary">.125 &middot; 0 HR &middot; .301 OPS</span></li><li><span class="n"><player-card pid="671976">Peters</player-card></span><span class="primary t-rough">.210<em>xwOBA</em></span><span class="secondary">.063 &middot; 0 HR &middot; .181 OPS</span></li><li><span class="n"><player-card pid="695020">Murray</player-card></span><span class="primary t-rough">.218<em>xwOBA</em></span><span class="secondary">.154 &middot; 1 HR &middot; .539 OPS</span></li></ul></div>
     </div>
     <div class="two">
-      <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="691799">Taylor</player-card></span><span class="s">8.1 IP &middot; 1.08 ERA &middot; 10 K</span></li><li><span class="n"><player-card pid="608371">Sims</player-card></span><span class="s">5.1 IP &middot; 1.69 ERA &middot; 5 K</span></li><li><span class="n"><player-card pid="641743">Kay</player-card></span><span class="s">14.2 IP &middot; 2.45 ERA &middot; 11 K</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="673929">Leasure</player-card></span><span class="s">8.0 IP &middot; 4.50 ERA &middot; 9 K</span></li><li><span class="n"><player-card pid="656794">Newcomb</player-card></span><span class="s">8.1 IP &middot; 4.32 ERA &middot; 9 K</span></li></ul></div>
+      <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="691799">Taylor</player-card></span><span class="primary t-elite">2.55<em>xERA</em></span><span class="secondary">8.1 IP &middot; 1.08 ERA &middot; 10 K &middot; 24.6% Whf</span></li><li><span class="n"><player-card pid="607200">Fedde</player-card></span><span class="primary t-solid">3.08<em>xERA</em></span><span class="secondary">16.0 IP &middot; 3.38 ERA &middot; 12 K &middot; 20.0% Whf</span></li><li><span class="n"><player-card pid="608371">Sims</player-card></span><span class="primary t-solid">3.15<em>xERA</em></span><span class="secondary">5.1 IP &middot; 1.69 ERA &middot; 5 K &middot; 21.2% Whf</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="641743">Kay</player-card></span><span class="primary t-rough">7.26<em>xERA</em></span><span class="secondary">14.2 IP &middot; 2.45 ERA &middot; 11 K &middot; 21.9% Whf</span></li><li><span class="n"><player-card pid="622554">Domínguez</player-card></span><span class="primary t-rough">6.21<em>xERA</em></span><span class="secondary">5.2 IP &middot; 3.18 ERA &middot; 7 K &middot; 27.9% Whf</span></li></ul></div>
     </div>
     
   </section>
@@ -741,6 +798,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="sp-name"><player-card pid="702273">Noah Schultz</player-card></div>
         <div class="sp-season"></div>
         
+        
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
@@ -750,13 +808,53 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <h4>Last 2 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
             <tbody><tr><td>03-31</td><td class="opp">vs Milwaukee Brewers</td><td class="num">4.2</td><td class="num">2</td><td class="num">4</td><td class="num">2</td><td class="num">3</td></tr><tr><td>04-06</td><td class="opp">vs Chicago Cubs</td><td class="num">4.0</td><td class="num">2</td><td class="num">5</td><td class="num">1</td><td class="num">4</td></tr></tbody></table>
+        <h4>Arsenal</h4><div class="sp-arsenal"><div class="pitch-card" title="4-Seam Fastball">
+          <div class="pc-code">FF</div>
+          <div class="pc-velo">94.8<em>mph</em></div>
+          <div class="pc-stats">
+            <span class="pc-stat"><b>37%</b><em>usage</em></span>
+            <span class="pc-stat pc-whiff t-rough"><b>10%</b><em>whf</em></span>
+            <span class="pc-stat"><b>2221</b><em>rpm</em></span>
+          </div>
+        </div><div class="pitch-card" title="Slider">
+          <div class="pc-code">SL</div>
+          <div class="pc-velo">87.5<em>mph</em></div>
+          <div class="pc-stats">
+            <span class="pc-stat"><b>28%</b><em>usage</em></span>
+            <span class="pc-stat pc-whiff t-solid"><b>25%</b><em>whf</em></span>
+            <span class="pc-stat"><b>2379</b><em>rpm</em></span>
+          </div>
+        </div></div>
         </div>
+    </div>
+  </section>
+
+  <section id="matchup" open>
+    <summary>
+      <span class="num">03</span>
+      <span class="h">Matchup Read</span>
+      <span class="tag">Lineup &times; Arsenal</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    <div class="matchup-read">
+      <div class="mr-head">
+        <span class="mr-sp">Shane McClanahan</span>
+        <span class="mr-sub">tonight's arsenal × White Sox lineup</span>
+      </div>
+      <div class="mr-arsenal"><div class="mr-pc" title="4-Seam Fastball"><div class="mr-pc-code">FF</div><div class="mr-pc-velo">94.8</div><div class="mr-pc-usage">37%</div></div><div class="mr-pc" title="Slider"><div class="mr-pc-code">SL</div><div class="mr-pc-velo">87.5</div><div class="mr-pc-usage">28%</div></div></div>
+      <table class="mr-lineup">
+        <tbody><tr class="mr-row"><td class="mr-slot">1</td><td class="mr-name">Andrew Benintendi</td><td class="mr-pos">LF</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-rough">D</span></td></tr><tr class="mr-row"><td class="mr-slot">2</td><td class="mr-name">Chase Meidroth</td><td class="mr-pos">SS</td><td class="mr-read"><span class="mr-tag mr-vuln">vuln: <b>SL</b> <span class="mr-dots d-vuln">●●○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-rough">D</span></td></tr><tr class="mr-row"><td class="mr-slot">3</td><td class="mr-name">Colson Montgomery</td><td class="mr-pos">SS</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-rough">D</span></td></tr><tr class="mr-row"><td class="mr-slot">4</td><td class="mr-name">Derek Hill</td><td class="mr-pos">CF</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-rough">D</span></td></tr><tr class="mr-row"><td class="mr-slot">5</td><td class="mr-name">Edgar Quero</td><td class="mr-pos">C</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-rough">D</span></td></tr><tr class="mr-row"><td class="mr-slot">6</td><td class="mr-name">Luisangel Acuña</td><td class="mr-pos">2B</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-rough">D</span></td></tr><tr class="mr-row"><td class="mr-slot">7</td><td class="mr-name">Miguel Vargas</td><td class="mr-pos">3B</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-rough">D</span></td></tr><tr class="mr-row"><td class="mr-slot">8</td><td class="mr-name">Munetaka Murakami</td><td class="mr-pos">3B</td><td class="mr-read"><span class="mr-nodata">—</span></td><td class="mr-gcell"><span class="mr-grade">—</span></td></tr><tr class="mr-row"><td class="mr-slot">9</td><td class="mr-name">Reese McGuire</td><td class="mr-pos">C</td><td class="mr-read"><span class="mr-nodata">—</span></td><td class="mr-gcell"><span class="mr-grade">—</span></td></tr></tbody>
+      </table>
+      <div class="mr-foot">
+        <span class="mr-team">TEAM <b class="t-rough">D</b></span>
+        <span class="mr-exp">exploit: <b>SL</b> (1)</span>
+      </div>
     </div>
   </section>
 
   <section id="pulse" open>
     <summary>
-      <span class="num">03</span>
+      <span class="num">04</span>
       <span class="h">The Stretch</span>
       <span class="tag">Season Pulse</span>
       <span class="chev">&#9656;</span>
@@ -779,7 +877,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 
   <section id="pressbox" open>
     <summary>
-      <span class="num">04</span>
+      <span class="num">05</span>
       <span class="h">The Pressbox</span>
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
@@ -789,7 +887,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 
   <section id="farm" open>
     <summary>
-      <span class="num">05</span>
+      <span class="num">06</span>
       <span class="h">Down on the Farm</span>
       <span class="tag">No games</span>
       <span class="chev">&#9656;</span>
@@ -811,7 +909,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 
   <section id="today" open>
     <summary>
-      <span class="num">06</span>
+      <span class="num">07</span>
       <span class="h">Today&rsquo;s Slate</span>
       <span class="tag">Tue Apr 14</span>
       <span class="chev">&#9656;</span>
@@ -878,7 +976,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="time">6:15 CT</div>
         <div class="probs">Meyer vs López</div>
-        <div class="bc">BravesVision · Marlins.TV · Gray TV</div>
+        <div class="bc">BravesVision · Marlins.TV, presented by Werner, Hoffman, Greig &amp; Garcia · Gray TV</div>
       </div><div class="g" data-gpk="823723">
         <div class="matchup">
           <span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-111"/></svg><span class="ab">BOS</span></span>
@@ -956,7 +1054,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 
   <section id="div" open>
     <summary>
-      <span class="num">07</span>
+      <span class="num">08</span>
       <span class="h">AL Central</span>
       <span class="tag">Rivals &middot; Yesterday</span>
       <span class="chev">&#9656;</span>
@@ -979,7 +1077,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 
   <section id="league" open>
     <summary>
-      <span class="num">08</span>
+      <span class="num">09</span>
       <span class="h">Around the League</span>
       <span class="tag">Apr 13 &middot; 6 Notes</span>
       <span class="chev">&#9656;</span>
@@ -1024,7 +1122,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 
   <section id="history" open>
     <summary>
-      <span class="num">09</span>
+      <span class="num">10</span>
       <span class="h">This Day in White Sox History</span>
       <span class="tag">Apr 14</span>
       <span class="chev">&#9656;</span>
@@ -1038,7 +1136,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Guaranteed Rate Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/14/26 07:59 CT</span>
+  <span>Filed 04/14/26 14:03 CT</span>
 </footer>
 
 <script>
