@@ -853,24 +853,46 @@
     }
 
     const s = p.season || {};
+    // Savant advanced stats (populated by build.py fetch_savant_leaderboards)
+    const adv = p.advanced || {};
+    const advH = adv.hitter || {};
+    const advP = adv.pitcher || {};
+    const hasSavant = !!(Object.keys(advH).length || Object.keys(advP).length);
+
+    // Map raw Savant values to a 0-100 bar fill. Anchors roughly: 20th to
+    // 90th percentile across qualified players. Returns 0 for unknown.
+    function savantPct(kind, raw) {
+      if (raw == null || raw === "") return 0;
+      const num = parseFloat(String(raw).replace(/[^\d.\-]/g, ""));
+      if (!isFinite(num)) return 0;
+      const clamp = (n) => Math.max(0, Math.min(100, n));
+      switch (kind) {
+        case "xwoba":  return clamp(((num - 0.270) / 0.130) * 100);
+        case "xera":   return clamp(((6.0 - num) / 4.0) * 100);
+        case "whiff":  return clamp(((num - 15) / 20) * 100);
+        case "brl":    return clamp((num / 20) * 100);
+        default:       return 0;
+      }
+    }
+
     let metrics;
     if (isPitcher) {
       metrics = [
-        { label: "ERA+",     val: pick(s, ["eraPlus"]) || "—",  pct: 0 },
-        { label: "FIP",      val: "—",                           pct: 0 },
-        { label: "K/9",      val: fmtDec(pick(s, ["strikeoutsPer9Inn"]), 1), pct: 0 },
-        { label: "BB/9",     val: fmtDec(pick(s, ["walksPer9Inn"]), 1),      pct: 0 },
-        { label: "WHIP",     val: fmtDec(pick(s, ["whip"]), 2),              pct: 0 },
-        { label: "HR/9",     val: fmtDec(pick(s, ["homeRunsPer9"]), 1),      pct: 0 },
+        { label: "ERA+", val: pick(s, ["eraPlus"]) || "—", pct: 0 },
+        { label: "xERA", val: advP.xera || "—",            pct: savantPct("xera", advP.xera) },
+        { label: "K/9",  val: fmtDec(pick(s, ["strikeoutsPer9Inn"]), 1), pct: 0 },
+        { label: "BB/9", val: fmtDec(pick(s, ["walksPer9Inn"]), 1),      pct: 0 },
+        { label: "WHIP", val: fmtDec(pick(s, ["whip"]), 2),              pct: 0 },
+        { label: "Whf%", val: advP.whiff_percent ? `${advP.whiff_percent}%` : "—", pct: savantPct("whiff", advP.whiff_percent) },
       ];
     } else {
       metrics = [
-        { label: "OPS+",     val: pick(s, ["opsPlus"]) || "—",   pct: 0 },
-        { label: "wOBA",     val: "—",                            pct: 0 },
-        { label: "Barrel%",  val: "—",                            pct: 0 },
-        { label: "HardHit%", val: "—",                            pct: 0 },
-        { label: "Sprint",   val: "—",                            pct: 0 },
-        { label: "OAA",      val: "—",                            pct: 0 },
+        { label: "OPS+",    val: pick(s, ["opsPlus"]) || "—", pct: 0 },
+        { label: "xwOBA",   val: advH.xwoba || "—",           pct: savantPct("xwoba", advH.xwoba) },
+        { label: "Barrel%", val: advH.brl_percent ? `${advH.brl_percent}%` : "—", pct: savantPct("brl", advH.brl_percent) },
+        { label: "HardHit%", val: "—",                         pct: 0 },
+        { label: "Sprint",  val: "—",                          pct: 0 },
+        { label: "Whf%",    val: advH.whiff_percent ? `${advH.whiff_percent}%` : "—", pct: savantPct("whiff", advH.whiff_percent) },
       ];
     }
     const metricHtml = metrics
@@ -979,7 +1001,7 @@
           <div class="pc-advanced">
             <div class="pc-adv-head">
               <h3>Advanced · ${new Date().getFullYear()}</h3>
-              <span>MLB API</span>
+              <span>${hasSavant ? "MLB API · Savant" : "MLB API"}</span>
             </div>
             <div class="pc-adv-grid">${metricHtml}</div>
           </div>
@@ -987,7 +1009,7 @@
           ${touchesHtml}
 
           <div class="pc-footnote">
-            ${isPitcher ? "Starting pitcher. Advanced Statcast metrics (FIP, Stuff+, CSW%) coming in Phase 1.5 via Baseball Savant." : "Today's starting lineup. Advanced Statcast (xwOBA, Barrel%, Sprint Speed) coming in Phase 1.5 via Baseball Savant."}
+            ${isPitcher ? "Starting pitcher. Statcast expected stats via Baseball Savant." : "Today's starting lineup. Statcast expected stats via Baseball Savant."}
             <span class="sig">— The Morning Lineup</span>
           </div>
         </div>
