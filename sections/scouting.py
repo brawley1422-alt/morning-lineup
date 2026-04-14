@@ -31,36 +31,47 @@ def _fmt_time_ct(iso_z):
 
 
 def _render_arsenal(arsenal):
-    """Render a compact pitch-mix table from the top 4 pitches by usage.
-    Returns empty string when arsenal is missing or empty."""
+    """Render the top 4 pitches by usage as individual arsenal cards. Each
+    card makes velocity the hero number, with pitch name in serif and
+    usage/spin/whiff as muted support data. Returns empty string when
+    arsenal is missing or empty."""
     if not arsenal:
         return ""
     top = [p for p in arsenal if p.get("pitch")][:4]
     if not top:
         return ""
-    rows = []
+    cards = []
     for p in top:
         usage = p.get("usage")
         velo = p.get("velo")
         spin = p.get("spin")
         whiff = p.get("whiff")
-        usage_s = f"{usage:.0f}%" if isinstance(usage, (int, float)) else "&mdash;"
+        # Whiff tier for color emphasis
+        if isinstance(whiff, (int, float)):
+            if whiff >= 30:
+                whiff_cls = "t-elite"
+            elif whiff >= 22:
+                whiff_cls = "t-solid"
+            else:
+                whiff_cls = "t-rough"
+        else:
+            whiff_cls = ""
         velo_s = f"{velo:.1f}" if isinstance(velo, (int, float)) else "&mdash;"
         spin_s = f"{int(round(spin))}" if isinstance(spin, (int, float)) else "&mdash;"
+        usage_s = f"{usage:.0f}%" if isinstance(usage, (int, float)) else "&mdash;"
         whiff_s = f"{whiff:.0f}%" if isinstance(whiff, (int, float)) else "&mdash;"
-        name = escape(p.get("name") or p.get("pitch", ""))
-        rows.append(
-            f'<tr><td class="pitch-name">{name}</td>'
-            f'<td class="num">{usage_s}</td>'
-            f'<td class="num">{velo_s}</td>'
-            f'<td class="num">{spin_s}</td>'
-            f'<td class="num">{whiff_s}</td></tr>'
-        )
-    return f"""<h4>Arsenal</h4>
-    <table class="data sp-arsenal">
-      <thead><tr><th>Pitch</th><th style="text-align:right">Usage</th><th style="text-align:right">Velo</th><th style="text-align:right">Spin</th><th style="text-align:right">Whf</th></tr></thead>
-      <tbody>{"".join(rows)}</tbody>
-    </table>"""
+        full_name = escape(p.get("name") or p.get("pitch", ""))
+        pitch_code = escape(p.get("pitch", ""))
+        cards.append(f'''<div class="pitch-card" title="{full_name}">
+          <div class="pc-code">{pitch_code}</div>
+          <div class="pc-velo">{velo_s}<em>mph</em></div>
+          <div class="pc-stats">
+            <span class="pc-stat"><b>{usage_s}</b><em>usage</em></span>
+            <span class="pc-stat pc-whiff {whiff_cls}"><b>{whiff_s}</b><em>whf</em></span>
+            <span class="pc-stat"><b>{spin_s}</b><em>rpm</em></span>
+          </div>
+        </div>''')
+    return f'<h4>Arsenal</h4><div class="sp-arsenal">{"".join(cards)}</div>'
 
 
 def render(briefing):

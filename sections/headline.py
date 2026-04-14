@@ -443,18 +443,23 @@ def _render_hot_cold(hitters_data, pitchers_data, savant=None):
         last = escape(name.split()[-1])
         name_html = f'<player-card pid="{pid}">{last}</player-card>' if pid else last
         sav = s.get("sav", {}) or {}
-        xwoba_disp, _ = _fmt_savant_xwoba(sav.get("xwoba"))
+        xwoba_disp, xwoba_f = _fmt_savant_xwoba(sav.get("xwoba"))
         brl_disp, _ = _fmt_savant_pct(sav.get("brl_percent"))
-        adv_bits = []
         if xwoba_disp:
-            adv_bits.append(f'{xwoba_disp} xwOBA')
-        if brl_disp:
-            adv_bits.append(f'{brl_disp}% Brl')
-        adv_html = f'<span class="adv">{" &middot; ".join(adv_bits)}</span>' if adv_bits else ""
+            # Primary metric is xwOBA (thresholds: elite / solid / rough)
+            tier = "t-elite" if xwoba_f and xwoba_f >= .360 else ("t-solid" if xwoba_f and xwoba_f >= .320 else "t-rough")
+            primary = f'<span class="primary {tier}">{xwoba_disp}<em>xwOBA</em></span>'
+            secondary_bits = [f'{avg} &middot; {hr} HR &middot; {ops} OPS']
+            if brl_disp:
+                secondary_bits.append(f'{brl_disp}% Brl')
+            secondary = f'<span class="secondary">{" &middot; ".join(secondary_bits)}</span>'
+        else:
+            # Savant unavailable — fall back to traditional line as primary
+            primary = f'<span class="primary t-legacy">{ops}<em>OPS</em></span>'
+            secondary = f'<span class="secondary">{avg} &middot; {hr} HR</span>'
         return (
             f'<li><span class="n">{name_html}</span>'
-            f'<span class="s">{avg} / {hr} HR / {ops} OPS</span>'
-            f'{adv_html}</li>'
+            f'{primary}{secondary}</li>'
         )
 
     hot_html = "".join(hitter_li(s) for s in hot)
@@ -508,18 +513,21 @@ def _render_hot_cold(hitters_data, pitchers_data, savant=None):
         last = escape(name.split()[-1])
         name_html = f'<player-card pid="{pid}">{last}</player-card>' if pid else last
         sav = s.get("sav", {}) or {}
-        xera_disp, _ = _fmt_savant_xera(sav.get("xera"))
-        whiff_disp, _ = _fmt_savant_pct(sav.get("whiff_percent"))
-        adv_bits = []
+        xera_disp, xera_f = _fmt_savant_xera(sav.get("xera"))
+        whiff_disp, whiff_f = _fmt_savant_pct(sav.get("whiff_percent"))
         if xera_disp:
-            adv_bits.append(f'{xera_disp} xERA')
-        if whiff_disp:
-            adv_bits.append(f'{whiff_disp}% Whf')
-        adv_html = f'<span class="adv">{" &middot; ".join(adv_bits)}</span>' if adv_bits else ""
+            tier = "t-elite" if xera_f is not None and xera_f < 3.00 else ("t-solid" if xera_f is not None and xera_f < 4.00 else "t-rough")
+            primary = f'<span class="primary {tier}">{xera_disp}<em>xERA</em></span>'
+            secondary_bits = [f'{ip} IP &middot; {era_v} ERA &middot; {k} K']
+            if whiff_disp:
+                secondary_bits.append(f'{whiff_disp}% Whf')
+            secondary = f'<span class="secondary">{" &middot; ".join(secondary_bits)}</span>'
+        else:
+            primary = f'<span class="primary t-legacy">{era_v}<em>ERA</em></span>'
+            secondary = f'<span class="secondary">{ip} IP &middot; {k} K</span>'
         return (
             f'<li><span class="n">{name_html}</span>'
-            f'<span class="s">{ip} IP &middot; {era_v} ERA &middot; {k} K</span>'
-            f'{adv_html}</li>'
+            f'{primary}{secondary}</li>'
         )
 
     phot_html = "".join(pitcher_li(s) for s in p_hot)

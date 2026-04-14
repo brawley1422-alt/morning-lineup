@@ -160,11 +160,16 @@ ul.plays .txt strong{color:var(--paper);font-weight:500}
 .tempbox.cold .n{color:#6a9ad4}
 .tempbox h4{margin-top:0}
 .tempbox ul{list-style:none;padding:0;margin:0}
-.tempbox li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dotted var(--rule);font-size:13px;flex-wrap:wrap}
+.tempbox li{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;column-gap:12px;row-gap:2px;padding:8px 0;border-bottom:1px dotted var(--rule)}
 .tempbox li:last-child{border-bottom:none}
-.tempbox .n{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
-.tempbox .s{font-family:var(--mono);font-size:11px;color:var(--gold)}
-.tempbox .adv{font-family:var(--mono);font-size:10px;color:var(--paper-mute);letter-spacing:.04em;flex-basis:100%;text-align:right;margin-top:-2px}
+.tempbox .n{grid-column:1;grid-row:1;font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper);font-size:13px;align-self:baseline}
+.tempbox .primary{grid-column:2;grid-row:1;font-family:var(--mono);font-size:17px;font-weight:600;letter-spacing:-.01em;align-self:baseline;line-height:1;text-align:right}
+.tempbox .primary em{display:inline-block;margin-left:5px;font-style:normal;font-size:9px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);vertical-align:2px}
+.tempbox .primary.t-elite{color:#8bc48f}
+.tempbox .primary.t-solid{color:var(--gold-hi)}
+.tempbox .primary.t-rough{color:#c87a74}
+.tempbox .primary.t-legacy{color:var(--gold)}
+.tempbox .secondary{grid-column:1/-1;grid-row:2;font-family:var(--mono);font-size:10px;color:var(--paper-mute);letter-spacing:.03em;text-align:right}
 .next-games{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px;margin:6px 0}
 .nx-card{background:var(--ink-2);border:1px solid var(--rule);padding:10px 14px;border-radius:3px;border-left:3px solid var(--team-primary-hi);box-shadow:0 2px 8px -2px rgba(0,0,0,.35);transition:border-color .15s,box-shadow .15s,transform .15s;}
 .nx-card:hover{border-color:var(--rule-hi);box-shadow:0 4px 12px -4px rgba(0,0,0,.4);transform:translateY(-1px)}
@@ -324,9 +329,21 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .sp-season{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
 .sp-log{min-width:auto !important;margin-top:4px}
 .sp-log .opp{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
-.sp-arsenal{min-width:auto !important;margin-top:4px}
-.sp-arsenal .pitch-name{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
-.sp-arsenal td,.sp-arsenal th{font-size:11px}
+.sp-arsenal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:6px}
+@media (max-width:600px){.sp-arsenal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pitch-card{background:linear-gradient(180deg,var(--ink-3) 0%,var(--ink-2) 100%);border:1px solid var(--rule);border-top:2px solid var(--gold-dim);border-radius:2px;padding:9px 10px 10px;position:relative;overflow:hidden;min-width:0}
+.pitch-card::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 100% 0%,rgba(201,162,74,.07),transparent 60%);pointer-events:none}
+.pc-code{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--gold);line-height:1;margin-bottom:2px;letter-spacing:.02em;position:relative}
+.pc-velo{font-family:var(--mono);font-size:28px;font-weight:600;letter-spacing:-.02em;color:var(--paper);line-height:1;margin:4px 0 8px;position:relative}
+.pc-velo em{display:inline-block;margin-left:4px;font-style:normal;font-size:9px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);vertical-align:5px}
+.pc-stats{display:grid;grid-template-columns:1fr;gap:3px;position:relative}
+.pc-stat{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:10px;color:var(--paper-dim);letter-spacing:.02em;border-top:1px dotted var(--rule);padding-top:2px}
+.pc-stat:first-child{border-top:none}
+.pc-stat b{font-weight:500;color:var(--paper)}
+.pc-stat em{font-style:normal;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-mute)}
+.pc-whiff.t-elite b{color:#8bc48f}
+.pc-whiff.t-solid b{color:var(--gold-hi)}
+.pc-whiff.t-rough b{color:#c87a74}
 .pulse-record{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;padding:10px 0;border-bottom:1px solid var(--rule);margin-bottom:10px}
 .pulse-wl{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--paper)}
 .pulse-pct{font-family:var(--mono);font-size:16px;color:var(--gold)}
@@ -721,12 +738,12 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="700250">Rice</player-card></span><span class="s">.304 / 3 HR / 1.267 OPS</span></li><li><span class="n"><player-card pid="502671">Goldschmidt</player-card></span><span class="s">.222 / 1 HR / .967 OPS</span></li><li><span class="n"><player-card pid="642708">Rosario</player-card></span><span class="s">.250 / 2 HR / .941 OPS</span></li><li><span class="n"><player-card pid="592450">Judge</player-card></span><span class="s">.280 / 1 HR / .840 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="641555">Escarra</player-card></span><span class="s">.000 / 0 HR / .100 OPS</span></li><li><span class="n"><player-card pid="676609">Caballero</player-card></span><span class="s">.043 / 0 HR / .207 OPS</span></li><li><span class="n"><player-card pid="641857">McMahon</player-card></span><span class="s">.067 / 0 HR / .367 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="700250">Rice</player-card></span><span class="primary t-legacy">1.267<em>OPS</em></span><span class="secondary">.304 &middot; 3 HR</span></li><li><span class="n"><player-card pid="502671">Goldschmidt</player-card></span><span class="primary t-legacy">.967<em>OPS</em></span><span class="secondary">.222 &middot; 1 HR</span></li><li><span class="n"><player-card pid="642708">Rosario</player-card></span><span class="primary t-legacy">.941<em>OPS</em></span><span class="secondary">.250 &middot; 2 HR</span></li><li><span class="n"><player-card pid="592450">Judge</player-card></span><span class="primary t-legacy">.840<em>OPS</em></span><span class="secondary">.280 &middot; 1 HR</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="641555">Escarra</player-card></span><span class="primary t-legacy">.100<em>OPS</em></span><span class="secondary">.000 &middot; 0 HR</span></li><li><span class="n"><player-card pid="676609">Caballero</player-card></span><span class="primary t-legacy">.207<em>OPS</em></span><span class="secondary">.043 &middot; 0 HR</span></li><li><span class="n"><player-card pid="641857">McMahon</player-card></span><span class="primary t-legacy">.367<em>OPS</em></span><span class="secondary">.067 &middot; 0 HR</span></li></ul></div>
     </div>
     <div class="two">
-      <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="687396">Headrick</player-card></span><span class="s">6.0 IP &middot; 0.00 ERA &middot; 10 K</span></li><li><span class="n"><player-card pid="642232">Yarbrough</player-card></span><span class="s">2.2 IP &middot; 0.00 ERA &middot; 3 K</span></li><li><span class="n"><player-card pid="657612">Hill</player-card></span><span class="s">6.0 IP &middot; 0.00 ERA &middot; 3 K</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="666808">Doval</player-card></span><span class="s">4.1 IP &middot; 8.31 ERA &middot; 6 K</span></li><li><span class="n"><player-card pid="656234">Bird</player-card></span><span class="s">5.0 IP &middot; 5.40 ERA &middot; 6 K</span></li></ul></div>
+      <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="687396">Headrick</player-card></span><span class="primary t-legacy">0.00<em>ERA</em></span><span class="secondary">6.0 IP &middot; 10 K</span></li><li><span class="n"><player-card pid="642232">Yarbrough</player-card></span><span class="primary t-legacy">0.00<em>ERA</em></span><span class="secondary">2.2 IP &middot; 3 K</span></li><li><span class="n"><player-card pid="657612">Hill</player-card></span><span class="primary t-legacy">0.00<em>ERA</em></span><span class="secondary">6.0 IP &middot; 3 K</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="666808">Doval</player-card></span><span class="primary t-legacy">8.31<em>ERA</em></span><span class="secondary">4.1 IP &middot; 6 K</span></li><li><span class="n"><player-card pid="656234">Bird</player-card></span><span class="primary t-legacy">5.40<em>ERA</em></span><span class="secondary">5.0 IP &middot; 6 K</span></li></ul></div>
     </div>
     
   </section>

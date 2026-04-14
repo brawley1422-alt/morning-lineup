@@ -228,14 +228,14 @@ class TestRenderHotColdSavant(unittest.TestCase):
         html = _render_hot_cold(self._hitters(), self._pitchers(), self._savant())
         self.assertIn("xwOBA", html)
         self.assertIn("Brl", html)
-        self.assertIn(".423 xwOBA", html)  # Ohtani
-        self.assertIn("25.6% Brl", html)
+        self.assertIn(".423<em>xwOBA</em>", html)  # Ohtani primary
+        self.assertIn("25.6% Brl", html)            # Ohtani secondary slug
 
     def test_renders_xera_and_whiff_columns(self):
         html = _render_hot_cold(self._hitters(), self._pitchers(), self._savant())
         self.assertIn("xERA", html)
         self.assertIn("Whf", html)
-        self.assertIn("2.45 xERA", html)  # Skenes
+        self.assertIn("2.45<em>xERA</em>", html)  # Skenes primary
 
     def test_sorts_hitters_by_xwoba(self):
         # Ohtani has the 2nd-highest xwOBA (.423), but Cruz has .426. So
