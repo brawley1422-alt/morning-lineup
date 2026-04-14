@@ -211,6 +211,9 @@ dl.transac dd{margin:2px 0 0;color:var(--paper-dim)}
 .minors .res .w{color:var(--win)}
 .minors .res .l{color:var(--loss)}
 .minors .note{font-size:11.5px;color:var(--paper-dim);margin-top:6px;line-height:1.4}
+.minors .lvl-tonight{font-family:var(--mono);font-size:10px;color:var(--paper-mute);margin-top:4px;letter-spacing:.02em}
+.minors .lvl-tonight .lvl-lbl{font-family:var(--cond);text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-right:4px}
+.minors .lvl-standings{font-family:var(--mono);font-size:10px;color:var(--paper-dim);margin-top:2px;letter-spacing:.02em}
 .prospect-tag{font-family:var(--cond);font-size:9px;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:var(--ink);padding:1px 5px;border-radius:2px;margin-left:2px;font-weight:600}
 .prosp-header{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--gold);margin:8px 0 4px;border-top:1px solid var(--rule);padding-top:8px}
 .prosp-tracker{display:flex;flex-direction:column;gap:2px}
@@ -355,6 +358,7 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .mr-pc-code{font-family:var(--serif);font-style:italic;font-weight:900;font-size:16px;color:var(--gold);line-height:1}
 .mr-pc-velo{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--paper);line-height:1;margin:3px 0 2px}
 .mr-pc-usage{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--paper-mute);text-transform:uppercase}
+.mr-pc-xwoba{font-family:var(--mono);font-size:10px;color:var(--paper-dim);margin-top:2px;letter-spacing:.02em}
 .mr-lineup{width:100%;border-collapse:collapse;margin-bottom:8px}
 .mr-lineup td{padding:7px 8px;border-bottom:1px dotted var(--rule);font-family:var(--mono);font-size:12px;color:var(--paper-dim);vertical-align:baseline}
 .mr-lineup .mr-row:last-child td{border-bottom:none}
@@ -747,7 +751,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Braves</span> <player-card pid="625643">Reynaldo López</player-card><div class="nx-pline">1.15 ERA &middot; 1-0 &middot; 15.2 IP &middot; 13 K &middot; 0.96 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-146"/></svg>MIA</span> Max Meyer<div class="nx-pline">3.68 ERA &middot; 1-0 &middot; 14.2 IP &middot; 15 K &middot; 1.36 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="660670">Jr.</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="686948">Baldwin</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="621566">Olson</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="663586">Riley</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="573262">Yastrzemski</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="645277">Albies</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="642086">Smith</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="671739">II</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="643289">Dubón</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> BravesVision &middot; Marlins.TV, presented by Werner, Hoffman, Greig &amp; Garcia &middot; Gray TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 680 AM/93.7 FM The Fan &middot; 560AM WQAM</div>
-        <div class="nx-wx">84°F &middot; Clear &middot; 7 mph SSW</div>
+        <div class="nx-wx">84°F &middot; Clear &middot; 7 mph SW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Wed, Apr 15 &middot; vs <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-146"/></svg><span class="ab">MIA</span></div>
@@ -807,6 +811,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
             <span class="pc-stat"><b>52%</b><em>usage</em></span>
             <span class="pc-stat pc-whiff t-rough"><b>13%</b><em>whf</em></span>
             <span class="pc-stat"><b>2024</b><em>rpm</em></span>
+            <span class="pc-stat pc-xwoba t-solid"><b>.300</b><em>xwOBA</em></span>
           </div>
         </div><div class="pitch-card" title="Slider">
           <div class="pc-code">SL</div>
@@ -815,6 +820,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
             <span class="pc-stat"><b>34%</b><em>usage</em></span>
             <span class="pc-stat pc-whiff t-elite"><b>39%</b><em>whf</em></span>
             <span class="pc-stat"><b>2324</b><em>rpm</em></span>
+            <span class="pc-stat pc-xwoba t-solid"><b>.320</b><em>xwOBA</em></span>
           </div>
         </div></div>
         </div>
@@ -833,6 +839,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
             <span class="pc-stat"><b>31%</b><em>usage</em></span>
             <span class="pc-stat pc-whiff t-elite"><b>59%</b><em>whf</em></span>
             <span class="pc-stat"><b>2593</b><em>rpm</em></span>
+            <span class="pc-stat pc-xwoba t-rough"><b>.382</b><em>xwOBA</em></span>
           </div>
         </div><div class="pitch-card" title="Sweeper">
           <div class="pc-code">ST</div>
@@ -841,6 +848,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
             <span class="pc-stat"><b>22%</b><em>usage</em></span>
             <span class="pc-stat pc-whiff t-rough"><b>20%</b><em>whf</em></span>
             <span class="pc-stat"><b>2523</b><em>rpm</em></span>
+            <span class="pc-stat pc-xwoba t-rough"><b>.398</b><em>xwOBA</em></span>
           </div>
         </div><div class="pitch-card" title="4-Seam Fastball">
           <div class="pc-code">FF</div>
@@ -849,6 +857,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
             <span class="pc-stat"><b>21%</b><em>usage</em></span>
             <span class="pc-stat pc-whiff t-rough"><b>8%</b><em>whf</em></span>
             <span class="pc-stat"><b>2473</b><em>rpm</em></span>
+            <span class="pc-stat pc-xwoba t-rough"><b>.422</b><em>xwOBA</em></span>
           </div>
         </div><div class="pitch-card" title="Changeup">
           <div class="pc-code">CH</div>
@@ -857,6 +866,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
             <span class="pc-stat"><b>17%</b><em>usage</em></span>
             <span class="pc-stat pc-whiff t-rough"><b>21%</b><em>whf</em></span>
             <span class="pc-stat"><b>1784</b><em>rpm</em></span>
+            <span class="pc-stat pc-xwoba t-solid"><b>.286</b><em>xwOBA</em></span>
           </div>
         </div></div>
         </div>
@@ -875,7 +885,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <span class="mr-sp">Max Meyer</span>
         <span class="mr-sub">tonight's arsenal × Braves lineup</span>
       </div>
-      <div class="mr-arsenal"><div class="mr-pc" title="Slider"><div class="mr-pc-code">SL</div><div class="mr-pc-velo">90.4</div><div class="mr-pc-usage">31%</div></div><div class="mr-pc" title="Sweeper"><div class="mr-pc-code">ST</div><div class="mr-pc-velo">88.0</div><div class="mr-pc-usage">22%</div></div><div class="mr-pc" title="4-Seam Fastball"><div class="mr-pc-code">FF</div><div class="mr-pc-velo">94.8</div><div class="mr-pc-usage">21%</div></div><div class="mr-pc" title="Changeup"><div class="mr-pc-code">CH</div><div class="mr-pc-velo">89.3</div><div class="mr-pc-usage">17%</div></div><div class="mr-pc" title="Sinker"><div class="mr-pc-code">SI</div><div class="mr-pc-velo">94.2</div><div class="mr-pc-usage">12%</div></div></div>
+      <div class="mr-arsenal"><div class="mr-pc" title="Slider"><div class="mr-pc-code">SL</div><div class="mr-pc-velo">90.4</div><div class="mr-pc-usage">31%</div><div class="mr-pc-xwoba">.382</div></div><div class="mr-pc" title="Sweeper"><div class="mr-pc-code">ST</div><div class="mr-pc-velo">88.0</div><div class="mr-pc-usage">22%</div><div class="mr-pc-xwoba">.398</div></div><div class="mr-pc" title="4-Seam Fastball"><div class="mr-pc-code">FF</div><div class="mr-pc-velo">94.8</div><div class="mr-pc-usage">21%</div><div class="mr-pc-xwoba">.422</div></div><div class="mr-pc" title="Changeup"><div class="mr-pc-code">CH</div><div class="mr-pc-velo">89.3</div><div class="mr-pc-usage">17%</div><div class="mr-pc-xwoba">.286</div></div><div class="mr-pc" title="Sinker"><div class="mr-pc-code">SI</div><div class="mr-pc-velo">94.2</div><div class="mr-pc-usage">12%</div><div class="mr-pc-xwoba">.325</div></div></div>
       <table class="mr-lineup">
         <tbody><tr class="mr-row"><td class="mr-slot">1</td><td class="mr-name">Ronald Acuña Jr.</td><td class="mr-pos">RF</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>FF</b> <span class="mr-dots d-safe">●●●○</span></span></td><td class="mr-gcell"><span class="mr-grade t-elite">A</span></td></tr><tr class="mr-row"><td class="mr-slot">2</td><td class="mr-name">Drake Baldwin</td><td class="mr-pos">C</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>SL</b> <span class="mr-dots d-safe">●○○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-solid">B</span></td></tr><tr class="mr-row"><td class="mr-slot">3</td><td class="mr-name">Matt Olson</td><td class="mr-pos">1B</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>FF</b> <span class="mr-dots d-safe">●●●●</span></span></td><td class="mr-gcell"><span class="mr-grade t-solid">B</span></td></tr><tr class="mr-row"><td class="mr-slot">4</td><td class="mr-name">Austin Riley</td><td class="mr-pos">3B</td><td class="mr-read"><span class="mr-tag mr-vuln">vuln: <b>SL</b> <span class="mr-dots d-vuln">●○○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-solid">B</span></td></tr><tr class="mr-row"><td class="mr-slot">5</td><td class="mr-name">Mike Yastrzemski</td><td class="mr-pos">RF</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>CH</b> <span class="mr-dots d-safe">●○○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-solid">B</span></td></tr><tr class="mr-row"><td class="mr-slot">6</td><td class="mr-name">Ozzie Albies</td><td class="mr-pos">2B</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-solid">B</span></td></tr><tr class="mr-row"><td class="mr-slot">7</td><td class="mr-name">Dominic Smith</td><td class="mr-pos">1B</td><td class="mr-read"><span class="mr-tag mr-vuln">vuln: <b>FF</b> <span class="mr-dots d-vuln">●○○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-rough">C</span></td></tr><tr class="mr-row"><td class="mr-slot">8</td><td class="mr-name">Michael Harris II</td><td class="mr-pos">CF</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>FF</b> <span class="mr-dots d-safe">●●●●</span></span></td><td class="mr-gcell"><span class="mr-grade t-solid">B</span></td></tr><tr class="mr-row"><td class="mr-slot">9</td><td class="mr-name">Mauricio Dubón</td><td class="mr-pos">2B</td><td class="mr-read"><span class="mr-tag mr-vuln">vuln: <b>SL</b> <span class="mr-dots d-vuln">●○○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-rough">C</span></td></tr></tbody>
       </table>
@@ -929,16 +939,24 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="minors"><div class="lvl" data-lvl="AAA">
         <div class="aff">Gwinnett Stripers</div>
         <div class="res"><em>No game / not final</em></div>
+        <div class="lvl-tonight"><span class="lvl-lbl">tonight</span> at Redbirds &middot; 6:05 PM CT</div>
+        <div class="lvl-standings">10&ndash;5 &middot; 2nd</div>
       </div><div class="lvl" data-lvl="AA">
         <div class="aff">Columbus Clingstones</div>
         <div class="res"><em>No game / not final</em></div>
+        <div class="lvl-tonight"><span class="lvl-lbl">tonight</span> vs Shuckers &middot; 5:05 PM CT</div>
+        <div class="lvl-standings">5&ndash;4 &middot; 1st</div>
       </div><div class="lvl" data-lvl="A+">
         <div class="aff">Rome Emperors</div>
         <div class="res"><em>No game / not final</em></div>
+        <div class="lvl-tonight"><span class="lvl-lbl">tonight</span> vs BlueClaws &middot; 5:00 PM CT</div>
+        <div class="lvl-standings">4&ndash;5 &middot; 3rd</div>
       </div><div class="lvl" data-lvl="A">
         <div class="aff">Augusta GreenJackets</div>
         <div class="res"><em>No game / not final</em></div>
-      </div></div><h3 class="prosp-header">Prospect Watch</h3><div class="prosp-tracker"><div class="prosp-cols"><span>#</span><span>Name</span><span>Pos</span><span>Lvl</span><span>Line</span></div><div class="prosp-row dnp"><span class="prosp-rank">#1</span><span class="prosp-name">Cam Caminiti</span><span class="prosp-pos">LHP</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#2</span><span class="prosp-name">JR Ritchie</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#3</span><span class="prosp-name">Didier Fuentes</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#4</span><span class="prosp-name">Tate Southisene</span><span class="prosp-pos">SS/OF</span><span class="prosp-lvl a">A</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#5</span><span class="prosp-name">Alex Lodise</span><span class="prosp-pos">SS</span><span class="prosp-lvl a">A</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#6</span><span class="prosp-name">Owen Murphy</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#9</span><span class="prosp-name">Lucas Braun</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#10</span><span class="prosp-name">John Gil</span><span class="prosp-pos">SS</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#12</span><span class="prosp-name">Garrett Baumann</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#13</span><span class="prosp-name">Conor Essenburg</span><span class="prosp-pos">OF</span><span class="prosp-lvl a">A</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#14</span><span class="prosp-name">Herick Hernandez</span><span class="prosp-pos">LHP</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#16</span><span class="prosp-name">Drue Hackenberg</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#17</span><span class="prosp-name">Jhancarlos Lara</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#18</span><span class="prosp-name">Rolddy Muñoz</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#19</span><span class="prosp-name">Owen Carey</span><span class="prosp-pos">OF</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div></div>
+        <div class="lvl-tonight"><span class="lvl-lbl">tonight</span> vs Woodpeckers &middot; 6:05 PM CT</div>
+        <div class="lvl-standings">4&ndash;5 &middot; 5th</div>
+      </div></div><h3 class="prosp-header">Prospect Watch</h3><div class="prosp-tracker"><div class="prosp-cols"><span>#</span><span>Name</span><span>Pos</span><span>Lvl</span><span>Line</span></div><div class="prosp-row dnp"><span class="prosp-rank">#1</span><span class="prosp-name">Cam Caminiti</span><span class="prosp-pos">P</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#2</span><span class="prosp-name">JR Ritchie</span><span class="prosp-pos">P</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#3</span><span class="prosp-name">Didier Fuentes</span><span class="prosp-pos">P</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#4</span><span class="prosp-name">Tate Southisene</span><span class="prosp-pos">SS</span><span class="prosp-lvl a">A</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#5</span><span class="prosp-name">Alex Lodise</span><span class="prosp-pos">SS</span><span class="prosp-lvl a">A</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#6</span><span class="prosp-name">Owen Murphy</span><span class="prosp-pos">P</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#9</span><span class="prosp-name">Lucas Braun</span><span class="prosp-pos">P</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#10</span><span class="prosp-name">John Gil</span><span class="prosp-pos">SS</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#12</span><span class="prosp-name">Garrett Baumann</span><span class="prosp-pos">P</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#13</span><span class="prosp-name">Conor Essenburg</span><span class="prosp-pos">OF</span><span class="prosp-lvl a">A</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#14</span><span class="prosp-name">Herick Hernandez</span><span class="prosp-pos">P</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#16</span><span class="prosp-name">Drue Hackenberg</span><span class="prosp-pos">P</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#17</span><span class="prosp-name">Jhancarlos Lara</span><span class="prosp-pos">P</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#18</span><span class="prosp-name">Rolddy Muñoz</span><span class="prosp-pos">P</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#19</span><span class="prosp-name">Owen Carey</span><span class="prosp-pos">OF</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div></div>
   </section>
 
   <section id="today" open>
@@ -1176,7 +1194,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Truist Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/14/26 15:10 CT</span>
+  <span>Filed 04/14/26 15:46 CT</span>
 </footer>
 
 <script>
