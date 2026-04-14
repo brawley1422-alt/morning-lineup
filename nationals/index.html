@@ -160,10 +160,16 @@ ul.plays .txt strong{color:var(--paper);font-weight:500}
 .tempbox.cold .n{color:#6a9ad4}
 .tempbox h4{margin-top:0}
 .tempbox ul{list-style:none;padding:0;margin:0}
-.tempbox li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dotted var(--rule);font-size:13px;}
+.tempbox li{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;column-gap:12px;row-gap:2px;padding:8px 0;border-bottom:1px dotted var(--rule)}
 .tempbox li:last-child{border-bottom:none}
-.tempbox .n{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
-.tempbox .s{font-family:var(--mono);font-size:11px;color:var(--gold)}
+.tempbox .n{grid-column:1;grid-row:1;font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper);font-size:13px;align-self:baseline}
+.tempbox .primary{grid-column:2;grid-row:1;font-family:var(--mono);font-size:17px;font-weight:600;letter-spacing:-.01em;align-self:baseline;line-height:1;text-align:right}
+.tempbox .primary em{display:inline-block;margin-left:5px;font-style:normal;font-size:9px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);vertical-align:2px}
+.tempbox .primary.t-elite{color:#8bc48f}
+.tempbox .primary.t-solid{color:var(--gold-hi)}
+.tempbox .primary.t-rough{color:#c87a74}
+.tempbox .primary.t-legacy{color:var(--gold)}
+.tempbox .secondary{grid-column:1/-1;grid-row:2;font-family:var(--mono);font-size:10px;color:var(--paper-mute);letter-spacing:.03em;text-align:right}
 .next-games{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px;margin:6px 0}
 .nx-card{background:var(--ink-2);border:1px solid var(--rule);padding:10px 14px;border-radius:3px;border-left:3px solid var(--team-primary-hi);box-shadow:0 2px 8px -2px rgba(0,0,0,.35);transition:border-color .15s,box-shadow .15s,transform .15s;}
 .nx-card:hover{border-color:var(--rule-hi);box-shadow:0 4px 12px -4px rgba(0,0,0,.4);transform:translateY(-1px)}
@@ -323,6 +329,56 @@ tr.scorecard-link:hover td{color:var(--gold) !important}
 .sp-season{font-family:var(--mono);font-size:11px;color:var(--gold);margin-top:4px}
 .sp-log{min-width:auto !important;margin-top:4px}
 .sp-log .opp{font-family:var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--paper)}
+.sp-arsenal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:6px}
+@media (max-width:600px){.sp-arsenal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pitch-card{background:linear-gradient(180deg,var(--ink-3) 0%,var(--ink-2) 100%);border:1px solid var(--rule);border-top:2px solid var(--gold-dim);border-radius:2px;padding:9px 10px 10px;position:relative;overflow:hidden;min-width:0}
+.pitch-card::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 100% 0%,rgba(201,162,74,.07),transparent 60%);pointer-events:none}
+.pc-code{font-family:var(--serif);font-style:italic;font-weight:900;font-size:20px;color:var(--gold);line-height:1;margin-bottom:2px;letter-spacing:.02em;position:relative}
+.pc-velo{font-family:var(--mono);font-size:28px;font-weight:600;letter-spacing:-.02em;color:var(--paper);line-height:1;margin:4px 0 8px;position:relative}
+.pc-velo em{display:inline-block;margin-left:4px;font-style:normal;font-size:9px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);vertical-align:5px}
+.pc-stats{display:grid;grid-template-columns:1fr;gap:3px;position:relative}
+.pc-stat{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:10px;color:var(--paper-dim);letter-spacing:.02em;border-top:1px dotted var(--rule);padding-top:2px}
+.pc-stat:first-child{border-top:none}
+.pc-stat b{font-weight:500;color:var(--paper)}
+.pc-stat em{font-style:normal;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-mute)}
+.pc-whiff.t-elite b{color:#8bc48f}
+.pc-whiff.t-solid b{color:var(--gold-hi)}
+.pc-whiff.t-rough b{color:#c87a74}
+/* Matchup Read — tonight's lineup × opposing arsenal */
+.matchup-read{margin-top:6px}
+.matchup-read .mr-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:8px}
+.matchup-read .mr-sp{font-family:var(--serif);font-style:italic;font-size:22px;font-weight:700;color:var(--gold)}
+.matchup-read .mr-sub{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--paper-mute)}
+.mr-arsenal{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin-bottom:10px}
+@media (max-width:600px){.mr-arsenal{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.mr-pc{background:linear-gradient(180deg,var(--ink-3) 0%,var(--ink-2) 100%);border:1px solid var(--rule);border-top:2px solid var(--gold-dim);border-radius:2px;padding:6px 7px 7px;text-align:center;min-width:0}
+.mr-pc-code{font-family:var(--serif);font-style:italic;font-weight:900;font-size:16px;color:var(--gold);line-height:1}
+.mr-pc-velo{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--paper);line-height:1;margin:3px 0 2px}
+.mr-pc-usage{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--paper-mute);text-transform:uppercase}
+.mr-lineup{width:100%;border-collapse:collapse;margin-bottom:8px}
+.mr-lineup td{padding:7px 8px;border-bottom:1px dotted var(--rule);font-family:var(--mono);font-size:12px;color:var(--paper-dim);vertical-align:baseline}
+.mr-lineup .mr-row:last-child td{border-bottom:none}
+.mr-lineup .mr-slot{width:18px;color:var(--paper-mute);font-size:10px;text-align:right}
+.mr-lineup .mr-name{color:var(--paper);font-weight:500;font-size:13px;white-space:nowrap}
+.mr-lineup .mr-pos{color:var(--paper-mute);font-size:9px;letter-spacing:.08em;text-transform:uppercase;width:28px}
+.mr-lineup .mr-read{text-align:left;width:auto}
+.mr-lineup .mr-gcell{text-align:right;width:34px}
+.mr-tag{font-size:11px;letter-spacing:.02em}
+.mr-tag b{color:var(--gold);font-weight:700}
+.mr-vuln{color:var(--paper-dim)}
+.mr-safe{color:var(--paper-dim)}
+.mr-none,.mr-nodata{color:var(--paper-mute)}
+.mr-dots{margin-left:5px;font-size:9px;letter-spacing:.04em}
+.mr-dots.d-vuln{color:#c87a74}
+.mr-dots.d-safe{color:#8bc48f}
+.mr-grade{font-family:var(--serif);font-style:italic;font-size:20px;font-weight:900;color:var(--paper)}
+.mr-grade.t-elite{color:#8bc48f}
+.mr-grade.t-solid{color:var(--gold-hi)}
+.mr-grade.t-rough{color:#c87a74}
+.mr-foot{display:flex;justify-content:space-between;align-items:baseline;padding-top:8px;border-top:1px solid var(--rule);font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--paper-mute)}
+.mr-team b{font-family:var(--serif);font-style:italic;font-weight:900;font-size:16px;margin-left:6px;letter-spacing:0}
+.mr-exp b{color:var(--gold);font-weight:700;letter-spacing:.02em}
+.mr-muted{color:var(--paper-mute);text-transform:none;letter-spacing:.02em;font-style:italic}
 .pulse-record{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;padding:10px 0;border-bottom:1px solid var(--rule);margin-bottom:10px}
 .pulse-wl{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--paper)}
 .pulse-pct{font-family:var(--mono);font-size:16px;color:var(--gold)}
@@ -587,7 +643,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><details class="column" data-role="straight_beat"><summary class="column-byline"><span class="column-name">Grant Whitestone</span><span class="column-role">The Straight Beat</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p class="column-off"><em>Grant Whitestone is off today.</em></p></div></details><details class="column" data-role="optimist"><summary class="column-byline"><span class="column-name">Wendy Okonkwo</span><span class="column-role">The Optimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p class="column-off"><em>Wendy Okonkwo is off today.</em></p></div></details><details class="column" data-role="pessimist"><summary class="column-byline"><span class="column-name">Murray Feldschneider</span><span class="column-role">The Pessimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p class="column-off"><em>Murray Feldschneider is off today.</em></p></div></details></div><script>(function(){
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><details class="column" data-role="straight_beat"><summary class="column-byline"><span class="column-name">Grant Whitestone</span><span class="column-role">The Straight Beat</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Nationals’ loss to the Pirates yesterday wasn’t just another setback—it was a mirror held up to the franchise’s identity in this era. Washington has always been a team that thrives on resilience, but lately, that resilience feels like a relic. The 16-5 drubbing wasn’t just about the Pirates’ offense; it was about the Nationals’ inability to protect leads, their bullpen’s collapse in critical moments, and a lineup that’s been a ghost town since April. On the record, this isn’t a one-game slump. It’s a pattern.</p><p>The front office has spent years balancing the ledger between payroll and potential, but the math isn’t adding up. Last winter, they traded away pieces that could’ve bolstered a playoff push, opting instead for depth and “future assets.” Now, with the NL East tightening around them, those assets feel like empty promises. The 2.5-game deficit isn’t just a number—it’s a reminder that the window for contention is closing faster than the team’s starting rotation.</p><p>There’s a strange irony in this era of the Nationals. The Expos-to-Nationals transition was a story of hope, a promise that baseball’s capital could be a contender again. But the team that once played in Montreal with a sense of urgency now seems to exist in a holding pattern. The ballpark is full, the fans are loud, but the product on the field feels like a draft copy of a better game. The Pirates’ 16 runs weren’t just a fluke—they were a statement. This isn’t just about one game; it’s about a culture that’s drifted.</p><p>The bullpen, once a strength, has become a liability.</p></div></details><details class="column" data-role="optimist"><summary class="column-byline"><span class="column-name">Wendy Okonkwo</span><span class="column-role">The Optimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Nationals lost yesterday, but let’s not dwell on the score. Let’s talk about the infield dirt in my desk drawer, the way it feels like a time capsule of possibility. That dirt wasn’t just soil—it was a promise, a reminder that even in a 16-5 loss, there’s a physics to the game that bends toward the future. Elly Wood’s line drives have a physics of their own, you know? They don’t just hit the ground; they arc like equations waiting to be solved. And if you’re paying attention, you’ll notice the numbers aren’t just about wins and losses. They’re about the variables in play: young arms, fresh legs, and a front office that’s building something bigger than a single season.</p><p>Rebuilds end in October parades, and this one’s already got the smell. The smell of grit. The smell of a team that’s not just surviving but evolving. Let’s be real—yesterday’s game was a math problem with too</p></div></details><details class="column" data-role="pessimist"><summary class="column-byline"><span class="column-name">Murray Feldschneider</span><span class="column-role">The Pessimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Nationals’ 5-16 drubbing by the Pirates wasn’t just another loss—it was a textbook case of how the front office’s incompetence continues to poison this franchise. You don’t trade away your best young talent for a pile of draft picks and a mid-level free agent, only to watch the team hemorrhage runs like it’s some kind of team sport. The Lerners sold a World Series and bought a minor-league reunion tour. This team has more gift-shop hats than wins in May.</p><p>Let’s dissect this disaster. First, the offense. The Nationals’ lineup, which once had the makings of a playoff threat, now looks like a group of guys playing a game of hot potato with the ball. They’re hitting .245 as a team, which is barely above .240, and their on-base percentage is so low it’s making me question if they’ve been practicing their batting stances in a vacuum. The Pirates, for their part, looked like a team that actually cares about winning. They hit 16 runs, which is more than the Nationals’ total for the entire series against the Mets last month. This isn’t just bad luck—it’s a systemic failure to build a competitive roster.</p><p>And then there’s the pitching. The starters are either too hittable or too inconsistent, and the bullpen has turned into a circus. You know the drill</p></div></details></div><script>(function(){
   var grid = document.currentScript && document.currentScript.previousElementSibling;
   if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
   var kids = Array.prototype.slice.call(grid.children);
@@ -603,6 +659,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <ol>
       <li><a href="#team">The Nationals</a></li>
       <li><a href="#scout">Scouting Report</a></li>
+      <li><a href="#matchup">Matchup Read</a></li>
       <li><a href="#pulse">The Stretch</a></li>
       <li><a href="#pressbox">The Pressbox</a></li>
       <li><a href="#farm">Down on the Farm</a></li>
@@ -688,9 +745,9 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-venue">PNC Park </div>
         <div class="nx-meta"><span class="nx-opp-rec">PIT: 10-6, 1st NL Central (W1)</span> &middot; <span class="nx-series">Season series: 0-1</span></div>
         <div class="nx-pitcher"><span class="nx-side">Nationals</span> <player-card pid="571945">Miles Mikolas</player-card><div class="nx-pline">12.41 ERA &middot; 0-3 &middot; 12.1 IP &middot; 11 K &middot; 2.35 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-134"/></svg>PIT</span> Mitch Keller<div class="nx-pline">1.00 ERA &middot; 1-0 &middot; 18.0 IP &middot; 11 K &middot; 0.94 WHIP</div></div>
-        
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="691781">House</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="682928">Abrams</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="678554">Mead</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="695734">Lile</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="686452">Millas</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="696285">Young</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="695578">Wood</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="686894">Wiemer</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="678391">Vivas</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> SportsNet Pittsburgh &middot; Nationals.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WJFK 106.7 The Fan &middot; Sports Radio 93.7 KDKA The Fan</div>
-        <div class="nx-wx">68°F &middot; Overcast &middot; 9 mph SSW</div>
+        <div class="nx-wx">78°F &middot; Partly Cloudy &middot; 16 mph WSW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Wed, Apr 15 &middot; at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-134"/></svg><span class="ab">PIT</span></div>
@@ -717,12 +774,12 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="695578">Wood</player-card></span><span class="s">.520 / 3 HR / 1.636 OPS</span></li><li><span class="n"><player-card pid="682928">Abrams</player-card></span><span class="s">.375 / 2 HR / 1.096 OPS</span></li><li><span class="n"><player-card pid="678554">Mead</player-card></span><span class="s">.316 / 1 HR / .935 OPS</span></li><li><span class="n"><player-card pid="696285">Young</player-card></span><span class="s">.333 / 1 HR / .916 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="671277">Jr.</player-card></span><span class="s">.125 / 1 HR / .410 OPS</span></li><li><span class="n"><player-card pid="683083">Nuñez</player-card></span><span class="s">.174 / 0 HR / .457 OPS</span></li><li><span class="n"><player-card pid="686894">Wiemer</player-card></span><span class="s">.200 / 0 HR / .473 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="695578">Wood</player-card></span><span class="primary t-elite">.409<em>xwOBA</em></span><span class="secondary">.520 &middot; 3 HR &middot; 1.636 OPS</span></li><li><span class="n"><player-card pid="682928">Abrams</player-card></span><span class="primary t-elite">.407<em>xwOBA</em></span><span class="secondary">.375 &middot; 2 HR &middot; 1.096 OPS</span></li><li><span class="n"><player-card pid="678554">Mead</player-card></span><span class="primary t-elite">.392<em>xwOBA</em></span><span class="secondary">.316 &middot; 1 HR &middot; .935 OPS</span></li><li><span class="n"><player-card pid="696285">Young</player-card></span><span class="primary t-elite">.376<em>xwOBA</em></span><span class="secondary">.333 &middot; 1 HR &middot; .916 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="660688">Ruiz</player-card></span><span class="primary t-rough">.221<em>xwOBA</em></span><span class="secondary">.200 &middot; 0 HR &middot; .538 OPS</span></li><li><span class="n"><player-card pid="677588">Tena</player-card></span><span class="primary t-rough">.224<em>xwOBA</em></span><span class="secondary">.231 &middot; 0 HR &middot; .564 OPS</span></li><li><span class="n"><player-card pid="686452">Millas</player-card></span><span class="primary t-rough">.262<em>xwOBA</em></span><span class="secondary">.143 &middot; 0 HR &middot; .476 OPS</span></li></ul></div>
     </div>
     <div class="two">
-      <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="656492">Griffin</player-card></span><span class="s">15.1 IP &middot; 1.76 ERA &middot; 12 K</span></li><li><span class="n"><player-card pid="687606">Schultz</player-card></span><span class="s">4.2 IP &middot; 1.93 ERA &middot; 6 K</span></li><li><span class="n"><player-card pid="690925">Beeter</player-card></span><span class="s">7.2 IP &middot; 3.52 ERA &middot; 6 K</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="571945">Mikolas</player-card></span><span class="s">12.1 IP &middot; 12.41 ERA &middot; 11 K</span></li><li><span class="n"><player-card pid="672335">Pérez</player-card></span><span class="s">5.2 IP &middot; 11.12 ERA &middot; 3 K</span></li></ul></div>
+      <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="687606">Schultz</player-card></span><span class="primary t-elite">2.97<em>xERA</em></span><span class="secondary">4.2 IP &middot; 1.93 ERA &middot; 6 K &middot; 31.3% Whf</span></li><li><span class="n"><player-card pid="681402">Varland</player-card></span><span class="primary t-solid">3.56<em>xERA</em></span><span class="secondary">5.0 IP &middot; 5.40 ERA &middot; 6 K &middot; 25.6% Whf</span></li><li><span class="n"><player-card pid="690925">Beeter</player-card></span><span class="primary t-rough">4.92<em>xERA</em></span><span class="secondary">7.2 IP &middot; 3.52 ERA &middot; 6 K &middot; 21.2% Whf</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="672335">Pérez</player-card></span><span class="primary t-rough">16.04<em>xERA</em></span><span class="secondary">5.2 IP &middot; 11.12 ERA &middot; 3 K &middot; 22.0% Whf</span></li><li><span class="n"><player-card pid="571945">Mikolas</player-card></span><span class="primary t-rough">6.74<em>xERA</em></span><span class="secondary">12.1 IP &middot; 12.41 ERA &middot; 11 K &middot; 19.8% Whf</span></li></ul></div>
     </div>
     
   </section>
@@ -743,6 +800,23 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
             <tbody><tr><td>03-28</td><td class="opp">vs Chicago Cubs</td><td class="num">5.0</td><td class="num">4</td><td class="num">4</td><td class="num">6</td><td class="num">3</td></tr><tr><td>04-03</td><td class="opp">vs Los Angeles Dodgers</td><td class="num">4.1</td><td class="num">11</td><td class="num">4</td><td class="num">11</td><td class="num">1</td></tr><tr><td>04-08</td><td class="opp">vs St. Louis Cardinals</td><td class="num">3.0</td><td class="num">2</td><td class="num">3</td><td class="num">5</td><td class="num">3</td></tr></tbody></table>
+        <h4>Arsenal</h4><div class="sp-arsenal"><div class="pitch-card" title="4-Seam Fastball">
+          <div class="pc-code">FF</div>
+          <div class="pc-velo">92.1<em>mph</em></div>
+          <div class="pc-stats">
+            <span class="pc-stat"><b>24%</b><em>usage</em></span>
+            <span class="pc-stat pc-whiff t-solid"><b>25%</b><em>whf</em></span>
+            <span class="pc-stat"><b>2218</b><em>rpm</em></span>
+          </div>
+        </div><div class="pitch-card" title="Sinker">
+          <div class="pc-code">SI</div>
+          <div class="pc-velo">91.6<em>mph</em></div>
+          <div class="pc-stats">
+            <span class="pc-stat"><b>21%</b><em>usage</em></span>
+            <span class="pc-stat pc-whiff t-rough"><b>16%</b><em>whf</em></span>
+            <span class="pc-stat"><b>2131</b><em>rpm</em></span>
+          </div>
+        </div></div>
         </div>
         <div class="vs-divider">VS</div>
         <div class="sp-card">
@@ -752,13 +826,61 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
             <tbody><tr><td>03-28</td><td class="opp">vs New York Mets</td><td class="num">6.0</td><td class="num">0</td><td class="num">3</td><td class="num">3</td><td class="num">0</td></tr><tr><td>04-03</td><td class="opp">vs Baltimore Orioles</td><td class="num">6.0</td><td class="num">2</td><td class="num">4</td><td class="num">6</td><td class="num">4</td></tr><tr><td>04-08</td><td class="opp">vs San Diego Padres</td><td class="num">6.0</td><td class="num">0</td><td class="num">4</td><td class="num">3</td><td class="num">1</td></tr></tbody></table>
+        <h4>Arsenal</h4><div class="sp-arsenal"><div class="pitch-card" title="4-Seam Fastball">
+          <div class="pc-code">FF</div>
+          <div class="pc-velo">93.0<em>mph</em></div>
+          <div class="pc-stats">
+            <span class="pc-stat"><b>30%</b><em>usage</em></span>
+            <span class="pc-stat pc-whiff t-rough"><b>12%</b><em>whf</em></span>
+            <span class="pc-stat"><b>2336</b><em>rpm</em></span>
+          </div>
+        </div><div class="pitch-card" title="Sinker">
+          <div class="pc-code">SI</div>
+          <div class="pc-velo">92.0<em>mph</em></div>
+          <div class="pc-stats">
+            <span class="pc-stat"><b>26%</b><em>usage</em></span>
+            <span class="pc-stat pc-whiff t-rough"><b>4%</b><em>whf</em></span>
+            <span class="pc-stat"><b>2306</b><em>rpm</em></span>
+          </div>
+        </div><div class="pitch-card" title="Sweeper">
+          <div class="pc-code">ST</div>
+          <div class="pc-velo">82.1<em>mph</em></div>
+          <div class="pc-stats">
+            <span class="pc-stat"><b>26%</b><em>usage</em></span>
+            <span class="pc-stat pc-whiff t-elite"><b>36%</b><em>whf</em></span>
+            <span class="pc-stat"><b>2659</b><em>rpm</em></span>
+          </div>
+        </div></div>
         </div>
+    </div>
+  </section>
+
+  <section id="matchup" open>
+    <summary>
+      <span class="num">03</span>
+      <span class="h">Matchup Read</span>
+      <span class="tag">Lineup &times; Arsenal</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    <div class="matchup-read">
+      <div class="mr-head">
+        <span class="mr-sp">Mitch Keller</span>
+        <span class="mr-sub">tonight's arsenal × Nationals lineup</span>
+      </div>
+      <div class="mr-arsenal"><div class="mr-pc" title="4-Seam Fastball"><div class="mr-pc-code">FF</div><div class="mr-pc-velo">93.0</div><div class="mr-pc-usage">30%</div></div><div class="mr-pc" title="Sinker"><div class="mr-pc-code">SI</div><div class="mr-pc-velo">92.0</div><div class="mr-pc-usage">26%</div></div><div class="mr-pc" title="Sweeper"><div class="mr-pc-code">ST</div><div class="mr-pc-velo">82.1</div><div class="mr-pc-usage">26%</div></div></div>
+      <table class="mr-lineup">
+        <tbody><tr class="mr-row"><td class="mr-slot">1</td><td class="mr-name">Brady House</td><td class="mr-pos">3B</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-rough">D</span></td></tr><tr class="mr-row"><td class="mr-slot">2</td><td class="mr-name">CJ Abrams</td><td class="mr-pos">SS</td><td class="mr-read"><span class="mr-tag mr-vuln">vuln: <b>ST</b> <span class="mr-dots d-vuln">●○○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-rough">D</span></td></tr><tr class="mr-row"><td class="mr-slot">3</td><td class="mr-name">Curtis Mead</td><td class="mr-pos">1B</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-rough">D</span></td></tr><tr class="mr-row"><td class="mr-slot">4</td><td class="mr-name">Daylen Lile</td><td class="mr-pos">RF</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>FF</b> <span class="mr-dots d-safe">●●●○</span></span></td><td class="mr-gcell"><span class="mr-grade t-rough">C</span></td></tr><tr class="mr-row"><td class="mr-slot">5</td><td class="mr-name">Drew Millas</td><td class="mr-pos">C</td><td class="mr-read"><span class="mr-nodata">—</span></td><td class="mr-gcell"><span class="mr-grade">—</span></td></tr><tr class="mr-row"><td class="mr-slot">6</td><td class="mr-name">Jacob Young</td><td class="mr-pos">CF</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-rough">D</span></td></tr><tr class="mr-row"><td class="mr-slot">7</td><td class="mr-name">James Wood</td><td class="mr-pos">LF</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>FF</b> <span class="mr-dots d-safe">●●●●</span></span></td><td class="mr-gcell"><span class="mr-grade t-rough">D</span></td></tr><tr class="mr-row"><td class="mr-slot">8</td><td class="mr-name">Joey Wiemer</td><td class="mr-pos">LF</td><td class="mr-read"><span class="mr-nodata">—</span></td><td class="mr-gcell"><span class="mr-grade">—</span></td></tr><tr class="mr-row"><td class="mr-slot">9</td><td class="mr-name">Jorbit Vivas</td><td class="mr-pos">2B</td><td class="mr-read"><span class="mr-nodata">—</span></td><td class="mr-gcell"><span class="mr-grade">—</span></td></tr></tbody>
+      </table>
+      <div class="mr-foot">
+        <span class="mr-team">TEAM <b class="t-rough">D</b></span>
+        <span class="mr-exp">exploit: <b>ST</b> (1)</span>
+      </div>
     </div>
   </section>
 
   <section id="pulse" open>
     <summary>
-      <span class="num">03</span>
+      <span class="num">04</span>
       <span class="h">The Stretch</span>
       <span class="tag">Season Pulse</span>
       <span class="chev">&#9656;</span>
@@ -781,17 +903,17 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 
   <section id="pressbox" open>
     <summary>
-      <span class="num">04</span>
+      <span class="num">05</span>
       <span class="h">The Pressbox</span>
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Washington Nationals placed LHP Ken Waldichuk on the 15-day injured list. Left forearm tightness.</span></div><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Washington Nationals placed RHP Cole Henry on the 15-day injured list. Right rotator cuff strain.</span></div><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Washington Nationals recalled RHP Orlando Ribalta from Rochester Red Wings.</span></div><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Washington Nationals recalled RHP Jackson Rutledge from Rochester Red Wings.</span></div><div class="transac-item"><span class="transac-date">04-07</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Washington Nationals activated RHP Paxton Schultz from the 15-day injured list.</span></div><div class="transac-item"><span class="transac-date">04-07</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Washington Nationals optioned RHP Andre Granillo to Rochester Red Wings.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 15-Day</dt><dd>P <strong>Cole Henry</strong></dd><dd>P <strong>Ken Waldichuk</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>DJ Herz</strong></dd><dd>P <strong>Josiah Gray</strong></dd><dd>P <strong>Trevor Williams</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Washington Nationals optioned RHP Jackson Rutledge to Rochester Red Wings.</span></div><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Washington Nationals recalled LHP Mitchell Parker from Rochester Red Wings.</span></div><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Washington Nationals placed RHP Cole Henry on the 15-day injured list. Right rotator cuff strain.</span></div><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Washington Nationals placed LHP Ken Waldichuk on the 15-day injured list. Left forearm tightness.</span></div><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Washington Nationals recalled RHP Jackson Rutledge from Rochester Red Wings.</span></div><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Washington Nationals recalled RHP Orlando Ribalta from Rochester Red Wings.</span></div><div class="transac-item"><span class="transac-date">04-07</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Washington Nationals activated RHP Paxton Schultz from the 15-day injured list.</span></div><div class="transac-item"><span class="transac-date">04-07</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Washington Nationals optioned RHP Andre Granillo to Rochester Red Wings.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 15-Day</dt><dd>P <strong>Cole Henry</strong></dd><dd>P <strong>Ken Waldichuk</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>DJ Herz</strong></dd><dd>P <strong>Josiah Gray</strong></dd><dd>P <strong>Trevor Williams</strong></dd></dl></div></div>
   </section>
 
   <section id="farm" open>
     <summary>
-      <span class="num">05</span>
+      <span class="num">06</span>
       <span class="h">Down on the Farm</span>
       <span class="tag">No games</span>
       <span class="chev">&#9656;</span>
@@ -813,7 +935,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 
   <section id="today" open>
     <summary>
-      <span class="num">06</span>
+      <span class="num">07</span>
       <span class="h">Today&rsquo;s Slate</span>
       <span class="tag">Tue Apr 14</span>
       <span class="chev">&#9656;</span>
@@ -880,7 +1002,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="time">6:15 CT</div>
         <div class="probs">Meyer vs López</div>
-        <div class="bc">BravesVision · Marlins.TV · Gray TV</div>
+        <div class="bc">BravesVision · Marlins.TV, presented by Werner, Hoffman, Greig &amp; Garcia · Gray TV</div>
       </div><div class="g" data-gpk="823723">
         <div class="matchup">
           <span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-111"/></svg><span class="ab">BOS</span></span>
@@ -958,7 +1080,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 
   <section id="div" open>
     <summary>
-      <span class="num">07</span>
+      <span class="num">08</span>
       <span class="h">NL East</span>
       <span class="tag">Rivals &middot; Yesterday</span>
       <span class="chev">&#9656;</span>
@@ -984,7 +1106,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 
   <section id="league" open>
     <summary>
-      <span class="num">08</span>
+      <span class="num">09</span>
       <span class="h">Around the League</span>
       <span class="tag">Apr 13 &middot; 6 Notes</span>
       <span class="chev">&#9656;</span>
@@ -1029,7 +1151,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 
   <section id="history" open>
     <summary>
-      <span class="num">09</span>
+      <span class="num">10</span>
       <span class="h">This Day in Nationals History</span>
       <span class="tag">Apr 14</span>
       <span class="chev">&#9656;</span>
@@ -1043,7 +1165,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Nationals Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/14/26 07:34 CT</span>
+  <span>Filed 04/14/26 14:00 CT</span>
 </footer>
 
 <script>
