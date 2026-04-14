@@ -1,7 +1,7 @@
 ---
 title: "refactor: Stats pipeline hardening — MLB + farm + deploy"
 type: refactor
-status: active
+status: completed
 date: 2026-04-14
 ---
 
