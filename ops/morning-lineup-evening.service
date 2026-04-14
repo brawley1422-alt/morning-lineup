@@ -1,0 +1,17 @@
+[Unit]
+Description=Morning Lineup — evening edition watcher (all teams)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/morning-lineup
+EnvironmentFile=%h/.secrets/morning-lineup.env
+ExecStart=/usr/bin/python3 %h/morning-lineup/evening.py
+# Max 6h runtime is enforced inside evening.py; this is a hard backstop.
+TimeoutStartSec=7h
+StandardOutput=append:%h/morning-lineup/data/evening.log
+StandardError=append:%h/morning-lineup/data/evening.log
+
+[Install]
+WantedBy=default.target

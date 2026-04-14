@@ -1,0 +1,14 @@
+[Unit]
+Description=Trigger Morning Lineup evening watcher daily at 6 PM CT
+After=network-online.target
+
+[Timer]
+# 18:00 America/Chicago = 23:00 UTC (standard) / 22:00 UTC (DST)
+# systemd OnCalendar honors the system time zone, so this fires at 6 PM
+# local regardless of DST as long as the machine TZ is America/Chicago.
+OnCalendar=*-*-* 18:00:00
+Persistent=true
+Unit=morning-lineup-evening.service
+
+[Install]
+WantedBy=timers.target
