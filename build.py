@@ -1551,10 +1551,12 @@ def build_landing():
             "division_name": cfg["division_name"],
             "colors": cfg["colors"],
         })
-    template = (ROOT / "landing.html").read_text(encoding="utf-8")
-    html = template.replace("__TEAMS_JSON__", json.dumps(teams))
+    html = (ROOT / "landing.html").read_text(encoding="utf-8")
     out = ROOT / "index.html"
     out.write_text(html, encoding="utf-8")
+    (ROOT / "landing-teams.js").write_text(
+        "window.__TEAMS = " + json.dumps(teams) + ";\n", encoding="utf-8"
+    )
     print(f"Wrote landing page → {out} ({len(html):,} bytes)")
 
 if __name__ == "__main__":
