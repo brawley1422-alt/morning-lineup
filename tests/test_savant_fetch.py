@@ -23,6 +23,7 @@ sys.path.insert(0, str(ROOT))
 
 import build  # noqa: E402
 from sections.headline import _render_hot_cold  # noqa: E402
+from sections.scouting import _render_arsenal  # noqa: E402
 
 
 BATTER_CSV = (
@@ -111,24 +112,28 @@ class TestFetchSavantLeaderboards(unittest.TestCase):
                 urlopen.assert_not_called()
         self.assertEqual(result["batter"], {})
         self.assertEqual(result["pitcher"], {})
-        self.assertEqual(result["schema"], 1)
+        self.assertEqual(result["schema"], build._SAVANT_SCHEMA)
 
     def test_happy_path_writes_cache(self):
-        responses = {
-            "type=batter": BATTER_CSV.encode("utf-8"),
-            "type=pitcher": PITCHER_CSV.encode("utf-8"),
-        }
-
         def fake_urlopen(req, timeout=None):
             url = req.full_url if hasattr(req, "full_url") else str(req)
-            for key, body in responses.items():
-                if key in url:
-                    m = mock.MagicMock()
-                    m.read.return_value = body
-                    m.__enter__.return_value = m
-                    m.__exit__.return_value = False
-                    return m
-            raise AssertionError(f"unexpected url: {url}")
+            if "type=batter" in url:
+                body = BATTER_CSV
+            elif "type=pitcher" in url and "arsenal" not in url:
+                body = PITCHER_CSV
+            elif "pitch-arsenal-stats" in url:
+                body = ARSENAL_STATS_CSV
+            elif "pitch-arsenals" in url and "avg_speed" in url:
+                body = ARSENAL_SPEED_CSV
+            elif "pitch-arsenals" in url and "avg_spin" in url:
+                body = ARSENAL_SPIN_CSV
+            else:
+                raise AssertionError(f"unexpected url: {url}")
+            m = mock.MagicMock()
+            m.read.return_value = body.encode("utf-8")
+            m.__enter__.return_value = m
+            m.__exit__.return_value = False
+            return m
 
         with mock.patch("urllib.request.urlopen", side_effect=fake_urlopen):
             result = build.fetch_savant_leaderboards(2026, date(2026, 4, 14))
@@ -142,7 +147,7 @@ class TestFetchSavantLeaderboards(unittest.TestCase):
         cache_file = self._tmp / "cache" / "savant" / "leaderboards-2026-2026-04-14.json"
         self.assertTrue(cache_file.exists())
         on_disk = json.loads(cache_file.read_text(encoding="utf-8"))
-        self.assertEqual(on_disk["schema"], 1)
+        self.assertEqual(on_disk["schema"], build._SAVANT_SCHEMA)
         self.assertIn("660271", on_disk["batter"])
 
     def test_cache_hit_skips_network(self):
@@ -151,11 +156,13 @@ class TestFetchSavantLeaderboards(unittest.TestCase):
         cache_dir.mkdir(parents=True, exist_ok=True)
         cache_file = cache_dir / "leaderboards-2026-2026-04-14.json"
         cache_file.write_text(json.dumps({
-            "schema": 1,
+            "schema": build._SAVANT_SCHEMA,
             "season": "2026",
             "date": "2026-04-14",
             "batter": {"111": {"xwoba": ".400"}},
             "pitcher": {"222": {"xera": "3.10"}},
+            "arsenal": {"694973": [{"pitch": "FF", "name": "4-Seam Fastball",
+                                     "usage": 50.0, "velo": 99.0, "spin": 2400, "whiff": 30.0}]},
         }), encoding="utf-8")
 
         with mock.patch("urllib.request.urlopen") as urlopen:
@@ -172,7 +179,7 @@ class TestFetchSavantLeaderboards(unittest.TestCase):
             result = build.fetch_savant_leaderboards(2026, date(2026, 4, 14))
         self.assertEqual(result["batter"], {})
         self.assertEqual(result["pitcher"], {})
-        self.assertEqual(result["schema"], 1)
+        self.assertEqual(result["schema"], build._SAVANT_SCHEMA)
 
 
 def _roster_entry(pid, name, pos_abbr, stat):
@@ -276,6 +283,111 @@ class TestRenderHotColdSavant(unittest.TestCase):
         ohtani_pos = heating.find("Ohtani")
         cruz_pos = heating.find("Cruz")
         self.assertLess(ohtani_pos, cruz_pos)
+
+
+ARSENAL_STATS_CSV = (
+    '\ufeff"last_name, first_name","player_id","team_name_alt","pitch_type","pitch_name",'
+    '"run_value_per_100","run_value","pitches","pitch_usage","pa","ba","slg","woba",'
+    '"whiff_percent","k_percent","put_away","est_ba","est_slg","est_woba","hard_hit_percent"\n'
+    '"Skenes, Paul",694973,"PIT","FF","4-Seam Fastball",-1.2,-8,"450",48.2,"90","0.180","0.290","0.240",30,28,20,"0.190","0.300","0.250",32\n'
+    '"Skenes, Paul",694973,"PIT","SL","Slider",-0.9,-5,"240",31.7,"60","0.150","0.220","0.210",42,35,28,"0.170","0.250","0.220",25\n'
+    '"Skenes, Paul",694973,"PIT","CH","Changeup",-0.5,-2,"80",10.1,"20","0.220","0.320","0.270",35,20,15,"0.230","0.330","0.280",30\n'
+    '"Alcantara, Sandy",645261,"MIA","SI","Sinker",-0.3,-2,"320",42.0,"80","0.210","0.300","0.280",18,15,12,"0.220","0.310","0.290",40\n'
+)
+
+ARSENAL_SPEED_CSV = (
+    '\ufeff"last_name, first_name","pitcher","ff_avg_speed","si_avg_speed","fc_avg_speed",'
+    '"sl_avg_speed","ch_avg_speed","cu_avg_speed","fs_avg_speed","kn_avg_speed",'
+    '"st_avg_speed","sv_avg_speed"\n'
+    '"Skenes, Paul","694973","99.1",,,"88.4","89.0",,,,,\n'
+    '"Alcantara, Sandy","645261",,"97.2",,,,,,,,\n'
+)
+
+ARSENAL_SPIN_CSV = (
+    '\ufeff"last_name, first_name","pitcher","ff_avg_spin","si_avg_spin","fc_avg_spin",'
+    '"sl_avg_spin","ch_avg_spin","cu_avg_spin","fs_avg_spin","kn_avg_spin",'
+    '"st_avg_spin","sv_avg_spin"\n'
+    '"Skenes, Paul","694973","2410",,,"2610","1820",,,,,\n'
+    '"Alcantara, Sandy","645261",,"2180",,,,,,,,\n'
+)
+
+
+class TestBuildSavantArsenal(unittest.TestCase):
+    def test_merges_stats_speed_spin(self):
+        out = build._build_savant_arsenal(ARSENAL_STATS_CSV, ARSENAL_SPEED_CSV, ARSENAL_SPIN_CSV)
+        self.assertIn("694973", out)
+        skenes = out["694973"]
+        self.assertEqual(len(skenes), 3)
+        # Sorted by usage desc
+        self.assertEqual([p["pitch"] for p in skenes], ["FF", "SL", "CH"])
+        # FF has velo+spin, SL has velo+spin, CH has no velo in this fixture
+        ff = skenes[0]
+        self.assertEqual(ff["name"], "4-Seam Fastball")
+        self.assertAlmostEqual(ff["usage"], 48.2)
+        self.assertAlmostEqual(ff["velo"], 99.1)
+        self.assertAlmostEqual(ff["spin"], 2410.0)
+        self.assertAlmostEqual(ff["whiff"], 30.0)
+        sl = skenes[1]
+        self.assertAlmostEqual(sl["velo"], 88.4)
+        ch = skenes[2]
+        self.assertAlmostEqual(ch["velo"], 89.0)
+        self.assertAlmostEqual(ch["spin"], 1820.0)
+
+    def test_handles_missing_speed_csv(self):
+        out = build._build_savant_arsenal(ARSENAL_STATS_CSV, "", "")
+        self.assertIn("694973", out)
+        for p in out["694973"]:
+            self.assertIsNone(p["velo"])
+            self.assertIsNone(p["spin"])
+        # Stats columns still populated
+        self.assertAlmostEqual(out["694973"][0]["usage"], 48.2)
+
+    def test_handles_missing_stats_csv(self):
+        # No stats means no skeleton — result is empty even if velo/spin exist
+        out = build._build_savant_arsenal("", ARSENAL_SPEED_CSV, ARSENAL_SPIN_CSV)
+        self.assertEqual(out, {})
+
+    def test_empty_returns_empty(self):
+        self.assertEqual(build._build_savant_arsenal("", "", ""), {})
+
+
+class TestRenderArsenal(unittest.TestCase):
+    def _skenes_pitches(self):
+        out = build._build_savant_arsenal(ARSENAL_STATS_CSV, ARSENAL_SPEED_CSV, ARSENAL_SPIN_CSV)
+        return out["694973"]
+
+    def test_renders_table_with_top_pitches(self):
+        html = _render_arsenal(self._skenes_pitches())
+        self.assertIn("sp-arsenal", html)
+        self.assertIn("4-Seam Fastball", html)
+        self.assertIn("Slider", html)
+        self.assertIn("48%", html)  # Skenes FF usage
+        self.assertIn("99.1", html)  # FF velo
+        self.assertIn("2410", html)  # FF spin
+
+    def test_caps_at_four_pitches(self):
+        many = [
+            {"pitch": f"P{i}", "name": f"Pitch{i}", "usage": 30 - i, "velo": 90.0, "spin": 2000, "whiff": 25}
+            for i in range(6)
+        ]
+        html = _render_arsenal(many)
+        # Only top 4 by usage should render
+        self.assertIn("Pitch0", html)
+        self.assertIn("Pitch3", html)
+        self.assertNotIn("Pitch4", html)
+        self.assertNotIn("Pitch5", html)
+
+    def test_empty_arsenal_returns_empty_string(self):
+        self.assertEqual(_render_arsenal([]), "")
+        self.assertEqual(_render_arsenal(None), "")
+
+    def test_missing_velo_spin_renders_dash(self):
+        pitches = [{"pitch": "FF", "name": "4-Seam Fastball", "usage": 50.0,
+                    "velo": None, "spin": None, "whiff": 25.0}]
+        html = _render_arsenal(pitches)
+        self.assertIn("&mdash;", html)
+        self.assertIn("50%", html)
+        self.assertIn("25%", html)
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 ---
 title: "feat: Baseball Savant advanced stats in form guide and scouting report"
 type: feat
-status: active
+status: completed
 date: 2026-04-14
 ---
 
@@ -280,7 +280,7 @@ Either `hitter` or `pitcher` sub-dict may be absent (two-way players aside, most
 
 ### Phase 2 — Scouting Report (ships after Phase 1)
 
-- [ ] **Unit 4: Extend `fetch_savant_player()` with pitch-mix endpoint**
+- [x] **Unit 4: Extend `fetch_savant_player()` with pitch-mix endpoint**
 
   **Goal:** Add the third Savant endpoint (`player-pitch-mix`) to the fetch helper, populate `advanced.pitcher.pitch_mix` in the cache, and bump the schema to `2`.
 
@@ -313,7 +313,7 @@ Either `hitter` or `pitcher` sub-dict may be absent (two-way players aside, most
 
 ---
 
-- [ ] **Unit 5: Render pitch mix in `_sp_card()`**
+- [x] **Unit 5: Render pitch mix in `_sp_card()`**
 
   **Goal:** Update the probable-starter card at `sections/scouting.py:47` to render a compact pitch-mix table (pitch type, usage%, velo, spin, whiff%) when `sp["advanced"]["pitcher"]["pitch_mix"]` is present. Fall back to today's layout when absent.
 

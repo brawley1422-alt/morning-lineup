@@ -514,11 +514,126 @@ def _parse_savant_csv(text):
         out[pid] = rec
     return out
 
+_SAVANT_SCHEMA = 2  # bump invalidates prior-day caches
+
+def _build_savant_arsenal(stats_csv, speed_csv, spin_csv):
+    """Merge Savant arsenal CSVs into {pid_str: [{pitch, name, usage, velo,
+    spin, whiff}, ...]}. Returns {} if no input CSVs produced usable rows.
+
+    stats_csv: pitch-arsenal-stats — one row per (pitcher, pitch_type) with
+               pitch_type/pitch_name/pitch_usage/whiff_percent.
+    speed_csv: pitch-arsenals type=avg_speed — one wide row per pitcher with
+               ff_avg_speed, si_avg_speed, sl_avg_speed, etc.
+    spin_csv:  pitch-arsenals type=avg_spin — same wide shape with
+               ff_avg_spin, si_avg_spin, etc.
+    """
+    import csv, io
+    arsenal = {}
+
+    # Pass 1: build the skeleton from the per-pitch stats leaderboard.
+    if stats_csv:
+        reader = csv.reader(io.StringIO(stats_csv.lstrip("\ufeff")))
+        try:
+            header = next(reader)
+        except StopIteration:
+            header = []
+        idx = {name: i for i, name in enumerate(header)}
+        req = ("player_id", "pitch_type", "pitch_name", "pitch_usage", "whiff_percent")
+        if all(k in idx for k in req):
+            for row in reader:
+                if len(row) <= max(idx[k] for k in req):
+                    continue
+                pid = row[idx["player_id"]].strip().strip('"')
+                if not pid:
+                    continue
+                pitch = row[idx["pitch_type"]].strip().strip('"').upper()
+                if not pitch:
+                    continue
+                name = row[idx["pitch_name"]].strip().strip('"')
+                try:
+                    usage = float(row[idx["pitch_usage"]])
+                except (ValueError, TypeError):
+                    usage = None
+                try:
+                    whiff = float(row[idx["whiff_percent"]])
+                except (ValueError, TypeError):
+                    whiff = None
+                arsenal.setdefault(pid, []).append({
+                    "pitch": pitch,
+                    "name": name,
+                    "usage": usage,
+                    "whiff": whiff,
+                    "velo": None,
+                    "spin": None,
+                })
+
+    # Pass 2 + 3: merge velo + spin from the wide arsenals leaderboards.
+    def _wide_map(wide_csv):
+        out = {}
+        if not wide_csv:
+            return out
+        reader = csv.reader(io.StringIO(wide_csv.lstrip("\ufeff")))
+        try:
+            header = next(reader)
+        except StopIteration:
+            return out
+        # The wide endpoints use `pitcher` as the pid column, not `player_id`.
+        try:
+            pid_col = header.index("pitcher")
+        except ValueError:
+            return out
+        for row in reader:
+            if len(row) <= pid_col:
+                continue
+            pid = row[pid_col].strip().strip('"')
+            if not pid:
+                continue
+            rec = {}
+            for i, col in enumerate(header):
+                if i == pid_col or i >= len(row):
+                    continue
+                val = row[i].strip().strip('"')
+                if not val:
+                    continue
+                rec[col.lower()] = val
+            out[pid] = rec
+        return out
+
+    speed_map = _wide_map(speed_csv)
+    spin_map = _wide_map(spin_csv)
+
+    for pid, pitches in arsenal.items():
+        s_row = speed_map.get(pid, {})
+        sp_row = spin_map.get(pid, {})
+        for p in pitches:
+            key_base = p["pitch"].lower()
+            velo_raw = s_row.get(f"{key_base}_avg_speed")
+            spin_raw = sp_row.get(f"{key_base}_avg_spin")
+            try:
+                p["velo"] = float(velo_raw) if velo_raw else None
+            except (ValueError, TypeError):
+                p["velo"] = None
+            try:
+                p["spin"] = float(spin_raw) if spin_raw else None
+            except (ValueError, TypeError):
+                p["spin"] = None
+        pitches.sort(key=lambda x: (x["usage"] if x["usage"] is not None else -1), reverse=True)
+
+    return arsenal
+
+
 def fetch_savant_leaderboards(season, today):
-    """Fetch Baseball Savant expected-stats leaderboards for hitters and
-    pitchers and return a {'batter': {pid: {...}}, 'pitcher': {pid: {...}}}
-    map. Cached daily to data/cache/savant/leaderboards-{season}-{date}.json.
-    Any network or parse failure returns {} for that side — the caller must
+    """Fetch Baseball Savant leaderboards for hitters, pitchers, and pitch
+    arsenal. Returns:
+        {
+          'schema': 2,
+          'batter':  {pid: {xwoba, brl_percent, whiff_percent}},
+          'pitcher': {pid: {xera, xwoba, whiff_percent, brl_percent}},
+          'arsenal': {pid: [{pitch, name, usage, velo, spin, whiff}, ...]},
+        }
+
+    Cached daily to data/cache/savant/leaderboards-{season}-{date}.json.
+    Any network or parse failure degrades gracefully — the caller must
     tolerate missing data per player."""
     global _SAVANT_MEM
     mem_key = (str(season), today.isoformat())
@@ -527,7 +642,7 @@ def fetch_savant_leaderboards(season, today):
 
     # Golden-snapshot fixture mode: deterministic empty map.
     if "--fixture" in sys.argv:
-        result = {"batter": {}, "pitcher": {}, "schema": 1}
+        result = {"batter": {}, "pitcher": {}, "arsenal": {}, "schema": _SAVANT_SCHEMA}
         _SAVANT_MEM[mem_key] = result
         return result
 
@@ -535,21 +650,27 @@ def fetch_savant_leaderboards(season, today):
     if cache_path.exists():
         try:
             cached = json.loads(cache_path.read_text(encoding="utf-8"))
-            if cached.get("schema") == 1:
+            if cached.get("schema") == _SAVANT_SCHEMA:
                 _SAVANT_MEM[mem_key] = cached
                 return cached
         except Exception:
             pass
 
-    base = "https://baseballsavant.mlb.com/leaderboard/custom"
-    batter_url = (
-        f"{base}?year={season}&type=batter&min=0"
-        f"&selections=xwoba,brl_percent,whiff_percent&csv=true"
-    )
-    pitcher_url = (
-        f"{base}?year={season}&type=pitcher&min=0"
-        f"&selections=xera,xwoba,whiff_percent,brl_percent&csv=true"
-    )
+    cbase = "https://baseballsavant.mlb.com/leaderboard/custom"
+    lbase = "https://baseballsavant.mlb.com/leaderboard"
+    urls = {
+        "batter": (
+            f"{cbase}?year={season}&type=batter&min=0"
+            f"&selections=xwoba,brl_percent,whiff_percent&csv=true"
+        ),
+        "pitcher": (
+            f"{cbase}?year={season}&type=pitcher&min=0"
+            f"&selections=xera,xwoba,whiff_percent,brl_percent&csv=true"
+        ),
+        "arsenal_stats": f"{lbase}/pitch-arsenal-stats?year={season}&min=10&csv=true",
+        "arsenal_speed": f"{lbase}/pitch-arsenals?year={season}&min=0&type=avg_speed&csv=true",
+        "arsenal_spin":  f"{lbase}/pitch-arsenals?year={season}&min=0&type=avg_spin&csv=true",
+    }
 
     def _get(url):
         req = urllib.request.Request(url, headers={"User-Agent": "MorningLineup/1.0"})
@@ -560,15 +681,19 @@ def fetch_savant_leaderboards(season, today):
             print(f"  warning: savant fetch failed ({url[:60]}...): {e}", flush=True)
             return ""
 
-    batter_csv = _get(batter_url)
-    pitcher_csv = _get(pitcher_url)
+    bodies = {k: _get(u) for k, u in urls.items()}
 
     result = {
-        "schema": 1,
+        "schema": _SAVANT_SCHEMA,
         "season": str(season),
         "date": today.isoformat(),
-        "batter": _parse_savant_csv(batter_csv) if batter_csv else {},
-        "pitcher": _parse_savant_csv(pitcher_csv) if pitcher_csv else {},
+        "batter": _parse_savant_csv(bodies["batter"]) if bodies["batter"] else {},
+        "pitcher": _parse_savant_csv(bodies["pitcher"]) if bodies["pitcher"] else {},
+        "arsenal": _build_savant_arsenal(
+            bodies["arsenal_stats"],
+            bodies["arsenal_speed"],
+            bodies["arsenal_spin"],
+        ),
     }
 
     try:
