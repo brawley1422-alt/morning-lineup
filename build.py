@@ -1382,6 +1382,10 @@ def page(briefing):
       <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"/></svg>
       <span>All Teams</span>
     </a>
+    <button type="button" class="share-btn" aria-label="Share this team" title="Share this page">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      <span>Share</span>
+    </button>
   </div>
   <div class="kicker">
     <span>Vol. {t.year - 2023} &middot; <span class="vol">No. {vol_no:03d}</span></span>
@@ -1566,7 +1570,7 @@ def page(briefing):
 }})();
 </script>
 <script>var TEAM_ID={TEAM_ID};var TEAM_IDLE_MSG="{CFG['branding']['idle_msg']}";</script>
-<script src="sections.js" defer></script><script src="tz.js" defer></script><script src="analytics.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="tz.js" defer></script><script src="analytics.js" defer></script><script src="share.js" defer></script><script src="install-prompt.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});
 document.addEventListener("click",function(e){{var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){{var h=tr.getAttribute("data-href");if(h){{e.preventDefault();location.href=h}}}}}});
@@ -2388,7 +2392,7 @@ if __name__ == "__main__":
         # the team output dir so the relative script tags resolve on every page.
         try:
             import shutil
-            for _asset in ("player-card.js", "reader-state.js", "resolution-pass.js", "tz.js", "analytics.js"):
+            for _asset in ("player-card.js", "reader-state.js", "resolution-pass.js", "tz.js", "analytics.js", "share.js", "install-prompt.js"):
                 _src = ROOT / _asset
                 if _src.exists():
                     shutil.copyfile(_src, out_path.parent / _asset)

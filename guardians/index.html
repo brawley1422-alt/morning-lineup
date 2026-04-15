@@ -662,6 +662,50 @@ body.theme-paper .column-body{color:#3a3626;border-top-color:#cfc39a}
 body.theme-paper .columnists-head .section-kicker{color:var(--ink)}
 body.theme-paper .column[data-role="straight_beat"] .column-role{color:#2d2826}
 body.theme-paper .column:not([open]) > summary.column-byline:hover{background:linear-gradient(90deg,rgba(201,162,74,.14),transparent 55%)}
+
+/* ====== Share button (masthead, next to home/teams nav) ====== */
+.nav-btns .share-btn{display:inline-flex;align-items:center;gap:6px;color:var(--gold);border:1px solid var(--gold-dim);background:var(--ink-2);border-radius:3px;padding:8px 12px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:10px;font-weight:600;cursor:pointer;transition:color .15s,border-color .15s,background .15s}
+.nav-btns .share-btn:hover{color:var(--paper);border-color:var(--gold);background:var(--ink-3)}
+.nav-btns .share-btn svg{flex-shrink:0}
+@media (max-width:640px){.nav-btns .share-btn span{display:none}}
+
+/* ====== Toast ("Link copied to clipboard") ====== */
+#ml-toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(10px);background:var(--ink-2);color:var(--paper);border:1px solid var(--gold-dim);border-left:3px solid var(--gold);padding:12px 20px;font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:11px;border-radius:3px;box-shadow:0 20px 40px -10px rgba(0,0,0,.6);z-index:9999;opacity:0;transition:opacity .25s ease,transform .25s ease;pointer-events:none}
+#ml-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ====== Install prompt banner ====== */
+.ml-install-banner{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(30px);max-width:460px;width:calc(100% - 32px);background:var(--ink-2);border:1px solid var(--gold-dim);border-top:3px solid var(--gold);border-radius:4px;padding:16px 18px;display:flex;flex-direction:column;gap:12px;box-shadow:0 24px 50px -12px rgba(0,0,0,.7);z-index:9998;opacity:0;transition:opacity .3s ease,transform .3s ease}
+.ml-install-banner.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.ml-install-copy{display:flex;flex-direction:column;gap:4px}
+.ml-install-title{font-family:var(--serif);font-style:italic;font-weight:800;font-size:20px;color:var(--paper);line-height:1.1}
+.ml-install-detail{font-family:var(--body);font-size:13px;color:var(--paper-dim);line-height:1.45}
+.ml-install-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.ml-install-accept,.ml-install-dismiss{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:600;padding:9px 16px;border-radius:3px;cursor:pointer;transition:color .15s,border-color .15s,background .15s}
+.ml-install-accept{background:var(--gold);color:var(--ink);border:1px solid var(--gold);}
+.ml-install-accept:hover{background:var(--gold-hi,#e6bf62);border-color:var(--gold-hi,#e6bf62)}
+.ml-install-dismiss{background:transparent;color:var(--paper-mute);border:1px solid var(--rule-hi);}
+.ml-install-dismiss:hover{color:var(--paper);border-color:var(--gold-dim)}
+
+/* ====== First-visit welcome overlay (landing page only) ====== */
+.ml-welcome{position:fixed;inset:0;background:rgba(10,12,18,.78);backdrop-filter:blur(6px);z-index:10000;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .35s ease}
+.ml-welcome.show{opacity:1;pointer-events:auto}
+.ml-welcome-card{background:var(--ink-2);border:1px solid var(--gold-dim);border-top:4px solid var(--gold);max-width:540px;width:100%;max-height:90vh;overflow-y:auto;padding:28px 32px 24px;border-radius:4px;box-shadow:0 40px 80px -20px rgba(0,0,0,.8);position:relative}
+.ml-welcome-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent 0%,var(--team-accent,#c9a24a) 30%,var(--gold) 50%,var(--team-accent,#c9a24a) 70%,transparent 100%)}
+.ml-welcome-kicker{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:baseline}
+.ml-welcome-kicker .step{color:var(--gold)}
+.ml-welcome-card h2{font-family:var(--serif);font-style:italic;font-weight:900;font-size:36px;line-height:1;color:var(--paper);margin:0 0 8px}
+.ml-welcome-card .sub{font-family:var(--body);font-size:14px;color:var(--paper-dim);margin:0 0 18px;line-height:1.5}
+.ml-welcome-teams{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:16px}
+@media (max-width:520px){.ml-welcome-teams{grid-template-columns:repeat(4,1fr)}}
+.ml-welcome-team{font-family:var(--cond);text-transform:uppercase;letter-spacing:.05em;font-size:10px;font-weight:600;padding:10px 4px;background:var(--ink-3);color:var(--paper-dim);border:1px solid var(--rule);border-radius:2px;cursor:pointer;text-align:center;text-decoration:none;transition:color .15s,border-color .15s,background .15s,transform .15s}
+.ml-welcome-team:hover{color:var(--paper);border-color:var(--gold);background:var(--ink-2);transform:translateY(-1px)}
+.ml-welcome-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
+.ml-welcome-accept,.ml-welcome-skip{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:600;padding:10px 18px;border-radius:3px;cursor:pointer;transition:color .15s,border-color .15s,background .15s;border:1px solid}
+.ml-welcome-accept{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.ml-welcome-accept:hover{background:var(--gold-hi,#e6bf62);border-color:var(--gold-hi,#e6bf62)}
+.ml-welcome-skip{background:transparent;color:var(--paper-mute);border-color:var(--rule-hi)}
+.ml-welcome-skip:hover{color:var(--paper);border-color:var(--gold-dim)}
+.ml-welcome-ios-steps{font-family:var(--body);font-size:13px;color:var(--paper-dim);line-height:1.55;margin:10px 0 18px;padding:12px 14px;background:var(--ink);border-left:3px solid var(--gold);border-radius:2px}
 </style>
 </head>
 <body data-team="guardians">
@@ -677,6 +721,10 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"/></svg>
       <span>All Teams</span>
     </a>
+    <button type="button" class="share-btn" aria-label="Share this team" title="Share this page">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      <span>Share</span>
+    </button>
   </div>
   <div class="kicker">
     <span>Vol. 3 &middot; <span class="vol">No. 105</span></span>
@@ -785,7 +833,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="nx-venue">Busch Stadium <span class="nx-dome">Retractable Roof</span></div>
         <div class="nx-meta"><span class="nx-opp-rec">STL: 9-8, 3rd NL Central (W1)</span> &middot; <span class="nx-series">Season series: 1-1</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Guardians</span> <player-card pid="677944">Slade Cecconi</player-card><div class="nx-pline">5.74 ERA &middot; 0-2 &middot; 15.2 IP &middot; 14 K &middot; 1.21 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-138"/></svg>STL</span> Dustin May<div class="nx-pline">9.45 ERA &middot; 1-2 &middot; 13.1 IP &middot; 11 K &middot; 1.80 WHIP</div></div>
+        <div class="nx-pitcher"><span class="nx-side">Guardians</span> <player-card pid="677944">Slade Cecconi</player-card><div class="nx-pline">5.60 ERA &middot; 0-2 &middot; 17.2 IP &middot; 17 K &middot; 1.42 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-138"/></svg>STL</span> Dustin May<div class="nx-pline">8.80 ERA &middot; 1-2 &middot; 15.1 IP &middot; 13 K &middot; 1.76 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="680757">Kwan</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="800050">DeLauter</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="608070">Ramírez</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="700932">Manzardo</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="671655">Valera</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="682877">Brito</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="682177">Schneemann</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="666310">Naylor</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="677587">Rocchio</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Guardians.TV Presented by Progressive &middot; Cardinals.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WTAM 1100 &middot; KMOX 1120 AM/104.1 FM &middot; Guardians Radio Network</div>
         <div class="nx-wx">72°F &middot; Climate controlled</div>
@@ -815,12 +863,12 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="800050">DeLauter</player-card></span><span class="primary t-elite">.424<em>xwOBA</em></span><span class="secondary">.217 &middot; 0 HR &middot; .748 OPS</span></li><li><span class="n"><player-card pid="608070">Ramírez</player-card></span><span class="primary t-elite">.375<em>xwOBA</em></span><span class="secondary">.321 &middot; 2 HR &middot; 1.031 OPS</span></li><li><span class="n"><player-card pid="682657">Martínez</player-card></span><span class="primary t-elite">.362<em>xwOBA</em></span><span class="secondary">.433 &middot; 2 HR &middot; 1.166 OPS</span></li><li><span class="n"><player-card pid="677587">Rocchio</player-card></span><span class="primary t-solid">.358<em>xwOBA</em></span><span class="secondary">.208 &middot; 1 HR &middot; .654 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="656555">Hoskins</player-card></span><span class="primary t-rough">.287<em>xwOBA</em></span><span class="secondary">.185 &middot; 1 HR &middot; .621 OPS</span></li><li><span class="n"><player-card pid="681807">Fry</player-card></span><span class="primary t-rough">.288<em>xwOBA</em></span><span class="secondary">.125 &middot; 0 HR &middot; .425 OPS</span></li><li><span class="n"><player-card pid="682177">Schneemann</player-card></span><span class="primary t-rough">.293<em>xwOBA</em></span><span class="secondary">.316 &middot; 1 HR &middot; .988 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="800050">DeLauter</player-card></span><span class="primary t-elite">.424<em>xwOBA</em></span><span class="secondary">.238 &middot; 0 HR &middot; .789 OPS</span></li><li><span class="n"><player-card pid="608070">Ramírez</player-card></span><span class="primary t-elite">.375<em>xwOBA</em></span><span class="secondary">.360 &middot; 2 HR &middot; 1.147 OPS</span></li><li><span class="n"><player-card pid="682657">Martínez</player-card></span><span class="primary t-elite">.362<em>xwOBA</em></span><span class="secondary">.433 &middot; 2 HR &middot; 1.166 OPS</span></li><li><span class="n"><player-card pid="677587">Rocchio</player-card></span><span class="primary t-solid">.358<em>xwOBA</em></span><span class="secondary">.200 &middot; 1 HR &middot; .683 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="656555">Hoskins</player-card></span><span class="primary t-rough">.287<em>xwOBA</em></span><span class="secondary">.185 &middot; 1 HR &middot; .621 OPS</span></li><li><span class="n"><player-card pid="681807">Fry</player-card></span><span class="primary t-rough">.288<em>xwOBA</em></span><span class="secondary">.125 &middot; 0 HR &middot; .425 OPS</span></li><li><span class="n"><player-card pid="682177">Schneemann</player-card></span><span class="primary t-rough">.293<em>xwOBA</em></span><span class="secondary">.438 &middot; 1 HR &middot; 1.276 OPS</span></li></ul></div>
     </div>
     <div class="two">
       <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="681870">Sabrowski</player-card></span><span class="primary t-elite">0.84<em>xERA</em></span><span class="secondary">5.2 IP &middot; 3.18 ERA &middot; 9 K &middot; 39.7% Whf</span></li><li><span class="n"><player-card pid="676282">Cantillo</player-card></span><span class="primary t-elite">2.39<em>xERA</em></span><span class="secondary">20.2 IP &middot; 2.61 ERA &middot; 24 K &middot; 28.2% Whf</span></li><li><span class="n"><player-card pid="682120">Herrin</player-card></span><span class="primary t-elite">2.79<em>xERA</em></span><span class="secondary">3.2 IP &middot; 0.00 ERA &middot; 3 K &middot; 35.5% Whf</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="688883">Pallette</player-card></span><span class="primary t-rough">6.45<em>xERA</em></span><span class="secondary">7.2 IP &middot; 4.70 ERA &middot; 9 K &middot; 27.0% Whf</span></li><li><span class="n"><player-card pid="677944">Cecconi</player-card></span><span class="primary t-rough">6.17<em>xERA</em></span><span class="secondary">15.2 IP &middot; 5.74 ERA &middot; 14 K &middot; 23.0% Whf</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="688883">Pallette</player-card></span><span class="primary t-rough">6.45<em>xERA</em></span><span class="secondary">7.2 IP &middot; 4.70 ERA &middot; 9 K &middot; 27.0% Whf</span></li><li><span class="n"><player-card pid="677944">Cecconi</player-card></span><span class="primary t-rough">6.17<em>xERA</em></span><span class="secondary">17.2 IP &middot; 5.60 ERA &middot; 17 K &middot; 23.0% Whf</span></li></ul></div>
     </div>
     
     <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Line Score &middot; Three Stars &middot; Leaders</div>
@@ -838,7 +886,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="sp-card">
         <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-114"/></svg><span class="sp-side-ab">Guardians</span></div>
         <div class="sp-name"><player-card pid="677944">Slade Cecconi</player-card></div>
-        <div class="sp-season">5.74 ERA &middot; 0-2 &middot; 15.2 IP &middot; 14 K &middot; 1.21 WHIP</div>
+        <div class="sp-season">5.60 ERA &middot; 0-2 &middot; 17.2 IP &middot; 17 K &middot; 1.42 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
             <tbody><tr><td>03-29</td><td class="opp">vs Seattle Mariners</td><td class="num">4.1</td><td class="num">6</td><td class="num">5</td><td class="num">6</td><td class="num">3</td></tr><tr><td>04-05</td><td class="opp">vs Chicago Cubs</td><td class="num">6.0</td><td class="num">0</td><td class="num">6</td><td class="num">1</td><td class="num">1</td></tr><tr><td>04-10</td><td class="opp">vs Atlanta Braves</td><td class="num">5.1</td><td class="num">4</td><td class="num">3</td><td class="num">7</td><td class="num">1</td></tr></tbody></table>
@@ -884,7 +932,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="sp-card">
         <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-138"/></svg><span class="sp-side-ab">STL</span></div>
         <div class="sp-name">Dustin May</div>
-        <div class="sp-season">9.45 ERA &middot; 1-2 &middot; 13.1 IP &middot; 11 K &middot; 1.80 WHIP</div>
+        <div class="sp-season">8.80 ERA &middot; 1-2 &middot; 15.1 IP &middot; 13 K &middot; 1.76 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
             <tbody><tr><td>03-29</td><td class="opp">vs Tampa Bay Rays</td><td class="num">4.0</td><td class="num">6</td><td class="num">3</td><td class="num">10</td><td class="num">1</td></tr><tr><td>04-04</td><td class="opp">vs Detroit Tigers</td><td class="num">3.1</td><td class="num">7</td><td class="num">4</td><td class="num">7</td><td class="num">2</td></tr><tr><td>04-10</td><td class="opp">vs Boston Red Sox</td><td class="num">6.0</td><td class="num">1</td><td class="num">4</td><td class="num">4</td><td class="num">0</td></tr></tbody></table>
@@ -1260,7 +1308,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Progressive Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/15/26 11:40 CT</span>
+  <span>Filed 04/15/26 13:09 CT</span>
 </footer>
 
 <script>
@@ -1290,7 +1338,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=114;var TEAM_IDLE_MSG="No Guardians game in progress";</script>
-<script src="sections.js" defer></script><script src="tz.js" defer></script><script src="analytics.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="tz.js" defer></script><script src="analytics.js" defer></script><script src="share.js" defer></script><script src="install-prompt.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});
