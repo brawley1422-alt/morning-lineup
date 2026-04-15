@@ -21,12 +21,14 @@ revised: 2026-04-15
 |------------|-----------|----------|------------------------------------------------------|
 | 2026-04-15 | `22a59e0` | A1-A5    | OG/Twitter meta tags on every page, robots.txt, sitemap.xml, 30 per-team OG card PNGs, fixed Cubs-centric manifest copy, canonical URLs, per-page titles + descriptions for SEO |
 | 2026-04-15 | `3636d04` | E1, E2   | `analytics.js` client + Supabase `events` table (schema in `docs/supabase/events.sql`, applied manually by JB in the Supabase SQL Editor) + `docs/launch/metrics-dashboard.md` with daily-fill-in log and copy-pasteable queries |
+| 2026-04-15 | `b2d8fda` | D1, D2, D5 | Share button in every team masthead (Web Share API + clipboard fallback + toast), smart install prompt gated on visits≥3 + non-standalone + not-dismissed, first-visit onboarding overlay on landing (pick team → install → "come back tomorrow"). All wired to analytics events: `share_click`, `install_shown`/`accepted`/`dismissed`, `onboard_*` |
 
 **Verified live:**
 - Team page OG tags render correctly (anyone sharing a link to a team page now gets a rich preview card).
 - `/robots.txt` and `/sitemap.xml` served from GH Pages root.
 - 30 per-team OG card PNGs committed under `icons/og-{slug}.png` + `icons/og-default.png`.
 - Analytics smoke-test row inserted via REST API with HTTP 201. Every pageview on the live site now writes a row to Supabase `events`.
+- Share button, install prompt, and welcome overlay all served at 200 across root + per-team paths.
 
 ## What we learned by shipping
 
@@ -35,6 +37,73 @@ revised: 2026-04-15
 - **Track B (friends & family invite flow) is lower ROI than it looked on paper.** The manual alternative — JB texts 10 friends the URL — is effectively free and captures the same outcome for the same sample size. A formal invite system, a welcome overlay, and a magic-link share button is a week of work that replaces a task JB can do in one evening. **Recommendation below: skip most of Track B and fold its one valuable piece (welcome onboarding for any cold visitor) into Track D.**
 - **Track D1 (share button) is higher ROI than any single B unit.** One button, one script, every visitor gets the power to share with one tap. It's the thing that makes the OG cards we just shipped actually get used.
 - **No content has been pushed externally yet.** All the work so far is infrastructure. Zero launch signal has left the repo. Until JB posts somewhere, analytics will show only his own visits and this session's smoke tests.
+
+## Research Deepening Pass (2026-04-15, post-Phase-2)
+
+After shipping Phases 1 and 2, four research threads were run in parallel
+to strengthen the remaining Phase 3–5 unit specs. Findings below are
+integrated into the revised unit definitions; this section summarizes the
+highest-signal decisions the research produced.
+
+### Launch playbook findings
+
+- **r/baseball gates self-promo.** Posts look like product pitches get removed without mod pre-approval. The reliable entry is a **soft launch in a friendly team subreddit first** (r/CHICubs is the natural choice given JB's affinity), then message r/baseball mods with that team-sub post as proof the community likes it.
+- **Frame every external post as content, not build.** Lead with today's screenshot and a concrete observation ("The Cubs have the worst bullpen ERA in April since 2017 — here's the chart"). The site is the source in the body. "I built this" goes in the first comment, not the title.
+- **Skip Product Hunt.** For an off-genre content site with no pre-built network, PH ROI is marginal. The platform has drifted toward AI tools and SaaS. Time is better spent on team subs + Twitter replies to beat writers.
+- **Stagger the launch over 3 days, not simultaneously.** Day 1: team subreddit soft launch. Day 2: r/baseball (mod-approved) + Twitter. Day 3: Show HN. 24-hour gaps. Simultaneous posting means you can't respond to engagement on all channels.
+- **Show HN title format:** `Show HN: Morning Lineup – a daily newspaper-style briefing for all 30 MLB teams`. Tue/Wed/Thu 8–10am ET. First comment immediately with stack + what's automated + what's next. Never ask friends to upvote — HN voting-ring detection is fatal.
+- **Twitter:** screenshots in the first tweet, link in the first reply, pin the reply. Link-in-first-tweet is algorithmically downweighted.
+- **Correction to prior plan draft:** `r/reddevils` is Manchester United, not a baseball sub. Correct Giants sub is `r/SFGiants`.
+
+### Email deliverability findings (affects D3)
+
+- **Provider: Resend.** Free tier (3,000/mo, 100/day), no credit card, cleanest Supabase DX, first-class Supabase ecosystem integration.
+- **Sending from a provider default domain (`onboarding@resend.dev`) is not viable for real lists.** Deliverability to Gmail primary inbox is poor — emails land in Promotions at best, Spam at worst. Gmail SMTP + app password has a 500/day cap and burns fast.
+- **Recommendation: buy a cheap owned domain** (`morninglineup.email` at Cloudflare Registrar, ~$10/yr). Resend's dashboard wizard auto-generates SPF + DKIM + DMARC records and verifies on Cloudflare DNS in under 5 minutes.
+- **Supabase scheduler:** There is no built-in cron UI for Edge Functions. The canonical 2026 pattern is `pg_cron` extension (Dashboard → Database → Extensions) calling `net.http_post` (from `pg_net`) to invoke the Edge Function URL with the service-role key. DST gotcha: compute the target hour inside the function from `America/Chicago` rather than hard-coding a UTC cron.
+- **Idempotency via `email_sends` table** with unique constraint on `(user_id, send_date)` — insert before sending so retries don't duplicate.
+- **Compliance minimums:** `List-Unsubscribe` one-click header (Resend adds it automatically when you pass the header), CAN-SPAM physical address in footer, short `/privacy` page on GH Pages.
+- **Double opt-in is now the majority default** for deliverability. Gmail's 2024 sender rules punish low-engagement lists hard; single opt-in risks burning sender reputation on day one.
+- **Contrarian finding (press-kit agent):** Consider skipping email v1 entirely. For a free daily content site, the home-screen install is the retention mechanism; email is a second surface to maintain (compose, send, unsubscribe, SPF/DKIM/DMARC, compliance) for a marginal retention lift at the current audience size. Revisit at 500 DAU when there's a newsy reason to send beyond "new edition live."
+
+### Web push findings (affects D4)
+
+- **iOS PWA push works since 16.4, but is install-gated.** Reachable audience is roughly 10–15× smaller than Android Chrome because the user must install to home screen *first*. Android Chrome (FCM-backed) remains the most reliable delivery path.
+- **EU blackout:** iOS 17.4+ DMA changes removed standalone PWA mode in the EU. Push and badges don't work there. Non-issue for an MLB audience.
+- **Use `negrel/webpush` or `draphy/pushforge`** — Deno-native VAPID libraries that work inside Supabase Edge Functions. The classic Node `web-push` npm package is awkward in the Edge runtime. **Don't use it.**
+- **Safari payload cap ~256 bytes** for title+body combined. No custom images (only the PWA app icon renders). Keep copy tight: `"Cubs 5, Brewers 3 — Final. Tap for recap."`
+- **Pre-prompt is mandatory.** Never call `pushManager.subscribe()` on first visit — Chrome has actively deranked sites that do. Use a custom HTML button ("Get final score alerts for the Cubs") that triggers the native prompt only on click. Well-prompted content sites hit 15–20% accept vs ~6% site-wide average.
+- **410 Gone = delete the row immediately.** Also listen for `pushsubscriptionchange` in `sw.js` and re-POST the new subscription.
+- **Permission-free fallback: `navigator.setAppBadge()` with local polling.** Costs nothing, works for users who decline push, and gives a passive re-engagement surface (badge only updates when the PWA is opened, but that's still a nudge). **Ship this as a Day-1 companion to web push**, not as an alternative.
+- **Build-vs-buy:** negrel/webpush + Supabase Edge Function is ~200 lines total. OneSignal's free tier has a 10k-per-send cap and adds SDK bloat. For a static site with one event trigger (game Final), self-hosting via VAPID is cleaner than any managed service.
+
+### Press kit + landing conversion findings (affects C1, C2)
+
+- **Single dominant CTA beats menu.** Every high-converting newsletter/content landing page in recent teardowns (beehiiv, Morning Brew, Sherwood News) has one CTA above the fold, removed top nav from the hero, and a product preview thumbnail as social proof.
+- **For Morning Lineup, the team-picker grid IS the CTA** — don't dilute it with an email field in the same stripe. Email capture is a Phase-5 decision, not a launch-day one.
+- **Contextual CTA variant:** first visit = "Pick your team", repeat visit (via `localStorage.ml_visits`) = "Welcome back — add to home screen". The install chip is a *secondary* element, not the primary action.
+- **Install button copy:** "Read it every morning" converts better than generic "Install". Place it **in-content after one scroll**, not in the header. Header-mounted install buttons get <1% tap-through vs 4–6% for in-content placement.
+- **Trust signals without users:** name the founder, state the cadence, show the stack. "Edited by JB Rawley. Rebuilt every morning at 6 a.m. CT. 30 teams. No ads, no tracking." This replaces testimonials you don't have. Founder photo fits `/press/`, not the hero.
+- **Press kit conventions (2026):**
+  - Naming: **`/press/`** (not `/about/` or `/media-kit/`) — matches the editorial theme and is what reporters search for.
+  - Sections (in order): Fact Sheet, Descriptions (one-liner / 50w / 150w), Screenshots, Logos, Founder, Quotes, Contact.
+  - Downloadable ZIP: `/press/morning-lineup-press-kit.zip` — logos (PNG + SVG, dark + light), 2–3 hero screenshots at 2x retina, founder headshot, fact sheet + boilerplate as plain text. One gold "Download press kit" button at the top of the page.
+  - **Fact sheet is the most-copied section** per Prezly's 2025 guide. Lead with it.
+  - **One pre-written quote** attributed to JB so a writer can drop it in without emailing.
+  - **Three description lengths (one-liner, 50w, 150w)** so reporters can paste whichever fits.
+- **Explicitly do NOT build for launch:** fake "As seen in" logo row, email capture form, modal popups, testimonial carousel, header-mounted install button, Notion-hosted press kit (keep the HTML page as the front door; Notion is hidden).
+
+### Research caveat
+
+Two of the four agents ran without web search access and noted this
+explicitly. Their recommendations are synthesis from 2024–2025 platform
+norms, which are generally stable but not guaranteed to hold on
+launch day. JB should sanity-check:
+
+1. r/baseball's current Rule 2 wording before posting
+2. Resend's free tier numbers and Gmail/Yahoo bulk sender thresholds (both moving targets)
+
+A 15-minute pre-flight check each is worth it before pressing publish.
 
 ## Overview
 
@@ -433,62 +502,96 @@ shareability floor and every other growth mechanism stops leaking.
 
 ### Track C — Public Launch Moment
 
-- [ ] **Unit C1: Landing page conversion CTA**
+- [ ] **Unit C1: Landing page conversion CTA (research-revised)**
 
-**Goal:** `landing.html` gets a permanent above-the-fold CTA stripe: "Pick your team · Install to home screen · Get the daily email".
+**Goal:** The landing page has a single dominant above-the-fold CTA that routes cold visitors straight into the product. The team-picker grid **is** the CTA — not one of three options competing with email capture.
 
 **Requirements:** R5
 
-**Dependencies:** Track A complete
+**Dependencies:** Track A complete. Phase 2 already shipped `welcome-overlay.js` which handles the first-visit onboarding flow. C1 handles every subsequent visit and anyone who skipped the overlay.
 
 **Files:**
-- Modify: `landing.html` (CTA stripe markup + CSS)
-- Modify: `landing.html` JS block (wire up install prompt, team picker jump, email form)
+- Modify: `landing.html` (CTA stripe markup + CSS + contextual-variant JS)
 
-**Approach:**
-- CTA stripe sits directly under the masthead, above the live standings.
-- Three buttons side-by-side on desktop, stacked on mobile.
-- "Install" button uses `beforeinstallprompt` and hides itself if the app is already installed (`matchMedia('(display-mode: standalone)')`).
-- "Email" button opens a tiny Supabase-backed signup modal (no password — magic link or email-only newsletter list).
+**Approach (revised per research):**
+- **Single full-bleed stripe**, not a three-button row. Runs under the masthead, above the live standings. One headline, one action.
+- **Primary action is the existing team-picker grid** — a single dominant CTA converts better than a menu of options. Do NOT add an email field in this stripe. (Email capture is a Phase-5 decision.)
+- **Contextual headline via `localStorage.ml_visits`:**
+  - Visit 1 (overlay already dismissed): `Pick your team. Read it every morning.`
+  - Visit 2+: `Welcome back. Add Morning Lineup to your home screen.`
+  - Standalone PWA display mode: hide the stripe entirely (user already installed).
+- **Secondary chip under the headline:** `Read it every morning → Add to home screen`. Feature-detect `beforeinstallprompt`; fall back to iOS Safari share-sheet instructions on iOS; hide entirely on desktop Safari.
+- **Trust line in the masthead dek, byline style:** `Edited by JB Rawley. Rebuilt every morning at 6 a.m. CT. 30 teams. No ads, no tracking.` Replaces testimonials we don't have. Shipping this line is a 10-minute change and can land independently of the rest of C1.
+- Analytics events: `landing_cta_clicked` with `{variant: "first|return"}`, reuse existing `install_*` events from D2.
+
+**Explicitly not shipped in C1:**
+- Email capture field (deferred to Phase 5, possibly skipped entirely)
+- Modal popups
+- Testimonial row
+- Fake "As seen in" logo bar
 
 **Test scenarios:**
-- Happy path: Install button triggers native prompt on Chrome Android.
-- Happy path: Install button hides on installed PWA.
-- Happy path: Email signup persists email to Supabase.
-- Edge case: Safari desktop (no install prompt API) shows "Bookmark this page" instead.
+- Happy path: First visit after overlay dismissal → stripe shows "Pick your team" headline, team grid is the primary target.
+- Happy path: Return visit (`ml_visits >= 2`) → stripe headline swaps to "Welcome back".
+- Happy path: Installed PWA (`display-mode: standalone`) → stripe hidden, user goes straight to home/.
+- Edge case: Safari desktop → install chip hidden (no API + no iOS instructions apply).
+- Edge case: iOS Safari → install chip shows share-sheet instructions instead of a clickable button.
 
-**Verification:** Cold landing visit produces a clear "what do I do next" signal in under 2 seconds.
+**Verification:** Cold landing visit produces a clear "pick your team" signal above the fold. Analytics `landing_cta_clicked` events arrive in Supabase within seconds of click.
 
 ---
 
-- [ ] **Unit C2: Press kit page**
+- [ ] **Unit C2: Press kit page (research-revised)**
 
-**Goal:** A standalone `/press/` page with a one-paragraph description, screenshots, team logos, contact, and pre-written social copy. Something to link to when posting externally.
+**Goal:** A `/press/` page that gives beat writers, bloggers, and sports-Twitter curators everything they need to cover Morning Lineup without emailing for assets. Ships with a one-click ZIP download of the full kit.
 
 **Requirements:** R5
 
 **Dependencies:** Track A complete
 
 **Files:**
-- Create: `press/index.html`
-- Create: `press/press.css`
-- Create: `press/screenshots/*.png` (5–10 captures — cubs page, landing, scorecard, player cards, fold design)
-- Modify: `deploy.py` (add press assets to STATIC_ASSETS)
+- Create: `press/index.html` (newspaper-template styling, matches the rest of the site)
+- Create: `press/press.css` (minimal — reuses `../style.css` where possible)
+- Create: `press/screenshots/landing.png`, `press/screenshots/cubs.png`, `press/screenshots/scorecard.png` (2x retina)
+- Create: `press/logos/logo-dark.svg`, `press/logos/logo-light.svg`, `press/logos/logo-mark.png`
+- Create: `press/founder-jb.jpg` (editorial B&W headshot — JB to provide)
+- Create: `press/morning-lineup-press-kit.zip` (bundles the above + `fact-sheet.txt` + `boilerplate.txt`)
+- Modify: `deploy.py` (add `press/` tree to STATIC_ASSETS deploy loop)
+- Modify: `build.py` footer to link `/press/`
 
-**Approach:**
-- Editorial styling matches the rest of the site (dark ink, gold, Playfair).
-- Sections: One-liner, Why it exists, Features, Screenshots, "Use this copy" (pre-written Reddit/Twitter/PH posts), Contact.
-- No auth gate.
+**Approach (revised per research):**
+- **Naming:** `/press/`, not `/about/` or `/media-kit/`. Matches the editorial theme and is what reporters search for.
+- **Template:** full newspaper aesthetic — Playfair masthead reading "PRESS ROOM", dark ink on cream, gold rule. Reuse the existing `style.css` variables.
+- **Sections in order** (from the 2025 Prezly/Zapier/Acorn Games research synthesis — fact sheet is the most-copied section, lead with it):
+  1. **Download press kit** (big gold button at the top, "Download press kit (ZIP, ~4 MB)")
+  2. **Fact sheet** — launched 2026, built by JB Rawley in Grand Rapids, MI, 30 team pages rebuilt every morning, static HTML + Python, zero ads, zero tracking
+  3. **Three description lengths** so reporters can paste whichever fits their word count:
+     - *One-liner:* `Morning Lineup is a daily newspaper-style briefing for all 30 MLB teams, rebuilt every morning.`
+     - *50-word:* add stack, cadence, solo-founder angle
+     - *150-word:* add the "why" (built because existing MLB apps bury the box score under ten tabs of ads)
+  4. **Screenshots** — 2–3 hero captures at 2x retina: landing page, a team page, the scorecard view
+  5. **Logos** — PNG + SVG, dark + light variants
+  6. **Founder** — JB headshot + 2-sentence bio
+  7. **Pre-written quote** attributed to JB so a writer can drop it in without emailing: *"I wanted the feeling of opening the morning paper and seeing my team's box score on the second page. Morning Lineup is that page, for all 30 teams, every day."*
+  8. **Press contact** — one email (not a form), a 24-hour response promise, and optional Bluesky/X handle
+- **ZIP contents:** `logo-dark.svg`, `logo-light.svg`, `logo-mark.png@2x`, `screenshot-landing.png@2x`, `screenshot-cubs.png@2x`, `founder-jb.jpg`, `fact-sheet.txt`, `boilerplate.txt`. Generate via a one-shot `scripts/build_press_kit.sh`.
+- **Footer link on every page** so reporters can find it via "site:brawley1422-alt.github.io/morning-lineup press kit".
 
-**Test scenarios:** *Test expectation: none — static content page.*
+**Explicitly NOT included:**
+- Notion-hosted kit (keep HTML as the front door)
+- Testimonials or fake "As seen in"
+- Mailing list form in the contact section
+- Modal popups for image previews
 
-**Verification:** `/press/` serves 200, all screenshots load, social-copy snippets are correct.
+**Test scenarios:** *Test expectation: none — static content page. Manual QA: verify all 8 sections render, ZIP downloads cleanly, founder photo is editorial B&W, quote attribution is correct.*
+
+**Verification:** `/press/` serves 200. `/press/morning-lineup-press-kit.zip` downloads and extracts cleanly. Footer link appears on every team page.
 
 ---
 
-- [ ] **Unit C3: Launch-day distribution checklist**
+- [ ] **Unit C3: Launch-day distribution checklist (research-revised)**
 
-**Goal:** A committed markdown doc listing every channel, exact copy, and the order to post them in, so the launch day is mechanical.
+**Goal:** A committed markdown doc listing every channel, exact copy, and the order to post them in, so launch week is mechanical. Revised per research to stagger over 3 days, skip Product Hunt, and use content-first framing.
 
 **Requirements:** R5
 
@@ -497,20 +600,60 @@ shareability floor and every other growth mechanism stops leaking.
 **Files:**
 - Create: `docs/launch/2026-04-XX-launch-day-checklist.md`
 
-**Approach:**
-- Channels: r/baseball, r/{top-5-team-subreddits}, Twitter (personal + tagged teams), Hacker News (Show HN: The Morning Lineup), Product Hunt (schedule for a Tuesday or Wednesday), ESPN Fan Feedback, MLB Reddit, your personal LinkedIn.
-- For each channel: exact title, exact body, exact image, best time to post, who to @-mention if anyone.
-- Rules of thumb: content-first framing ("I built X for Y reason") beats feature pitches. Don't post everywhere at once — stagger 30 minutes apart so each community feels "first."
+**Approach (revised per research):**
+
+**Day 1 — Soft launch in one team sub (low stakes, learn framing).**
+- **Channel:** `r/CHICubs` (JB's natural affinity — he'll respond best to engagement, and team subs are more tolerant of fan-made stuff than r/baseball).
+- **Title:** Content-first observation, not "I built this." Example: `The Cubs have the worst April bullpen ERA since 2017 — I pulled the data into a page-one chart` or similar. Lead with a concrete fact about today.
+- **Body:** A screenshot of the Cubs page showing the specific stat the title referenced. 2 sentences of context. Link to `https://brawley1422-alt.github.io/morning-lineup/cubs/`. "I built this" goes in a follow-up comment if asked, not in the body.
+- **Time:** Weekday morning ET, before first pitch of a marquee Cubs game.
+- **Purpose:** Learn what framing resonates. If this post lands well, use it as proof when messaging r/baseball mods on Day 2.
+
+**Day 2 — r/baseball (mod-approved) + Twitter.**
+- **r/baseball:** Message mods first with the Day 1 team-sub post as proof the community likes it. Ask for flair and permission. Wait for approval. Post with the same content-first title format.
+- **Twitter:** Screenshots in the first tweet (2–3 hero captures of different teams' pages), link in the first reply, pin the reply. Do NOT put the link in the first tweet — algorithmic deranking. Include one line about the why: `30 MLB teams. One daily briefing. Built by one person in Python + vanilla JS.`
+- **Time:** Twitter post 30 minutes after r/baseball lands to avoid simultaneous self-promotion signals.
+
+**Day 3 — Show HN.**
+- **Title:** `Show HN: Morning Lineup – a daily newspaper-style briefing for all 30 MLB teams`. Em-dash + factual descriptor. No adjectives like "beautiful" or "modern". No emojis.
+- **Body:** 2–3 sentences max. Detail goes in the first comment.
+- **First comment:** Immediate, must cover — why JB built it, the stack (static site generator, GitHub Pages, Supabase for auth, zero framework), what's automated vs manual, what's next. HN rewards transparency about scope and limitations.
+- **Time:** Tuesday or Wednesday, 8–10am ET.
+- **NEVER ask friends to upvote.** HN voting-ring detection is aggressive and penalties are often irreversible. Organic only.
+
+**Skipped channels and why:**
+- **Product Hunt:** Off-genre for content sites, no pre-built network, platform drifted to AI tools and SaaS. Time is better spent elsewhere.
+- **LinkedIn:** Wrong audience for MLB content.
+- **ESPN Fan Feedback / MLB Reddit:** Lower-leverage than targeted team subs + r/baseball.
+
+**Optional follow-up channels (post-launch week):**
+- Team-specific subs for 3–5 teams JB has a natural in on (r/NYYankees, r/Braves, r/Dodgers are known to be more tolerant; r/SFGiants is stricter).
+- r/sabermetrics if the site adds a data-viz angle worth sharing.
+- Beat writer Twitter replies when they tweet a stat and Morning Lineup visualizes it.
+
+**Rules of the road:**
+- Content-first framing always beats feature-pitch on every platform.
+- 24-hour gaps between channels, not 30 minutes.
+- Respond to every comment in the first 6 hours. Cold engagement kills posts.
+- If one channel flops, pause and diagnose before hitting the next. Don't cascade a bad framing.
+
+**Two-week follow-up post:** "Morning Lineup, two weeks later — what I learned and changed." Repost to Twitter and optionally Show HN (HN allows substantive reposts).
+
+**Day-of sanity checks:**
+- Verify r/baseball Rule 2 wording (it moves).
+- Test the OG card in Facebook Sharing Debugger + Twitter Card Validator.
+- Confirm analytics events flow end-to-end.
+- Stage a dry-run post in a throwaway sub first.
 
 **Test scenarios:** *Test expectation: none — document.*
 
-**Verification:** On launch day, follow the checklist top-to-bottom without improvising.
+**Verification:** On launch day, follow the checklist top-to-bottom without improvising. Watch `docs/launch/metrics-dashboard.md` fill in with real data for the first time.
 
 ---
 
 ### Track D — Growth Loop Features
 
-- [ ] **Unit D1: Share button on every team page**
+- [x] **Unit D1: Share button on every team page**
 
 **Goal:** A small "Share this team" button in the page masthead that opens the Web Share sheet on mobile, copies the URL on desktop.
 
@@ -538,7 +681,7 @@ shareability floor and every other growth mechanism stops leaking.
 
 ---
 
-- [ ] **Unit D2: Smart install prompt**
+- [x] **Unit D2: Smart install prompt**
 
 **Goal:** A dismissible, non-nagging install banner that appears on the 3rd visit (not before), only on mobile, only if not installed.
 
@@ -567,63 +710,120 @@ shareability floor and every other growth mechanism stops leaking.
 
 ---
 
-- [ ] **Unit D3: Daily email digest (optional)**
+- [ ] **Unit D3: Daily email digest (research-revised — likely deferred)**
 
-**Goal:** Users who opted in receive a 7am email with their team's briefing link and a one-line summary.
+> **Strong contrarian signal from research:** Consider skipping email v1 entirely. For a free daily content site, the home-screen install (already shipped in D2+D5) is the retention mechanism. Email is a second surface to maintain — compose, send, unsubscribe handling, SPF/DKIM/DMARC, compliance — for a marginal retention lift at the current audience size. **Revisit this unit once analytics show >500 DAU AND install-prompt acceptance is below target AND there's a newsy reason to send beyond "new edition live."** If those conditions don't hold by week 3 post-launch, drop this unit entirely.
+
+**If it still makes sense to ship:**
+
+**Goal:** Opted-in users receive a 7am CT email with their team's briefing link and yesterday's one-line summary.
 
 **Requirements:** R6
 
-**Dependencies:** Supabase backend work (Edge Function + email provider API key)
+**Dependencies:**
+- One-time JB action: buy a cheap domain at Cloudflare Registrar (~$10/yr, e.g. `morninglineup.email` or `.app`)
+- Resend account (free, no credit card)
+- Supabase: enable `pg_cron` and `pg_net` extensions in Dashboard → Database → Extensions
+- New secrets in Supabase: `RESEND_API_KEY`, `SEND_FROM_ADDRESS`
 
 **Files:**
-- Create: `supabase/functions/daily-digest/index.ts` (Edge Function)
-- Create: `docs/ops/email-digest-setup.md` (runbook for env vars, cron, etc.)
-- Modify: Supabase schema — add `email_digest_enabled` column to profiles table
+- Create: `supabase/functions/daily-digest/index.ts` (Deno Edge Function)
+- Create: `docs/supabase/email-digest.sql` (schema + cron + pg_net setup, idempotent like events.sql)
+- Create: `docs/ops/email-digest-setup.md` (runbook for domain DNS records + secrets + cron schedule)
+- Modify: Supabase schema — add `email_digest_enabled boolean default false`, `email_verified boolean default false` to `profiles`; create `email_sends` table with unique constraint `(user_id, send_date)`
+- Modify: `settings/settings.js` + `settings/index.html` to add an opt-in toggle with double-confirmation
+- Create: `privacy/index.html` (short privacy page for CAN-SPAM compliance)
 
-**Approach:**
-- Edge Function runs on Supabase cron at 6:45am CT.
-- Pulls opted-in users, groups by team, fetches the morning briefing URL per team.
-- Sends via Resend or SendGrid (decide at implementation time based on free-tier limits).
-- Email body is plain-text with one link: "The {team} · Morning Lineup · Apr 16".
+**Approach (revised per research):**
+- **Provider: Resend.** Free tier, no credit card, cleanest Supabase DX, first-class Supabase ecosystem integration.
+- **Sending domain: owned domain, not `resend.dev`.** Buy `morninglineup.email` at Cloudflare Registrar (~$10/yr). Resend's dashboard wizard auto-generates SPF + DKIM + DMARC records for Cloudflare DNS; verify in <5 min. Start DMARC at `p=none` for monitoring.
+- **Double opt-in** (Gmail's 2024 sender rules punish low-engagement lists hard; single opt-in risks burning sender reputation on day one). User clicks "Enable digest" → receives confirmation email → clicks link → `email_verified = true`.
+- **Scheduler: `pg_cron` + `pg_net`.** Supabase has no built-in cron UI for Edge Functions. Canonical pattern: `select cron.schedule('ml-daily-digest', '0 12 * * *', $$ select net.http_post('https://...functions.supabase.co/daily-digest', headers := '{"Authorization": "Bearer ..."}'::jsonb) $$);` — DST gotcha: 12 UTC is 7am CT during CDT but 6am CST. Compute the target hour inside the function from `America/Chicago` timezone rather than hard-coding the cron.
+- **Idempotency:** Before each send, `insert into email_sends (user_id, send_date) values (...);` with a unique constraint. Duplicate insert = skip. Survives at-least-once cron semantics and function retries.
+- **Rate limiting:** Resend free tier allows 2 req/sec. Send in batches of 2 with a 500ms pause, or use `Promise.all` in pairs. For <1000 users this completes in <10 min, well under the Edge Function 400s wall-clock limit.
+- **Compliance (CAN-SPAM + Gmail sender rules):**
+  - `List-Unsubscribe` one-click header (Resend auto-adds when you pass the header)
+  - Unsubscribe link in footer → Supabase RPC that flips `email_digest_enabled = false`
+  - Physical mailing address in footer (JB's or a PO box)
+  - `/privacy` page explaining what's stored, linked from the email footer
+- **Email body:** Plain-text with one link per team. Format: `The {team} · Morning Lineup · Apr 16` + 1-line yesterday-game summary + link to `https://brawley1422-alt.github.io/morning-lineup/{slug}/`. HTML version optional for v1.
+- **Warm-up:** <50 person list = invisible, no special ramp needed. For 500+, follow a 50 → 100 → 200 → 500 curve over 5–7 days.
+- **Observability:** Log every send into an `email_runs` table from inside the function (user_id, status, error). `pg_cron` jobs succeed even if the function errors — without this table, silent failures are invisible.
 
 **Test scenarios:**
-- Happy path: Enable digest in settings → receive email next morning.
-- Happy path: Disable digest → no further emails.
-- Edge case: No email provider API key → function logs error, no send.
-- Integration: Supabase cron fires Edge Function, Edge Function hits email API, user receives email.
+- Happy path: User enables digest in settings → receives confirmation email → clicks link → `email_verified = true` → receives next morning's digest.
+- Happy path: User disables digest → no further sends on subsequent mornings.
+- Edge case: Duplicate cron fire (at-least-once) → second run inserts into `email_sends`, unique constraint fires, no duplicate email.
+- Edge case: Resend API returns 4xx → logged to `email_runs`, function continues with next user.
+- Edge case: User signs up between the cron fire and the function query → included if opted-in and verified at query time.
+- Integration: `pg_cron` → `pg_net` → Edge Function → Resend API → real inbox at 7am CT end-to-end.
 
-**Verification:** End-to-end: subscribe in settings, receive email, click through to team page.
+**Verification:** End-to-end with a test account on JB's own email — subscribe, verify, receive the next morning's digest, click through to the team page, analytics fires the `digest_click` event. Then check Resend dashboard for delivery status, spam folder sanity check, and `email_runs` table for zero errors.
 
 ---
 
-- [ ] **Unit D4: Web Push notifications (stretch)**
+- [ ] **Unit D4: Web Push notifications on game Final (research-revised)**
 
-**Goal:** Users who grant permission receive a push notification when their team's game goes Final.
+**Goal:** Users who grant push permission receive a notification within 2 minutes of their team's game going Final: "Cubs 5, Brewers 3 — Final. Tap for recap."
 
 **Requirements:** R6
 
-**Dependencies:** D2 (installed PWA + VAPID keys + backend push sender)
+**Dependencies:**
+- Phase 2 complete (installed PWA via D2's prompt)
+- `evening.py` already runs the game-final watcher
+- One-time: generate VAPID keys (`npx web-push generate-vapid-keys` or Deno equivalent)
+- Supabase secrets: `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`
 
 **Files:**
-- Create: `push-register.js`
-- Modify: `sw.js` (push event handler)
-- Create: `supabase/functions/game-final-push/index.ts`
-- Create: `docs/ops/web-push-setup.md`
+- Create: `push-register.js` (client: pre-prompt button + `pushManager.subscribe()` + POST to `push_subscriptions` table)
+- Modify: `sw.js` (add `push` event handler + `notificationclick` handler + `pushsubscriptionchange` handler)
+- Create: `supabase/functions/game-final-push/index.ts` (Deno Edge Function using `negrel/webpush`)
+- Create: `docs/supabase/push-subscriptions.sql` (schema: endpoint, p256dh, auth, user_id, team_id, created_at)
+- Create: `docs/ops/web-push-setup.md` (VAPID generation + secrets + testing runbook)
+- Modify: `evening.py` to POST to the Edge Function on game Final (fire-and-forget)
+- Modify: `settings/settings.js` + `settings/index.html` to add a "Push notifications" toggle
+- Optional: Create: `badge-poller.js` — the `setAppBadge()` fallback described below
 
-**Approach:**
-- User grants push permission from settings.
-- VAPID keys stored in `~/.secrets/`.
-- `evening.py` (the game-final watcher) hits a Supabase Edge Function on game Final, which fans out push notifications to all subscribers of that team.
-- Notification body: "{Team} {W/L} {score}. Tap for the full briefing."
-- Tap → opens team page.
+**Approach (revised per research):**
+- **Library: `negrel/webpush`** (Deno-native, RFC 8291/8292 compliant, works in Supabase Edge Functions). Alternative: `draphy/pushforge`. **Do NOT use the classic Node `web-push` npm package** — it's awkward in the Edge runtime.
+- **Pre-prompt is mandatory.** Never call `pushManager.subscribe()` on first visit; Chrome has actively deranked sites that do. Flow:
+  1. User lands on a team page with permission `default`
+  2. After some engagement (scroll, multi-section click), a custom HTML chip appears: "Get final score alerts for the {Team}"
+  3. Clicking the chip calls `pushManager.subscribe()` → browser native permission prompt
+  4. Accept → POST subscription payload to Supabase → chip shows "You're subscribed"
+  5. Decline → remember dismissal in localStorage; never prompt again (clicking Block is permanent anyway)
+- **Payload: tight** to fit Safari's ~256-byte cap on title+body. Template: `"Cubs 5, Brewers 3 — Final. Tap for recap."` No custom images — iOS renders only the PWA app icon; engineering a per-team image pipeline for Chrome-only isn't worth the complexity.
+- **Delivery pattern:**
+  - `evening.py` detects game Final (existing logic)
+  - POST to `https://...supabase.co/functions/game-final-push` with `{team_id, w_score, l_score, w_team, l_team}` + service-role header
+  - Edge Function queries `push_subscriptions` for that team_id, loops via `Promise.allSettled` in chunks of 50, sends via `negrel/webpush` with the VAPID keys
+  - On 410 Gone or 404: delete the row immediately
+  - On success: log to `push_runs` table
+- **Subscription lifecycle:**
+  - `sw.js` listens for `pushsubscriptionchange` (fires when the browser rotates the endpoint) and re-POSTs the new payload
+  - Edge Function handles 410/404 by deleting stale rows
+  - Cleanup job optional: nightly delete for rows unseen in 30 days
+- **Tap behavior:** `sw.js` `notificationclick` handler calls `clients.openWindow('/morning-lineup/{team_slug}/')`. Works from fully closed state on both Chrome and Safari.
+
+**Permission-free companion — Unit D6: badge polling fallback**
+
+Ship this **alongside** D4, not as an alternative:
+
+- [ ] **Unit D6: Local badge-poll for unseen game Finals**
+- **Files:** `badge-poller.js`, modify `build.py` script loading, modify `build.py` asset copy loop
+- **Approach:** When the PWA loads (or on `visibilitychange` → visible), fetch `history.json` or a lightweight `latest-finals.json`, compare against `localStorage.ml_last_seen_finals`, and call `navigator.setAppBadge(unseenCount)`. Zero permission theater, zero server cost. Passive re-engagement — badge only updates when the user opens the PWA, but that's still a nudge that "something happened."
+- **Why ship both:** Web push is the real-time nudge for users who opted in. Badge polling is the opt-out-proof retention surface for users who declined push. They complement each other.
 
 **Test scenarios:**
-- Happy path: Grant permission → service worker receives push → notification shown.
-- Happy path: Tap notification → team page loads.
-- Edge case: Permission denied → subscription skipped gracefully.
-- Integration: `evening.py` → Supabase → service worker → notification end-to-end.
+- Happy path: Grant push permission via pre-prompt → subscription row written to Supabase → receive notification on next game Final → tap → team page loads.
+- Happy path: Decline push → pre-prompt dismissed → no further ask.
+- Happy path: Install PWA → badge polling kicks in on next visit → `navigator.setAppBadge` shows unseen count.
+- Edge case: Subscription expires (410 from push service) → Edge Function deletes row on next send attempt.
+- Edge case: iOS Safari not installed (no home-screen install) → pre-prompt hidden; D6 badge fallback is no-op on non-installed Safari.
+- Edge case: EU user (iOS 17.4+ standalone PWA removed) → push + badge both hidden via feature detection.
+- Integration: `evening.py` game-final → Edge Function → push delivery → notification rendered → `notificationclick` → team page.
 
-**Verification:** A real user receives a push notification within 2 minutes of game Final.
+**Verification:** Real device testing — Chrome Android (primary), iOS 16.4+ Safari installed as home-screen PWA (secondary). Subscribe, trigger a fake final via a test Edge Function endpoint, confirm notification within 2 min. Then install PWA, let a real game finish, confirm badge count updates on next PWA open.
 
 ---
 
@@ -751,9 +951,9 @@ Both directly tracked via analytics already wired up.
 
 Order of operations:
 
-- [ ] **Unit D1** — Share button on every team page. Cheap (one button, one script, one CSS block), big leverage (multiplies every visitor's sharing ability), directly measurable via `share_click` events. Single most important remaining unit.
-- [ ] **Unit D2** — Smart install prompt (3rd-visit gate, dismissible, platform-aware). The PWA is already set up; we're just adding the CTA. Measurable via `install_shown` / `install_accepted` / `install_dismissed` events.
-- [ ] **Unit D5** (new — salvaged from killed B1) — First-visit onboarding overlay on the landing page. Skippable "Pick your team / Install / Come back tomorrow" overlay fired on any first visit. Shares CSS with D2.
+- [x] **Unit D1** — Share button on every team page. Cheap (one button, one script, one CSS block), big leverage (multiplies every visitor's sharing ability), directly measurable via `share_click` events. Single most important remaining unit.
+- [x] **Unit D2** — Smart install prompt (3rd-visit gate, dismissible, platform-aware). The PWA is already set up; we're just adding the CTA. Measurable via `install_shown` / `install_accepted` / `install_dismissed` events.
+- [x] **Unit D5** (new — salvaged from killed B1) — First-visit onboarding overlay on the landing page. Skippable "Pick your team / Install / Come back tomorrow" overlay fired on any first visit. Shares CSS with D2.
 
 Why this order: D1 is the floor. D2 compounds over time. D5 is a
 one-time conversion booster for cold visits. All three can ship in one
@@ -779,13 +979,14 @@ This phase was originally Track B. The only valuable piece from B1
 B2 (magic-link invite button) has been dropped entirely — manual
 texting is strictly better at this scale.
 
-### Phase 5 — Growth Loops (Ongoing, data-driven)
+### Phase 5 — Growth Loops (Ongoing, data-driven — research-revised)
 
 Only ship these after Phase 3 has delivered real analytics showing
-where the funnel is leaking.
+where the funnel is leaking. Research pass 2026-04-15 adjusted the
+priority order and added Unit D6.
 
-- [ ] **Unit D3** — Daily email digest. Only if analytics show install accept rate + return rate are below target and email is the gap.
-- [ ] **Unit D4** — Web Push notifications on game Final. Only if D3 proves the nightly push pattern works + VAPID backend work is warranted.
+- [ ] **Unit D4 + D6** — Web Push notifications on game Final **plus** permission-free `setAppBadge` local polling companion. Ship together. Realistic subscribed audience is 10–15× smaller than Android-Chrome-only estimates suggest (iOS is install-gated); the badge polling fallback catches users who decline push. Research suggests this is a cleaner v1 than the email digest — the trigger event is already detected in `evening.py`, the subscribe button can be scoped per team, and the whole thing is ~200 lines with `negrel/webpush`. **Priority: first in Phase 5.**
+- [ ] **Unit D3** — Daily email digest. **Likely deferred or dropped.** Contrarian research signal: for a free daily content site with home-screen install, email is a second surface to maintain for marginal retention lift. Only ship if analytics at week 3 post-launch show install-accept rate <10% AND next-day return <30% AND there's a newsy reason to send beyond "new edition live." Otherwise drop entirely. Prerequisites if it does ship: buy a cheap domain (~$10/yr), enable `pg_cron` + `pg_net`, Resend account, double opt-in flow.
 - [ ] **Plus any new unit the data suggests** — e.g. a "most-shared team this week" module, a leaderboard of reader-picked outcomes, etc. Plan those as they become obvious from the metrics, not in advance.
 
 ### Deprecated Units
@@ -797,7 +998,7 @@ where the funnel is leaking.
 
 ## New Unit — D5: First-Visit Onboarding Overlay
 
-- [ ] **Unit D5: First-visit overlay on the landing page**
+- [x] **Unit D5: First-visit overlay on the landing page**
 
 **Goal:** A skippable, dismiss-once welcome overlay that appears on the landing page for any first-time visitor. Three steps: (1) Pick your team, (2) Install to home screen (if supported), (3) "Come back tomorrow" — plain bookmark reminder, no email required for v1. Persistent dismissal via `localStorage`.
 
