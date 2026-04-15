@@ -203,9 +203,12 @@ fetch(API + "/schedule?sportId=1&date=" + new Date().toISOString().slice(0,10) +
     document.getElementById("kick-games").textContent = games.length + " Games";
 
     var sub = document.getElementById("greet-sub");
-    if (nLive > 0) sub.innerHTML = 'Your briefings are ready <span class="g">·</span> <span class="paper">' + nLive + ' live game' + (nLive===1?"":"s") + ' right now</span>';
-    else if (games.length) sub.innerHTML = 'Your briefings are ready <span class="g">·</span> <span class="paper">' + games.length + ' games on today\'s slate</span>';
-    else sub.textContent = 'Your briefings are ready — no MLB action today';
+    // Don't clobber the first-visit welcome CTA copy set by landing-cta.js
+    if (!window.__mlFirstVisitGreet) {
+      if (nLive > 0) sub.innerHTML = 'Your briefings are ready <span class="g">·</span> <span class="paper">' + nLive + ' live game' + (nLive===1?"":"s") + ' right now</span>';
+      else if (games.length) sub.innerHTML = 'Your briefings are ready <span class="g">·</span> <span class="paper">' + games.length + ' games on today\'s slate</span>';
+      else sub.textContent = 'Your briefings are ready — no MLB action today';
+    }
 
     if (window.__heroTeamSlug && window.fillHero) window.fillHero(window.__heroTeamSlug);
   })

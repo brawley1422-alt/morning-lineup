@@ -188,6 +188,7 @@ def _main():
         "share.js",
         "install-prompt.js",
         "welcome-overlay.js",
+        "landing-cta.js",
         "auth-bounce.js",
         "config/supabase.js",
         "auth/index.html",

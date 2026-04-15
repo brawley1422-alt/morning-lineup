@@ -4,7 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0d0f14">
-<title>The Morning Lineup — Today's Edition</title>
+<title>The Morning Lineup — A Daily Briefing for Every MLB Team</title>
+<meta name="description" content="A daily briefing for every MLB team — last night's game, today's matchup, leaders, farm system, and the full slate. Updated every morning.">
+<link rel="canonical" href="https://brawley1422-alt.github.io/morning-lineup/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Morning Lineup">
+<meta property="og:title" content="The Morning Lineup — A Daily Briefing for Every MLB Team">
+<meta property="og:description" content="Last night's game, today's matchup, leaders, and the full slate — for all 30 teams, updated every morning.">
+<meta property="og:url" content="https://brawley1422-alt.github.io/morning-lineup/">
+<meta property="og:image" content="https://brawley1422-alt.github.io/morning-lineup/icons/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Morning Lineup">
+<meta name="twitter:description" content="A daily briefing for every MLB team. Last night's game, today's matchup, and every angle that matters.">
+<meta name="twitter:image" content="https://brawley1422-alt.github.io/morning-lineup/icons/og-default.png">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co https://esm.sh https://statsapi.mlb.com; base-uri 'self'; form-action 'self'">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,6 +61,14 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
 .mast-main{font-family:var(--serif);font-weight:900;font-style:italic;font-size:clamp(48px,9vw,108px);line-height:.88;margin:0;letter-spacing:-.015em;white-space:nowrap;background:linear-gradient(180deg,var(--paper) 0%,var(--paper-dim) 70%,var(--paper-mute) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 2px 0 rgba(0,0,0,.4)}
 .mast-main .mast-the{display:block;font-family:var(--cond);font-style:normal;font-weight:600;font-size:.18em;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);-webkit-text-fill-color:var(--gold);margin-bottom:6px;text-shadow:0 1px 0 rgba(0,0,0,.4)}
 .mast-main em{font-style:italic;font-weight:900}
+.mast-dek{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);margin:10px 0 0;max-width:680px;margin-left:auto;margin-right:auto;line-height:1.5}
+
+/* FOOTER LEFT (brand + optional install chip) */
+.foot-left{display:inline-flex;align-items:center;gap:16px}
+.foot-install{background:transparent;border:1px solid var(--gold-dim);color:var(--gold);font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:10px;font-weight:600;padding:6px 12px;border-radius:1px;cursor:pointer;white-space:nowrap;transition:border-color .15s,color .15s,background .15s;display:inline-flex;align-items:center;gap:8px}
+.foot-install[hidden]{display:none}
+.foot-install:hover{border-color:var(--gold);color:var(--paper);background:rgba(201,162,74,.08)}
+.foot-install::before{content:"◆";font-size:8px}
 
 /* GREETING BAR */
 .greet{position:relative;z-index:2;max-width:1280px;margin:18px auto 0;padding:0 32px;display:grid;grid-template-columns:1.4fr .6fr;gap:36px;align-items:center}
@@ -55,6 +77,11 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
 .greet-sub{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper-mute);margin:0}
 .greet-sub .g{color:var(--gold)}
 .greet-sub .paper{color:var(--paper)}
+.greet-pick{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--gold);margin:12px 0 0;display:flex;align-items:center;gap:10px;font-weight:600}
+.greet-pick[hidden]{display:none}
+.greet-pick .arrow{display:inline-block;font-family:var(--mono);font-size:16px;color:var(--gold);animation:bounce 1.8s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+.greet-head .welcome-em{font-style:italic;color:var(--gold)}
 .greet-meta{display:flex;gap:18px;justify-content:flex-end;font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--paper-mute)}
 .greet-meta .stat{text-align:right}
 .greet-meta .n{display:block;font-family:var(--serif);font-style:italic;font-weight:900;font-size:30px;line-height:1;color:var(--gold);margin-bottom:4px}
@@ -157,6 +184,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
   </div>
   <div class="mast-center">
     <h1 class="mast-main"><span class="mast-the">The</span>Morning <em>Lineup</em></h1>
+    <p class="mast-dek">Edited by JB Rawley. Rebuilt every morning at 6 a.m. CT. 30 teams. No ads, no tracking.</p>
   </div>
   <div class="mast-kicker-r">
     <div class="row"><span>Today</span><span class="val" id="kick-games">—</span></div>
@@ -164,11 +192,12 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
   </div>
 </header>
 
-<!-- GREETING -->
-<div class="greet">
+<!-- GREETING / WELCOME (copy swapped by landing-cta.js on first visit) -->
+<div class="greet" id="greet">
   <div>
-    <h2 class="greet-head">Good morning, <span class="reader" id="greet-reader">Reader.</span></h2>
+    <h2 class="greet-head" id="greet-head">Good morning, <span class="reader" id="greet-reader">Reader.</span></h2>
     <p class="greet-sub" id="greet-sub">Your briefings are ready</p>
+    <p class="greet-pick" id="greet-pick" hidden>Pick your team <span class="arrow">↓</span></p>
   </div>
   <div class="greet-meta">
     <div class="stat"><span class="n" id="stat-games">—</span>Games Today</div>
@@ -196,12 +225,16 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
 <main class="leagues" id="leagues"></main>
 
 <footer class="site-foot">
-  <span>The Morning Lineup</span>
+  <span class="foot-left">The Morning Lineup<button type="button" class="foot-install" id="foot-install" hidden>Add to Home Screen</button></span>
   <span><span class="g">Data:</span> MLB Stats API</span>
 </footer>
 
 <script src="landing-teams.js"></script>
 <script src="landing-main.js"></script>
+<script src="analytics.js" defer></script>
+<script src="landing-cta.js" defer></script>
+<script src="install-prompt.js" defer></script>
+<script src="welcome-overlay.js" defer></script>
 
 <!-- Async: fetch reader name + followed teams from Supabase -->
 <script type="module" src="landing-hydrate.js"></script>
