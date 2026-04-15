@@ -3,9 +3,38 @@ title: "feat: Launch & distribution — every option for getting Morning Lineup 
 type: feat
 status: active
 date: 2026-04-15
+revised: 2026-04-15
 ---
 
 # Launch & Distribution — every option on the table
+
+> **Revision note (2026-04-15, same day):** Track A and Track E shipped
+> in two commits. This document has been updated to mark those units
+> complete, capture what we learned from shipping, and re-sequence the
+> remaining work. The original 5-track structure is preserved; the
+> "Phased Delivery" and "Path Forward" sections now reflect the
+> post-shipping reality.
+
+## Shipped Log
+
+| Date       | Commit    | Track    | Summary                                              |
+|------------|-----------|----------|------------------------------------------------------|
+| 2026-04-15 | `22a59e0` | A1-A5    | OG/Twitter meta tags on every page, robots.txt, sitemap.xml, 30 per-team OG card PNGs, fixed Cubs-centric manifest copy, canonical URLs, per-page titles + descriptions for SEO |
+| 2026-04-15 | `3636d04` | E1, E2   | `analytics.js` client + Supabase `events` table (schema in `docs/supabase/events.sql`, applied manually by JB in the Supabase SQL Editor) + `docs/launch/metrics-dashboard.md` with daily-fill-in log and copy-pasteable queries |
+
+**Verified live:**
+- Team page OG tags render correctly (anyone sharing a link to a team page now gets a rich preview card).
+- `/robots.txt` and `/sitemap.xml` served from GH Pages root.
+- 30 per-team OG card PNGs committed under `icons/og-{slug}.png` + `icons/og-default.png`.
+- Analytics smoke-test row inserted via REST API with HTTP 201. Every pageview on the live site now writes a row to Supabase `events`.
+
+## What we learned by shipping
+
+- **The measurement layer changes the posture of every subsequent unit.** Before Track E, we were guessing what would move the needle. Now every unit can be measured against concrete metrics (pageviews, sessions, top team, referrer). This argues for shipping small cheap units and *looking at the data* before committing to larger ones.
+- **OG card generation was much easier than expected.** Headless Chromium + a single HTML template + team-config-driven substitution rendered 30 production-ready cards in ~30 seconds. Future OG-adjacent work (press-kit screenshots, social promo graphics, email header images) can reuse the same pipeline.
+- **Track B (friends & family invite flow) is lower ROI than it looked on paper.** The manual alternative — JB texts 10 friends the URL — is effectively free and captures the same outcome for the same sample size. A formal invite system, a welcome overlay, and a magic-link share button is a week of work that replaces a task JB can do in one evening. **Recommendation below: skip most of Track B and fold its one valuable piece (welcome onboarding for any cold visitor) into Track D.**
+- **Track D1 (share button) is higher ROI than any single B unit.** One button, one script, every visitor gets the power to share with one tap. It's the thing that makes the OG cards we just shipped actually get used.
+- **No content has been pushed externally yet.** All the work so far is infrastructure. Zero launch signal has left the repo. Until JB posts somewhere, analytics will show only his own visits and this session's smoke tests.
 
 ## Overview
 
@@ -170,7 +199,7 @@ shareability floor and every other growth mechanism stops leaking.
 
 ### Track A — Shareability Floor (foundation)
 
-- [ ] **Unit A1: Open Graph and Twitter Card meta tags on every team page**
+- [x] **Unit A1: Open Graph and Twitter Card meta tags on every team page**
 
 **Goal:** Every team page, the landing page, and the home page emit complete `og:*` and `twitter:*` meta tags so that any link shared anywhere produces a rich preview card.
 
@@ -229,7 +258,7 @@ shareability floor and every other growth mechanism stops leaking.
 
 ---
 
-- [ ] **Unit A2: robots.txt, sitemap.xml, and canonical URLs**
+- [x] **Unit A2: robots.txt, sitemap.xml, and canonical URLs**
 
 **Goal:** Google can crawl and index every team page. A sitemap makes discovery fast; canonical URLs prevent duplicate-content issues.
 
@@ -264,7 +293,7 @@ shareability floor and every other growth mechanism stops leaking.
 
 ---
 
-- [ ] **Unit A3: Per-page meta descriptions and page titles**
+- [x] **Unit A3: Per-page meta descriptions and page titles**
 
 **Goal:** Every page has a unique, compelling `<title>` and `<meta name="description">` tuned for search snippets.
 
@@ -292,7 +321,7 @@ shareability floor and every other growth mechanism stops leaking.
 
 ---
 
-- [ ] **Unit A4: Per-team OG images (one-shot generation)**
+- [x] **Unit A4: Per-team OG images (one-shot generation)**
 
 **Goal:** Commit 30 static 1200×630 PNGs to `icons/og-{slug}.png`, one per team, styled to match the newspaper masthead with team colors.
 
@@ -321,7 +350,7 @@ shareability floor and every other growth mechanism stops leaking.
 
 ---
 
-- [ ] **Unit A5: Fix Cubs-centric manifest copy**
+- [x] **Unit A5: Fix Cubs-centric manifest copy**
 
 **Goal:** `manifest.json` description is team-agnostic so the PWA install copy makes sense across all 30 teams.
 
@@ -600,7 +629,7 @@ shareability floor and every other growth mechanism stops leaking.
 
 ### Track E — Measurement
 
-- [ ] **Unit E1: Plausible or Umami analytics**
+- [x] **Unit E1: Plausible or Umami analytics**
 
 **Goal:** Every page emits anonymous page views and custom events (share click, install click, email signup) to a privacy-respecting analytics endpoint.
 
@@ -631,7 +660,7 @@ shareability floor and every other growth mechanism stops leaking.
 
 ---
 
-- [ ] **Unit E2: Launch metrics dashboard page**
+- [x] **Unit E2: Launch metrics dashboard page**
 
 **Goal:** A committed markdown in `docs/launch/` that the operator reviews daily during launch week with the numbers that matter.
 
@@ -686,30 +715,123 @@ shareability floor and every other growth mechanism stops leaking.
 - **Retention:** Next-day return rate for installed users ≥ 30%.
 - **Growth:** Share events per week, tracked by team, non-zero and rising.
 
-## Phased Delivery
+## Phased Delivery — Original Plan
 
-### Phase 1 — Foundation (Week 1, ~1 day of work)
-- Units A1, A2, A3, A4, A5, E1
+### Phase 1 — Foundation ✅ SHIPPED 2026-04-15
+- Units A1, A2, A3, A4, A5, E1, E2
 
-Everything is static, no backend changes, fully testable locally. The output is: shareable links work, Google can find us, we can measure everything, the manifest isn't Cubs-centric.
+Everything was static, no backend changes, fully testable locally. Outcome: shareable links work, Google can find the site, analytics are flowing.
 
-### Phase 2 — Friends & Family Beta (Week 2, ~1 day of work)
-- Units B1, B2
+### ~~Phase 2 — Friends & Family Beta~~ (superseded — see Path Forward below)
 
-Hand to 20–50 people via the invite link. Gather feedback. Tune onboarding copy based on what they say.
+### ~~Phase 3 — Public Launch~~ (still valid, re-sequenced below)
 
-### Phase 3 — Public Launch (Week 3, ~1 day of prep + a launch day)
-- Units C1, C2, C3
-- Execute the launch-day checklist
+### ~~Phase 4 — Growth Loops~~ (re-sequenced — D1/D2 moved earlier)
 
-### Phase 4 — Growth Loops (Ongoing, 1 loop/week)
-- Unit D1 first — cheapest lever
-- Unit D2 next — highest install impact
-- Unit D3 when Supabase backend work is justified by signup count
-- Unit D4 last — highest dependency cost, highest engagement upside
+### ~~Phase 5 — Measurement Discipline~~ (subsumed by E2, ships continuously)
 
-### Phase 5 — Measurement Discipline
-- Unit E2 runs continuously during launch week
+---
+
+## Path Forward — Revised Sequence (2026-04-15, post-Phase-1)
+
+Ship order has been re-thought now that Track A and Track E are live.
+The original plan treated Tracks B and D as peers; the shipped learning
+is that Track B's invite-flow unit economics don't justify its code
+footprint for an audience of 20–50 people. Track D1 (share button) is
+the one high-leverage unit that makes every already-shipped OG card
+actually get used. The revised sequence puts the cheap high-leverage
+work first and defers anything requiring Supabase schema changes until
+there's data to justify it.
+
+### Phase 2 — Cheap High-Leverage (~4–6 hours)
+
+Goal: **every visitor can share the page they're looking at with one
+tap, and every return visitor gets gently nudged to install the PWA.**
+Both directly tracked via analytics already wired up.
+
+Order of operations:
+
+- [ ] **Unit D1** — Share button on every team page. Cheap (one button, one script, one CSS block), big leverage (multiplies every visitor's sharing ability), directly measurable via `share_click` events. Single most important remaining unit.
+- [ ] **Unit D2** — Smart install prompt (3rd-visit gate, dismissible, platform-aware). The PWA is already set up; we're just adding the CTA. Measurable via `install_shown` / `install_accepted` / `install_dismissed` events.
+- [ ] **Unit D5** (new — salvaged from killed B1) — First-visit onboarding overlay on the landing page. Skippable "Pick your team / Install / Come back tomorrow" overlay fired on any first visit. Shares CSS with D2.
+
+Why this order: D1 is the floor. D2 compounds over time. D5 is a
+one-time conversion booster for cold visits. All three can ship in one
+commit and be measured against baseline analytics within 24 hours of
+the public launch.
+
+### Phase 3 — Public Launch (~1 day of prep + launch day)
+
+Once D1/D2/D5 are shipped and verified with a few warm visits, Phase 3
+is the actual launch moment.
+
+- [ ] **Unit C1** — Landing page conversion CTA stripe. Ships before C2/C3 because every external post will drive visits to the landing page.
+- [ ] **Unit C2** — Press kit page at `/press/`. Something to link from Reddit / Twitter / Product Hunt posts.
+- [ ] **Unit C3** — Launch-day distribution checklist. A committed markdown with exact copy and posting order for each channel.
+- [ ] **Launch-day execution** — Follow the checklist. Post to r/baseball, 3–5 team subreddits, Twitter, Hacker News, Product Hunt. Watch `docs/launch/metrics-dashboard.md` filling in every morning.
+
+### Phase 4 — Friends & Family (Manual)
+
+- [ ] **Manual F&F outreach** — JB texts the URL to 10–30 people over the course of launch week. No special invite flow, no magic link, no `?invite=1` welcome overlay tied to a query param — those add code for nothing. Plain URLs share cleanly now that OG cards work, and D5 will give any first-time visitor the right onboarding whether they came from a text or from a Reddit post.
+
+This phase was originally Track B. The only valuable piece from B1
+(first-visit onboarding overlay) has been moved to Unit D5 above, and
+B2 (magic-link invite button) has been dropped entirely — manual
+texting is strictly better at this scale.
+
+### Phase 5 — Growth Loops (Ongoing, data-driven)
+
+Only ship these after Phase 3 has delivered real analytics showing
+where the funnel is leaking.
+
+- [ ] **Unit D3** — Daily email digest. Only if analytics show install accept rate + return rate are below target and email is the gap.
+- [ ] **Unit D4** — Web Push notifications on game Final. Only if D3 proves the nightly push pattern works + VAPID backend work is warranted.
+- [ ] **Plus any new unit the data suggests** — e.g. a "most-shared team this week" module, a leaderboard of reader-picked outcomes, etc. Plan those as they become obvious from the metrics, not in advance.
+
+### Deprecated Units
+
+- **Unit B1** — Invite link landing and onboarding. Superseded by Unit D5 (first-visit overlay for any cold visit, not just invite links).
+- **Unit B2** — Supabase magic-link invite button. Dropped. Manual texting is strictly simpler at this audience size.
+
+---
+
+## New Unit — D5: First-Visit Onboarding Overlay
+
+- [ ] **Unit D5: First-visit overlay on the landing page**
+
+**Goal:** A skippable, dismiss-once welcome overlay that appears on the landing page for any first-time visitor. Three steps: (1) Pick your team, (2) Install to home screen (if supported), (3) "Come back tomorrow" — plain bookmark reminder, no email required for v1. Persistent dismissal via `localStorage`.
+
+**Requirements:** R3, R5
+
+**Dependencies:** Phase 1 (already shipped)
+
+**Files:**
+- Modify: `landing.html` (overlay markup + CSS)
+- Create: `welcome-overlay.js` (first-visit detection, step navigation, install prompt wiring, dismissal persistence)
+- Modify: `deploy.py` STATIC_ASSETS (add `welcome-overlay.js`)
+
+**Approach:**
+- First visit sets `localStorage.ml_onboarded = true` on dismissal.
+- Overlay is CSS-driven, sticky above the landing page hero.
+- Step 1: grid of team cards — click to set `localStorage.ml_team = slug` and advance.
+- Step 2: if `beforeinstallprompt` event has fired, show an "Install" button; else show iOS Safari instructions.
+- Step 3: single text — "Come back tomorrow. Every morning by 7 AM CT." + a "Got it" button that dismisses the overlay.
+- Analytics: fire `onboard_shown`, `onboard_team_picked` (with `team_slug`), `onboard_install_accepted`, `onboard_dismissed` events via `window.mlTrack`.
+
+**Patterns to follow:**
+- Existing `home/home.js` profile-check pattern for first-visit detection.
+- Existing `sections.js` IIFE + localStorage pattern.
+- Existing `window.mlTrack` API from `analytics.js`.
+
+**Test scenarios:**
+- Happy path: First visit with empty localStorage → overlay appears on landing.
+- Happy path: Pick team → overlay advances to step 2, `localStorage.ml_team` set, `onboard_team_picked` event fires.
+- Happy path: Dismiss → overlay disappears, `ml_onboarded = true`, next visit skips overlay.
+- Edge case: Return visit → no overlay regardless of `ml_onboarded` state.
+- Edge case: iOS Safari → step 2 shows manual instructions instead of a button.
+- Edge case: Already-installed PWA (`display-mode: standalone`) → skip step 2 entirely.
+
+**Verification:** Cold first visit (incognito window) shows the overlay; second visit goes straight to the landing page.
 
 ## Alternative Approaches Considered
 
