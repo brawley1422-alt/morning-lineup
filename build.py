@@ -1299,7 +1299,8 @@ def page(briefing):
     history_html = sections.history.render(briefing)
 
     # Editorial: three columnist personas per team (replaces the old lede)
-    lede_html = sections.columnists.render(briefing)
+    # Temporarily hidden — section needs a rework before it goes back in.
+    lede_html = ""
 
     # Dynamic section numbering — skip sections with empty HTML (e.g. scout
     # on off-days). Each visible section gets the next zero-padded number.
