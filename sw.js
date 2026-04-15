@@ -1,12 +1,4 @@
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-const CACHE = "lineup-202604150837";
-=======
-const CACHE = "lineup-202604150847";
->>>>>>> Stashed changes
-=======
-const CACHE = "lineup-202604141403";
->>>>>>> Stashed changes
+const CACHE = "lineup-202604151039";
 const SHELL = ["/morning-lineup/", "/morning-lineup/index.html", "/morning-lineup/live.js"];
 
 self.addEventListener("install", function (e) {
@@ -20,46 +12,27 @@ self.addEventListener("install", function (e) {
 
 self.addEventListener("activate", function (e) {
   e.waitUntil(
-    caches.keys().then(function (names) {
+    caches.keys().then(function (keys) {
       return Promise.all(
-        names
-          .filter(function (n) { return n !== CACHE; })
-          .map(function (n) { return caches.delete(n); })
+        keys.filter(function (k) { return k !== CACHE; }).map(function (k) { return caches.delete(k); })
       );
-    })
+    }).then(function () { return self.clients.claim(); })
   );
-  self.clients.claim();
 });
 
 self.addEventListener("fetch", function (e) {
   var url = new URL(e.request.url);
-
-  // Network-first for live API calls — must always be fresh.
-  if (url.hostname === "statsapi.mlb.com" || url.hostname === "api.open-meteo.com") {
-    e.respondWith(
-      fetch(e.request).catch(function () {
-        return caches.match(e.request);
-      })
-    );
-    return;
-  }
-
-  // Network-first for everything else (HTML, JS, CSS). Falls back to cache
-  // only when offline. Updated files always land on refresh — no hard-refresh
-  // required. Cache exists purely as an offline safety net.
+  if (e.request.method !== "GET") return;
+  if (url.origin !== location.origin) return;
   e.respondWith(
-    fetch(e.request)
-      .then(function (response) {
-        if (response && response.status === 200 && response.type === "basic") {
-          var clone = response.clone();
-          caches.open(CACHE).then(function (cache) {
-            cache.put(e.request, clone);
-          });
+    caches.match(e.request).then(function (hit) {
+      return hit || fetch(e.request).then(function (resp) {
+        if (resp && resp.status === 200 && resp.type === "basic") {
+          var copy = resp.clone();
+          caches.open(CACHE).then(function (cache) { cache.put(e.request, copy); });
         }
-        return response;
-      })
-      .catch(function () {
-        return caches.match(e.request);
-      })
+        return resp;
+      }).catch(function () { return hit; });
+    })
   );
 });
