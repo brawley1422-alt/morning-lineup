@@ -1566,7 +1566,7 @@ def page(briefing):
 }})();
 </script>
 <script>var TEAM_ID={TEAM_ID};var TEAM_IDLE_MSG="{CFG['branding']['idle_msg']}";</script>
-<script src="sections.js" defer></script><script src="tz.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="tz.js" defer></script><script src="analytics.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});
 document.addEventListener("click",function(e){{var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){{var h=tr.getAttribute("data-href");if(h){{e.preventDefault();location.href=h}}}}}});
@@ -2388,7 +2388,7 @@ if __name__ == "__main__":
         # the team output dir so the relative script tags resolve on every page.
         try:
             import shutil
-            for _asset in ("player-card.js", "reader-state.js", "resolution-pass.js", "tz.js"):
+            for _asset in ("player-card.js", "reader-state.js", "resolution-pass.js", "tz.js", "analytics.js"):
                 _src = ROOT / _asset
                 if _src.exists():
                     shutil.copyfile(_src, out_path.parent / _asset)

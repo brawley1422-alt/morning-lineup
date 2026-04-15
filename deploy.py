@@ -184,6 +184,7 @@ def _main():
         "sw.js",
         "robots.txt",
         "sitemap.xml",
+        "analytics.js",
         "auth-bounce.js",
         "config/supabase.js",
         "auth/index.html",
