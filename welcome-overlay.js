@@ -60,9 +60,9 @@
     return isIOS && isSafari;
   }
 
-  // Hard-coded team list. Matches teams/*.json slugs. Keeping this
-  // client-side avoids a fetch just for the onboarding grid.
-  var TEAMS = [
+  // Fallback team list (slug, abbreviation) used if window.__TEAMS isn't
+  // loaded yet. Real data with MLB IDs + branding comes from landing-teams.js.
+  var FALLBACK_TEAMS = [
     ["angels", "LAA"], ["astros", "HOU"], ["athletics", "ATH"], ["blue-jays", "TOR"],
     ["braves", "ATL"], ["brewers", "MIL"], ["cardinals", "STL"], ["cubs", "CHC"],
     ["dbacks", "ARI"], ["dodgers", "LAD"], ["giants", "SF"], ["guardians", "CLE"],
@@ -72,6 +72,27 @@
     ["rockies", "COL"], ["royals", "KC"], ["tigers", "DET"], ["twins", "MIN"],
     ["white-sox", "CWS"], ["yankees", "NYY"],
   ];
+
+  var LOGO_CDN = "https://www.mlbstatic.com/team-logos/team-cap-on-dark/";
+
+  function getTeams() {
+    // Prefer the hydrated team list from landing-teams.js — it has MLB IDs,
+    // full names, and colors. Fall back to the bare slug/abbr list so the
+    // overlay still works if that script failed to load.
+    if (window.__TEAMS && window.__TEAMS.length) {
+      return window.__TEAMS.map(function (t) {
+        return {
+          slug: t.slug,
+          abbr: t.abbreviation || t.slug.toUpperCase(),
+          id: t.id,
+          full: t.full_name || t.name || t.slug,
+        };
+      }).sort(function (a, b) { return a.full.localeCompare(b.full); });
+    }
+    return FALLBACK_TEAMS.map(function (t) {
+      return { slug: t[0], abbr: t[1], id: null, full: t[0] };
+    });
+  }
 
   function renderStep1(card, onPicked) {
     card.innerHTML = '';
@@ -85,14 +106,27 @@
     p.textContent = "We'll remember it. Click any team to open today's briefing.";
     var grid = document.createElement("div");
     grid.className = "ml-welcome-teams";
-    TEAMS.forEach(function (t) {
+    var teams = getTeams();
+    teams.forEach(function (t) {
       var a = document.createElement("a");
       a.className = "ml-welcome-team";
-      a.href = "./" + t[0] + "/";
-      a.textContent = t[1];
+      a.href = "./" + t.slug + "/";
+      a.setAttribute("aria-label", t.full);
+      if (t.id) {
+        var img = document.createElement("img");
+        img.className = "ml-welcome-team-logo";
+        img.src = LOGO_CDN + t.id + ".svg";
+        img.alt = "";
+        img.loading = "lazy";
+        a.appendChild(img);
+      }
+      var label = document.createElement("span");
+      label.className = "ml-welcome-team-abbr";
+      label.textContent = t.abbr;
+      a.appendChild(label);
       a.addEventListener("click", function () {
-        setTeam(t[0]);
-        track("onboard_team_picked", { team_slug: t[0] });
+        setTeam(t.slug);
+        track("onboard_team_picked", { team_slug: t.slug });
         markOnboarded();
         // Let the anchor navigate normally.
       });
