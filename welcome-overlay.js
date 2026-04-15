@@ -124,11 +124,11 @@
       label.className = "ml-welcome-team-abbr";
       label.textContent = t.abbr;
       a.appendChild(label);
-      a.addEventListener("click", function () {
+      a.addEventListener("click", function (ev) {
+        ev.preventDefault();
         setTeam(t.slug);
         track("onboard_team_picked", { team_slug: t.slug });
-        markOnboarded();
-        // Let the anchor navigate normally.
+        onPicked(false, "./" + t.slug + "/");
       });
       grid.appendChild(a);
     });
@@ -248,19 +248,32 @@
     card.className = "ml-welcome-card";
     overlay.appendChild(card);
 
+    var pendingTeamUrl = null;
+
     function close() {
       overlay.classList.remove("show");
       setTimeout(function () { if (overlay.parentNode) overlay.remove(); }, 400);
       markOnboarded();
     }
 
-    function goStep2() { renderStep2(card, function () { renderStep3(card, close); }); }
-    function goStep1Done(skipped) {
+    function finish() {
+      markOnboarded();
+      if (pendingTeamUrl) {
+        location.href = pendingTeamUrl;
+      } else {
+        close();
+      }
+    }
+
+    function goStep2() { renderStep2(card, function () { renderStep3(card, finish); }); }
+    function goStep1Done(skipped, teamUrl) {
       if (skipped) {
         track("onboard_dismissed", { at_step: 1 });
         close();
         return;
       }
+      pendingTeamUrl = teamUrl || null;
+      card.scrollTop = 0;
       goStep2();
     }
 
