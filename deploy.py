@@ -182,6 +182,8 @@ def _main():
     #    GET current SHA first to allow in-place updates without 422 conflicts.
     STATIC_ASSETS = [
         "sw.js",
+        "robots.txt",
+        "sitemap.xml",
         "auth-bounce.js",
         "config/supabase.js",
         "auth/index.html",

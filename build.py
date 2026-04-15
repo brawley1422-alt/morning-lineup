@@ -1330,6 +1330,16 @@ def page(briefing):
     else:
         filed = datetime.now(tz=CT).strftime("%m/%d/%y %H:%M CT")
 
+    # Shareability metadata: OG/Twitter cards, canonical URL, search description.
+    _site_url = "https://brawley1422-alt.github.io/morning-lineup"
+    _canonical = f"{_site_url}/{_team_slug}/"
+    _og_image = f"{_site_url}/icons/og-{_team_slug}.png"
+    _meta_title = f"The {TEAM_NAME} Daily Briefing &mdash; Morning Lineup, {fmt_date(t)}"
+    _meta_desc = (
+        f"The {TEAM_NAME} daily briefing: last night's game, today's matchup, "
+        f"leaders, farm system, and the full slate. Updated every morning."
+    )
+
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -1339,7 +1349,21 @@ def page(briefing):
 <meta name="theme-color" content="#0d0f14">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
-<title>The Morning Lineup &mdash; {fmt_date(t)}</title>
+<title>{_meta_title}</title>
+<meta name="description" content="{_meta_desc}">
+<link rel="canonical" href="{_canonical}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="The Morning Lineup">
+<meta property="og:title" content="{_meta_title}">
+<meta property="og:description" content="{_meta_desc}">
+<meta property="og:url" content="{_canonical}">
+<meta property="og:image" content="{_og_image}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{_meta_title}">
+<meta name="twitter:description" content="{_meta_desc}">
+<meta name="twitter:image" content="{_og_image}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,700&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
@@ -2224,9 +2248,41 @@ def build_landing():
     )
     print(f"Wrote landing page → {out} ({len(html):,} bytes)")
 
+def build_sitemap():
+    """Generate sitemap.xml listing all 30 team pages + landing + home.
+
+    Called at the end of --landing mode so every morning build refreshes
+    lastmod timestamps. Static, no API calls.
+    """
+    from xml.sax.saxutils import escape as _xml_escape
+    site = "https://brawley1422-alt.github.io/morning-lineup"
+    today = date.today().strftime("%Y-%m-%d")
+    urls = [(f"{site}/", "daily", "1.0")]
+    urls.append((f"{site}/home/", "daily", "0.8"))
+    for _cfg_file in sorted((ROOT / "teams").glob("*.json")):
+        _slug = _cfg_file.stem
+        urls.append((f"{site}/{_slug}/", "daily", "0.9"))
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for loc, freq, prio in urls:
+        lines.append("  <url>")
+        lines.append(f"    <loc>{_xml_escape(loc)}</loc>")
+        lines.append(f"    <lastmod>{today}</lastmod>")
+        lines.append(f"    <changefreq>{freq}</changefreq>")
+        lines.append(f"    <priority>{prio}</priority>")
+        lines.append("  </url>")
+    lines.append("</urlset>")
+    out = ROOT / "sitemap.xml"
+    out.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"Wrote sitemap → {out} ({len(urls)} urls)")
+
+
 if __name__ == "__main__":
     if "--landing" in sys.argv:
         build_landing()
+        build_sitemap()
+    elif "--sitemap" in sys.argv:
+        build_sitemap()
     elif "--capture-fixture" in sys.argv:
         # Capture the current load_all() output to a JSON fixture and exit.
         # No rendering, no data ledger write. Used by the snapshot test

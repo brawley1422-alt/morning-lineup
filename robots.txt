@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /auth/
+Disallow: /settings/
+Disallow: /data/
+Disallow: /archive/
+
+Sitemap: https://brawley1422-alt.github.io/morning-lineup/sitemap.xml
