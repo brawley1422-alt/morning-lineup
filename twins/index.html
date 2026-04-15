@@ -84,6 +84,12 @@ section > summary:hover .h{color:var(--gold-hi,#e6bf62)}
 section > summary .tag{flex:0 0 auto;font-family:var(--cond);text-transform:uppercase;font-size:10px;letter-spacing:.24em;color:var(--paper-mute);}
 section > summary .chev{font-family:var(--mono);font-size:16px;color:var(--gold);transition:transform .2s;}
 section[open] > summary .chev{transform:rotate(90deg)}
+/* Collapsible body: hide every child except the summary when the section is not open.
+   Only applies to sections with a direct > summary child (skips #columnists and any
+   future section that manages its own collapse semantics). Graceful degradation —
+   if sections.js fails to load, the server-rendered [open] state still shows content. */
+main > section:has(> summary) > *:not(summary):not(.sechead){display:none}
+main > section[open]:has(> summary) > *:not(summary):not(.sechead){display:revert}
 section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);margin:18px 0 8px;border-bottom:1px dotted var(--rule-hi);padding-bottom:5px;}
 section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--gold);margin:10px 0 5px;}
 p{margin:0 0 8px}
@@ -751,7 +757,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Twins</span> <player-card pid="680573">Simeon Woods Richardson</player-card><div class="nx-pline">4.60 ERA &middot; 0-2 &middot; 15.2 IP &middot; 8 K &middot; 1.28 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-111"/></svg>BOS</span> Connelly Early<div class="nx-pline">2.63 ERA &middot; 0-0 &middot; 13.2 IP &middot; 15 K &middot; 1.54 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="668885">Martin</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="686797">Lee</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="621439">Buxton</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="681546">Outman</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="605137">Bell</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="665019">Clemens</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="807712">Keaschall</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="670242">Wallner</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="680777">Jeffers</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Twins.TV Presented by Progressive &middot; NESN</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> TIBN &middot; WEEI 93.7 &middot; WCCO 830 &middot; The Wolf 102.9 FM &middot; Audacy App</div>
-        <div class="nx-wx">46°F &middot; Overcast &middot; 5 mph N</div>
+        <div class="nx-wx">44°F &middot; Clear &middot; 4 mph NE</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Fri, Apr 17 &middot; vs <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-113"/></svg><span class="ab">CIN</span></div>
@@ -937,17 +943,17 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="splits-grid"><div class="split-row"><span class="split-label">Home</span><span class="split-val">7-2</span><span class="split-pct">.778</span></div><div class="split-row"><span class="split-label">Away</span><span class="split-val">4-5</span><span class="split-pct">.444</span></div><div class="split-row"><span class="split-label">vs RHP</span><span class="split-val">6-2</span><span class="split-pct">.750</span></div><div class="split-row"><span class="split-label">vs LHP</span><span class="split-val">5-5</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">1-Run</span><span class="split-val">0-1</span><span class="split-pct">.000</span></div><div class="split-row"><span class="split-label">Extras</span><span class="split-val">0-1</span><span class="split-pct">.000</span></div><div class="split-row"><span class="split-label">Day</span><span class="split-val">6-4</span><span class="split-pct">.600</span></div><div class="split-row"><span class="split-label">Night</span><span class="split-val">5-3</span><span class="split-pct">.625</span></div><div class="split-row"><span class="split-label">Last 10</span><span class="split-val">8-2</span><span class="split-pct">.800</span></div><div class="split-row"><span class="split-label">Grass</span><span class="split-val">9-6</span><span class="split-pct">.600</span></div></div>
   </section>
 
-  <section id="pressbox" open>
+  <section id="pressbox">
     <summary>
       <span class="num">05</span>
       <span class="h">The Pressbox</span>
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-11</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Minnesota Twins recalled RHP Andrew Morris from St. Paul Saints.</span></div><div class="transac-item"><span class="transac-date">04-11</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Minnesota Twins recalled CF Ryan Kreidler from St. Paul Saints.</span></div><div class="transac-item"><span class="transac-date">04-09</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Minnesota Twins placed RHP Cody Laweryson on the 15-day injured list retroactive to April 9, 2026. Right forearm strain.</span></div><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Minnesota Twins placed 3B Royce Lewis on the 10-day injured list retroactive to April 10, 2025. Left knee sprain.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>3B <strong>Royce Lewis</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Cody Laweryson</strong></dd><dd>P <strong>Travis Adams</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>David Festa</strong></dd><dd>P <strong>Pablo López</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">C Ryan Jeffers changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Mick Abel changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">1B Josh Bell changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">3B Brooks Lee changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">CF James Outman changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">2B Kody Clemens changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Justin Topa changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Eric Orze changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Bailey Ober changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">2B Luke Keaschall changed number to 42.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>3B <strong>Royce Lewis</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Cody Laweryson</strong></dd><dd>P <strong>Travis Adams</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>David Festa</strong></dd><dd>P <strong>Pablo López</strong></dd></dl></div></div>
   </section>
 
-  <section id="farm" open>
+  <section id="farm">
     <summary>
       <span class="num">06</span>
       <span class="h">Down on the Farm</span>
@@ -1126,7 +1132,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="div" open>
+  <section id="div">
     <summary>
       <span class="num">08</span>
       <span class="h">AL Central</span>
@@ -1152,7 +1158,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="league" open>
+  <section id="league">
     <summary>
       <span class="num">09</span>
       <span class="h">Around the League</span>
@@ -1197,7 +1203,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     </div>
   </section>
 
-  <section id="history" open>
+  <section id="history">
     <summary>
       <span class="num">10</span>
       <span class="h">This Day in Twins History</span>
@@ -1213,7 +1219,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Target Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/15/26 04:28 CT</span>
+  <span>Filed 04/15/26 07:36 CT</span>
 </footer>
 
 <script>
@@ -1243,7 +1249,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=142;var TEAM_IDLE_MSG="No Twins game in progress";</script>
-<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});

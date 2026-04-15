@@ -84,6 +84,12 @@ section > summary:hover .h{color:var(--gold-hi,#e6bf62)}
 section > summary .tag{flex:0 0 auto;font-family:var(--cond);text-transform:uppercase;font-size:10px;letter-spacing:.24em;color:var(--paper-mute);}
 section > summary .chev{font-family:var(--mono);font-size:16px;color:var(--gold);transition:transform .2s;}
 section[open] > summary .chev{transform:rotate(90deg)}
+/* Collapsible body: hide every child except the summary when the section is not open.
+   Only applies to sections with a direct > summary child (skips #columnists and any
+   future section that manages its own collapse semantics). Graceful degradation —
+   if sections.js fails to load, the server-rendered [open] state still shows content. */
+main > section:has(> summary) > *:not(summary):not(.sechead){display:none}
+main > section[open]:has(> summary) > *:not(summary):not(.sechead){display:revert}
 section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);margin:18px 0 8px;border-bottom:1px dotted var(--rule-hi);padding-bottom:5px;}
 section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--gold);margin:10px 0 5px;}
 p{margin:0 0 8px}
@@ -647,7 +653,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><details class="column" data-role="straight_beat"><summary class="column-byline"><span class="column-name">Clyde Orendorff</span><span class="column-role">The Straight Beat</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p class="column-off"><em>Clyde Orendorff is off today.</em></p></div></details><details class="column" data-role="optimist"><summary class="column-byline"><span class="column-name">Lacey-Jean Marcum</span><span class="column-role">The Optimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Rangers lost yesterday, but let’s not let that sour the lemonade. A four-game losing streak in April? Buddy, that’s a warm-up act. This lineup is built to hoist another trophy before the peach harvest. Sure, the A’s handed us our second loss in three days, but let’s not forget—we’re still in the mix, and the AL West is a race that rewards patience and perspective.</p><p>Look, I’ll be the first to admit the last week hasn’t been pretty. The offense sputtered, the bullpen blinked, and the defense looked like a group of kids playing tag with a toddler. But here’s the thing: this team’s got legs. They’ve got the kind of depth that makes you think, “Lock up the stars, y’all.” You see it in the young arms on the mound—those fireballers with names like Martin and O’Halleran. They’re not just throwing strikes; they’re throwing confidence. And when you’ve got a bullpen that can turn a 3-0 deficit into a walk-off win, you’re not just surviving—you’re thriving</p></div></details><details class="column" data-role="pessimist"><summary class="column-byline"><span class="column-name">Buck Pierson</span><span class="column-role">The Pessimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>Another loss, another step closer to the abyss. The Rangers blinked yesterday, letting a two-run lead slip away to the A’s, and now they’re 9-8, clinging to the AL West like a calf to a fence post. You’d think with the standings this tight, you’d see some grit, some fire, some… anything. But no. The Rangers are still the same old bunch, flinching at every shadow and choking on every opportunity.</p><p>Pitching’s thin, the bullpen’s held together with baling wire, and the GM is on a victory tour</p></div></details></div><script>(function(){
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><details class="column" data-role="straight_beat"><summary class="column-byline"><span class="column-name">Clyde Orendorff</span><span class="column-role">The Straight Beat</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Rangers lost yesterday, but not without a fight. A 1-2 decision against the A’s, yes, but the way they battled—gritty, stubborn, and with a hint of desperation—felt like a playoff game. You could argue the bullpen’s late-inning breakdown was the difference, but let’s not sugarcoat it: the offense didn’t show up. Not once. Not twice. Not even in the seventh inning when they had a chance to tie it. Seager doubled twice, Eovaldi pitched into the seventh, and Texas beat the Astros 5-2 at Globe Life Field. Wait, no—that was last week. Yesterday, the Rangers’ bats went quiet.</p><p>Here’s the thing about this team: they’ve been fighting the same battle all season. The AL West is a sieve, and every game feels like a referendum on their ability to grind out wins. They’re 9-8, one game back, and the front office is probably already drafting a memo about how to “fix” the offense. But let’s not kid ourselves—this isn’t about fixing anything. It’s about adapting. The Rangers have a knack for making the most of their talent, but talent alone doesn’t win games in this division. You need consistency, you need clutch hits, and you need a bullpen that doesn’t collapse in the ninth.</p><p>The bullpen’s been a mixed bag. Last week, they held the Astros to two runs. Yesterday, they gave up three in the first inning. It’s the same group, same mechanics, same manager. The question isn’t whether they can improve—it’s whether they’ll finally start doing it. You can’t blame the pitchers for the offense’s silence. You can’t blame the hitters for the bullpen’s breakdown. You can only</p></div></details><details class="column" data-role="optimist"><summary class="column-byline"><span class="column-name">Lacey-Jean Marcum</span><span class="column-role">The Optimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Rangers lost yesterday, but let’s not let that sour the lemonade. A four-game losing streak in April? Buddy, that’s a warm-up act. This lineup is built to hoist another trophy before the peach harvest. Sure, the A’s handed us our second loss in three days, but let’s not forget—we’re still in the mix, and the AL West is a race that rewards patience and perspective.</p><p>Look, I’ll be the first to admit the last week hasn’t been pretty. The offense sputtered, the bullpen blinked, and the defense looked like a group of kids playing tag with a toddler. But here’s the thing: this team’s got legs. They’ve got the kind of depth that makes you think, “Lock up the stars, y’all.” You see it in the young arms on the mound—those fireballers with names like Martin and O’Halleran. They’re not just throwing strikes; they’re throwing confidence. And when you’ve got a bullpen that can turn a 3-0 deficit into a walk-off win, you’re not just surviving—you’re thriving</p></div></details><details class="column" data-role="pessimist"><summary class="column-byline"><span class="column-name">Buck Pierson</span><span class="column-role">The Pessimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>Another loss, another step closer to the abyss. The Rangers blinked yesterday, letting a two-run lead slip away to the A’s, and now they’re 9-8, clinging to the AL West like a calf to a fence post. You’d think with the standings this tight, you’d see some grit, some fire, some… anything. But no. The Rangers are still the same old bunch, flinching at every shadow and choking on every opportunity.</p><p>Pitching’s thin, the bullpen’s held together with baling wire, and the GM is on a victory tour</p></div></details></div><script>(function(){
   var grid = document.currentScript && document.currentScript.previousElementSibling;
   if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
   var kids = Array.prototype.slice.call(grid.children);
@@ -751,7 +757,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Rangers</span> <player-card pid="677958">Kumar Rocker</player-card><div class="nx-pline">4.50 ERA &middot; 0-1 &middot; 10.0 IP &middot; 8 K &middot; 1.40 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-133"/></svg>ATH</span> J.T. Ginn<div class="nx-pline">3.27 ERA &middot; 0-0 &middot; 11.0 IP &middot; 8 K &middot; 0.91 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="457705">McCutchen</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="607043">Nimmo</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="608369">Seager</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="643376">Jansen</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="694497">Carter</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="677649">Duran</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="669394">Burger</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="592626">Pederson</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="673962">Jung</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> NBCSCA+ &middot; Rangers Sports Network</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 105.3 The Fan &middot; Talk 650 KSTE &middot; A&#x27;s Cast</div>
-        <div class="nx-wx">49°F &middot; Overcast &middot; 4 mph SSE</div>
+        <div class="nx-wx">47°F &middot; Mostly Clear &middot; 6 mph SSE</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Thu, Apr 16 &middot; at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-133"/></svg><span class="ab">ATH</span></div>
@@ -937,17 +943,17 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="splits-grid"><div class="split-row"><span class="split-label">Home</span><span class="split-val">3-3</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Away</span><span class="split-val">6-5</span><span class="split-pct">.545</span></div><div class="split-row"><span class="split-label">vs RHP</span><span class="split-val">8-5</span><span class="split-pct">.615</span></div><div class="split-row"><span class="split-label">vs LHP</span><span class="split-val">1-3</span><span class="split-pct">.250</span></div><div class="split-row"><span class="split-label">1-Run</span><span class="split-val">3-3</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Extras</span><span class="split-val">1-0</span><span class="split-pct">1.000</span></div><div class="split-row"><span class="split-label">Day</span><span class="split-val">4-4</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Night</span><span class="split-val">5-4</span><span class="split-pct">.556</span></div><div class="split-row"><span class="split-label">Last 10</span><span class="split-val">5-5</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Grass</span><span class="split-val">6-5</span><span class="split-pct">.545</span></div></div>
   </section>
 
-  <section id="pressbox" open>
+  <section id="pressbox">
     <summary>
       <span class="num">05</span>
       <span class="h">The Pressbox</span>
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><p><em class="slang">No roster moves in the last 7 days.</em></p></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>3B <strong>Cody Freeman</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Carter Baumler</strong></dd><dd>P <strong>Cody Bradford</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Jordan Montgomery</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Jacob deGrom changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LHP Jalen Beeks changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">C Kyle Higashioka changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Jakob Junis changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Cole Winn changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RF Andrew McCutchen changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LHP Robert Garcia changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LF Wyatt Langford changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">SS Corey Seager changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">3B Josh Jung changed number to 42.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>3B <strong>Cody Freeman</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Carter Baumler</strong></dd><dd>P <strong>Cody Bradford</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Jordan Montgomery</strong></dd></dl></div></div>
   </section>
 
-  <section id="farm" open>
+  <section id="farm">
     <summary>
       <span class="num">06</span>
       <span class="h">Down on the Farm</span>
@@ -1126,7 +1132,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="div" open>
+  <section id="div">
     <summary>
       <span class="num">08</span>
       <span class="h">AL West</span>
@@ -1155,7 +1161,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="league" open>
+  <section id="league">
     <summary>
       <span class="num">09</span>
       <span class="h">Around the League</span>
@@ -1200,7 +1206,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     </div>
   </section>
 
-  <section id="history" open>
+  <section id="history">
     <summary>
       <span class="num">10</span>
       <span class="h">This Day in Rangers History</span>
@@ -1216,7 +1222,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Globe Life Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/15/26 04:23 CT</span>
+  <span>Filed 04/15/26 07:34 CT</span>
 </footer>
 
 <script>
@@ -1246,7 +1252,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=140;var TEAM_IDLE_MSG="No Rangers game in progress";</script>
-<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});

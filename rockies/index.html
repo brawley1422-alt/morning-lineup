@@ -84,6 +84,12 @@ section > summary:hover .h{color:var(--gold-hi,#e6bf62)}
 section > summary .tag{flex:0 0 auto;font-family:var(--cond);text-transform:uppercase;font-size:10px;letter-spacing:.24em;color:var(--paper-mute);}
 section > summary .chev{font-family:var(--mono);font-size:16px;color:var(--gold);transition:transform .2s;}
 section[open] > summary .chev{transform:rotate(90deg)}
+/* Collapsible body: hide every child except the summary when the section is not open.
+   Only applies to sections with a direct > summary child (skips #columnists and any
+   future section that manages its own collapse semantics). Graceful degradation —
+   if sections.js fails to load, the server-rendered [open] state still shows content. */
+main > section:has(> summary) > *:not(summary):not(.sechead){display:none}
+main > section[open]:has(> summary) > *:not(summary):not(.sechead){display:revert}
 section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);margin:18px 0 8px;border-bottom:1px dotted var(--rule-hi);padding-bottom:5px;}
 section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--gold);margin:10px 0 5px;}
 p{margin:0 0 8px}
@@ -751,7 +757,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Rockies</span> <player-card pid="500779">Jose Quintana</player-card><div class="nx-pline">4.15 ERA &middot; 0-0 &middot; 4.1 IP &middot; 2 K &middot; 1.85 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-117"/></svg>HOU</span> Spencer Arrighetti</div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="686668">Doyle</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="664954">Sullivan</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="666397">Julien</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="678662">Tovar</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="696100">Goodman</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="664983">McCarthy</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="687597">Beck</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="691720">Karros</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="666160">Moniak</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Space City Home Network &middot; Rockies.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KBME 790 AM/94.5 FM HD-2 &middot; KOA 850 AM/94.1 FM </div>
-        <div class="nx-wx">71°F &middot; Overcast &middot; 5 mph SSE</div>
+        <div class="nx-wx">71°F &middot; Light Drizzle &middot; 4 mph SE</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Thu, Apr 16 &middot; at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-117"/></svg><span class="ab">HOU</span></div>
@@ -935,17 +941,17 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="splits-grid"><div class="split-row"><span class="split-label">Home</span><span class="split-val">4-2</span><span class="split-pct">.667</span></div><div class="split-row"><span class="split-label">Away</span><span class="split-val">2-9</span><span class="split-pct">.182</span></div><div class="split-row"><span class="split-label">vs RHP</span><span class="split-val">6-9</span><span class="split-pct">.400</span></div><div class="split-row"><span class="split-label">vs LHP</span><span class="split-val">0-2</span><span class="split-pct">.000</span></div><div class="split-row"><span class="split-label">1-Run</span><span class="split-val">1-5</span><span class="split-pct">.167</span></div><div class="split-row"><span class="split-label">Extras</span><span class="split-val">1-1</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Day</span><span class="split-val">3-4</span><span class="split-pct">.429</span></div><div class="split-row"><span class="split-label">Night</span><span class="split-val">3-7</span><span class="split-pct">.300</span></div><div class="split-row"><span class="split-label">Last 10</span><span class="split-val">4-6</span><span class="split-pct">.400</span></div><div class="split-row"><span class="split-label">Grass</span><span class="split-val">4-7</span><span class="split-pct">.364</span></div></div>
   </section>
 
-  <section id="pressbox" open>
+  <section id="pressbox">
     <summary>
       <span class="num">05</span>
       <span class="h">The Pressbox</span>
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Colorado Rockies recalled RHP Tanner Gordon from Albuquerque Isotopes.</span></div><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Colorado Rockies optioned RHP Valente Bellozo to Albuquerque Isotopes.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 15-Day</dt><dd>P <strong>Jose Quintana</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Jeff Criswell</strong></dd><dd>DH <strong>Kris Bryant</strong></dd><dd>P <strong>McCade Brown</strong></dd><dd>P <strong>Pierson Ohl</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LHP Kyle Freeland changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Tomoyuki Sugano changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">OF Troy Johnston changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RF Mickey Moniak changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">SS Ezequiel Tovar changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Chase Dollander changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">CF Jake McCarthy changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RF Tyler Freeman changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">C Brett Sullivan changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Juan Mejia changed number to 42.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 15-Day</dt><dd>P <strong>Jose Quintana</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Jeff Criswell</strong></dd><dd>DH <strong>Kris Bryant</strong></dd><dd>P <strong>McCade Brown</strong></dd><dd>P <strong>Pierson Ohl</strong></dd></dl></div></div>
   </section>
 
-  <section id="farm" open>
+  <section id="farm">
     <summary>
       <span class="num">06</span>
       <span class="h">Down on the Farm</span>
@@ -1124,7 +1130,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="div" open>
+  <section id="div">
     <summary>
       <span class="num">08</span>
       <span class="h">NL West</span>
@@ -1153,7 +1159,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="league" open>
+  <section id="league">
     <summary>
       <span class="num">09</span>
       <span class="h">Around the League</span>
@@ -1198,7 +1204,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     </div>
   </section>
 
-  <section id="history" open>
+  <section id="history">
     <summary>
       <span class="num">10</span>
       <span class="h">This Day in Rockies History</span>
@@ -1214,7 +1220,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Coors Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/15/26 04:26 CT</span>
+  <span>Filed 04/15/26 07:35 CT</span>
 </footer>
 
 <script>
@@ -1244,7 +1250,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=115;var TEAM_IDLE_MSG="No Rockies game in progress";</script>
-<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});

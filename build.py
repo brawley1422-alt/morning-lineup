@@ -1413,7 +1413,7 @@ def page(briefing):
     {stretch_html}
   </section>
 
-  <section id="pressbox" open>
+  <section id="pressbox">
     <summary>
       <span class="num">{_num.get("pressbox", "")}</span>
       <span class="h">The Pressbox</span>
@@ -1423,7 +1423,7 @@ def page(briefing):
     {pressbox_html}
   </section>
 
-  <section id="farm" open>
+  <section id="farm">
     <summary>
       <span class="num">{_num.get("farm", "")}</span>
       <span class="h">Down on the Farm</span>
@@ -1443,7 +1443,7 @@ def page(briefing):
     {slate_html}
   </section>
 
-  <section id="div" open>
+  <section id="div">
     <summary>
       <span class="num">{_num.get("div", "")}</span>
       <span class="h">{DIV_NAME}</span>
@@ -1453,7 +1453,7 @@ def page(briefing):
     {division_html}
   </section>
 
-  <section id="league" open>
+  <section id="league">
     <summary>
       <span class="num">{_num.get("league", "")}</span>
       <span class="h">Around the League</span>
@@ -1463,7 +1463,7 @@ def page(briefing):
     {around_league_html}
   </section>
 
-  <section id="history" open>
+  <section id="history">
     <summary>
       <span class="num">{_num.get("history", "")}</span>
       <span class="h">This Day in {TEAM_NAME} History</span>
@@ -1509,7 +1509,7 @@ def page(briefing):
 }})();
 </script>
 <script>var TEAM_ID={TEAM_ID};var TEAM_IDLE_MSG="{CFG['branding']['idle_msg']}";</script>
-<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});
 document.addEventListener("click",function(e){{var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){{var h=tr.getAttribute("data-href");if(h){{e.preventDefault();location.href=h}}}}}});

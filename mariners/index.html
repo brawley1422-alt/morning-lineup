@@ -84,6 +84,12 @@ section > summary:hover .h{color:var(--gold-hi,#e6bf62)}
 section > summary .tag{flex:0 0 auto;font-family:var(--cond);text-transform:uppercase;font-size:10px;letter-spacing:.24em;color:var(--paper-mute);}
 section > summary .chev{font-family:var(--mono);font-size:16px;color:var(--gold);transition:transform .2s;}
 section[open] > summary .chev{transform:rotate(90deg)}
+/* Collapsible body: hide every child except the summary when the section is not open.
+   Only applies to sections with a direct > summary child (skips #columnists and any
+   future section that manages its own collapse semantics). Graceful degradation —
+   if sections.js fails to load, the server-rendered [open] state still shows content. */
+main > section:has(> summary) > *:not(summary):not(.sechead){display:none}
+main > section[open]:has(> summary) > *:not(summary):not(.sechead){display:revert}
 section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);margin:18px 0 8px;border-bottom:1px dotted var(--rule-hi);padding-bottom:5px;}
 section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--gold);margin:10px 0 5px;}
 p{margin:0 0 8px}
@@ -751,7 +757,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Mariners</span> <player-card pid="676106">Emerson Hancock</player-card><div class="nx-pline">2.04 ERA &middot; 2-1 &middot; 17.2 IP &middot; 19 K &middot; 0.74 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-135"/></svg>SD</span> Randy Vásquez<div class="nx-pline">1.02 ERA &middot; 1-0 &middot; 17.2 IP &middot; 19 K &middot; 1.08 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="680977">Donovan</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="663728">Raleigh</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="702284">Young</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="686527">Canzone</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="641487">Crawford</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="647304">Naylor</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="677594">Rodríguez</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="660844">Rivas</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="670042">Raley</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Padres.TV Presented by UC San Diego Health &middot; Mariners.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> Seattle Sports (710 AM) &middot; KWFN 97.3</div>
-        <div class="nx-wx">56°F &middot; Clear &middot; 4 mph ENE</div>
+        <div class="nx-wx">55°F &middot; Partly Cloudy &middot; 4 mph NE</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Thu, Apr 16 &middot; at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-135"/></svg><span class="ab">SD</span></div>
@@ -937,17 +943,17 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="splits-grid"><div class="split-row"><span class="split-label">Home</span><span class="split-val">7-4</span><span class="split-pct">.636</span></div><div class="split-row"><span class="split-label">Away</span><span class="split-val">1-6</span><span class="split-pct">.143</span></div><div class="split-row"><span class="split-label">vs RHP</span><span class="split-val">6-7</span><span class="split-pct">.462</span></div><div class="split-row"><span class="split-label">vs LHP</span><span class="split-val">2-3</span><span class="split-pct">.400</span></div><div class="split-row"><span class="split-label">1-Run</span><span class="split-val">2-5</span><span class="split-pct">.286</span></div><div class="split-row"><span class="split-label">Extras</span><span class="split-val">1-2</span><span class="split-pct">.333</span></div><div class="split-row"><span class="split-label">Day</span><span class="split-val">3-3</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Night</span><span class="split-val">5-7</span><span class="split-pct">.417</span></div><div class="split-row"><span class="split-label">Last 10</span><span class="split-val">4-6</span><span class="split-pct">.400</span></div><div class="split-row"><span class="split-label">Grass</span><span class="split-val">8-7</span><span class="split-pct">.533</span></div></div>
   </section>
 
-  <section id="pressbox" open>
+  <section id="pressbox">
     <summary>
       <span class="num">05</span>
       <span class="h">The Pressbox</span>
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Seattle Mariners placed RF Rob Refsnyder on the paternity list.</span></div><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge ">Designated f</span><span class="transac-desc">Seattle Mariners designated RHP Blas Castaño for assignment.</span></div><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge ">Selected</span><span class="transac-desc">Seattle Mariners selected the contract of 1B Patrick Wisdom from Tacoma Rainiers.</span></div><div class="transac-item"><span class="transac-date">04-08</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Seattle Mariners sent 3B Miles Mastrobuoni on a rehab assignment to Tacoma Rainiers.</span></div><div class="transac-item"><span class="transac-date">04-08</span><span class="transac-badge ">Selected</span><span class="transac-desc">Seattle Mariners selected the contract of RF Connor Joe from Tacoma Rainiers.</span></div><div class="transac-item"><span class="transac-date">04-07</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Seattle Mariners placed RF Victor Robles on the 10-day injured list retroactive to April 7, 2026. Right pec strain.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>3B <strong>Miles Mastrobuoni</strong></dd><dd>RF <strong>Victor Robles</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Bryce Miller</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Carlos Vargas</strong></dd><dd>P <strong>Logan Evans</strong></dd><dt>Paternity List</dt><dd>RF <strong>Rob Refsnyder</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">2B Cole Young changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Luis Castillo changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Cole Wilcox changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">1B Patrick Wisdom changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">SS J.P. Crawford changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">2B Brendan Donovan changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Casey Legumina changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">1B Connor Joe changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LHP Gabe Speier changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Eduard Bazardo changed number to 42.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>3B <strong>Miles Mastrobuoni</strong></dd><dd>RF <strong>Victor Robles</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Bryce Miller</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Carlos Vargas</strong></dd><dd>P <strong>Logan Evans</strong></dd><dt>Paternity List</dt><dd>RF <strong>Rob Refsnyder</strong></dd></dl></div></div>
   </section>
 
-  <section id="farm" open>
+  <section id="farm">
     <summary>
       <span class="num">06</span>
       <span class="h">Down on the Farm</span>
@@ -1126,7 +1132,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="div" open>
+  <section id="div">
     <summary>
       <span class="num">08</span>
       <span class="h">AL West</span>
@@ -1152,7 +1158,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="league" open>
+  <section id="league">
     <summary>
       <span class="num">09</span>
       <span class="h">Around the League</span>
@@ -1197,7 +1203,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     </div>
   </section>
 
-  <section id="history" open>
+  <section id="history">
     <summary>
       <span class="num">10</span>
       <span class="h">This Day in Mariners History</span>
@@ -1213,7 +1219,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A T-Mobile Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/15/26 04:17 CT</span>
+  <span>Filed 04/15/26 07:32 CT</span>
 </footer>
 
 <script>
@@ -1243,7 +1249,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=136;var TEAM_IDLE_MSG="No Mariners game in progress";</script>
-<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});

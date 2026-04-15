@@ -84,6 +84,12 @@ section > summary:hover .h{color:var(--gold-hi,#e6bf62)}
 section > summary .tag{flex:0 0 auto;font-family:var(--cond);text-transform:uppercase;font-size:10px;letter-spacing:.24em;color:var(--paper-mute);}
 section > summary .chev{font-family:var(--mono);font-size:16px;color:var(--gold);transition:transform .2s;}
 section[open] > summary .chev{transform:rotate(90deg)}
+/* Collapsible body: hide every child except the summary when the section is not open.
+   Only applies to sections with a direct > summary child (skips #columnists and any
+   future section that manages its own collapse semantics). Graceful degradation —
+   if sections.js fails to load, the server-rendered [open] state still shows content. */
+main > section:has(> summary) > *:not(summary):not(.sechead){display:none}
+main > section[open]:has(> summary) > *:not(summary):not(.sechead){display:revert}
 section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);margin:18px 0 8px;border-bottom:1px dotted var(--rule-hi);padding-bottom:5px;}
 section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--gold);margin:10px 0 5px;}
 p{margin:0 0 8px}
@@ -842,7 +848,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="splits-grid"><div class="split-row"><span class="split-label">Home</span><span class="split-val">3-3</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Away</span><span class="split-val">5-1</span><span class="split-pct">.833</span></div><div class="split-row"><span class="split-label">vs RHP</span><span class="split-val">7-3</span><span class="split-pct">.700</span></div><div class="split-row"><span class="split-label">vs LHP</span><span class="split-val">1-1</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">1-Run</span><span class="split-val">0-4</span><span class="split-pct">.000</span></div><div class="split-row"><span class="split-label">Extras</span><span class="split-val">0-0</span><span class="split-pct">.000</span></div><div class="split-row"><span class="split-label">Day</span><span class="split-val">4-2</span><span class="split-pct">.667</span></div><div class="split-row"><span class="split-label">Night</span><span class="split-val">4-2</span><span class="split-pct">.667</span></div><div class="split-row"><span class="split-label">Last 10</span><span class="split-val">6-4</span><span class="split-pct">.600</span></div><div class="split-row"><span class="split-label">Grass</span><span class="split-val">8-4</span><span class="split-pct">.667</span></div></div>
   </section>
 
-  <section id="pressbox" open>
+  <section id="pressbox">
     <summary>
       <span class="num">04</span>
       <span class="h">The Pressbox</span>
@@ -852,7 +858,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="two"><div><h3>Recent Transactions</h3><p><em class="slang">No roster moves in the last 7 days.</em></p></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>SS <strong>Anthony Volpe</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Carlos Rodón</strong></dd><dd>P <strong>Gerrit Cole</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Clarke Schmidt</strong></dd></dl></div></div>
   </section>
 
-  <section id="farm" open>
+  <section id="farm">
     <summary>
       <span class="num">05</span>
       <span class="h">Down on the Farm</span>
@@ -1031,7 +1037,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="div" open>
+  <section id="div">
     <summary>
       <span class="num">07</span>
       <span class="h">AL East</span>
@@ -1048,7 +1054,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="rivals"><div class="rival"><h4>AL East Rivals</h4><p>All off yesterday.</p></div></div>
   </section>
 
-  <section id="league" open>
+  <section id="league">
     <summary>
       <span class="num">08</span>
       <span class="h">Around the League</span>
@@ -1093,7 +1099,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     </div>
   </section>
 
-  <section id="history" open>
+  <section id="history">
     <summary>
       <span class="num">09</span>
       <span class="h">This Day in Yankees History</span>
@@ -1139,7 +1145,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=147;var TEAM_IDLE_MSG="No Yankees game in progress";</script>
-<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});

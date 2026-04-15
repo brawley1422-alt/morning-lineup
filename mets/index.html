@@ -84,6 +84,12 @@ section > summary:hover .h{color:var(--gold-hi,#e6bf62)}
 section > summary .tag{flex:0 0 auto;font-family:var(--cond);text-transform:uppercase;font-size:10px;letter-spacing:.24em;color:var(--paper-mute);}
 section > summary .chev{font-family:var(--mono);font-size:16px;color:var(--gold);transition:transform .2s;}
 section[open] > summary .chev{transform:rotate(90deg)}
+/* Collapsible body: hide every child except the summary when the section is not open.
+   Only applies to sections with a direct > summary child (skips #columnists and any
+   future section that manages its own collapse semantics). Graceful degradation —
+   if sections.js fails to load, the server-rendered [open] state still shows content. */
+main > section:has(> summary) > *:not(summary):not(.sechead){display:none}
+main > section[open]:has(> summary) > *:not(summary):not(.sechead){display:revert}
 section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);margin:18px 0 8px;border-bottom:1px dotted var(--rule-hi);padding-bottom:5px;}
 section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--gold);margin:10px 0 5px;}
 p{margin:0 0 8px}
@@ -751,7 +757,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Mets</span> <player-card pid="605280">Clay Holmes</player-card><div class="nx-pline">1.50 ERA &middot; 2-1 &middot; 18.0 IP &middot; 12 K &middot; 1.11 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-119"/></svg>LAD</span> Shohei Ohtani<div class="nx-pline">0.00 ERA &middot; 1-0 &middot; 12.0 IP &middot; 8 K &middot; 0.75 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="666182">Bichette</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="683146">Baty</player-card></span><span class="lu-slot"><span class="lu-pos">OF</span> <player-card pid="701807">Benge</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="682626">Alvarez</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="596019">Lindor</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="676724">Young</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="593871">Polanco</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="673357">Jr.</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="620443">Torrens</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> ESPN/ESPN App &middot; ESPN/ESPN App</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> Dodgers Radio AM570 &middot; Audacy Mets Radio WHSQ 880AM</div>
-        <div class="nx-wx">54°F &middot; Clear &middot; 5 mph E</div>
+        <div class="nx-wx">52°F &middot; Clear &middot; 3 mph E</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Fri, Apr 17 &middot; at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-112"/></svg><span class="ab">CHC</span></div>
@@ -937,17 +943,17 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="splits-grid"><div class="split-row"><span class="split-label">Home</span><span class="split-val">3-6</span><span class="split-pct">.333</span></div><div class="split-row"><span class="split-label">Away</span><span class="split-val">4-5</span><span class="split-pct">.444</span></div><div class="split-row"><span class="split-label">vs RHP</span><span class="split-val">7-6</span><span class="split-pct">.538</span></div><div class="split-row"><span class="split-label">vs LHP</span><span class="split-val">0-5</span><span class="split-pct">.000</span></div><div class="split-row"><span class="split-label">1-Run</span><span class="split-val">1-4</span><span class="split-pct">.200</span></div><div class="split-row"><span class="split-label">Extras</span><span class="split-val">2-2</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Day</span><span class="split-val">4-5</span><span class="split-pct">.444</span></div><div class="split-row"><span class="split-label">Night</span><span class="split-val">3-6</span><span class="split-pct">.333</span></div><div class="split-row"><span class="split-label">Last 10</span><span class="split-val">3-7</span><span class="split-pct">.300</span></div><div class="split-row"><span class="split-label">Grass</span><span class="split-val">7-11</span><span class="split-pct">.389</span></div></div>
   </section>
 
-  <section id="pressbox" open>
+  <section id="pressbox">
     <summary>
       <span class="num">05</span>
       <span class="h">The Pressbox</span>
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge act">Status Change</span><span class="transac-desc">New York Mets placed RHP Joey Gerber on the 15-day injured list. Right finger blister.</span></div><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge il">Released</span><span class="transac-desc">New York Mets released RHP Luis García.</span></div><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge ">Recalled</span><span class="transac-desc">New York Mets recalled RHP Austin Warren from Syracuse Mets.</span></div><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">New York Mets optioned 3B Ronny Mauricio to Syracuse Mets.</span></div><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge ">Selected</span><span class="transac-desc">New York Mets selected the contract of LF Tommy Pham from St. Lucie Mets.</span></div><div class="transac-item"><span class="transac-date">04-12</span><span class="transac-badge ">Designated f</span><span class="transac-desc">New York Mets designated RHP Luis García for assignment.</span></div><div class="transac-item"><span class="transac-date">04-12</span><span class="transac-badge ">Recalled</span><span class="transac-desc">New York Mets recalled RHP Joey Gerber from Syracuse Mets.</span></div><div class="transac-item"><span class="transac-date">04-11</span><span class="transac-badge ">Designated f</span><span class="transac-desc">New York Mets designated LHP Richard Lovelady for assignment.</span></div><div class="transac-item"><span class="transac-date">04-11</span><span class="transac-badge ">Selected</span><span class="transac-desc">New York Mets selected the contract of RHP Craig Kimbrel from St. Lucie Mets.</span></div><div class="transac-item"><span class="transac-date">04-09</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">New York Mets sent LHP A.J. Minter on a rehab assignment to St. Lucie Mets.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>RF <strong>Juan Soto</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>A.J. Minter</strong></dd><dd>P <strong>Joey Gerber</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Dedniel Núñez</strong></dd><dd>P <strong>Justin Hagenman</strong></dd><dd>P <strong>Reed Garrett</strong></dd><dd>P <strong>Tylor Megill</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Huascar Brazobán changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LF Jared Young changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Freddy Peralta changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">2B Marcus Semien changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">3B Mark Vientos changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Tobias Myers changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LF Tommy Pham changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Luke Weaver changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">CF Luis Robert Jr. changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">C Luis Torrens changed number to 42.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>RF <strong>Juan Soto</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>A.J. Minter</strong></dd><dd>P <strong>Joey Gerber</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Dedniel Núñez</strong></dd><dd>P <strong>Justin Hagenman</strong></dd><dd>P <strong>Reed Garrett</strong></dd><dd>P <strong>Tylor Megill</strong></dd></dl></div></div>
   </section>
 
-  <section id="farm" open>
+  <section id="farm">
     <summary>
       <span class="num">06</span>
       <span class="h">Down on the Farm</span>
@@ -1126,7 +1132,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="div" open>
+  <section id="div">
     <summary>
       <span class="num">08</span>
       <span class="h">NL East</span>
@@ -1152,7 +1158,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="league" open>
+  <section id="league">
     <summary>
       <span class="num">09</span>
       <span class="h">Around the League</span>
@@ -1197,7 +1203,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     </div>
   </section>
 
-  <section id="history" open>
+  <section id="history">
     <summary>
       <span class="num">10</span>
       <span class="h">This Day in Mets History</span>
@@ -1213,7 +1219,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Citi Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/15/26 04:18 CT</span>
+  <span>Filed 04/15/26 07:32 CT</span>
 </footer>
 
 <script>
@@ -1243,7 +1249,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=121;var TEAM_IDLE_MSG="No Mets game in progress";</script>
-<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});

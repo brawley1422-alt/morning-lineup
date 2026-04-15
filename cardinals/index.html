@@ -84,6 +84,12 @@ section > summary:hover .h{color:var(--gold-hi,#e6bf62)}
 section > summary .tag{flex:0 0 auto;font-family:var(--cond);text-transform:uppercase;font-size:10px;letter-spacing:.24em;color:var(--paper-mute);}
 section > summary .chev{font-family:var(--mono);font-size:16px;color:var(--gold);transition:transform .2s;}
 section[open] > summary .chev{transform:rotate(90deg)}
+/* Collapsible body: hide every child except the summary when the section is not open.
+   Only applies to sections with a direct > summary child (skips #columnists and any
+   future section that manages its own collapse semantics). Graceful degradation —
+   if sections.js fails to load, the server-rendered [open] state still shows content. */
+main > section:has(> summary) > *:not(summary):not(.sechead){display:none}
+main > section[open]:has(> summary) > *:not(summary):not(.sechead){display:revert}
 section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);margin:18px 0 8px;border-bottom:1px dotted var(--rule-hi);padding-bottom:5px;}
 section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--gold);margin:10px 0 5px;}
 p{margin:0 0 8px}
@@ -647,7 +653,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <span class="item pill">Data: MLB Stats API</span>
   </div>
 </header>
-<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><details class="column" data-role="straight_beat"><summary class="column-byline"><span class="column-name">Lenard Chouteau</span><span class="column-role">The Straight Beat</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p class="column-off"><em>Lenard Chouteau is off today.</em></p></div></details><details class="column" data-role="optimist"><summary class="column-byline"><span class="column-name">Gretchen Hartmann</span><span class="column-role">The Optimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Cardinals lost yesterday, but let’s not dwell on that. Let’s talk about what they’re capable of. You think an eight-game skid matters? Honey, the Cardinals invented the comeback. Molina could un-retire tomorrow and I’d believe it. This team has a way of turning around, of making you forget the last three losses and remember the last three wins. They’ve got that spark, that fire that’s been buried under a few bad breaks but never fully extinguished.</p><p>Look, the Guardians took the game yesterday, sure. But the Cardinals? They’re still in the race. 9-8 isn’t a disaster—it’s a statement. They’re in the thick of the NL Central, and that’s where the magic happens. You think the 2011 team was the last time they pulled off a miracle? That was just the beginning. The Busch Stadium crowd knows this: every game is a chance to rewrite the script.</p><p>I’ll admit, yesterday’s loss stung. But here’s the thing—this team’s got a history of turning pain into power. They’ve got players who’ve been through the fire before. Yadier Molina, for one. He’s not here, but his</p></div></details><details class="column" data-role="pessimist"><summary class="column-byline"><span class="column-name">Vern Kratzinger</span><span class="column-role">The Pessimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Cardinals lost again. Not to a team with a legitimate shot at the playoffs, but to the Guardians, a team that’s been a footnote in the NL Central for years. Nine wins, eight losses, and a 1.0 game gap in a division that’s already decided its playoff picture. This isn’t a rebuild. It’s a mirage. Mozeliak has mistaken a rebuild for a vacation. This isn’t Redbird baseball. This is the ghost of a better franchise wearing the same laundry.</p><p>The manager’s name is Mike. Again. Not that there’s anything wrong with Mike, but when every new skipper gets the same moniker, you start to wonder if the front office is just throwing darts at a board labeled “Manager.” Mike’s approach yesterday was textbook: a bullpen meltdown, a lineup that couldn’t capitalize on a 5-0 lead, and a defense that looked like it was playing a different game.</p></div></details></div><script>(function(){
+<section id="columnists" class="columnists"><div class="columnists-head"><span class="section-kicker">The Columnists</span><span class="section-dek">Three takes on today</span></div><div class="columnists-grid" data-shuffle="true"><details class="column" data-role="straight_beat"><summary class="column-byline"><span class="column-name">Lenard Chouteau</span><span class="column-role">The Straight Beat</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Cardinals lost yesterday, 6-5 to the Guardians, but here’s the thing: they didn’t fold. They didn’t break. They didn’t let the scoreboard dictate their spirit. That’s the Cardinal Way, for what it’s worth.</p><p>You know the script: a team with a 9-8 record, 1.0 game behind in the NL Central, and a bullpen that’s been asked to do more than a damn piano tuner. But here’s the rub—this team keeps finding ways to scrape through. They’re not the kind of squad that crumbles under pressure. They’re the kind that keeps swinging, even when the count’s full. Even when the odds are stacked. Even when the fans are groaning.</p><p>Let’s talk about the bullpen, because that’s where the real work happens. The Cardinals’ relief corps has been a mixed bag all season, but yesterday’s game was a microcosm of their struggles. A lead, a chance to close it out, and then—poof—another inning of</p></div></details><details class="column" data-role="optimist"><summary class="column-byline"><span class="column-name">Gretchen Hartmann</span><span class="column-role">The Optimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Cardinals lost yesterday, but let’s not dwell on that. Let’s talk about what they’re capable of. You think an eight-game skid matters? Honey, the Cardinals invented the comeback. Molina could un-retire tomorrow and I’d believe it. This team has a way of turning around, of making you forget the last three losses and remember the last three wins. They’ve got that spark, that fire that’s been buried under a few bad breaks but never fully extinguished.</p><p>Look, the Guardians took the game yesterday, sure. But the Cardinals? They’re still in the race. 9-8 isn’t a disaster—it’s a statement. They’re in the thick of the NL Central, and that’s where the magic happens. You think the 2011 team was the last time they pulled off a miracle? That was just the beginning. The Busch Stadium crowd knows this: every game is a chance to rewrite the script.</p><p>I’ll admit, yesterday’s loss stung. But here’s the thing—this team’s got a history of turning pain into power. They’ve got players who’ve been through the fire before. Yadier Molina, for one. He’s not here, but his</p></div></details><details class="column" data-role="pessimist"><summary class="column-byline"><span class="column-name">Vern Kratzinger</span><span class="column-role">The Pessimist</span><span class="column-toggle" aria-hidden="true">Read</span></summary><div class="column-body"><p>The Cardinals lost again. Not to a team with a legitimate shot at the playoffs, but to the Guardians, a team that’s been a footnote in the NL Central for years. Nine wins, eight losses, and a 1.0 game gap in a division that’s already decided its playoff picture. This isn’t a rebuild. It’s a mirage. Mozeliak has mistaken a rebuild for a vacation. This isn’t Redbird baseball. This is the ghost of a better franchise wearing the same laundry.</p><p>The manager’s name is Mike. Again. Not that there’s anything wrong with Mike, but when every new skipper gets the same moniker, you start to wonder if the front office is just throwing darts at a board labeled “Manager.” Mike’s approach yesterday was textbook: a bullpen meltdown, a lineup that couldn’t capitalize on a 5-0 lead, and a defense that looked like it was playing a different game.</p></div></details></div><script>(function(){
   var grid = document.currentScript && document.currentScript.previousElementSibling;
   if (!grid || !grid.classList || !grid.classList.contains('columnists-grid')) return;
   var kids = Array.prototype.slice.call(grid.children);
@@ -937,17 +943,17 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="splits-grid"><div class="split-row"><span class="split-label">Home</span><span class="split-val">6-5</span><span class="split-pct">.545</span></div><div class="split-row"><span class="split-label">Away</span><span class="split-val">3-3</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">vs RHP</span><span class="split-val">7-5</span><span class="split-pct">.583</span></div><div class="split-row"><span class="split-label">vs LHP</span><span class="split-val">2-3</span><span class="split-pct">.400</span></div><div class="split-row"><span class="split-label">1-Run</span><span class="split-val">5-0</span><span class="split-pct">1.000</span></div><div class="split-row"><span class="split-label">Extras</span><span class="split-val">4-0</span><span class="split-pct">1.000</span></div><div class="split-row"><span class="split-label">Day</span><span class="split-val">4-4</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Night</span><span class="split-val">5-4</span><span class="split-pct">.556</span></div><div class="split-row"><span class="split-label">Last 10</span><span class="split-val">5-5</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Grass</span><span class="split-val">9-8</span><span class="split-pct">.529</span></div></div>
   </section>
 
-  <section id="pressbox" open>
+  <section id="pressbox">
     <summary>
       <span class="num">05</span>
       <span class="h">The Pressbox</span>
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge ">Designated f</span><span class="transac-desc">St. Louis Cardinals designated LHP Jared Shuster for assignment.</span></div><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge ">Returned</span><span class="transac-desc">RHP Cade Winquest returned to St. Louis Cardinals from New York Yankees.</span></div><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge ">Recalled</span><span class="transac-desc">St. Louis Cardinals recalled RHP Ryan Fernandez from Memphis Redbirds.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 15-Day</dt><dd>P <strong>Hunter Dobbins</strong></dd><dd>P <strong>Matt Pushard</strong></dd><dt>Injured 60-Day</dt><dd>LF <strong>Lars Nootbaar</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">C Pedro Pagés changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Gordon Graceffo changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">3B Ramón Urías changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">2B Thomas Saggese changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Matt Svanson changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LHP Justin Bruihl changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">C Yohel Pozo changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LHP JoJo Romero changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">SS Masyn Winn changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Andre Pallante changed number to 42.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 15-Day</dt><dd>P <strong>Hunter Dobbins</strong></dd><dd>P <strong>Matt Pushard</strong></dd><dt>Injured 60-Day</dt><dd>LF <strong>Lars Nootbaar</strong></dd></dl></div></div>
   </section>
 
-  <section id="farm" open>
+  <section id="farm">
     <summary>
       <span class="num">06</span>
       <span class="h">Down on the Farm</span>
@@ -1126,7 +1132,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="div" open>
+  <section id="div">
     <summary>
       <span class="num">08</span>
       <span class="h">NL Central</span>
@@ -1155,7 +1161,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="league" open>
+  <section id="league">
     <summary>
       <span class="num">09</span>
       <span class="h">Around the League</span>
@@ -1200,7 +1206,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     </div>
   </section>
 
-  <section id="history" open>
+  <section id="history">
     <summary>
       <span class="num">10</span>
       <span class="h">This Day in Cardinals History</span>
@@ -1216,7 +1222,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Busch Stadium Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/15/26 04:12 CT</span>
+  <span>Filed 04/15/26 07:31 CT</span>
 </footer>
 
 <script>
@@ -1246,7 +1252,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=138;var TEAM_IDLE_MSG="No Cardinals game in progress";</script>
-<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});

@@ -84,6 +84,12 @@ section > summary:hover .h{color:var(--gold-hi,#e6bf62)}
 section > summary .tag{flex:0 0 auto;font-family:var(--cond);text-transform:uppercase;font-size:10px;letter-spacing:.24em;color:var(--paper-mute);}
 section > summary .chev{font-family:var(--mono);font-size:16px;color:var(--gold);transition:transform .2s;}
 section[open] > summary .chev{transform:rotate(90deg)}
+/* Collapsible body: hide every child except the summary when the section is not open.
+   Only applies to sections with a direct > summary child (skips #columnists and any
+   future section that manages its own collapse semantics). Graceful degradation —
+   if sections.js fails to load, the server-rendered [open] state still shows content. */
+main > section:has(> summary) > *:not(summary):not(.sechead){display:none}
+main > section[open]:has(> summary) > *:not(summary):not(.sechead){display:revert}
 section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);margin:18px 0 8px;border-bottom:1px dotted var(--rule-hi);padding-bottom:5px;}
 section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--gold);margin:10px 0 5px;}
 p{margin:0 0 8px}
@@ -695,7 +701,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <table class="linescore">
         <thead><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th class="rhe">R</th><th class="rhe">H</th><th class="rhe">E</th></tr></thead>
         <tbody>
-          <tr class="win-row"><td class="team-label"><span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-139"/></svg><span class="ab">Tampa Bay</span></span></td><td>3</td><td>0</td><td>1</td><td>0</td><td>0</td><td>2</td><td>2</td><td>0</td><td>0</td><td class="rhe-total gold">8</td><td class="rhe-total gold">12</td><td class="rhe-total gold">2</td></tr>
+          <tr class="win-row"><td class="team-label"><span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-139"/></svg><span class="ab">Tampa Bay</span></span></td><td>3</td><td>0</td><td>1</td><td>0</td><td>0</td><td>2</td><td>2</td><td>0</td><td>0</td><td class="rhe-total gold">8</td><td class="rhe-total gold">12</td><td class="rhe-total gold">1</td></tr>
           <tr><td class="team-label"><span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-145"/></svg><span class="ab">Chicago White</span></span></td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td class="rhe-total">5</td><td class="rhe-total">5</td><td class="rhe-total">1</td></tr>
         </tbody>
       </table>
@@ -751,7 +757,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Rays</span> <player-card pid="669947">Jesse Scholtens</player-card><div class="nx-pline">0.00 ERA &middot; 0-0 &middot; 4.2 IP &middot; 4 K &middot; 1.07 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-145"/></svg>CWS</span> Sean Burke<div class="nx-pline">3.60 ERA &middot; 0-1 &middot; 15.0 IP &middot; 15 K &middot; 1.07 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="810938">Williamson</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="656775">Mullins</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="802415">Simpson</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="676439">Feduccia</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="641584">Fraley</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="666018">Aranda</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="676356">DeLuca</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="691406">Caminero</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="663743">Fortes</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Rays.TV &middot; Chicago Sports Network Plus</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WDAE 95.7 FM &middot; ESPN Chicago WMVP 1000 AM</div>
-        <div class="nx-wx">63°F &middot; Mostly Clear &middot; 8 mph S</div>
+        <div class="nx-wx">64°F &middot; Overcast &middot; 6 mph WSW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Thu, Apr 16 &middot; at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-145"/></svg><span class="ab">CWS</span></div>
@@ -919,17 +925,17 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="splits-grid"><div class="split-row"><span class="split-label">Home</span><span class="split-val">4-2</span><span class="split-pct">.667</span></div><div class="split-row"><span class="split-label">Away</span><span class="split-val">5-5</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">vs RHP</span><span class="split-val">6-6</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">vs LHP</span><span class="split-val">3-1</span><span class="split-pct">.750</span></div><div class="split-row"><span class="split-label">1-Run</span><span class="split-val">3-1</span><span class="split-pct">.750</span></div><div class="split-row"><span class="split-label">Extras</span><span class="split-val">2-1</span><span class="split-pct">.667</span></div><div class="split-row"><span class="split-label">Day</span><span class="split-val">4-4</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Night</span><span class="split-val">5-3</span><span class="split-pct">.625</span></div><div class="split-row"><span class="split-label">Last 10</span><span class="split-val">7-3</span><span class="split-pct">.700</span></div><div class="split-row"><span class="split-label">Grass</span><span class="split-val">5-5</span><span class="split-pct">.500</span></div></div>
   </section>
 
-  <section id="pressbox" open>
+  <section id="pressbox">
     <summary>
       <span class="num">05</span>
       <span class="h">The Pressbox</span>
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Tampa Bay Rays transferred RHP Ryan Pepiot from the 15-day injured list to the 60-day injured list. Right hip inflammation.</span></div><div class="transac-item"><span class="transac-date">04-12</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Tampa Bay Rays activated RHP Drew Rasmussen.</span></div><div class="transac-item"><span class="transac-date">04-12</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Tampa Bay Rays optioned LHP Joe Rock to Durham Bulls.</span></div><div class="transac-item"><span class="transac-date">04-11</span><span class="transac-badge act">Status Change</span><span class="transac-desc">RHP Drew Rasmussen roster status changed by Tampa Bay Rays.</span></div><div class="transac-item"><span class="transac-date">04-11</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Tampa Bay Rays recalled RHP Jesse Scholtens from Durham Bulls.</span></div><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Tampa Bay Rays placed RHP Joe Boyle on the 15-day injured list.</span></div><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Tampa Bay Rays recalled LHP Joe Rock from Durham Bulls.</span></div><div class="transac-item"><span class="transac-date">04-10</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Tampa Bay Rays placed RHP Joe Boyle on the 15-day injured list retroactive to April 10, 2026. Right elbow strain.</span></div><div class="transac-item"><span class="transac-date">04-09</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Tampa Bay Rays optioned RHP Jesse Scholtens to Durham Bulls.</span></div><div class="transac-item"><span class="transac-date">04-08</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Tampa Bay Rays placed RHP Drew Rasmussen on the paternity list.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>LF <strong>Gavin Lux</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Edwin Uceta</strong></dd><dd>P <strong>Garrett Cleavinger</strong></dd><dd>P <strong>Joe Boyle</strong></dd><dd>P <strong>Michael Grove</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Manuel Rodríguez</strong></dd><dd>P <strong>Ryan Pepiot</strong></dd><dd>P <strong>Steven Wilson</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">3B Junior Caminero changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">1B Jonathan Aranda changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">1B Yandy Díaz changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RF Jake Fraley changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Yoendrys Gómez changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Jesse Scholtens changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Hunter Bigge changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">C Nick Fortes changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RF Ryan Vilade changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">CF Jonny DeLuca changed number to 42.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>LF <strong>Gavin Lux</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Edwin Uceta</strong></dd><dd>P <strong>Garrett Cleavinger</strong></dd><dd>P <strong>Joe Boyle</strong></dd><dd>P <strong>Michael Grove</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Manuel Rodríguez</strong></dd><dd>P <strong>Ryan Pepiot</strong></dd><dd>P <strong>Steven Wilson</strong></dd></dl></div></div>
   </section>
 
-  <section id="farm" open>
+  <section id="farm">
     <summary>
       <span class="num">06</span>
       <span class="h">Down on the Farm</span>
@@ -1108,7 +1114,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="div" open>
+  <section id="div">
     <summary>
       <span class="num">08</span>
       <span class="h">AL East</span>
@@ -1137,7 +1143,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="league" open>
+  <section id="league">
     <summary>
       <span class="num">09</span>
       <span class="h">Around the League</span>
@@ -1182,7 +1188,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     </div>
   </section>
 
-  <section id="history" open>
+  <section id="history">
     <summary>
       <span class="num">10</span>
       <span class="h">This Day in Rays History</span>
@@ -1198,7 +1204,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Tropicana Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/15/26 04:24 CT</span>
+  <span>Filed 04/15/26 07:34 CT</span>
 </footer>
 
 <script>
@@ -1228,7 +1234,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=139;var TEAM_IDLE_MSG="No Rays game in progress";</script>
-<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});

@@ -84,6 +84,12 @@ section > summary:hover .h{color:var(--gold-hi,#e6bf62)}
 section > summary .tag{flex:0 0 auto;font-family:var(--cond);text-transform:uppercase;font-size:10px;letter-spacing:.24em;color:var(--paper-mute);}
 section > summary .chev{font-family:var(--mono);font-size:16px;color:var(--gold);transition:transform .2s;}
 section[open] > summary .chev{transform:rotate(90deg)}
+/* Collapsible body: hide every child except the summary when the section is not open.
+   Only applies to sections with a direct > summary child (skips #columnists and any
+   future section that manages its own collapse semantics). Graceful degradation —
+   if sections.js fails to load, the server-rendered [open] state still shows content. */
+main > section:has(> summary) > *:not(summary):not(.sechead){display:none}
+main > section[open]:has(> summary) > *:not(summary):not(.sechead){display:revert}
 section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);margin:18px 0 8px;border-bottom:1px dotted var(--rule-hi);padding-bottom:5px;}
 section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--gold);margin:10px 0 5px;}
 p{margin:0 0 8px}
@@ -751,7 +757,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">D-backs</span> <player-card pid="593958">Eduardo Rodriguez</player-card><div class="nx-pline">0.50 ERA &middot; 1-0 &middot; 18.0 IP &middot; 11 K &middot; 1.00 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-110"/></svg>BAL</span> Kyle Bradish<div class="nx-pline">5.27 ERA &middot; 1-2 &middot; 13.2 IP &middot; 17 K &middot; 1.68 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="677950">Thomas</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="682998">Carroll</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="672695">Perdomo</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="545121">Vargas</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="543510">McCann</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="678489">Barrosa</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="699912">Fernandez</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="606466">Marte</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="571448">Arenado</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> MASN &middot; Dbacks.TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 98.7 FM Arizona&#x27;s Sports Station &middot; 98 Rock 97.9 FM &middot; WBAL 1090 AM</div>
-        <div class="nx-wx">64°F &middot; Clear &middot; Calm</div>
+        <div class="nx-wx">69°F &middot; Partly Cloudy &middot; 3 mph SW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Fri, Apr 17 &middot; vs <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-141"/></svg><span class="ab">TOR</span></div>
@@ -937,17 +943,17 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="splits-grid"><div class="split-row"><span class="split-label">Home</span><span class="split-val">5-2</span><span class="split-pct">.714</span></div><div class="split-row"><span class="split-label">Away</span><span class="split-val">5-6</span><span class="split-pct">.455</span></div><div class="split-row"><span class="split-label">vs RHP</span><span class="split-val">5-8</span><span class="split-pct">.385</span></div><div class="split-row"><span class="split-label">vs LHP</span><span class="split-val">5-0</span><span class="split-pct">1.000</span></div><div class="split-row"><span class="split-label">1-Run</span><span class="split-val">6-4</span><span class="split-pct">.600</span></div><div class="split-row"><span class="split-label">Extras</span><span class="split-val">1-1</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Day</span><span class="split-val">5-2</span><span class="split-pct">.714</span></div><div class="split-row"><span class="split-label">Night</span><span class="split-val">5-6</span><span class="split-pct">.455</span></div><div class="split-row"><span class="split-label">Last 10</span><span class="split-val">7-3</span><span class="split-pct">.700</span></div><div class="split-row"><span class="split-label">Grass</span><span class="split-val">5-6</span><span class="split-pct">.455</span></div></div>
   </section>
 
-  <section id="pressbox" open>
+  <section id="pressbox">
     <summary>
       <span class="num">05</span>
       <span class="h">The Pressbox</span>
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Arizona Diamondbacks activated RHP Merrill Kelly from the 15-day injured list.</span></div><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Arizona Diamondbacks transferred 1B Pavin Smith from the 10-day injured list to the 60-day injured list. Left elbow inflammation.</span></div><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge ">Selected</span><span class="transac-desc">Arizona Diamondbacks selected the contract of C Aramis Garcia from Reno Aces.</span></div><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Arizona Diamondbacks optioned RHP Taylor Rashi to Reno Aces.</span></div><div class="transac-item"><span class="transac-date">04-11</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Arizona Diamondbacks placed C Gabriel Moreno on the 10-day injured list retroactive to April 11, 2026. Left oblique strain.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>1B <strong>Carlos Santana</strong></dd><dd>C <strong>Gabriel Moreno</strong></dd><dd>LF <strong>Lourdes Gurriel Jr.</strong></dd><dd>1B <strong>Tyler Locklear</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>A.J. Puk</strong></dd><dd>P <strong>Andrew Saalfrank</strong></dd><dd>P <strong>Blake Walston</strong></dd><dd>P <strong>Corbin Burnes</strong></dd><dd>P <strong>Cristian Mena</strong></dd><dd>SS <strong>Jordan Lawlar</strong></dd><dd>P <strong>Justin Martinez</strong></dd><dd>1B <strong>Pavin Smith</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Michael Soroka changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">SS Geraldo Perdomo changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LHP Eduardo Rodriguez changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Zac Gallen changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Taylor Clarke changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">CF Alek Thomas changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">1B Luken Baker changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">SS Jose Fernandez changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Brandon Pfaadt changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">2B Ildemaro Vargas changed number to 42.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>1B <strong>Carlos Santana</strong></dd><dd>C <strong>Gabriel Moreno</strong></dd><dd>LF <strong>Lourdes Gurriel Jr.</strong></dd><dd>1B <strong>Tyler Locklear</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>A.J. Puk</strong></dd><dd>P <strong>Andrew Saalfrank</strong></dd><dd>P <strong>Blake Walston</strong></dd><dd>P <strong>Corbin Burnes</strong></dd><dd>P <strong>Cristian Mena</strong></dd><dd>SS <strong>Jordan Lawlar</strong></dd><dd>P <strong>Justin Martinez</strong></dd><dd>1B <strong>Pavin Smith</strong></dd></dl></div></div>
   </section>
 
-  <section id="farm" open>
+  <section id="farm">
     <summary>
       <span class="num">06</span>
       <span class="h">Down on the Farm</span>
@@ -1126,7 +1132,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="div" open>
+  <section id="div">
     <summary>
       <span class="num">08</span>
       <span class="h">NL West</span>
@@ -1155,7 +1161,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="league" open>
+  <section id="league">
     <summary>
       <span class="num">09</span>
       <span class="h">Around the League</span>
@@ -1200,7 +1206,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     </div>
   </section>
 
-  <section id="history" open>
+  <section id="history">
     <summary>
       <span class="num">10</span>
       <span class="h">This Day in D-backs History</span>
@@ -1216,7 +1222,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Chase Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/15/26 04:14 CT</span>
+  <span>Filed 04/15/26 07:31 CT</span>
 </footer>
 
 <script>
@@ -1246,7 +1252,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=109;var TEAM_IDLE_MSG="No D-backs game in progress";</script>
-<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});

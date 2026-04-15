@@ -84,6 +84,12 @@ section > summary:hover .h{color:var(--gold-hi,#e6bf62)}
 section > summary .tag{flex:0 0 auto;font-family:var(--cond);text-transform:uppercase;font-size:10px;letter-spacing:.24em;color:var(--paper-mute);}
 section > summary .chev{font-family:var(--mono);font-size:16px;color:var(--gold);transition:transform .2s;}
 section[open] > summary .chev{transform:rotate(90deg)}
+/* Collapsible body: hide every child except the summary when the section is not open.
+   Only applies to sections with a direct > summary child (skips #columnists and any
+   future section that manages its own collapse semantics). Graceful degradation —
+   if sections.js fails to load, the server-rendered [open] state still shows content. */
+main > section:has(> summary) > *:not(summary):not(.sechead){display:none}
+main > section[open]:has(> summary) > *:not(summary):not(.sechead){display:revert}
 section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);margin:18px 0 8px;border-bottom:1px dotted var(--rule-hi);padding-bottom:5px;}
 section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--gold);margin:10px 0 5px;}
 p{margin:0 0 8px}
@@ -751,7 +757,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Angels</span> <player-card pid="686799">Jack Kochanowicz</player-card><div class="nx-pline">3.24 ERA &middot; 2-0 &middot; 16.2 IP &middot; 12 K &middot; 1.26 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-147"/></svg>NYY</span> Luis Gil<div class="nx-pline">6.75 ERA &middot; 0-1 &middot; 4.0 IP &middot; 2 K &middot; 1.50 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="624428">Frazier</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="669326">Teodosio</player-card></span><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="666176">Adell</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="624585">Soler</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="666139">Lowe</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="681351">O&#x27;Hoppe</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="545361">Trout</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="694384">Schanuel</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="672724">Peraza</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> Amazon Prime Video &middot; FanDuel Sports Network West</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> KLAA 830 &middot; WFAN 660/101.9 FM</div>
-        <div class="nx-wx">66°F &middot; Mostly Clear &middot; 4 mph W</div>
+        <div class="nx-wx">71°F &middot; Clear &middot; 4 mph WSW</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Thu, Apr 16 &middot; at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-147"/></svg><span class="ab">NYY</span></div>
@@ -928,17 +934,17 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="splits-grid"><div class="split-row"><span class="split-label">Home</span><span class="split-val">3-3</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Away</span><span class="split-val">6-6</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">vs RHP</span><span class="split-val">6-7</span><span class="split-pct">.462</span></div><div class="split-row"><span class="split-label">vs LHP</span><span class="split-val">3-2</span><span class="split-pct">.600</span></div><div class="split-row"><span class="split-label">1-Run</span><span class="split-val">2-1</span><span class="split-pct">.667</span></div><div class="split-row"><span class="split-label">Extras</span><span class="split-val">1-1</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Day</span><span class="split-val">3-4</span><span class="split-pct">.429</span></div><div class="split-row"><span class="split-label">Night</span><span class="split-val">6-5</span><span class="split-pct">.545</span></div><div class="split-row"><span class="split-label">Last 10</span><span class="split-val">6-4</span><span class="split-pct">.600</span></div><div class="split-row"><span class="split-label">Grass</span><span class="split-val">9-9</span><span class="split-pct">.500</span></div></div>
   </section>
 
-  <section id="pressbox" open>
+  <section id="pressbox">
     <summary>
       <span class="num">05</span>
       <span class="h">The Pressbox</span>
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Los Angeles Angels recalled LHP Sam Aldegheri from Salt Lake Bees.</span></div><div class="transac-item"><span class="transac-date">04-14</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Los Angeles Angels optioned LHP Mitch Farris to Salt Lake Bees.</span></div><div class="transac-item"><span class="transac-date">04-13</span><span class="transac-badge opt">Outrighted</span><span class="transac-desc">Los Angeles Angels sent 3B Jeimer Candelario outright to Salt Lake Bees.</span></div><div class="transac-item"><span class="transac-date">04-12</span><span class="transac-badge ">Selected</span><span class="transac-desc">Los Angeles Angels selected the contract of RHP Nick Sandlin from Salt Lake Bees.</span></div><div class="transac-item"><span class="transac-date">04-12</span><span class="transac-badge opt">Optioned</span><span class="transac-desc">Los Angeles Angels optioned RHP George Klassen to Salt Lake Bees.</span></div><div class="transac-item"><span class="transac-date">04-11</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Los Angeles Angels activated 2B Vaughn Grissom from the 10-day injured list.</span></div><div class="transac-item"><span class="transac-date">04-11</span><span class="transac-badge ">Designated f</span><span class="transac-desc">Los Angeles Angels designated 3B Jeimer Candelario for assignment.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 15-Day</dt><dd>P <strong>Alek Manoah</strong></dd><dd>P <strong>Ben Joyce</strong></dd><dd>P <strong>Grayson Rodriguez</strong></dd><dd>P <strong>Kirby Yates</strong></dd><dd>P <strong>Ryan Johnson</strong></dd><dt>Injured 60-Day</dt><dd>3B <strong>Anthony Rendon</strong></dd><dd>P <strong>Robert Stephenson</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">2B Adam Frazier changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Sam Bachman changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">CF Bryce Teodosio changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LHP Reid Detmers changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">SS Zach Neto changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">1B Nolan Schanuel changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LHP Drew Pomeranz changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">C Travis d&#x27;Arnaud changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LHP Brent Suter changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RF Josh Lowe changed number to 42.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 15-Day</dt><dd>P <strong>Alek Manoah</strong></dd><dd>P <strong>Ben Joyce</strong></dd><dd>P <strong>Grayson Rodriguez</strong></dd><dd>P <strong>Kirby Yates</strong></dd><dd>P <strong>Ryan Johnson</strong></dd><dt>Injured 60-Day</dt><dd>3B <strong>Anthony Rendon</strong></dd><dd>P <strong>Robert Stephenson</strong></dd></dl></div></div>
   </section>
 
-  <section id="farm" open>
+  <section id="farm">
     <summary>
       <span class="num">06</span>
       <span class="h">Down on the Farm</span>
@@ -1117,7 +1123,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="div" open>
+  <section id="div">
     <summary>
       <span class="num">08</span>
       <span class="h">AL West</span>
@@ -1143,7 +1149,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div></div>
   </section>
 
-  <section id="league" open>
+  <section id="league">
     <summary>
       <span class="num">09</span>
       <span class="h">Around the League</span>
@@ -1188,7 +1194,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     </div>
   </section>
 
-  <section id="history" open>
+  <section id="history">
     <summary>
       <span class="num">10</span>
       <span class="h">This Day in Angels History</span>
@@ -1204,7 +1210,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Angel Stadium Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/15/26 04:07 CT</span>
+  <span>Filed 04/15/26 07:30 CT</span>
 </footer>
 
 <script>
@@ -1234,7 +1240,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 })();
 </script>
 <script>var TEAM_ID=108;var TEAM_IDLE_MSG="No Angels game in progress";</script>
-<script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});
