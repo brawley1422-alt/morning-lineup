@@ -18,17 +18,36 @@
   var SUPABASE_ANON_KEY = "sb_publishable_n0rJdo0RsjVUla839uR1nQ_0-t2lzFh";
   var ENDPOINT = SUPABASE_URL + "/rest/v1/events";
 
-  // Session ID persists per tab so a pageview + 3 share clicks roll up to
-  // one session. Random, short, no PII.
+  // Anonymous ID persists across visits on the same browser so we can group
+  // pageviews by person for anon users. Random, short, no PII. Migrates any
+  // existing per-tab sessionStorage value so in-flight sessions don't reset.
   var sid;
   try {
-    sid = sessionStorage.getItem("ml_sid");
+    sid = localStorage.getItem("ml_aid");
     if (!sid) {
-      sid = Math.random().toString(36).slice(2, 12) + Date.now().toString(36);
-      sessionStorage.setItem("ml_sid", sid);
+      try { sid = sessionStorage.getItem("ml_sid"); } catch (e) { /* ignore */ }
+      if (!sid) {
+        sid = Math.random().toString(36).slice(2, 12) + Date.now().toString(36);
+      }
+      localStorage.setItem("ml_aid", sid);
     }
   } catch (e) {
     sid = null;
+  }
+
+  // Read the current Supabase user id, if any, straight out of the shared
+  // auth storage (see auth/session.js — storageKey: "ml-auth"). This avoids
+  // having to import session.js (which would require making this a module)
+  // and there's no race: analytics.js and session.js read from the same key.
+  function currentUserId() {
+    try {
+      var raw = localStorage.getItem("ml-auth");
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      return (parsed && parsed.user && parsed.user.id) || null;
+    } catch (e) {
+      return null;
+    }
   }
 
   // Derive the team slug from the URL path. Non-team paths (home/, auth/,
@@ -53,6 +72,7 @@
       path: (location.pathname || "") + (location.search || ""),
       referrer: document.referrer || null,
       session_id: sid,
+      user_id: currentUserId(),
       ua: (navigator.userAgent || "").slice(0, 256),
     };
     if (extra && typeof extra === "object") {
