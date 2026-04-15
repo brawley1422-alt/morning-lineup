@@ -1246,6 +1246,28 @@ def _build_team_sprite():
 TEAM_SPRITE = _build_team_sprite()
 
 
+_FOLD_PEEK = {
+    "team": "Line Score &middot; Three Stars &middot; Leaders",
+    "scout": "Today&rsquo;s Pitching Matchup",
+    "matchup": "Lineup Grades vs Arsenal",
+    "pulse": "Record &middot; Splits &middot; Pythagorean",
+    "pressbox": "Transactions &middot; Injured List",
+    "farm": "AAA &middot; AA &middot; A+ &middot; A &middot; Prospects",
+    "today": "Full Slate &middot; Probables",
+    "div": "Division Standings &middot; Rivals",
+    "league": "News &middot; Scoreboard &middot; Leaders",
+    "history": "This Day in History",
+}
+
+def _fold(sid):
+    peek = _FOLD_PEEK.get(sid, "Tap to open")
+    return (
+        '<div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div>'
+        '<div class="fold-artifact fold-crease" aria-hidden="true"></div>'
+        f'<div class="fold-artifact fold-peek" aria-hidden="true">{peek}</div>'
+    )
+
+
 def page(briefing):
     data = briefing.data
     t = data["today"]; y = data["yest"]
@@ -1381,6 +1403,7 @@ def page(briefing):
       <span class="chev">&#9656;</span>
     </summary>
     {headline_html}
+    {_fold("team")}
   </section>
 
   {f"""<section id="scout" open>
@@ -1391,6 +1414,7 @@ def page(briefing):
       <span class="chev">&#9656;</span>
     </summary>
     {scout_html}
+    {_fold("scout")}
   </section>""" if scout_html else ''}
 
   {f"""<section id="matchup" open>
@@ -1401,6 +1425,7 @@ def page(briefing):
       <span class="chev">&#9656;</span>
     </summary>
     {matchup_html}
+    {_fold("matchup")}
   </section>""" if matchup_html else ''}
 
   <section id="pulse" open>
@@ -1411,6 +1436,7 @@ def page(briefing):
       <span class="chev">&#9656;</span>
     </summary>
     {stretch_html}
+    {_fold("pulse")}
   </section>
 
   <section id="pressbox">
@@ -1421,6 +1447,7 @@ def page(briefing):
       <span class="chev">&#9656;</span>
     </summary>
     {pressbox_html}
+    {_fold("pressbox")}
   </section>
 
   <section id="farm">
@@ -1431,6 +1458,7 @@ def page(briefing):
       <span class="chev">&#9656;</span>
     </summary>
     {minors_html}
+    {_fold("farm")}
   </section>
 
   <section id="today" open>
@@ -1441,6 +1469,7 @@ def page(briefing):
       <span class="chev">&#9656;</span>
     </summary>
     {slate_html}
+    {_fold("today")}
   </section>
 
   <section id="div">
@@ -1451,6 +1480,7 @@ def page(briefing):
       <span class="chev">&#9656;</span>
     </summary>
     {division_html}
+    {_fold("div")}
   </section>
 
   <section id="league">
@@ -1461,6 +1491,7 @@ def page(briefing):
       <span class="chev">&#9656;</span>
     </summary>
     {around_league_html}
+    {_fold("league")}
   </section>
 
   <section id="history">
@@ -1471,6 +1502,7 @@ def page(briefing):
       <span class="chev">&#9656;</span>
     </summary>
     {history_html}
+    {_fold("history")}
   </section>
 
   </main>

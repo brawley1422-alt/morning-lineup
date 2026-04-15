@@ -88,8 +88,34 @@ section[open] > summary .chev{transform:rotate(90deg)}
    Only applies to sections with a direct > summary child (skips #columnists and any
    future section that manages its own collapse semantics). Graceful degradation —
    if sections.js fails to load, the server-rendered [open] state still shows content. */
-main > section:has(> summary) > *:not(summary):not(.sechead){display:none}
-main > section[open]:has(> summary) > *:not(summary):not(.sechead){display:revert}
+main > section:has(> summary) > *:not(summary):not(.sechead):not(.fold-artifact){display:none}
+main > section[open]:has(> summary) > *:not(summary):not(.sechead):not(.fold-artifact){display:revert}
+/* ---- Fold artifacts: only render on COLLAPSED sections. ---- */
+/* Default hidden; only shown via :not([open]) rules below. */
+main > section > .fold-artifact{display:none}
+main > section:has(> .fold-artifact):not([open]){position:relative}
+main > section:has(> .fold-artifact):not([open]) > summary .chev{visibility:hidden}
+main > section:has(> .fold-artifact):not([open]) > summary{padding-right:110px}
+/* ---- Stamp: absolutely positioned, rotated, clipped through letters ---- */
+main > section:not([open]) > .fold-stamp{display:flex;position:absolute;right:8px;top:6px;width:92px;height:92px;border:2.5px solid var(--team-accent);box-shadow:inset 0 0 0 1.5px var(--team-accent);border-radius:50%;background:color-mix(in srgb,var(--team-accent) 6%,transparent);color:var(--team-accent);font-family:var(--cond);font-weight:800;letter-spacing:.14em;text-transform:uppercase;text-align:center;line-height:1;align-items:flex-start;justify-content:center;padding:22px 4px 0;transform:rotate(-9deg);opacity:.92;pointer-events:none;clip-path:polygon(0 0,100% 0,100% 53%,82% 50%,58% 55%,32% 49%,12% 54%,0 51%);}
+main > section:not([open]) > .fold-stamp > span{font-size:22px;margin-top:4px;display:block}
+/* Per-section variation — every section folds a touch differently. */
+main > section:nth-of-type(2n):not([open]) > .fold-stamp{transform:rotate(-6deg);clip-path:polygon(0 0,100% 0,100% 48%,78% 53%,50% 47%,22% 52%,0 49%);right:12px;top:10px}
+main > section:nth-of-type(3n):not([open]) > .fold-stamp{transform:rotate(-11deg);clip-path:polygon(0 0,100% 0,100% 54%,72% 48%,44% 56%,18% 50%,0 54%);right:6px;top:4px}
+main > section:nth-of-type(3n+1):not([open]) > .fold-stamp{transform:rotate(-8deg);clip-path:polygon(0 0,100% 0,100% 50%,88% 55%,62% 48%,38% 54%,14% 49%,0 53%)}
+main > section:nth-of-type(5n+2):not([open]) > .fold-stamp{transform:rotate(-13deg);clip-path:polygon(0 0,100% 0,100% 52%,84% 56%,56% 49%,28% 55%,8% 50%,0 54%);right:10px;top:8px}
+/* ---- Crease: dashed hairline with gold tick caps, slight angle jitter ---- */
+main > section:not([open]) > .fold-crease{display:block;position:relative;margin:14px 24px 0;height:0;border-top:1px dashed var(--gold-dim);}
+main > section:not([open]) > .fold-crease::before,main > section:not([open]) > .fold-crease::after{content:"";position:absolute;top:-3px;width:3px;height:6px;background:var(--gold)}
+main > section:not([open]) > .fold-crease::before{left:-4px}
+main > section:not([open]) > .fold-crease::after{right:-4px}
+main > section:nth-of-type(2n):not([open]) > .fold-crease{transform:rotate(-.18deg);margin-top:16px}
+main > section:nth-of-type(3n):not([open]) > .fold-crease{transform:rotate(.22deg);margin-top:12px}
+main > section:nth-of-type(3n+1):not([open]) > .fold-crease{transform:rotate(-.09deg);margin-top:15px}
+main > section:nth-of-type(5n+2):not([open]) > .fold-crease{transform:rotate(.14deg);margin-top:13px}
+/* ---- Peek: one mono dateline, dodges the stamp on the right ---- */
+main > section:not([open]) > .fold-peek{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--paper-mute);text-align:center;margin:9px 0 16px;padding:0 110px 0 10px;}
+main > section:not([open]) > .fold-peek::before{content:"Inside \00b7 ";color:var(--gold-dim)}
 section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);margin:18px 0 8px;border-bottom:1px dotted var(--rule-hi);padding-bottom:5px;}
 section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--gold);margin:10px 0 5px;}
 p{margin:0 0 8px}
@@ -792,6 +818,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="672582">Zerpa</player-card></span><span class="primary t-rough">8.68<em>xERA</em></span><span class="secondary">8.0 IP &middot; 6.75 ERA &middot; 4 K &middot; 21.6% Whf</span></li><li><span class="n"><player-card pid="687075">Sproat</player-card></span><span class="primary t-rough">8.06<em>xERA</em></span><span class="secondary">10.1 IP &middot; 10.45 ERA &middot; 10 K &middot; 18.8% Whf</span></li></ul></div>
     </div>
     
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Line Score &middot; Three Stars &middot; Leaders</div>
   </section>
 
   <section id="scout" open>
@@ -895,6 +922,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div></div>
         </div>
     </div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Today&rsquo;s Pitching Matchup</div>
   </section>
 
   <section id="matchup" open>
@@ -918,6 +946,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <span class="mr-exp">exploit: <b>FF</b> (1)</span>
       </div>
     </div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Lineup Grades vs Arsenal</div>
   </section>
 
   <section id="pulse" open>
@@ -941,6 +970,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     </div>
     <h3>Splits</h3>
     <div class="splits-grid"><div class="split-row"><span class="split-label">Home</span><span class="split-val">5-5</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Away</span><span class="split-val">3-3</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">vs RHP</span><span class="split-val">5-6</span><span class="split-pct">.455</span></div><div class="split-row"><span class="split-label">vs LHP</span><span class="split-val">3-2</span><span class="split-pct">.600</span></div><div class="split-row"><span class="split-label">1-Run</span><span class="split-val">0-2</span><span class="split-pct">.000</span></div><div class="split-row"><span class="split-label">Extras</span><span class="split-val">0-1</span><span class="split-pct">.000</span></div><div class="split-row"><span class="split-label">Day</span><span class="split-val">5-3</span><span class="split-pct">.625</span></div><div class="split-row"><span class="split-label">Night</span><span class="split-val">3-5</span><span class="split-pct">.375</span></div><div class="split-row"><span class="split-label">Last 10</span><span class="split-val">3-7</span><span class="split-pct">.300</span></div><div class="split-row"><span class="split-label">Grass</span><span class="split-val">8-8</span><span class="split-pct">.500</span></div></div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Record &middot; Splits &middot; Pythagorean</div>
   </section>
 
   <section id="pressbox">
@@ -951,6 +981,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="chev">&#9656;</span>
     </summary>
     <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Jacob Misiorowski changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">SS Joey Ortiz changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RF Luis Matos changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">1B Jake Bauers changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Chad Patrick changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Brandon Sproat changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Trevor Megill changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">C Gary Sánchez changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">RHP Jake Woodford changed number to 42.</span></div><div class="transac-item"><span class="transac-date">04-15</span><span class="transac-badge ">Number Chang</span><span class="transac-desc">LHP Aaron Ashby changed number to 42.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>1B <strong>Andrew Vaughn</strong></dd><dd>LF <strong>Christian Yelich</strong></dd><dd>CF <strong>Jackson Chourio</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Craig Yoho</strong></dd><dd>P <strong>Jared Koenig</strong></dd><dd>P <strong>Quinn Priester</strong></dd><dt>Injured 60-Day</dt><dd>LF <strong>Akil Baddoo</strong></dd><dd>P <strong>Rob Zastryzny</strong></dd></dl></div></div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Transactions &middot; Injured List</div>
   </section>
 
   <section id="farm">
@@ -985,6 +1016,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="lvl-tonight"><span class="lvl-lbl">tonight</span> vs Howlers &middot; 6:05 PM CT</div>
         <div class="lvl-standings">4&ndash;6 &middot; 4th</div>
       </div></div><h3 class="prosp-header">Prospect Watch</h3><div class="prosp-tracker"><div class="prosp-cols"><span>#</span><span>Name</span><span>Pos</span><span>Lvl</span><span>Line</span></div><div class="prosp-row played"><span class="prosp-rank">#1</span><span class="prosp-name">Jesús Made</span><span class="prosp-pos">SS</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">0-3, 2 BB, 1 K</span></div><div class="prosp-row played hot"><span class="prosp-rank">#3</span><span class="prosp-name">Jett Williams</span><span class="prosp-pos">SS</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">3-5, 2 R, 1 RBI, 1 BB</span></div><div class="prosp-row played"><span class="prosp-rank">#4</span><span class="prosp-name">Cooper Pratt</span><span class="prosp-pos">SS</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">0-2, 3 R, 3 BB</span></div><div class="prosp-row played"><span class="prosp-rank">#8</span><span class="prosp-name">Jeferson Quero</span><span class="prosp-pos">C</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">1-4, 4 RBI, 2 BB, 2 K</span></div><div class="prosp-row played hot"><span class="prosp-rank">#12</span><span class="prosp-name">Luis Lara</span><span class="prosp-pos">CF</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">3-4, 2 R, 1 BB, 1 K</span></div><div class="prosp-row played"><span class="prosp-rank">#15</span><span class="prosp-name">Brady Ebel</span><span class="prosp-pos">SS</span><span class="prosp-lvl a">A</span><span class="prosp-stat">0-3, 1 RBI, 1 K</span></div><div class="prosp-divider"></div><div class="prosp-row dnp"><span class="prosp-rank">#2</span><span class="prosp-name">Luis Peña</span><span class="prosp-pos">SS</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#6</span><span class="prosp-name">Andrew Fischer</span><span class="prosp-pos">3B</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#7</span><span class="prosp-name">Logan Henderson</span><span class="prosp-pos">P</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#9</span><span class="prosp-name">Bishop Letson</span><span class="prosp-pos">P</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#10</span><span class="prosp-name">Marco Dinges</span><span class="prosp-pos">C</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#11</span><span class="prosp-name">Josh Adamczewski</span><span class="prosp-pos">SS</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#13</span><span class="prosp-name">Luke Adams</span><span class="prosp-pos">3B</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#14</span><span class="prosp-name">Braylon Payne</span><span class="prosp-pos">OF</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#17</span><span class="prosp-name">Robert Gasser</span><span class="prosp-pos">P</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div></div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">AAA &middot; AA &middot; A+ &middot; A &middot; Prospects</div>
   </section>
 
   <section id="today" open>
@@ -1130,6 +1162,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="probs">Holmes vs Ohtani</div>
         <div class="bc">ESPN/ESPN App · ESPN/ESPN App</div>
       </div></div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Full Slate &middot; Probables</div>
   </section>
 
   <section id="div">
@@ -1159,6 +1192,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <h4><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-138"/></svg> Cardinals <span class="score">W 6-5 vs <svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-114"/></svg><span class="ab">CLE</span></span></h4>
         <p>WP: Riley O&#x27;Brien · LP: Tim Herrin</p>
       </div></div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Division Standings &middot; Rivals</div>
   </section>
 
   <section id="league">
@@ -1204,6 +1238,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
     <tbody><tr><td>ERA</td><td class="name">José Soriano <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-108"/></svg><span class="ab">LAA</span></span></td><td class="num">0.33</td></tr><tr><td>SV</td><td class="name">Paul Sewald <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-109"/></svg><span class="ab">AZ</span></span></td><td class="num">6</td></tr><tr><td>W</td><td class="name">José Soriano <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-108"/></svg><span class="ab">LAA</span></span></td><td class="num">4</td></tr></tbody></table></div></div>
     </div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">News &middot; Scoreboard &middot; Leaders</div>
   </section>
 
   <section id="history">
@@ -1214,6 +1249,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="chev">&#9656;</span>
     </summary>
     <p class="idle-msg">No historical entries for today&rsquo;s date.</p>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">This Day in History</div>
   </section>
 
   </main>
@@ -1222,7 +1258,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A American Family Field Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 04/15/26 07:31 CT</span>
+  <span>Filed 04/15/26 08:34 CT</span>
 </footer>
 
 <script>

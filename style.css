@@ -75,8 +75,34 @@ section[open] > summary .chev{transform:rotate(90deg)}
    Only applies to sections with a direct > summary child (skips #columnists and any
    future section that manages its own collapse semantics). Graceful degradation —
    if sections.js fails to load, the server-rendered [open] state still shows content. */
-main > section:has(> summary) > *:not(summary):not(.sechead){display:none}
-main > section[open]:has(> summary) > *:not(summary):not(.sechead){display:revert}
+main > section:has(> summary) > *:not(summary):not(.sechead):not(.fold-artifact){display:none}
+main > section[open]:has(> summary) > *:not(summary):not(.sechead):not(.fold-artifact){display:revert}
+/* ---- Fold artifacts: only render on COLLAPSED sections. ---- */
+/* Default hidden; only shown via :not([open]) rules below. */
+main > section > .fold-artifact{display:none}
+main > section:has(> .fold-artifact):not([open]){position:relative}
+main > section:has(> .fold-artifact):not([open]) > summary .chev{visibility:hidden}
+main > section:has(> .fold-artifact):not([open]) > summary{padding-right:110px}
+/* ---- Stamp: absolutely positioned, rotated, clipped through letters ---- */
+main > section:not([open]) > .fold-stamp{display:flex;position:absolute;right:8px;top:6px;width:92px;height:92px;border:2.5px solid var(--team-accent);box-shadow:inset 0 0 0 1.5px var(--team-accent);border-radius:50%;background:color-mix(in srgb,var(--team-accent) 6%,transparent);color:var(--team-accent);font-family:var(--cond);font-weight:800;letter-spacing:.14em;text-transform:uppercase;text-align:center;line-height:1;align-items:flex-start;justify-content:center;padding:22px 4px 0;transform:rotate(-9deg);opacity:.92;pointer-events:none;clip-path:polygon(0 0,100% 0,100% 53%,82% 50%,58% 55%,32% 49%,12% 54%,0 51%);}
+main > section:not([open]) > .fold-stamp > span{font-size:22px;margin-top:4px;display:block}
+/* Per-section variation — every section folds a touch differently. */
+main > section:nth-of-type(2n):not([open]) > .fold-stamp{transform:rotate(-6deg);clip-path:polygon(0 0,100% 0,100% 48%,78% 53%,50% 47%,22% 52%,0 49%);right:12px;top:10px}
+main > section:nth-of-type(3n):not([open]) > .fold-stamp{transform:rotate(-11deg);clip-path:polygon(0 0,100% 0,100% 54%,72% 48%,44% 56%,18% 50%,0 54%);right:6px;top:4px}
+main > section:nth-of-type(3n+1):not([open]) > .fold-stamp{transform:rotate(-8deg);clip-path:polygon(0 0,100% 0,100% 50%,88% 55%,62% 48%,38% 54%,14% 49%,0 53%)}
+main > section:nth-of-type(5n+2):not([open]) > .fold-stamp{transform:rotate(-13deg);clip-path:polygon(0 0,100% 0,100% 52%,84% 56%,56% 49%,28% 55%,8% 50%,0 54%);right:10px;top:8px}
+/* ---- Crease: dashed hairline with gold tick caps, slight angle jitter ---- */
+main > section:not([open]) > .fold-crease{display:block;position:relative;margin:14px 24px 0;height:0;border-top:1px dashed var(--gold-dim);}
+main > section:not([open]) > .fold-crease::before,main > section:not([open]) > .fold-crease::after{content:"";position:absolute;top:-3px;width:3px;height:6px;background:var(--gold)}
+main > section:not([open]) > .fold-crease::before{left:-4px}
+main > section:not([open]) > .fold-crease::after{right:-4px}
+main > section:nth-of-type(2n):not([open]) > .fold-crease{transform:rotate(-.18deg);margin-top:16px}
+main > section:nth-of-type(3n):not([open]) > .fold-crease{transform:rotate(.22deg);margin-top:12px}
+main > section:nth-of-type(3n+1):not([open]) > .fold-crease{transform:rotate(-.09deg);margin-top:15px}
+main > section:nth-of-type(5n+2):not([open]) > .fold-crease{transform:rotate(.14deg);margin-top:13px}
+/* ---- Peek: one mono dateline, dodges the stamp on the right ---- */
+main > section:not([open]) > .fold-peek{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--paper-mute);text-align:center;margin:9px 0 16px;padding:0 110px 0 10px;}
+main > section:not([open]) > .fold-peek::before{content:"Inside \00b7 ";color:var(--gold-dim)}
 section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);margin:18px 0 8px;border-bottom:1px dotted var(--rule-hi);padding-bottom:5px;}
 section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--gold);margin:10px 0 5px;}
 p{margin:0 0 8px}

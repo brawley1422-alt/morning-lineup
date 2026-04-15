@@ -88,8 +88,34 @@ section[open] > summary .chev{transform:rotate(90deg)}
    Only applies to sections with a direct > summary child (skips #columnists and any
    future section that manages its own collapse semantics). Graceful degradation —
    if sections.js fails to load, the server-rendered [open] state still shows content. */
-main > section:has(> summary) > *:not(summary):not(.sechead){display:none}
-main > section[open]:has(> summary) > *:not(summary):not(.sechead){display:revert}
+main > section:has(> summary) > *:not(summary):not(.sechead):not(.fold-artifact){display:none}
+main > section[open]:has(> summary) > *:not(summary):not(.sechead):not(.fold-artifact){display:revert}
+/* ---- Fold artifacts: only render on COLLAPSED sections. ---- */
+/* Default hidden; only shown via :not([open]) rules below. */
+main > section > .fold-artifact{display:none}
+main > section:has(> .fold-artifact):not([open]){position:relative}
+main > section:has(> .fold-artifact):not([open]) > summary .chev{visibility:hidden}
+main > section:has(> .fold-artifact):not([open]) > summary{padding-right:110px}
+/* ---- Stamp: absolutely positioned, rotated, clipped through letters ---- */
+main > section:not([open]) > .fold-stamp{display:flex;position:absolute;right:8px;top:6px;width:92px;height:92px;border:2.5px solid var(--team-accent);box-shadow:inset 0 0 0 1.5px var(--team-accent);border-radius:50%;background:color-mix(in srgb,var(--team-accent) 6%,transparent);color:var(--team-accent);font-family:var(--cond);font-weight:800;letter-spacing:.14em;text-transform:uppercase;text-align:center;line-height:1;align-items:flex-start;justify-content:center;padding:22px 4px 0;transform:rotate(-9deg);opacity:.92;pointer-events:none;clip-path:polygon(0 0,100% 0,100% 53%,82% 50%,58% 55%,32% 49%,12% 54%,0 51%);}
+main > section:not([open]) > .fold-stamp > span{font-size:22px;margin-top:4px;display:block}
+/* Per-section variation — every section folds a touch differently. */
+main > section:nth-of-type(2n):not([open]) > .fold-stamp{transform:rotate(-6deg);clip-path:polygon(0 0,100% 0,100% 48%,78% 53%,50% 47%,22% 52%,0 49%);right:12px;top:10px}
+main > section:nth-of-type(3n):not([open]) > .fold-stamp{transform:rotate(-11deg);clip-path:polygon(0 0,100% 0,100% 54%,72% 48%,44% 56%,18% 50%,0 54%);right:6px;top:4px}
+main > section:nth-of-type(3n+1):not([open]) > .fold-stamp{transform:rotate(-8deg);clip-path:polygon(0 0,100% 0,100% 50%,88% 55%,62% 48%,38% 54%,14% 49%,0 53%)}
+main > section:nth-of-type(5n+2):not([open]) > .fold-stamp{transform:rotate(-13deg);clip-path:polygon(0 0,100% 0,100% 52%,84% 56%,56% 49%,28% 55%,8% 50%,0 54%);right:10px;top:8px}
+/* ---- Crease: dashed hairline with gold tick caps, slight angle jitter ---- */
+main > section:not([open]) > .fold-crease{display:block;position:relative;margin:14px 24px 0;height:0;border-top:1px dashed var(--gold-dim);}
+main > section:not([open]) > .fold-crease::before,main > section:not([open]) > .fold-crease::after{content:"";position:absolute;top:-3px;width:3px;height:6px;background:var(--gold)}
+main > section:not([open]) > .fold-crease::before{left:-4px}
+main > section:not([open]) > .fold-crease::after{right:-4px}
+main > section:nth-of-type(2n):not([open]) > .fold-crease{transform:rotate(-.18deg);margin-top:16px}
+main > section:nth-of-type(3n):not([open]) > .fold-crease{transform:rotate(.22deg);margin-top:12px}
+main > section:nth-of-type(3n+1):not([open]) > .fold-crease{transform:rotate(-.09deg);margin-top:15px}
+main > section:nth-of-type(5n+2):not([open]) > .fold-crease{transform:rotate(.14deg);margin-top:13px}
+/* ---- Peek: one mono dateline, dodges the stamp on the right ---- */
+main > section:not([open]) > .fold-peek{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--paper-mute);text-align:center;margin:9px 0 16px;padding:0 110px 0 10px;}
+main > section:not([open]) > .fold-peek::before{content:"Inside \00b7 ";color:var(--gold-dim)}
 section h3{font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--gold);margin:18px 0 8px;border-bottom:1px dotted var(--rule-hi);padding-bottom:5px;}
 section h4{font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--gold);margin:10px 0 5px;}
 p{margin:0 0 8px}
@@ -792,6 +818,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <div class="tempbox cold"><h4>In the Doghouse (L7)</h4><ul><li><span class="n"><player-card pid="664208">Maton</player-card></span><span class="primary t-legacy">13.50<em>ERA</em></span><span class="secondary">4.0 IP &middot; 5 K</span></li><li><span class="n"><player-card pid="640451">Harvey</player-card></span><span class="primary t-legacy">6.75<em>ERA</em></span><span class="secondary">4.0 IP &middot; 4 K</span></li></ul></div>
     </div>
     
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Line Score &middot; Three Stars &middot; Leaders</div>
   </section>
 
   <section id="scout" open>
@@ -823,6 +850,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         
         </div>
     </div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Today&rsquo;s Pitching Matchup</div>
   </section>
 
   
@@ -848,6 +876,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     </div>
     <h3>Splits</h3>
     <div class="splits-grid"><div class="split-row"><span class="split-label">Home</span><span class="split-val">3-3</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Away</span><span class="split-val">3-3</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">vs RHP</span><span class="split-val">5-3</span><span class="split-pct">.625</span></div><div class="split-row"><span class="split-label">vs LHP</span><span class="split-val">1-3</span><span class="split-pct">.250</span></div><div class="split-row"><span class="split-label">1-Run</span><span class="split-val">1-1</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Extras</span><span class="split-val">0-0</span><span class="split-pct">.000</span></div><div class="split-row"><span class="split-label">Day</span><span class="split-val">3-5</span><span class="split-pct">.375</span></div><div class="split-row"><span class="split-label">Night</span><span class="split-val">3-1</span><span class="split-pct">.750</span></div><div class="split-row"><span class="split-label">Last 10</span><span class="split-val">5-5</span><span class="split-pct">.500</span></div><div class="split-row"><span class="split-label">Grass</span><span class="split-val">4-5</span><span class="split-pct">.444</span></div></div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Record &middot; Splits &middot; Pythagorean</div>
   </section>
 
   <section id="pressbox">
@@ -858,6 +887,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="chev">&#9656;</span>
     </summary>
     <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Chicago Cubs recalled RHP Javier Assad from Iowa Cubs.</span></div><div class="transac-item"><span class="transac-date">04-06</span><span class="transac-badge ">Returned</span><span class="transac-desc">RHP Ethan Roberts returned to Iowa Cubs from Chicago Cubs.</span></div><div class="transac-item"><span class="transac-date">04-05</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Chicago Cubs recalled LHP Riley Martin from Iowa Cubs.</span></div><div class="transac-item"><span class="transac-date">04-05</span><span class="transac-badge ">Recalled</span><span class="transac-desc">Chicago Cubs recalled RHP Ethan Roberts from Iowa Cubs.</span></div><div class="transac-item"><span class="transac-date">04-04</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Chicago Cubs placed RHP Cade Horton on the 15-day injured list retroactive to April 4, 2026. Right forearm strain.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge opt">Assigned</span><span class="transac-desc">Chicago Cubs sent RF Seiya Suzuki on a rehab assignment to Knoxville Smokies.</span></div><div class="transac-item"><span class="transac-date">04-03</span><span class="transac-badge act">Status Change</span><span class="transac-desc">Chicago Cubs placed LHP Matthew Boyd on the 15-day injured list retroactive to April 3, 2026. Left biceps strain.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>RF <strong>Seiya Suzuki</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Cade Horton</strong></dd><dd>P <strong>Jordan Wicks</strong></dd><dd>P <strong>Matthew Boyd</strong></dd><dd>P <strong>Porter Hodge</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Justin Steele</strong></dd><dd>P <strong>Shelby Miller</strong></dd><dd>1B <strong>Tyler Austin</strong></dd></dl></div></div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Transactions &middot; Injured List</div>
   </section>
 
   <section id="farm">
@@ -892,6 +922,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="lvl-tonight"><em>off day</em></div>
         
       </div></div><h3 class="prosp-header">Prospect Watch</h3><div class="prosp-tracker"><div class="prosp-cols"><span>#</span><span>Name</span><span>Pos</span><span>Lvl</span><span>Line</span></div><div class="prosp-row dnp"><span class="prosp-rank">#2</span><span class="prosp-name">Jaxon Wiggins</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#4</span><span class="prosp-name">Kevin Alcántara</span><span class="prosp-pos">OF</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#5</span><span class="prosp-name">Jefferson Rojas</span><span class="prosp-pos">SS</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#6</span><span class="prosp-name">Kane Kepley</span><span class="prosp-pos">OF</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#7</span><span class="prosp-name">Jonathon Long</span><span class="prosp-pos">1B</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#8</span><span class="prosp-name">Josiah Hartshorn</span><span class="prosp-pos">OF</span><span class="prosp-lvl a">A</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#9</span><span class="prosp-name">Pedro Ramírez</span><span class="prosp-pos">2B</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#10</span><span class="prosp-name">James Triantos</span><span class="prosp-pos">2B</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#11</span><span class="prosp-name">Owen Ayers</span><span class="prosp-pos">C</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#15</span><span class="prosp-name">Cole Mathis</span><span class="prosp-pos">OF</span><span class="prosp-lvl a">A</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#20</span><span class="prosp-name">Ariel Armas</span><span class="prosp-pos">C</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#21</span><span class="prosp-name">Brett Bateman</span><span class="prosp-pos">OF</span><span class="prosp-lvl aaa">AAA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#23</span><span class="prosp-name">Erian Rodriguez</span><span class="prosp-pos">RHP</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#24</span><span class="prosp-name">Luis Martinez-Gomez</span><span class="prosp-pos">LHP</span><span class="prosp-lvl aa">AA</span><span class="prosp-stat">DNP</span></div><div class="prosp-row dnp"><span class="prosp-rank">#25</span><span class="prosp-name">Angel Cepeda</span><span class="prosp-pos">SS</span><span class="prosp-lvl aplus">A+</span><span class="prosp-stat">DNP</span></div></div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">AAA &middot; AA &middot; A+ &middot; A &middot; Prospects</div>
   </section>
 
   <section id="today" open>
@@ -1037,6 +1068,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="probs">Rocker vs Glasnow</div>
         <div class="bc">SportsNet LA · CW33</div>
       </div></div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Full Slate &middot; Probables</div>
   </section>
 
   <section id="div">
@@ -1057,6 +1089,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <h4><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-113"/></svg> Reds <span class="score">L 1-8 at <svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-146"/></svg><span class="ab">???</span></span></h4>
         <p>WP: Max Meyer · LP: Rhett Lowder</p>
       </div></div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Division Standings &middot; Rivals</div>
   </section>
 
   <section id="league">
@@ -1102,6 +1135,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
     <tbody><tr><td>ERA</td><td class="name">Bryce Elder <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-144"/></svg><span class="ab">???</span></span></td><td class="num">0.00</td></tr><tr><td>SV</td><td class="name">David Bednar <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-147"/></svg><span class="ab">???</span></span></td><td class="num">5</td></tr><tr><td>W</td><td class="name">Aaron Ashby <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-158"/></svg><span class="ab">???</span></span></td><td class="num">3</td></tr></tbody></table></div></div>
     </div>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">News &middot; Scoreboard &middot; Leaders</div>
   </section>
 
   <section id="history">
@@ -1112,6 +1146,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="chev">&#9656;</span>
     </summary>
     <ul class="plays"><li><span class="inn">1916</span><span class="txt">The Cubs play their first game at Weeghman Park, the stadium that would become Wrigley Field.</span></li></ul>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">This Day in History</div>
   </section>
 
   </main>
