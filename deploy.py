@@ -6,7 +6,7 @@ then replace index.html with the freshly-built local index.html.
 Env: GITHUB_TOKEN (fine-grained PAT with Contents:RW on this repo).
 Run AFTER build.py, from the folder containing the built index.html.
 """
-import base64, json, os, sys, time, urllib.request, urllib.error, urllib.parse
+import base64, http.client, json, os, sys, time, urllib.request, urllib.error, urllib.parse
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -30,13 +30,22 @@ HDR = {
 }
 
 
-def gh(method, path, body=None):
+def gh(method, path, body=None, retries=3):
     data = json.dumps(body).encode() if body else None
-    req = urllib.request.Request(f"{API}{path}", data=data, method=method, headers=HDR)
-    if data:
-        req.add_header("Content-Type", "application/json")
-    with urllib.request.urlopen(req, timeout=25) as r:
-        return json.loads(r.read())
+    for attempt in range(retries):
+        req = urllib.request.Request(f"{API}{path}", data=data, method=method, headers=HDR)
+        if data:
+            req.add_header("Content-Type", "application/json")
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return json.loads(r.read())
+        except (http.client.IncompleteRead, urllib.error.URLError) as e:
+            if attempt + 1 < retries:
+                wait = 2 ** attempt
+                print(f"  retry {attempt + 1}/{retries} for {method} {path}: {e}")
+                time.sleep(wait)
+            else:
+                raise
 
 
 def verify_pages_build(max_polls=5, poll_interval=15, sleep=time.sleep):
