@@ -1574,7 +1574,7 @@ def page(briefing):
 <script>
 window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});
 document.addEventListener("click",function(e){{var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){{var h=tr.getAttribute("data-href");if(h){{e.preventDefault();location.href=h}}}}}});
-if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(function(){{}});
+if("serviceWorker"in navigator){{navigator.serviceWorker.register("sw.js").then(function(reg){{reg.addEventListener("updatefound",function(){{var w=reg.installing;if(!w)return;w.addEventListener("statechange",function(){{if(w.state==="activated"&&navigator.serviceWorker.controller){{var d=document.createElement("div");d.id="sw-toast";d.innerHTML='New edition available &mdash; <a href="#" onclick="location.reload();return false" style="color:var(--gold,#c9a24a);font-weight:700">Refresh</a>';d.style.cssText="position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink,#0d0f14);color:var(--paper,#ece4d0);padding:.6rem 1.2rem;border-radius:6px;font:600 .85rem/1.4 Oswald,sans-serif;letter-spacing:.03em;text-transform:uppercase;z-index:9999;box-shadow:0 2px 12px rgba(0,0,0,.4);opacity:0;transition:opacity .3s";document.body.appendChild(d);setTimeout(function(){{d.style.opacity="1"}},50);setTimeout(function(){{d.style.opacity="0";setTimeout(function(){{d.remove()}},400)}},12000)}}}})}})}}).catch(function(){{}})}}
 </script>
 
 </body>
