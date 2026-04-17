@@ -1,5 +1,5 @@
-const CACHE = "lineup-202604151310";
-const SHELL = ["/morning-lineup/", "/morning-lineup/index.html", "/morning-lineup/live.js"];
+const CACHE = "lineup-202604170707";
+const SHELL = ["/morning-lineup/", "/morning-lineup/index.html"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(
@@ -24,15 +24,37 @@ self.addEventListener("fetch", function (e) {
   var url = new URL(e.request.url);
   if (e.request.method !== "GET") return;
   if (url.origin !== location.origin) return;
-  e.respondWith(
-    caches.match(e.request).then(function (hit) {
-      return hit || fetch(e.request).then(function (resp) {
-        if (resp && resp.status === 200 && resp.type === "basic") {
+
+  var isHTML = e.request.mode === "navigate"
+    || (url.pathname.endsWith("/") || url.pathname.endsWith(".html"));
+
+  if (isHTML) {
+    // Network-first: always fetch fresh HTML, cache fallback for offline
+    e.respondWith(
+      fetch(e.request).then(function (resp) {
+        if (resp && resp.status === 200) {
           var copy = resp.clone();
           caches.open(CACHE).then(function (cache) { cache.put(e.request, copy); });
         }
         return resp;
-      }).catch(function () { return hit; });
-    })
-  );
+      }).catch(function () {
+        return caches.match(e.request);
+      })
+    );
+  } else {
+    // Stale-while-revalidate: serve cached asset instantly, refresh in background
+    e.respondWith(
+      caches.open(CACHE).then(function (cache) {
+        return cache.match(e.request).then(function (hit) {
+          var fetchPromise = fetch(e.request).then(function (resp) {
+            if (resp && resp.status === 200 && resp.type === "basic") {
+              cache.put(e.request, resp.clone());
+            }
+            return resp;
+          }).catch(function () { return hit; });
+          return hit || fetchPromise;
+        });
+      })
+    );
+  }
 });
