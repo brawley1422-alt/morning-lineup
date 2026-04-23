@@ -232,25 +232,32 @@ export async function initNotificationsPanel(root) {
     errBox.textContent = "";
   }
 
+  // Hide every sub-panel; we only reveal them once we know the user can use them.
+  const subPanels = root.querySelectorAll(".notif-device, .notif-tvsync, .notif-teams");
+  function hideSubPanels() { subPanels.forEach(el => el.hidden = true); }
+  function showSubPanels() { subPanels.forEach(el => el.hidden = false); }
+  hideSubPanels();
+
   if (!pushSupported()) {
     supportGate.hidden = false;
     supportGate.textContent = "Push notifications aren't supported in this browser. Try Chrome, Firefox, Edge, or Safari on iOS 16.4+ (installed to home screen).";
-    deviceBtn.disabled = true;
     return;
-  }
-
-  const { ios, standalone } = isStandaloneIOS();
-  if (ios && !standalone) {
-    iosHint.hidden = false;
-    deviceBtn.disabled = true;
   }
 
   const session = await getSession();
   if (!session) {
     supportGate.hidden = false;
     supportGate.textContent = "Sign in to manage notifications.";
-    deviceBtn.disabled = true;
     return;
+  }
+
+  // From here on we're signed-in and push-capable. Reveal the controls.
+  showSubPanels();
+
+  const { ios, standalone } = isStandaloneIOS();
+  if (ios && !standalone) {
+    iosHint.hidden = false;
+    deviceBtn.disabled = true;
   }
   const userId = session.user.id;
 
