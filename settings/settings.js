@@ -5,6 +5,7 @@
 // the broadcast below (localStorage ping that /home listens for).
 
 import { supabase, requireAuth, getProfile, signOut } from "../auth/session.js";
+import { initNotificationsPanel } from "../push-ui.js";
 
 const SECTION_LABELS = {
   headline: "The Team",
@@ -69,6 +70,10 @@ function clearError() {
 function broadcastChange() {
   try {
     localStorage.setItem("ml-profile-updated", String(Date.now()));
+  } catch {}
+  // Same-tab listeners (e.g. the Notifications panel) don't get storage events.
+  try {
+    document.dispatchEvent(new CustomEvent("ml:followed-teams-changed"));
   } catch {}
 }
 
@@ -480,6 +485,14 @@ async function init() {
     await signOut();
     window.location.href = "../auth/";
   });
+
+  // Notifications panel — independent init, failures don't break the page.
+  const notifRoot = document.getElementById("notifications-panel");
+  if (notifRoot) {
+    initNotificationsPanel(notifRoot).catch((err) => {
+      console.warn("notifications panel failed to init", err);
+    });
+  }
 }
 
 init().catch((err) => {
