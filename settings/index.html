@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="../auth/auth.css">
 <link rel="stylesheet" href="settings.css">
+<link rel="stylesheet" href="../push-ui.css">
 </head>
 <body>
 <header class="masthead auth-masthead">
@@ -109,6 +110,15 @@
       <label><input type="radio" name="theme" value="dark"><span>Dark</span></label>
       <label><input type="radio" name="theme" value="paper"><span>Paper</span></label>
     </div>
+  </section>
+
+  <section class="auth-card settings-card" id="notifications-section">
+    <div class="sechead">
+      <span class="num">07</span>
+      <span class="h">Notifications</span>
+      <span class="tag">Push Alerts</span>
+    </div>
+    <div id="notifications-panel"></div>
   </section>
 
   <div class="auth-error" id="settings-error" hidden></div>
