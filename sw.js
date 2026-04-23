@@ -1,4 +1,4 @@
-const CACHE = "lineup-202604230714";
+const CACHE = "lineup-202604231315";
 const SHELL = ["/morning-lineup/", "/morning-lineup/index.html"];
 
 self.addEventListener("install", function (e) {
@@ -57,4 +57,39 @@ self.addEventListener("fetch", function (e) {
       })
     );
   }
+});
+
+self.addEventListener("push", function (e) {
+  var payload = {};
+  try { payload = e.data ? e.data.json() : {}; } catch (err) { payload = {}; }
+
+  var title = payload.title || "Morning Lineup";
+  var body = payload.body || "";
+  var url = payload.url || "/morning-lineup/";
+  var tag = payload.tag || undefined;
+  var icon = payload.icon || "/morning-lineup/icons/icon-192.png";
+
+  var options = {
+    body: body,
+    tag: tag,
+    icon: icon,
+    badge: "/morning-lineup/icons/icon-192.png",
+    data: { url: url }
+  };
+
+  e.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener("notificationclick", function (e) {
+  e.notification.close();
+  var target = (e.notification.data && e.notification.data.url) || "/morning-lineup/";
+  e.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (clients) {
+      for (var i = 0; i < clients.length; i++) {
+        var c = clients[i];
+        if (c.url.indexOf(target) !== -1 && "focus" in c) return c.focus();
+      }
+      if (self.clients.openWindow) return self.clients.openWindow(target);
+    })
+  );
 });
