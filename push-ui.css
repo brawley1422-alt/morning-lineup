@@ -1,0 +1,179 @@
+/* push-ui.css — styles for the Notifications card in settings. */
+
+.notif-support-gate {
+  background: rgba(201, 162, 74, 0.08);
+  border-left: 3px solid var(--gold, #c9a24a);
+  padding: 0.9rem 1rem;
+  font: 400 0.95rem/1.5 Lora, Georgia, serif;
+  color: var(--ink, #0d0f14);
+  margin-bottom: 1rem;
+}
+
+.notif-ios-hint {
+  background: rgba(201, 162, 74, 0.08);
+  border-left: 3px solid var(--gold, #c9a24a);
+  padding: 0.8rem 1rem;
+  font: 400 0.9rem/1.5 Lora, Georgia, serif;
+  margin-bottom: 1rem;
+}
+.notif-ios-hint strong { font-weight: 700; }
+.notif-ios-hint em { font-style: italic; color: var(--gold, #c9a24a); }
+
+/* This device */
+.notif-device {
+  margin-bottom: 1.25rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(13, 15, 20, 0.12);
+  background: rgba(236, 228, 208, 0.4);
+}
+.notif-device-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.notif-device-title {
+  font: 600 0.75rem/1 Oswald, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink, #0d0f14);
+  margin-bottom: 0.25rem;
+}
+.notif-device-status {
+  font: 400 0.95rem/1.3 Lora, Georgia, serif;
+  color: rgba(13, 15, 20, 0.7);
+}
+.notif-device-btn {
+  min-width: 7rem;
+}
+
+/* TV sync */
+.notif-tvsync {
+  margin-bottom: 1.25rem;
+}
+.notif-tvsync-label {
+  font: 700 0.95rem/1.2 Oswald, sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+.notif-tvsync-hint {
+  font: 400 0.85rem/1.4 Lora, Georgia, serif;
+  color: rgba(13, 15, 20, 0.65);
+  margin-bottom: 0.6rem;
+  font-style: italic;
+}
+.notif-tvsync-row {
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+}
+
+/* Per-team list */
+.notif-teams {
+  border-top: 1px solid rgba(13, 15, 20, 0.1);
+  padding-top: 1rem;
+}
+.notif-teams-label {
+  font: 700 0.95rem/1.2 Oswald, sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+.notif-teams-hint {
+  font: 400 0.85rem/1.4 Lora, Georgia, serif;
+  color: rgba(13, 15, 20, 0.65);
+  margin-bottom: 0.8rem;
+  font-style: italic;
+}
+.notif-teams-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.notif-team {
+  border: 1px solid rgba(13, 15, 20, 0.12);
+  background: rgba(236, 228, 208, 0.35);
+}
+.notif-team > summary {
+  padding: 0.6rem 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  list-style: none;
+}
+.notif-team > summary::-webkit-details-marker { display: none; }
+.notif-team > summary::before {
+  content: "▸";
+  font-size: 0.8rem;
+  color: rgba(13, 15, 20, 0.5);
+  transition: transform 0.15s ease;
+}
+.notif-team[open] > summary::before { transform: rotate(90deg); }
+.notif-team-name {
+  font: 700 1rem/1.2 "Playfair Display", Georgia, serif;
+  flex: 1;
+}
+.notif-team-count {
+  font: 600 0.7rem/1 Oswald, sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold, #c9a24a);
+}
+
+.notif-team-types {
+  list-style: none;
+  margin: 0;
+  padding: 0 0.9rem 0.8rem;
+}
+.notif-team-types li {
+  padding: 0.4rem 0;
+  border-top: 1px solid rgba(13, 15, 20, 0.06);
+}
+.notif-type-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.7rem;
+  align-items: baseline;
+  cursor: pointer;
+}
+.notif-type-row input[type="checkbox"] {
+  grid-row: span 2;
+  align-self: start;
+  margin-top: 0.25rem;
+}
+.notif-type-label {
+  font: 600 0.95rem/1.2 Oswald, sans-serif;
+  letter-spacing: 0.02em;
+}
+.notif-type-hint {
+  grid-column: 2;
+  font: 400 0.82rem/1.3 Lora, Georgia, serif;
+  color: rgba(13, 15, 20, 0.6);
+  font-style: italic;
+}
+
+.notif-error {
+  margin-top: 0.75rem;
+}
+
+/* Dark theme overrides — match settings.css pattern */
+[data-theme="dark"] .notif-device,
+[data-theme="dark"] .notif-team {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+[data-theme="dark"] .notif-device-status,
+[data-theme="dark"] .notif-tvsync-hint,
+[data-theme="dark"] .notif-teams-hint,
+[data-theme="dark"] .notif-type-hint {
+  color: rgba(236, 228, 208, 0.6);
+}
+[data-theme="dark"] .notif-device-title,
+[data-theme="dark"] .notif-tvsync-label,
+[data-theme="dark"] .notif-teams-label,
+[data-theme="dark"] .notif-type-label,
+[data-theme="dark"] .notif-team-name {
+  color: var(--paper, #ece4d0);
+}
