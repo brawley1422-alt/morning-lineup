@@ -19,19 +19,24 @@ API = "https://statsapi.mlb.com/api/v1"
 LOGO_BASE = "https://www.mlbstatic.com/team-logos/team-cap-on-dark/"
 CT = ZoneInfo("America/Chicago")
 
+# (request_key, response_key, label) — API normalizes some keys in the response
+# (e.g. "strikeOuts" → "strikeouts", "whip" → "walksAndHitsPerInningPitched"),
+# so we match on the response form.
 HIT_CATS = [
-    ("battingAverage", "AVG"),
-    ("homeRuns", "HR"),
-    ("runsBattedIn", "RBI"),
-    ("stolenBases", "SB"),
-    ("onBasePlusSlugging", "OPS"),
+    ("battingAverage", "battingAverage", "AVG"),
+    ("homeRuns", "homeRuns", "HR"),
+    ("runsBattedIn", "runsBattedIn", "RBI"),
+    ("stolenBases", "stolenBases", "SB"),
+    ("onBasePlusSlugging", "onBasePlusSlugging", "OPS"),
 ]
 PIT_CATS = [
-    ("earnedRunAverage", "ERA"),
-    ("strikeOuts", "K"),
-    ("whip", "WHIP"),
-    ("saves", "SV"),
-    ("wins", "W"),
+    ("earnedRunAverage", "earnedRunAverage", "ERA"),
+    ("strikeOuts", "strikeouts", "K"),
+    ("whip", "walksAndHitsPerInningPitched", "WHIP"),
+    ("saves", "saves", "SV"),
+    ("wins", "wins", "W"),
+    ("inningsPitched", "inningsPitched", "IP"),
+    ("holds", "holds", "HLD"),
 ]
 
 
@@ -92,11 +97,11 @@ def render(teams_dir):
     try:
         hit = _fetch(
             "/stats/leaders", sportId=1, season=season, limit=5, statGroup="hitting",
-            leaderCategories=",".join(c for c, _ in HIT_CATS),
+            leaderCategories=",".join(req for req, _, _ in HIT_CATS),
         )
         pit = _fetch(
             "/stats/leaders", sportId=1, season=season, limit=5, statGroup="pitching",
-            leaderCategories=",".join(c for c, _ in PIT_CATS),
+            leaderCategories=",".join(req for req, _, _ in PIT_CATS),
         )
     except Exception as e:
         print(f"[landing_leaders] fetch failed: {e}")
@@ -105,15 +110,15 @@ def render(teams_dir):
     def _band(label, data, cats):
         lkp = {c["leaderCategory"]: c for c in data.get("leagueLeaders", [])}
         tiles = []
-        for cat_key, cat_label in cats:
-            c = lkp.get(cat_key)
+        for _, resp_key, cat_label in cats:
+            c = lkp.get(resp_key)
             if not c or not c.get("leaders"):
                 continue
             tiles.append(_render_cat(cat_label, c["leaders"], abbr_map, slug_map))
         return (
             f'<div class="leaders-band">'
             f'<p class="leaders-band-label">{label}</p>'
-            f'<div class="leaders-row">{"".join(tiles)}</div></div>'
+            f'<div class="leaders-row" style="--cols:{len(tiles)}">{"".join(tiles)}</div></div>'
         )
 
     today_str = date.today().strftime("%a · %b %-d").upper()
