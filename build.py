@@ -148,6 +148,8 @@ def load_all():
     today_lineup = {"home": [], "away": []}
     today_series = ""
     today_opp_info = ""
+    today_series_state = {}
+    today_opp_form = {}
     if next_games:
         tg = next_games[0]
         tg_pk = tg["gamePk"]
@@ -177,12 +179,13 @@ def load_all():
         except Exception as e:
             print(f"  warning: lineup fetch failed: {e}", flush=True)
 
-        # Season series: Cubs vs this opponent
+        # Season series: team vs this opponent
         try:
             ss_url = fetch("/schedule", sportId=1, teamId=TEAM_ID, season=season,
                            startDate=f"{season}-03-20", endDate=today.isoformat(),
                            hydrate="team")
             sw, sl = 0, 0
+            last_meeting = None
             for dd in ss_url.get("dates", []):
                 for g in dd.get("games", []):
                     if g.get("status", {}).get("abstractGameState") != "Final":
@@ -197,8 +200,27 @@ def load_all():
                         sw += 1
                     else:
                         sl += 1
+                    last_meeting = (dd["date"], cs, os_, g.get("venue", {}).get("name", ""), cubs_home)
             if sw + sl > 0:
                 today_series = f"{sw}-{sl}"
+            today_series_state["wins"] = sw
+            today_series_state["losses"] = sl
+            today_series_state["is_first_meeting"] = (sw + sl == 0)
+            if last_meeting:
+                ldate, lcs, los, lven, lhome = last_meeting
+                today_series_state["last_meeting"] = {
+                    "date": ldate,
+                    "result": "W" if lcs > los else "L",
+                    "score": f"{lcs}-{los}" if lcs > los else f"{los}-{lcs}",
+                    "venue": lven,
+                    "was_home": lhome,
+                }
+            # Series position within current homestand/roadtrip
+            sg_num = tg.get("seriesGameNumber")
+            gis = tg.get("gamesInSeries")
+            if sg_num and gis:
+                today_series_state["game_in_series"] = sg_num
+                today_series_state["games_in_series"] = gis
         except Exception as e:
             print(f"  warning: season series fetch failed: {e}", flush=True)
 
@@ -219,6 +241,51 @@ def load_all():
                         break
         except Exception as e:
             print(f"  warning: opponent info failed: {e}", flush=True)
+
+        # Opponent L10 recent form
+        try:
+            opp_sched = fetch("/schedule", sportId=1, teamId=tg_opp_id, season=season,
+                              startDate=f"{season}-03-20", endDate=today.isoformat(),
+                              hydrate="team")
+            finals = []
+            for dd in opp_sched.get("dates", []):
+                for g in dd.get("games", []):
+                    if g.get("status", {}).get("abstractGameState") != "Final":
+                        continue
+                    finals.append((dd["date"], g))
+            finals.sort(key=lambda x: x[0])
+            last10 = finals[-10:]
+            if last10:
+                ow10 = ol10 = rs = ra = 0
+                for _, g in last10:
+                    ga, gh = g["teams"]["away"], g["teams"]["home"]
+                    opp_home = gh["team"]["id"] == tg_opp_id
+                    ops = gh.get("score", 0) if opp_home else ga.get("score", 0)
+                    oas = ga.get("score", 0) if opp_home else gh.get("score", 0)
+                    rs += ops
+                    ra += oas
+                    if ops > oas:
+                        ow10 += 1
+                    else:
+                        ol10 += 1
+                diff = rs - ra
+                if diff >= 5:
+                    trend = "↑"
+                elif diff <= -5:
+                    trend = "↓"
+                else:
+                    trend = "→"
+                today_opp_form = {
+                    "w": ow10,
+                    "l": ol10,
+                    "games": len(last10),
+                    "rpg": round(rs / len(last10), 1),
+                    "rapg": round(ra / len(last10), 1),
+                    "trend": trend,
+                    "run_diff": diff,
+                }
+        except Exception as e:
+            print(f"  warning: opponent form fetch failed: {e}", flush=True)
 
     # Cubs game yesterday → if no Final, walk back up to 7 days
     def find_cubs_final(start_day):
@@ -417,6 +484,8 @@ def load_all():
         "next_games": next_games,
         "today_lineup": today_lineup, "today_series": today_series,
         "today_opp_info": today_opp_info,
+        "today_series_state": today_series_state,
+        "today_opp_form": today_opp_form,
         "cubs_game": cubs_game, "cubs_game_date": cubs_game_date,
         "boxscore": boxscore, "plays": plays,
         "injuries": injuries,
@@ -2245,6 +2314,12 @@ def build_landing():
             "colors": cfg["colors"],
         })
     html = (ROOT / "landing.html").read_text(encoding="utf-8")
+
+    # Inject the League Leaders section (top 5 per cat, below standings).
+    import sections.landing_leaders
+    leaders_html = sections.landing_leaders.render(teams_dir)
+    html = html.replace("__LEADERS_HTML__", leaders_html)
+
     out = ROOT / "index.html"
     out.write_text(html, encoding="utf-8")
     (ROOT / "landing-teams.js").write_text(

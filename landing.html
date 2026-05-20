@@ -103,6 +103,38 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
 .yt-btn::after{content:"→";font-family:var(--mono)}
 .yt-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
 
+/* LEAGUE LEADERS — clean agate, below standings */
+.leaders{position:relative;z-index:2;max-width:1280px;margin:8px auto 36px;padding:0 32px}
+.leaders-head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px;background-image:linear-gradient(90deg,var(--paper) 0%,var(--gold) 50%,var(--paper) 100%);background-size:100% 2px;background-repeat:no-repeat;background-position:top;padding-top:14px;border-bottom:1px solid var(--rule);padding-bottom:10px}
+.leaders-head .num{font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.1em;border:1px solid var(--gold-dim);padding:3px 7px;border-radius:2px;background:rgba(201,162,74,.08)}
+.leaders-head .h{font-family:var(--serif);font-style:italic;font-weight:900;font-size:28px;letter-spacing:-.01em;color:var(--paper);flex:1;line-height:1;margin:0}
+.leaders-head .tag{font-family:var(--mono);font-size:9px;letter-spacing:.24em;color:var(--paper-mute);text-transform:uppercase}
+.leaders-band{margin-bottom:18px}
+.leaders-band:last-child{margin-bottom:0}
+.leaders-band-label{font-family:var(--cond);text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--gold);margin:0 0 10px;padding-left:2px;display:flex;align-items:center;gap:10px}
+.leaders-band-label::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--gold-dim),transparent)}
+.leaders-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.lcat{min-width:0}
+.lcat-hd{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--paper-mute);border-bottom:1px solid var(--rule);padding:0 2px 5px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:baseline}
+.lcat-hd .l{color:var(--gold)}
+.lcat ol{list-style:none;margin:0;padding:0}
+.lcat li{display:grid;grid-template-columns:14px 18px 1fr auto;gap:6px;align-items:center;padding:4px 2px;border-bottom:1px dotted var(--rule);font-size:12px;line-height:1.2}
+.lcat li:last-child{border-bottom:none}
+.lcat .rk{font-family:var(--mono);font-size:9px;color:var(--paper-mute);text-align:right}
+.lcat .lg{width:16px;height:16px;object-fit:contain;opacity:.9}
+.lcat .nm{font-family:var(--body);color:var(--paper);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}
+.lcat .nm:hover{color:var(--gold)}
+.lcat .nm .ab{font-family:var(--mono);font-size:9px;color:var(--paper-mute);letter-spacing:.06em;margin-left:4px}
+.lcat .v{font-family:var(--mono);font-size:11px;color:var(--paper);letter-spacing:.04em;text-align:right;font-weight:500}
+@media (max-width:900px){
+  .leaders{padding:0 16px;margin:4px auto 28px}
+  .leaders-row{grid-template-columns:repeat(2,1fr);gap:14px 18px}
+}
+@media (max-width:520px){
+  .leaders-row{grid-template-columns:1fr;gap:10px}
+  .lcat li{font-size:13px}
+}
+
 /* LEAGUES */
 .leagues{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 32px 40px;display:grid;grid-template-columns:1fr 1fr;gap:40px}
 
@@ -240,7 +272,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
   </div>
   <div class="mast-center">
     <h1 class="mast-main"><span class="mast-the">The</span>Morning <em>Lineup</em></h1>
-    <p class="mast-dek">Edited by JB Rawley. Rebuilt every morning at 6 a.m. CT. 30 teams. No ads, no tracking.</p>
+    <p class="mast-dek">Rebuilt every morning at 6 a.m. CT. 30 teams. No ads, no tracking.</p>
   </div>
   <div class="mast-kicker-r">
     <div class="row"><span>Today</span><span class="val" id="kick-games">—</span></div>
@@ -279,6 +311,9 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opa
 
 <!-- LEAGUES GRID -->
 <main class="leagues" id="leagues"></main>
+
+<!-- LEAGUE LEADERS — top 5 per category, injected at build time -->
+__LEADERS_HTML__
 
 <footer class="site-foot">
   <span class="foot-left">The Morning Lineup<button type="button" class="foot-install" id="foot-install" hidden>Add to Home Screen</button></span>
