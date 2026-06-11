@@ -122,7 +122,7 @@
     }
 
     var newHTML =
-      '<div class="live-widget">' +
+      '<div class="live-widget" data-gpk="' + game.gamePk + '">' +
         '<div class="live-badge"><span class="dot"></span> LIVE &mdash; ' + esc(innLabel) + "</div>" +
         '<div class="score-row">' +
           '<span class="team-abbr">' + esc(teamAbbr(away)) + '</span>' +
@@ -134,6 +134,7 @@
         situationHTML +
         matchupHTML +
         lastPlayHTML +
+        '<div class="live-sc-cta">Open Live Scorecard &rsaquo;</div>' +
       "</div>";
     if (newHTML !== lastWidgetHTML) {
       container.innerHTML = newHTML;
@@ -509,6 +510,21 @@
       checkCubs();
       pollSlate();
     }
+  });
+
+  /* ── live game → scorecard click-through ────────────────────── */
+
+  // The live widget carries data-gpk only while a game is in progress
+  // (renderLive sets it; renderFinal/renderPreview don't). Slate cards
+  // always carry data-gpk, so gate those on the g-live class.
+  document.addEventListener("click", function (e) {
+    var t = e.target;
+    if (t && t.ownerSVGElement) t = t.ownerSVGElement;
+    if (!t || !t.closest) return;
+    var el = t.closest(".live-widget[data-gpk], .slate .g.g-live");
+    if (!el) return;
+    var pk = el.getAttribute("data-gpk");
+    if (pk) location.href = "scorecard/?game=" + pk;
   });
 
   /* ── init ────────────────────────────────────────────────────── */
