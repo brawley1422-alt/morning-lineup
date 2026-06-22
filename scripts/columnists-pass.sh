@@ -5,8 +5,8 @@
 # if columns have already been generated for today.
 set -euo pipefail
 
-LOG="/home/tooyeezy/morning-lineup/scripts/daily-build.log"
-REPO="/home/tooyeezy/morning-lineup"
+LOG="/home/tooyeezy/personal/morning-lineup/scripts/daily-build.log"
+REPO="/home/tooyeezy/personal/morning-lineup"
 TEAMS_DIR="$REPO/teams"
 
 exec > >(tee -a "$LOG") 2>&1

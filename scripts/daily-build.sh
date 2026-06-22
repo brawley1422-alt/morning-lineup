@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
-# Daily build — two phases:
-#   Pass 1 (games): fast, skips LLM columnists, must succeed so readers get
-#     baseball content on time. Every team build is bounded by `timeout` so
-#     a hung network call can never stall the whole paper.
-#   Pass 2 (columnists): runs columnists-pass.sh, regenerates AI columns,
-#     and redeploys. Allowed to be slow or fail — games are already live.
+# Daily build — games pass only:
+#   Builds every team + the landing page (skipping LLM columnists), then
+#   deploys. Every team build is bounded by `timeout` so a hung network call
+#   can never stall the whole paper.
+#
+# The columnists section is disabled in build.py (commit 39b6a78a, 2026-04-15,
+# pending a rework), so there's no second pass here — it would rebuild and
+# redeploy all 30 teams for zero new content. To regenerate columns manually
+# once the section is re-enabled, run scripts/columnists-pass.sh directly.
 set -euo pipefail
 
-LOG="/home/tooyeezy/morning-lineup/scripts/daily-build.log"
-REPO="/home/tooyeezy/morning-lineup"
+LOG="/home/tooyeezy/personal/morning-lineup/scripts/daily-build.log"
+REPO="/home/tooyeezy/personal/morning-lineup"
 TEAMS_DIR="$REPO/teams"
 
 exec > >(tee -a "$LOG") 2>&1
@@ -41,11 +44,3 @@ STATUS=$(curl -sI https://brawley1422-alt.github.io/morning-lineup/cubs/ | head 
 echo "Cubs: $STATUS"
 
 echo "=== GAMES PASS DONE $(date '+%Y-%m-%d %H:%M:%S %Z') ==="
-
-# --- Pass 2: Columnists ----------------------------------------------------
-# Allowed to fail — games are already live. Run in the same shell so logs
-# stream into the same file.
-bash "$REPO/scripts/columnists-pass.sh" \
-  || echo "WARN: columnists pass failed — games pass is already live."
-
-echo "=== ALL PASSES DONE $(date '+%Y-%m-%d %H:%M:%S %Z') ==="
