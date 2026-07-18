@@ -1,0 +1,5 @@
+raw/
+seg/
+*.json
+*.mp4
+state.json
