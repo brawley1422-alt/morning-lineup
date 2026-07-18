@@ -24,6 +24,7 @@ import sections.pressbox
 import sections.scouting
 import sections.slate
 import sections.stretch
+import sections.wildcard
 try:
     from zoneinfo import ZoneInfo
     CT = ZoneInfo("America/Chicago")
@@ -1324,6 +1325,7 @@ _FOLD_PEEK = {
     "farm": "AAA &middot; AA &middot; A+ &middot; A &middot; Prospects",
     "today": "Full Slate &middot; Probables",
     "div": "Division Standings &middot; Rivals",
+    "wildcard": "The Playoff Line &middot; Wild Card Race",
     "league": "News &middot; Scoreboard &middot; Leaders",
     "history": "This Day in History",
 }
@@ -1354,6 +1356,7 @@ def page(briefing):
     headline_html, summary_tag = sections.headline.render(briefing)
 
     division_html = sections.division.render(briefing)
+    wildcard_html = sections.wildcard.render(briefing)
     slate_html = sections.slate.render(briefing)
     around_league_html, news_count = sections.around_league.render(briefing)
 
@@ -1382,6 +1385,7 @@ def page(briefing):
         ("farm", minors_html),
         ("today", slate_html),
         ("div", division_html),
+        ("wildcard", wildcard_html),
         ("league", around_league_html),
         ("history", history_html),
     ]
@@ -1484,6 +1488,7 @@ def page(briefing):
       <li><a href="#farm">Down on the Farm</a></li>
       <li><a href="#today">Today&rsquo;s Slate</a></li>
       <li><a href="#div">{DIV_NAME}</a></li>
+      <li><a href="#wildcard">Wild Card Race</a></li>
       <li><a href="#league">Around the League</a></li>
       <li><a href="#history">{TEAM_NAME} History</a></li>
     </ol>
@@ -1579,6 +1584,17 @@ def page(briefing):
     </summary>
     {division_html}
     {_fold("div")}
+  </section>
+
+  <section id="wildcard" open>
+    <summary>
+      <span class="num">{_num.get("wildcard", "")}</span>
+      <span class="h">Wild Card Race</span>
+      <span class="tag">The Playoff Line</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    {wildcard_html}
+    {_fold("wildcard")}
   </section>
 
   <section id="league">

@@ -712,6 +712,37 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 .ml-welcome-skip{background:transparent;color:var(--paper-mute);border-color:var(--rule-hi)}
 .ml-welcome-skip:hover{color:var(--paper);border-color:var(--gold-dim)}
 .ml-welcome-ios-steps{font-family:var(--body);font-size:13px;color:var(--paper-dim);line-height:1.55;margin:10px 0 18px;padding:12px 14px;background:var(--ink);border-left:3px solid var(--gold);border-radius:2px}
+
+/* ---- Wild Card Race ---- */
+.wc-hero{position:relative;display:flex;flex-direction:column;gap:2px;padding:16px 18px 16px 22px;margin:4px 0 18px;background:linear-gradient(180deg,var(--ink-2) 0%,var(--ink) 100%);border:1px solid var(--rule);border-left:4px solid var(--gold);border-radius:2px;}
+.wc-eyebrow{display:block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--paper-mute);margin-bottom:6px;}
+.wc-status{display:block;font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(30px,5vw,46px);line-height:.95;letter-spacing:-.01em;color:var(--paper);}
+.wc-detail{display:block;font-family:var(--body);font-size:14px;color:var(--paper-dim);margin-top:8px;}
+.wc-hero.is-div{border-left-color:var(--gold)}
+.wc-hero.is-div .wc-status{color:var(--gold)}
+.wc-hero.is-in{border-left-color:var(--win)}
+.wc-hero.is-in .wc-status{color:var(--win)}
+.wc-hero.is-hunt{border-left-color:var(--team-accent)}
+.wc-hero.is-hunt .wc-status{color:var(--team-accent-hi)}
+.wc-hero.is-out{border-left-color:var(--rule-hi);opacity:.82}
+.wc-hero.is-out .wc-status{color:var(--paper-mute)}
+
+.wc-table th.r{text-align:right}
+.wc-table td.wcgb{color:var(--paper-dim);font-weight:600}
+.wc-table td.wcgb.pos{color:var(--win)}
+.wc-table td.strk.w{color:var(--win)}
+.wc-table td.strk.l{color:var(--loss)}
+.wc-badge{display:inline-flex;align-items:center;justify-content:center;min-width:30px;font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.1em;color:var(--win);border:1px dashed var(--win);border-radius:1px;padding:3px 5px 2px;line-height:1;background:color-mix(in srgb,var(--win) 8%,transparent);}
+.wc-rank{display:inline-flex;justify-content:center;min-width:30px;font-family:var(--mono);font-size:11px;color:var(--paper-mute);padding:2px 5px;}
+.wc-table tr.wc-in:not(.my-team) td{background:color-mix(in srgb,var(--win) 5%,transparent)}
+.wc-line td{padding:0;border:none;position:relative;height:30px;background:linear-gradient(90deg,transparent 0%,var(--team-accent) 26%,var(--team-accent-hi) 50%,var(--team-accent) 74%,transparent 100%);background-size:100% 2px;background-repeat:no-repeat;background-position:center;}
+.wc-line td span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:var(--cond);font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--team-accent-hi);background:var(--ink);padding:2px 12px;white-space:nowrap;}
+.wc-gap td{text-align:center;color:var(--paper-mute);letter-spacing:.3em;padding:2px 10px;border-bottom:1px solid var(--rule);}
+.wc-context{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:10px 0 2px;font-family:var(--mono);font-size:11px;color:var(--paper-mute);}
+.wc-context .lbl{text-transform:uppercase;letter-spacing:.16em;font-size:10px;margin-right:6px;}
+.wc-context .dl-list{display:inline-flex;flex-wrap:wrap;gap:4px 14px;}
+.wc-context .dl{display:inline-flex;align-items:center;gap:5px;color:var(--paper-dim);}
+.wc-context .dl .ab{font-family:var(--cond);letter-spacing:.06em;}
 </style>
 </head>
 <body data-team="cubs">
@@ -760,6 +791,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <li><a href="#farm">Down on the Farm</a></li>
       <li><a href="#today">Today&rsquo;s Slate</a></li>
       <li><a href="#div">NL Central</a></li>
+      <li><a href="#wildcard">Wild Card Race</a></li>
       <li><a href="#league">Around the League</a></li>
       <li><a href="#history">Cubs History</a></li>
     </ol>
@@ -1151,9 +1183,23 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Division Standings &middot; Rivals</div>
   </section>
 
-  <section id="league">
+  <section id="wildcard" open>
     <summary>
       <span class="num">08</span>
+      <span class="h">Wild Card Race</span>
+      <span class="tag">The Playoff Line</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    <div class="wc-hero is-hunt"><span class="wc-eyebrow">NL Wild Card</span><span class="wc-status">In the Hunt</span><span class="wc-detail">1 game back of the final wild card</span></div>
+<h3>National League Wild Card</h3>
+<div class="tblwrap"><table class="data standings wc-table"><thead><tr><th>Team</th><th class="r">W</th><th class="r">L</th><th class="r">PCT</th><th class="r">WCGB</th><th class="r">L10</th><th class="r">STRK</th></tr></thead><tbody><tr class="wc-in"><td class="team"><span class="ml-logo-pair"><span class="wc-badge">WC1</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-144"/></svg><span class="ab">???</span></span></td><td class="num">8</td><td class="num">5</td><td class="num pct">.615</td><td class="num wcgb pos">+0.5</td><td class="num">6-4</td><td class="num strk w">W2</td></tr><tr class="wc-in"><td class="team"><span class="ml-logo-pair"><span class="wc-badge">WC2</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-113"/></svg><span class="ab">???</span></span></td><td class="num">8</td><td class="num">5</td><td class="num pct">.615</td><td class="num wcgb pos">+0.5</td><td class="num">6-4</td><td class="num strk l">L2</td></tr><tr class="wc-in"><td class="team"><span class="ml-logo-pair"><span class="wc-badge">WC3</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-134"/></svg><span class="ab">???</span></span></td><td class="num">7</td><td class="num">5</td><td class="num pct">.583</td><td class="num wcgb pos">+0</td><td class="num">7-3</td><td class="num strk l">L1</td></tr><tr class="wc-line" aria-hidden="true"><td colspan="7"><span>Playoff Line</span></td></tr><tr><td class="team"><span class="ml-logo-pair"><span class="wc-rank">4</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-138"/></svg><span class="ab">???</span></span></td><td class="num">7</td><td class="num">5</td><td class="num pct">.583</td><td class="num wcgb">0</td><td class="num">5-5</td><td class="num strk w">W2</td></tr><tr><td class="team"><span class="ml-logo-pair"><span class="wc-rank">5</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-121"/></svg><span class="ab">???</span></span></td><td class="num">7</td><td class="num">6</td><td class="num pct">.538</td><td class="num wcgb">0.5</td><td class="num">5-5</td><td class="num strk l">L2</td></tr><tr><td class="team"><span class="ml-logo-pair"><span class="wc-rank">6</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-135"/></svg><span class="ab">???</span></span></td><td class="num">7</td><td class="num">6</td><td class="num pct">.538</td><td class="num wcgb">0.5</td><td class="num">6-4</td><td class="num strk w">W2</td></tr><tr><td class="team"><span class="ml-logo-pair"><span class="wc-rank">7</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-109"/></svg><span class="ab">???</span></span></td><td class="num">7</td><td class="num">6</td><td class="num pct">.538</td><td class="num wcgb">0.5</td><td class="num">7-3</td><td class="num strk w">W2</td></tr><tr><td class="team"><span class="ml-logo-pair"><span class="wc-rank">8</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-143"/></svg><span class="ab">???</span></span></td><td class="num">6</td><td class="num">6</td><td class="num pct">.500</td><td class="num wcgb">1</td><td class="num">5-5</td><td class="num strk l">L2</td></tr><tr class="my-team"><td class="team"><span class="ml-logo-pair"><span class="wc-rank">9</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-112"/></svg><span class="ab">???</span></span></td><td class="num">6</td><td class="num">6</td><td class="num pct">.500</td><td class="num wcgb">1</td><td class="num">5-5</td><td class="num strk w">W2</td></tr></tbody></table></div>
+<p class="wc-context"><span class="lbl">In via the division</span><span class="dl-list"><span class="dl"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-119"/></svg><span class="ab">?</span></span><span class="dl"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-158"/></svg><span class="ab">?</span></span><span class="dl"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-146"/></svg><span class="ab">?</span></span></span></p>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">The Playoff Line &middot; Wild Card Race</div>
+  </section>
+
+  <section id="league">
+    <summary>
+      <span class="num">09</span>
       <span class="h">Around the League</span>
       <span class="tag">Apr 4 &middot; 3 Notes</span>
       <span class="chev">&#9656;</span>
@@ -1199,7 +1245,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 
   <section id="history">
     <summary>
-      <span class="num">09</span>
+      <span class="num">10</span>
       <span class="h">This Day in Cubs History</span>
       <span class="tag">Apr 5</span>
       <span class="chev">&#9656;</span>
