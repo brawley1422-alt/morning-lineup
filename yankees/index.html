@@ -712,6 +712,37 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 .ml-welcome-skip{background:transparent;color:var(--paper-mute);border-color:var(--rule-hi)}
 .ml-welcome-skip:hover{color:var(--paper);border-color:var(--gold-dim)}
 .ml-welcome-ios-steps{font-family:var(--body);font-size:13px;color:var(--paper-dim);line-height:1.55;margin:10px 0 18px;padding:12px 14px;background:var(--ink);border-left:3px solid var(--gold);border-radius:2px}
+
+/* ---- Wild Card Race ---- */
+.wc-hero{position:relative;display:flex;flex-direction:column;gap:2px;padding:16px 18px 16px 22px;margin:4px 0 18px;background:linear-gradient(180deg,var(--ink-2) 0%,var(--ink) 100%);border:1px solid var(--rule);border-left:4px solid var(--gold);border-radius:2px;}
+.wc-eyebrow{display:block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--paper-mute);margin-bottom:6px;}
+.wc-status{display:block;font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(30px,5vw,46px);line-height:.95;letter-spacing:-.01em;color:var(--paper);}
+.wc-detail{display:block;font-family:var(--body);font-size:14px;color:var(--paper-dim);margin-top:8px;}
+.wc-hero.is-div{border-left-color:var(--gold)}
+.wc-hero.is-div .wc-status{color:var(--gold)}
+.wc-hero.is-in{border-left-color:var(--win)}
+.wc-hero.is-in .wc-status{color:var(--win)}
+.wc-hero.is-hunt{border-left-color:var(--team-accent)}
+.wc-hero.is-hunt .wc-status{color:var(--team-accent-hi)}
+.wc-hero.is-out{border-left-color:var(--rule-hi);opacity:.82}
+.wc-hero.is-out .wc-status{color:var(--paper-mute)}
+
+.wc-table th.r{text-align:right}
+.wc-table td.wcgb{color:var(--paper-dim);font-weight:600}
+.wc-table td.wcgb.pos{color:var(--win)}
+.wc-table td.strk.w{color:var(--win)}
+.wc-table td.strk.l{color:var(--loss)}
+.wc-badge{display:inline-flex;align-items:center;justify-content:center;min-width:30px;font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.1em;color:var(--win);border:1px dashed var(--win);border-radius:1px;padding:3px 5px 2px;line-height:1;background:color-mix(in srgb,var(--win) 8%,transparent);}
+.wc-rank{display:inline-flex;justify-content:center;min-width:30px;font-family:var(--mono);font-size:11px;color:var(--paper-mute);padding:2px 5px;}
+.wc-table tr.wc-in:not(.my-team) td{background:color-mix(in srgb,var(--win) 5%,transparent)}
+.wc-line td{padding:0;border:none;position:relative;height:30px;background:linear-gradient(90deg,transparent 0%,var(--team-accent) 26%,var(--team-accent-hi) 50%,var(--team-accent) 74%,transparent 100%);background-size:100% 2px;background-repeat:no-repeat;background-position:center;}
+.wc-line td span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:var(--cond);font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--team-accent-hi);background:var(--ink);padding:2px 12px;white-space:nowrap;}
+.wc-gap td{text-align:center;color:var(--paper-mute);letter-spacing:.3em;padding:2px 10px;border-bottom:1px solid var(--rule);}
+.wc-context{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:10px 0 2px;font-family:var(--mono);font-size:11px;color:var(--paper-mute);}
+.wc-context .lbl{text-transform:uppercase;letter-spacing:.16em;font-size:10px;margin-right:6px;}
+.wc-context .dl-list{display:inline-flex;flex-wrap:wrap;gap:4px 14px;}
+.wc-context .dl{display:inline-flex;align-items:center;gap:5px;color:var(--paper-dim);}
+.wc-context .dl .ab{font-family:var(--cond);letter-spacing:.06em;}
 </style>
 </head>
 <body data-team="yankees">
@@ -760,6 +791,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <li><a href="#farm">Down on the Farm</a></li>
       <li><a href="#today">Today&rsquo;s Slate</a></li>
       <li><a href="#div">AL East</a></li>
+      <li><a href="#wildcard">Wild Card Race</a></li>
       <li><a href="#league">Around the League</a></li>
       <li><a href="#history">Yankees History</a></li>
     </ol>
@@ -839,10 +871,10 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         </div>
         <div class="nx-venue">Yankee Stadium </div>
         <div class="nx-meta"><span class="nx-opp-rec">LAD: 61-36, 1st NL West (L3)</span></div>
-        <div class="nx-pitcher"><span class="nx-side">Yankees</span> <player-card pid="543037">Gerrit Cole</player-card><div class="nx-pline">4.04 ERA &middot; 3-4 &middot; 49.0 IP &middot; 47 K &middot; 1.20 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-119"/></svg>LAD</span> Roki Sasaki<div class="nx-pline">5.33 ERA &middot; 3-5 &middot; 81.0 IP &middot; 80 K &middot; 1.36 WHIP</div></div>
-        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="645305">Sánchez</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="642708">Rosario</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="683011">Volpe</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="669224">Wells</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="700250">Rice</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="641355">Bellinger</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="691176">Domínguez</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="665862">Jr.</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="676609">Caballero</player-card></span></div></div>
+        <div class="nx-pitcher"><span class="nx-side">Yankees</span> <player-card pid="543037">Gerrit Cole</player-card><div class="nx-pline">3.60 ERA &middot; 3-4 &middot; 55.0 IP &middot; 55 K &middot; 1.13 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-119"/></svg>LAD</span> Roki Sasaki<div class="nx-pline">4.98 ERA &middot; 3-5 &middot; 86.2 IP &middot; 85 K &middot; 1.34 WHIP</div></div>
+        <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">CF</span> <player-card pid="663757">Grisham</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="700250">Rice</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="502671">Goldschmidt</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="641355">Bellinger</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="691176">Domínguez</player-card></span><span class="lu-slot"><span class="lu-pos">2B</span> <player-card pid="665862">Jr.</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="676609">Caballero</player-card></span><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="641857">McMahon</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="669224">Wells</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> SportsNet LA &middot; YES &middot; MLB Network &middot; MLB Network</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> WFAN 660/101.9 FM &middot; Dodgers Radio AM570</div>
-        <div class="nx-wx">70°F &middot; Mostly Clear &middot; 5 mph NW</div>
+        <div class="nx-wx">80°F &middot; Partly Cloudy &middot; Calm</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Sat, Jul 18 &middot; vs <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-119"/></svg><span class="ab">LAD</span></div>
@@ -869,8 +901,8 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <h3>Form Guide (Last 7 Days)</h3>
     
     <div class="two">
-      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="700250">Rice</player-card></span><span class="primary t-elite">.381<em>xwOBA</em></span><span class="secondary">.423 &middot; 5 HR &middot; 1.577 OPS</span></li><li><span class="n"><player-card pid="663757">Grisham</player-card></span><span class="primary t-solid">.356<em>xwOBA</em></span><span class="secondary">.231 &middot; 1 HR &middot; .709 OPS</span></li><li><span class="n"><player-card pid="641355">Bellinger</player-card></span><span class="primary t-solid">.352<em>xwOBA</em></span><span class="secondary">.286 &middot; 0 HR &middot; .667 OPS</span></li><li><span class="n"><player-card pid="680474">Schuemann</player-card></span><span class="primary t-solid">.338<em>xwOBA</em></span><span class="secondary">.316 &middot; 1 HR &middot; .961 OPS</span></li></ul></div>
-      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="676609">Caballero</player-card></span><span class="primary t-rough">.271<em>xwOBA</em></span><span class="secondary">.318 &middot; 2 HR &middot; .895 OPS</span></li><li><span class="n"><player-card pid="669224">Wells</player-card></span><span class="primary t-rough">.285<em>xwOBA</em></span><span class="secondary">.190 &middot; 2 HR &middot; .703 OPS</span></li><li><span class="n"><player-card pid="645305">Sánchez</player-card></span><span class="primary t-rough">.286<em>xwOBA</em></span><span class="secondary">.182 &middot; 0 HR &middot; .349 OPS</span></li></ul></div>
+      <div class="tempbox hot"><h4>Hitters Heating Up (L7)</h4><ul><li><span class="n"><player-card pid="700250">Rice</player-card></span><span class="primary t-elite">.381<em>xwOBA</em></span><span class="secondary">.440 &middot; 4 HR &middot; 1.517 OPS</span></li><li><span class="n"><player-card pid="663757">Grisham</player-card></span><span class="primary t-solid">.356<em>xwOBA</em></span><span class="secondary">.250 &middot; 1 HR &middot; .791 OPS</span></li><li><span class="n"><player-card pid="641355">Bellinger</player-card></span><span class="primary t-solid">.352<em>xwOBA</em></span><span class="secondary">.333 &middot; 0 HR &middot; .764 OPS</span></li><li><span class="n"><player-card pid="680474">Schuemann</player-card></span><span class="primary t-solid">.338<em>xwOBA</em></span><span class="secondary">.316 &middot; 1 HR &middot; .961 OPS</span></li></ul></div>
+      <div class="tempbox cold"><h4>In the Icebox (L7)</h4><ul><li><span class="n"><player-card pid="676609">Caballero</player-card></span><span class="primary t-rough">.271<em>xwOBA</em></span><span class="secondary">.238 &middot; 0 HR &middot; .465 OPS</span></li><li><span class="n"><player-card pid="669224">Wells</player-card></span><span class="primary t-rough">.285<em>xwOBA</em></span><span class="secondary">.150 &middot; 2 HR &middot; .640 OPS</span></li><li><span class="n"><player-card pid="645305">Sánchez</player-card></span><span class="primary t-rough">.286<em>xwOBA</em></span><span class="secondary">.182 &middot; 0 HR &middot; .349 OPS</span></li></ul></div>
     </div>
     <div class="two">
       <div class="tempbox hot"><h4>Arms Dealing (L7)</h4><ul><li><span class="n"><player-card pid="670280">Bednar</player-card></span><span class="primary t-elite">2.80<em>xERA</em></span><span class="secondary">9.1 IP &middot; 0.00 ERA &middot; 7 K &middot; 30.0% Whf</span></li><li><span class="n"><player-card pid="518585">Cruz</player-card></span><span class="primary t-elite">2.89<em>xERA</em></span><span class="secondary">6.2 IP &middot; 2.70 ERA &middot; 8 K &middot; 40.9% Whf</span></li><li><span class="n"><player-card pid="693645">Schlittler</player-card></span><span class="primary t-elite">2.98<em>xERA</em></span><span class="secondary">42.1 IP &middot; 2.34 ERA &middot; 53 K &middot; 27.2% Whf</span></li></ul></div>
@@ -892,7 +924,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="sp-card">
         <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-147"/></svg><span class="sp-side-ab">Yankees</span></div>
         <div class="sp-name"><player-card pid="543037">Gerrit Cole</player-card></div>
-        <div class="sp-season">4.04 ERA &middot; 3-4 &middot; 49.0 IP &middot; 47 K &middot; 1.20 WHIP</div>
+        <div class="sp-season">3.60 ERA &middot; 3-4 &middot; 55.0 IP &middot; 55 K &middot; 1.13 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
             <tbody><tr><td>05-22</td><td class="opp">vs Tampa Bay Rays</td><td class="num">6.0</td><td class="num">0</td><td class="num">2</td><td class="num">2</td><td class="num">3</td></tr><tr><td>05-27</td><td class="opp">vs Kansas City Royals</td><td class="num">6.2</td><td class="num">0</td><td class="num">10</td><td class="num">4</td><td class="num">0</td></tr><tr><td>06-03</td><td class="opp">vs Cleveland Guardians</td><td class="num">5.1</td><td class="num">4</td><td class="num">2</td><td class="num">6</td><td class="num">1</td></tr></tbody></table>
@@ -938,7 +970,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="sp-card">
         <div class="sp-side"><svg class="ml-logo md" aria-hidden="true" focusable="false"><use href="#team-119"/></svg><span class="sp-side-ab">LAD</span></div>
         <div class="sp-name">Roki Sasaki</div>
-        <div class="sp-season">5.33 ERA &middot; 3-5 &middot; 81.0 IP &middot; 80 K &middot; 1.36 WHIP</div>
+        <div class="sp-season">4.98 ERA &middot; 3-5 &middot; 86.2 IP &middot; 85 K &middot; 1.34 WHIP</div>
         <h4>Last 3 Starts</h4><table class="data sp-log">
             <thead><tr><th>Date</th><th>Opp</th><th style="text-align:right">IP</th><th style="text-align:right">ER</th><th style="text-align:right">K</th><th style="text-align:right">H</th><th style="text-align:right">BB</th></tr></thead>
             <tbody><tr><td>03-30</td><td class="opp">vs Cleveland Guardians</td><td class="num">4.0</td><td class="num">1</td><td class="num">4</td><td class="num">4</td><td class="num">2</td></tr><tr><td>04-05</td><td class="opp">vs Washington Nationals</td><td class="num">5.0</td><td class="num">6</td><td class="num">5</td><td class="num">5</td><td class="num">3</td></tr><tr><td>04-12</td><td class="opp">vs Texas Rangers</td><td class="num">4.0</td><td class="num">2</td><td class="num">6</td><td class="num">5</td><td class="num">5</td></tr></tbody></table>
@@ -998,11 +1030,11 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       </div>
       <div class="mr-arsenal"><div class="mr-pc" title="4-Seam Fastball"><div class="mr-pc-code">FF</div><div class="mr-pc-velo">97.6</div><div class="mr-pc-usage">43%</div><div class="mr-pc-xwoba">.411</div></div><div class="mr-pc" title="Split-Finger"><div class="mr-pc-code">FS</div><div class="mr-pc-velo">90.1</div><div class="mr-pc-usage">35%</div><div class="mr-pc-xwoba">.272</div></div><div class="mr-pc" title="Slider"><div class="mr-pc-code">SL</div><div class="mr-pc-velo">86.6</div><div class="mr-pc-usage">21%</div><div class="mr-pc-xwoba">.252</div></div><div class="mr-pc" title="Sweeper"><div class="mr-pc-code">ST</div><div class="mr-pc-velo">82.0</div><div class="mr-pc-usage">16%</div><div class="mr-pc-xwoba">.300</div></div></div>
       <table class="mr-lineup">
-        <tbody><tr class="mr-row"><td class="mr-slot">1</td><td class="mr-name">Ali Sánchez</td><td class="mr-pos">C</td><td class="mr-read"><span class="mr-nodata">—</span></td><td class="mr-gcell"><span class="mr-grade">—</span></td></tr><tr class="mr-row"><td class="mr-slot">2</td><td class="mr-name">Amed Rosario</td><td class="mr-pos">3B</td><td class="mr-read"><span class="mr-nodata">—</span></td><td class="mr-gcell"><span class="mr-grade">—</span></td></tr><tr class="mr-row"><td class="mr-slot">3</td><td class="mr-name">Anthony Volpe</td><td class="mr-pos">SS</td><td class="mr-read"><span class="mr-tag mr-vuln">vuln: <b>SL</b> <span class="mr-dots d-vuln">●●●○</span></span></td><td class="mr-gcell"><span class="mr-grade t-solid">B</span></td></tr><tr class="mr-row"><td class="mr-slot">4</td><td class="mr-name">Austin Wells</td><td class="mr-pos">C</td><td class="mr-read"><span class="mr-tag mr-vuln">vuln: <b>SL</b> <span class="mr-dots d-vuln">●●○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-solid">B</span></td></tr><tr class="mr-row"><td class="mr-slot">5</td><td class="mr-name">Ben Rice</td><td class="mr-pos">1B</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>FF</b> <span class="mr-dots d-safe">●●○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-elite">A</span></td></tr><tr class="mr-row"><td class="mr-slot">6</td><td class="mr-name">Cody Bellinger</td><td class="mr-pos">LF</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>FF</b> <span class="mr-dots d-safe">●●●○</span></span></td><td class="mr-gcell"><span class="mr-grade t-elite">A</span></td></tr><tr class="mr-row"><td class="mr-slot">7</td><td class="mr-name">Jasson Domínguez</td><td class="mr-pos">RF</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-elite">A</span></td></tr><tr class="mr-row"><td class="mr-slot">8</td><td class="mr-name">Jazz Chisholm Jr.</td><td class="mr-pos">2B</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-solid">B</span></td></tr><tr class="mr-row"><td class="mr-slot">9</td><td class="mr-name">José Caballero</td><td class="mr-pos">SS</td><td class="mr-read"><span class="mr-tag mr-vuln">vuln: <b>FF</b> <span class="mr-dots d-vuln">●●○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-rough">C</span></td></tr></tbody>
+        <tbody><tr class="mr-row"><td class="mr-slot">1</td><td class="mr-name">Trent Grisham</td><td class="mr-pos">CF</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>FF</b> <span class="mr-dots d-safe">●●●○</span></span></td><td class="mr-gcell"><span class="mr-grade t-elite">A</span></td></tr><tr class="mr-row"><td class="mr-slot">2</td><td class="mr-name">Ben Rice</td><td class="mr-pos">1B</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>FF</b> <span class="mr-dots d-safe">●●○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-elite">A</span></td></tr><tr class="mr-row"><td class="mr-slot">3</td><td class="mr-name">Paul Goldschmidt</td><td class="mr-pos">1B</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>FF</b> <span class="mr-dots d-safe">●○○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-elite">A</span></td></tr><tr class="mr-row"><td class="mr-slot">4</td><td class="mr-name">Cody Bellinger</td><td class="mr-pos">LF</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>FF</b> <span class="mr-dots d-safe">●●●○</span></span></td><td class="mr-gcell"><span class="mr-grade t-elite">A</span></td></tr><tr class="mr-row"><td class="mr-slot">5</td><td class="mr-name">Jasson Domínguez</td><td class="mr-pos">RF</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-elite">A</span></td></tr><tr class="mr-row"><td class="mr-slot">6</td><td class="mr-name">Jazz Chisholm Jr.</td><td class="mr-pos">2B</td><td class="mr-read"><span class="mr-tag mr-none">—</span></td><td class="mr-gcell"><span class="mr-grade t-solid">B</span></td></tr><tr class="mr-row"><td class="mr-slot">7</td><td class="mr-name">José Caballero</td><td class="mr-pos">SS</td><td class="mr-read"><span class="mr-tag mr-vuln">vuln: <b>FF</b> <span class="mr-dots d-vuln">●●○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-rough">C</span></td></tr><tr class="mr-row"><td class="mr-slot">8</td><td class="mr-name">Ryan McMahon</td><td class="mr-pos">3B</td><td class="mr-read"><span class="mr-tag mr-safe">safe: <b>FF</b> <span class="mr-dots d-safe">●○○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-elite">A</span></td></tr><tr class="mr-row"><td class="mr-slot">9</td><td class="mr-name">Austin Wells</td><td class="mr-pos">C</td><td class="mr-read"><span class="mr-tag mr-vuln">vuln: <b>SL</b> <span class="mr-dots d-vuln">●●○○</span></span></td><td class="mr-gcell"><span class="mr-grade t-solid">B</span></td></tr></tbody>
       </table>
       <div class="mr-foot">
         <span class="mr-team">TEAM <b class="t-elite">A</b></span>
-        <span class="mr-exp">exploit: <b>FF</b> (1), <b>SL</b> (2)</span>
+        <span class="mr-exp">exploit: <b>FF</b> (1), <b>SL</b> (1)</span>
       </div>
     </div>
     <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Lineup Grades vs Arsenal</div>
@@ -1018,7 +1050,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="pulse-record">
         <span class="pulse-wl">54&ndash;42</span>
         <span class="pulse-pct">.563</span>
-        <span class="pulse-gb">3.0 GB</span>
+        <span class="pulse-gb">2.5 GB</span>
         <span class="pulse-rank">2nd AL East</span>
         <span class="pulse-streak">W4</span>
     </div>
@@ -1039,7 +1071,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
       <span class="tag">Roster &middot; Transactions</span>
       <span class="chev">&#9656;</span>
     </summary>
-    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">07-13</span><span class="transac-badge act">Signed</span><span class="transac-desc">New York Yankees signed RHP David Leslie.</span></div><div class="transac-item"><span class="transac-date">07-13</span><span class="transac-badge act">Signed</span><span class="transac-desc">New York Yankees signed LHP Hunter Dietz.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>RF <strong>Aaron Judge</strong></dd><dd>DH <strong>Giancarlo Stanton</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Carlos Rodón</strong></dd><dd>P <strong>Max Fried</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Clarke Schmidt</strong></dd></dl></div></div>
+    <div class="two"><div><h3>Recent Transactions</h3><div class="transac-list"><div class="transac-item"><span class="transac-date">07-14</span><span class="transac-badge act">Signed</span><span class="transac-desc">New York Yankees signed OF Dean Toigo.</span></div><div class="transac-item"><span class="transac-date">07-14</span><span class="transac-badge act">Signed</span><span class="transac-desc">New York Yankees signed RHP Jason Krieger.</span></div><div class="transac-item"><span class="transac-date">07-13</span><span class="transac-badge act">Signed</span><span class="transac-desc">New York Yankees signed RHP David Leslie.</span></div><div class="transac-item"><span class="transac-date">07-13</span><span class="transac-badge act">Signed</span><span class="transac-desc">New York Yankees signed LHP Hunter Dietz.</span></div></div></div><div><h3>Injured List</h3><dl class="transac"><dt>Injured 10-Day</dt><dd>RF <strong>Aaron Judge</strong></dd><dd>DH <strong>Giancarlo Stanton</strong></dd><dt>Injured 15-Day</dt><dd>P <strong>Carlos Rodón</strong></dd><dd>P <strong>Max Fried</strong></dd><dt>Injured 60-Day</dt><dd>P <strong>Clarke Schmidt</strong></dd></dl></div></div>
     <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Transactions &middot; Injured List</div>
   </section>
 
@@ -1097,7 +1129,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
           <span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-111"/></svg><span class="ab">BOS</span></span>
         </div>
         <div class="time">6:10 CT</div>
-        <div class="probs">TBD vs TBD</div>
+        <div class="probs">Englert vs Rivera</div>
         <div class="bc">NESN · Rays.TV · WMOR</div>
       </div><div class="g" data-gpk="823524">
         <div class="matchup">
@@ -1108,15 +1140,6 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="time">6:05 CT</div>
         <div class="probs">Sasaki vs Cole</div>
         <div class="bc">SportsNet LA · YES · MLB Network · MLB Network</div>
-      </div><div class="g" data-gpk="824414">
-        <div class="matchup">
-          <span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-134"/></svg><span class="ab">PIT</span></span>
-          <span class="at">@</span>
-          <span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-114"/></svg><span class="ab">CLE</span></span>
-        </div>
-        <div class="time">6:10 CT</div>
-        <div class="probs">Jones vs Williams</div>
-        <div class="bc">SportsNet Pittsburgh · Guardians.TV Presented by Progressive</div>
       </div><div class="g" data-gpk="824901">
         <div class="matchup">
           <span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-140"/></svg><span class="ab">TEX</span></span>
@@ -1205,7 +1228,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
           <span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-109"/></svg><span class="ab">AZ</span></span>
         </div>
         <div class="time">8:40 CT</div>
-        <div class="probs">TBD vs Kelly</div>
+        <div class="probs">McGreevy vs Kelly</div>
         <div class="bc">DBACKS.TV · Cardinals.TV Presented by bet365</div>
       </div><div class="g" data-gpk="823115">
         <div class="matchup">
@@ -1216,6 +1239,15 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="time">9:10 CT</div>
         <div class="probs">Roupp vs Miller</div>
         <div class="bc">Mariners.TV · NBCS BA · KING 5</div>
+      </div><div class="g" data-gpk="824414">
+        <div class="matchup">
+          <span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-134"/></svg><span class="ab">PIT</span></span>
+          <span class="at">@</span>
+          <span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-114"/></svg><span class="ab">CLE</span></span>
+        </div>
+        <div class="time">6:10 CT</div>
+        <div class="probs">Jones vs Williams</div>
+        <div class="bc">SportsNet Pittsburgh · Guardians.TV Presented by Progressive</div>
       </div></div>
     <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Full Slate &middot; Probables</div>
   </section>
@@ -1232,21 +1264,35 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
     <th style="text-align:right">PCT</th><th style="text-align:right">GB</th>
     <th style="text-align:right">L10</th></tr></thead>
-    <tbody><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-139"/></svg><span class="ab">Rays</span></span></td><td class="num">56</td><td class="num">38</td><td class="num pct">.596</td><td class="num">&mdash;</td><td class="num">5-5</td></tr><tr class="my-team"><td class="team"><span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-147"/></svg><span class="ab">Yankees</span></span></td><td class="num">54</td><td class="num">42</td><td class="num pct">.563</td><td class="num">3.0</td><td class="num">6-4</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-111"/></svg><span class="ab">Red Sox</span></span></td><td class="num">46</td><td class="num">48</td><td class="num pct">.489</td><td class="num">10.0</td><td class="num">9-1</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-110"/></svg><span class="ab">Orioles</span></span></td><td class="num">46</td><td class="num">51</td><td class="num pct">.474</td><td class="num">11.5</td><td class="num">7-3</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-141"/></svg><span class="ab">Blue Jays</span></span></td><td class="num">45</td><td class="num">51</td><td class="num pct">.469</td><td class="num">12.0</td><td class="num">5-5</td></tr></tbody></table></div>
+    <tbody><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-139"/></svg><span class="ab">Rays</span></span></td><td class="num">56</td><td class="num">39</td><td class="num pct">.589</td><td class="num">&mdash;</td><td class="num">4-6</td></tr><tr class="my-team"><td class="team"><span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-147"/></svg><span class="ab">Yankees</span></span></td><td class="num">54</td><td class="num">42</td><td class="num pct">.563</td><td class="num">2.5</td><td class="num">6-4</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-111"/></svg><span class="ab">Red Sox</span></span></td><td class="num">47</td><td class="num">48</td><td class="num pct">.495</td><td class="num">9.0</td><td class="num">10-0</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-110"/></svg><span class="ab">Orioles</span></span></td><td class="num">46</td><td class="num">51</td><td class="num pct">.474</td><td class="num">11.0</td><td class="num">7-3</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-141"/></svg><span class="ab">Blue Jays</span></span></td><td class="num">45</td><td class="num">51</td><td class="num pct">.469</td><td class="num">11.5</td><td class="num">5-5</td></tr></tbody></table></div>
     <h3>Rivals &middot; Yesterday</h3>
     <div class="rivals"><div class="rival"><h4>AL East Rivals</h4><p>All off yesterday.</p></div></div>
     <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">Division Standings &middot; Rivals</div>
   </section>
 
-  <section id="league">
+  <section id="wildcard" open>
     <summary>
       <span class="num">09</span>
+      <span class="h">Wild Card Race</span>
+      <span class="tag">The Playoff Line</span>
+      <span class="chev">&#9656;</span>
+    </summary>
+    <div class="wc-hero is-in"><span class="wc-eyebrow">AL Wild Card</span><span class="wc-status">1st Wild Card</span><span class="wc-detail">6.5 games clear of the line</span></div>
+<h3>American League Wild Card</h3>
+<div class="tblwrap"><table class="data standings wc-table"><thead><tr><th>Team</th><th class="r">W</th><th class="r">L</th><th class="r">PCT</th><th class="r">WCGB</th><th class="r">L10</th><th class="r">STRK</th></tr></thead><tbody><tr class="my-team wc-in"><td class="team"><span class="ml-logo-pair"><span class="wc-badge">WC1</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-147"/></svg><span class="ab">Yankees</span></span></td><td class="num">54</td><td class="num">42</td><td class="num pct">.563</td><td class="num wcgb pos">+6.5</td><td class="num">6-4</td><td class="num strk w">W4</td></tr><tr class="wc-in"><td class="team"><span class="ml-logo-pair"><span class="wc-badge">WC2</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-114"/></svg><span class="ab">Guardians</span></span></td><td class="num">51</td><td class="num">46</td><td class="num pct">.526</td><td class="num wcgb pos">+3</td><td class="num">6-4</td><td class="num strk w">W4</td></tr><tr class="wc-in"><td class="team"><span class="ml-logo-pair"><span class="wc-badge">WC3</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-142"/></svg><span class="ab">Twins</span></span></td><td class="num">48</td><td class="num">49</td><td class="num pct">.495</td><td class="num wcgb pos">+0</td><td class="num">7-3</td><td class="num strk w">W2</td></tr><tr class="wc-line" aria-hidden="true"><td colspan="7"><span>Playoff Line</span></td></tr><tr><td class="team"><span class="ml-logo-pair"><span class="wc-rank">4</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-136"/></svg><span class="ab">Mariners</span></span></td><td class="num">48</td><td class="num">49</td><td class="num pct">.495</td><td class="num wcgb">0</td><td class="num">4-6</td><td class="num strk w">W1</td></tr><tr><td class="team"><span class="ml-logo-pair"><span class="wc-rank">5</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-111"/></svg><span class="ab">Red Sox</span></span></td><td class="num">47</td><td class="num">48</td><td class="num pct">.495</td><td class="num wcgb">0</td><td class="num">10-0</td><td class="num strk w">W10</td></tr><tr><td class="team"><span class="ml-logo-pair"><span class="wc-rank">6</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-117"/></svg><span class="ab">Astros</span></span></td><td class="num">47</td><td class="num">51</td><td class="num pct">.480</td><td class="num wcgb">1.5</td><td class="num">4-6</td><td class="num strk l">L1</td></tr><tr><td class="team"><span class="ml-logo-pair"><span class="wc-rank">7</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-110"/></svg><span class="ab">Orioles</span></span></td><td class="num">46</td><td class="num">51</td><td class="num pct">.474</td><td class="num wcgb">2</td><td class="num">7-3</td><td class="num strk w">W4</td></tr><tr><td class="team"><span class="ml-logo-pair"><span class="wc-rank">8</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-141"/></svg><span class="ab">Blue Jays</span></span></td><td class="num">45</td><td class="num">51</td><td class="num pct">.469</td><td class="num wcgb">2.5</td><td class="num">5-5</td><td class="num strk l">L2</td></tr><tr><td class="team"><span class="ml-logo-pair"><span class="wc-rank">9</span><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-116"/></svg><span class="ab">Tigers</span></span></td><td class="num">44</td><td class="num">52</td><td class="num pct">.458</td><td class="num wcgb">3.5</td><td class="num">7-3</td><td class="num strk l">L2</td></tr></tbody></table></div>
+<p class="wc-context"><span class="lbl">In via the division</span><span class="dl-list"><span class="dl"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-139"/></svg><span class="ab">TB</span></span><span class="dl"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-145"/></svg><span class="ab">CWS</span></span><span class="dl"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-140"/></svg><span class="ab">TEX</span></span></span></p>
+    <div class="fold-artifact fold-stamp" aria-hidden="true"><span>FOLDED</span></div><div class="fold-artifact fold-crease" aria-hidden="true"></div><div class="fold-artifact fold-peek" aria-hidden="true">The Playoff Line &middot; Wild Card Race</div>
+  </section>
+
+  <section id="league">
+    <summary>
+      <span class="num">10</span>
       <span class="h">Around the League</span>
       <span class="tag">Jul 16 &middot; 2 Notes</span>
       <span class="chev">&#9656;</span>
     </summary>
     <h3>News Wire</h3>
-    <div class="news-wire"><div class="blurb"><span class="blurb-tag streak">W9</span><p class="blurb-text">The Red Sox have won 9 straight.</p></div><div class="blurb"><span class="blurb-tag streak">L9</span><p class="blurb-text">The Athletics have dropped 9 in a row.</p></div></div>
+    <div class="news-wire"><div class="blurb"><span class="blurb-tag streak">W10</span><p class="blurb-text">The Red Sox have won 10 straight.</p></div><div class="blurb"><span class="blurb-tag streak">L9</span><p class="blurb-text">The Athletics have dropped 9 in a row.</p></div></div>
     <h3>Yesterday&rsquo;s Scoreboard</h3>
     <div class="tblwrap"><table class="data">
     <thead><tr><th>Away</th><th></th><th>Home</th><th></th><th>W</th><th>WP</th></tr></thead>
@@ -1256,7 +1302,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="two"><div><h4>AL East</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
-        <tbody><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-139"/></svg><span class="ab">Rays</span></span></td><td class="num">56</td><td class="num">38</td><td class="num">&mdash;</td></tr><tr class="my-team"><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-147"/></svg><span class="ab">Yankees</span></span></td><td class="num">54</td><td class="num">42</td><td class="num">3.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-111"/></svg><span class="ab">Red Sox</span></span></td><td class="num">46</td><td class="num">48</td><td class="num">10.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-110"/></svg><span class="ab">Orioles</span></span></td><td class="num">46</td><td class="num">51</td><td class="num">11.5</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-141"/></svg><span class="ab">Blue Jays</span></span></td><td class="num">45</td><td class="num">51</td><td class="num">12.0</td></tr></tbody></table></div><h4>AL Central</h4><div class="tblwrap"><table class="data standings">
+        <tbody><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-139"/></svg><span class="ab">Rays</span></span></td><td class="num">56</td><td class="num">39</td><td class="num">&mdash;</td></tr><tr class="my-team"><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-147"/></svg><span class="ab">Yankees</span></span></td><td class="num">54</td><td class="num">42</td><td class="num">2.5</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-111"/></svg><span class="ab">Red Sox</span></span></td><td class="num">47</td><td class="num">48</td><td class="num">9.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-110"/></svg><span class="ab">Orioles</span></span></td><td class="num">46</td><td class="num">51</td><td class="num">11.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-141"/></svg><span class="ab">Blue Jays</span></span></td><td class="num">45</td><td class="num">51</td><td class="num">11.5</td></tr></tbody></table></div><h4>AL Central</h4><div class="tblwrap"><table class="data standings">
         <thead><tr><th>Team</th><th style="text-align:right">W</th><th style="text-align:right">L</th>
         <th style="text-align:right">GB</th></tr></thead>
         <tbody><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-145"/></svg><span class="ab">White Sox</span></span></td><td class="num">50</td><td class="num">45</td><td class="num">&mdash;</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-114"/></svg><span class="ab">Guardians</span></span></td><td class="num">51</td><td class="num">46</td><td class="num">&mdash;</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-142"/></svg><span class="ab">Twins</span></span></td><td class="num">48</td><td class="num">49</td><td class="num">3.0</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-116"/></svg><span class="ab">Tigers</span></span></td><td class="num">44</td><td class="num">52</td><td class="num">6.5</td></tr><tr><td class="team"><span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-118"/></svg><span class="ab">Royals</span></span></td><td class="num">38</td><td class="num">59</td><td class="num">13.0</td></tr></tbody></table></div><h4>AL West</h4><div class="tblwrap"><table class="data standings">
@@ -1276,7 +1322,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
     <div class="two">
     <div><h4>Batting</h4><div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
-    <tbody><tr><td>AVG</td><td class="name">Otto Lopez <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-146"/></svg><span class="ab">MIA</span></span></td><td class="num">.334</td></tr><tr><td>HR</td><td class="name">Kyle Schwarber <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-143"/></svg><span class="ab">PHI</span></span></td><td class="num">32</td></tr><tr><td>RBI</td><td class="name">Jordan Walker <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-138"/></svg><span class="ab">STL</span></span></td><td class="num">74</td></tr><tr><td>SB</td><td class="name">Nasim Nuñez <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-120"/></svg><span class="ab">WSH</span></span></td><td class="num">34</td></tr><tr><td>OPS</td><td class="name">Yordan Alvarez <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-117"/></svg><span class="ab">HOU</span></span></td><td class="num">1.059</td></tr></tbody></table></div></div>
+    <tbody><tr><td>AVG</td><td class="name">Otto Lopez <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-146"/></svg><span class="ab">MIA</span></span></td><td class="num">.338</td></tr><tr><td>HR</td><td class="name">Kyle Schwarber <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-143"/></svg><span class="ab">PHI</span></span></td><td class="num">32</td></tr><tr><td>RBI</td><td class="name">Jordan Walker <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-138"/></svg><span class="ab">STL</span></span></td><td class="num">74</td></tr><tr><td>SB</td><td class="name">Nasim Nuñez <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-120"/></svg><span class="ab">WSH</span></span></td><td class="num">34</td></tr><tr><td>OPS</td><td class="name">Yordan Alvarez <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-117"/></svg><span class="ab">HOU</span></span></td><td class="num">1.065</td></tr></tbody></table></div></div>
     <div><h4>Pitching</h4><div class="tblwrap"><table class="data">
     <thead><tr><th>Cat</th><th>Leader</th><th style="text-align:right">#</th></tr></thead>
     <tbody><tr><td>ERA</td><td class="name">Jacob Misiorowski <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-158"/></svg><span class="ab">MIL</span></span></td><td class="num">1.62</td></tr><tr><td>SV</td><td class="name">Cade Smith <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-114"/></svg><span class="ab">CLE</span></span></td><td class="num">28</td></tr><tr><td>W</td><td class="name">Aaron Ashby <span class="ml-logo-pair"><svg class="ml-logo xs" aria-hidden="true" focusable="false"><use href="#team-158"/></svg><span class="ab">MIL</span></span></td><td class="num">12</td></tr></tbody></table></div></div>
@@ -1286,7 +1332,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 
   <section id="history">
     <summary>
-      <span class="num">10</span>
+      <span class="num">11</span>
       <span class="h">This Day in Yankees History</span>
       <span class="tag">Jul 17</span>
       <span class="chev">&#9656;</span>
@@ -1301,7 +1347,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Yankee Stadium Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 07/17/26 04:08 CT</span>
+  <span>Filed 07/17/26 19:54 CT</span>
 </footer>
 
 <script>
