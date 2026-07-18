@@ -2331,6 +2331,11 @@ def build_landing():
         })
     html = (ROOT / "landing.html").read_text(encoding="utf-8")
 
+    # Inject the Wild Card Race board (both leagues, below the standings grid).
+    import sections.landing_wildcard
+    wildcard_html = sections.landing_wildcard.render(teams_dir)
+    html = html.replace("__WILDCARD_HTML__", wildcard_html)
+
     # Inject the League Leaders section (top 5 per cat, below standings).
     import sections.landing_leaders
     leaders_html = sections.landing_leaders.render(teams_dir)
