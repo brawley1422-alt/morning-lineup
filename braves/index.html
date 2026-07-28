@@ -29,8 +29,8 @@
   --ink:#0d0f14;--ink-2:#141823;--ink-3:#1c2230;
   --paper:#ece4d0;--paper-dim:#c9bfa6;--paper-mute:#8b836d;
   --rule:#2a3142;--rule-hi:#3a4360;
-  --team-primary:#13274F;--team-primary-hi:#1d3a70;
-  --team-accent:#CE1141;--team-accent-hi:#e8394f;
+  --team-primary:#0E3386;--team-primary-hi:#2a56c4;
+  --team-accent:#CC3433;--team-accent-hi:#e8544f;
   --gold:#c9a24a;--gold-dim:#8a6f32;
   --win:#6ea86a;--loss:#c0554f;
   --serif:"Playfair Display",Georgia,serif;
@@ -874,7 +874,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
         <div class="nx-pitcher"><span class="nx-side">Braves</span> <player-card pid="519242">Chris Sale</player-card><div class="nx-pline">2.19 ERA &middot; 11-6 &middot; 111.0 IP &middot; 134 K &middot; 1.05 WHIP</div></div><div class="nx-pitcher"><span class="nx-side"><svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-121"/></svg>NYM</span> Christian Scott<div class="nx-pline">3.13 ERA &middot; 3-2 &middot; 63.1 IP &middot; 78 K &middot; 1.26 WHIP</div></div>
         <div class="nx-lineup"><span class="nx-lu-label">Lineup</span><div class="lu-slots"><span class="lu-slot"><span class="lu-pos">3B</span> <player-card pid="663586">Riley</player-card></span><span class="lu-slot"><span class="lu-pos">DH</span> <player-card pid="642086">Smith</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="686948">Baldwin</player-card></span><span class="lu-slot"><span class="lu-pos">RF</span> <player-card pid="642201">White</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="805347">Jarvis</player-card></span><span class="lu-slot"><span class="lu-pos">C</span> <player-card pid="663698">Bart</player-card></span><span class="lu-slot"><span class="lu-pos">SS</span> <player-card pid="622761">Mateo</player-card></span><span class="lu-slot"><span class="lu-pos">1B</span> <player-card pid="621566">Olson</player-card></span><span class="lu-slot"><span class="lu-pos">LF</span> <player-card pid="643289">Dubón</player-card></span></div></div>
         <div class="nx-bc"><span class="nx-bc-tag">TV</span> SNY &middot; BravesVision &middot; Gray TV</div><div class="nx-bc"><span class="nx-bc-tag">Radio</span> 680 AM/93.7 FM The Fan &middot; Audacy Mets Radio WHSQ 880AM</div>
-        <div class="nx-wx">75°F &middot; Overcast &middot; 9 mph S</div>
+        <div class="nx-wx">80°F &middot; Overcast &middot; 9 mph SSE</div>
       </div><div class="nx-card">
         <div class="nx-head">
           <div class="nx-day">Wed, Jul 29 &middot; at <svg class="ml-logo sm" aria-hidden="true" focusable="false"><use href="#team-121"/></svg><span class="ab">NYM</span></div>
@@ -1365,7 +1365,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <footer class="foot">
   <span>The Morning Lineup &middot; <span class="flag">A Truist Park Broadsheet</span></span>
   <span>Data: MLB Stats API (statsapi.mlb.com)</span>
-  <span>Filed 07/28/26 10:58 CT</span>
+  <span>Filed 07/28/26 11:53 CT</span>
 </footer>
 
 <script>
@@ -1399,7 +1399,7 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 <script>
 window.addEventListener("message",function(e){if(e.data&&e.data.type==="scorecard-height"){var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}});
 document.addEventListener("click",function(e){var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){var h=tr.getAttribute("data-href");if(h){e.preventDefault();location.href=h}}});
-if("serviceWorker"in navigator){navigator.serviceWorker.register("sw.js").then(function(reg){reg.addEventListener("updatefound",function(){var w=reg.installing;if(!w)return;w.addEventListener("statechange",function(){if(w.state==="activated"&&navigator.serviceWorker.controller){var d=document.createElement("div");d.id="sw-toast";d.innerHTML='New edition available &mdash; <a href="#" onclick="location.reload();return false" style="color:var(--gold,#c9a24a);font-weight:700">Refresh</a>';d.style.cssText="position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink,#0d0f14);color:var(--paper,#ece4d0);padding:.6rem 1.2rem;border-radius:6px;font:600 .85rem/1.4 Oswald,sans-serif;letter-spacing:.03em;text-transform:uppercase;z-index:9999;box-shadow:0 2px 12px rgba(0,0,0,.4);opacity:0;transition:opacity .3s";document.body.appendChild(d);setTimeout(function(){d.style.opacity="1"},50);setTimeout(function(){d.style.opacity="0";setTimeout(function(){d.remove()},400)},12000)}})})}).catch(function(){})}
+if("serviceWorker"in navigator){var hadCtrl=!!navigator.serviceWorker.controller;navigator.serviceWorker.register("sw.js").then(function(reg){reg.addEventListener("updatefound",function(){var w=reg.installing;if(!w)return;w.addEventListener("statechange",function(){if(w.state==="activated"&&hadCtrl){var d=document.createElement("div");d.id="sw-toast";d.innerHTML='New edition available &mdash; <a href="#" onclick="location.reload();return false" style="color:var(--gold,#c9a24a);font-weight:700">Refresh</a>';d.style.cssText="position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink,#0d0f14);color:var(--paper,#ece4d0);padding:.6rem 1.2rem;border-radius:6px;font:600 .85rem/1.4 Oswald,sans-serif;letter-spacing:.03em;text-transform:uppercase;z-index:9999;box-shadow:0 2px 12px rgba(0,0,0,.4);opacity:0;transition:opacity .3s";document.body.appendChild(d);setTimeout(function(){d.style.opacity="1"},50);setTimeout(function(){d.style.opacity="0";setTimeout(function(){d.remove()},400)},12000)}})})}).catch(function(){})}
 </script>
 
 </body>

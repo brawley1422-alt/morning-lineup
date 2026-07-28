@@ -68,6 +68,29 @@ PROSPECTS_FILE = ROOT / "teams" / _team_slug / "prospects.json"
 DATA_DIR = ROOT / "data"
 OUT = ROOT / _team_slug / "index.html"
 
+def _bind_team(slug):
+    """Rebind the module-level team globals to `slug`.
+
+    These are bound once at import from --team, which is fine for a
+    single-team process. --all loops in ONE process, so it has to rebind
+    them per team. Everything downstream (helpers here, and the section
+    renderers via briefing.*) reads these at call time, so rebinding is
+    enough -- no module reload needed.
+    """
+    global _team_slug, CFG, TEAM_ID, TEAM_NAME, AFFILIATES, DIV_ID, DIV_NAME
+    global HISTORY_FILE, PROSPECTS_FILE, OUT
+    _team_slug = slug
+    CFG = load_team_config(slug)
+    TEAM_ID = CFG["id"]
+    TEAM_NAME = CFG["name"]
+    AFFILIATES = CFG["affiliates"]
+    DIV_ID = CFG["division_id"]
+    DIV_NAME = CFG["division_name"]
+    HISTORY_FILE = ROOT / "teams" / slug / "history.json"
+    PROSPECTS_FILE = ROOT / "teams" / slug / "prospects.json"
+    OUT = ROOT / slug / "index.html"
+
+
 DIV_ORDER = [
     (201, "AL East"), (202, "AL Central"), (200, "AL West"),
     (204, "NL East"), (205, "NL Central"), (203, "NL West"),
@@ -1659,7 +1682,7 @@ def page(briefing):
 <script>
 window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});
 document.addEventListener("click",function(e){{var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){{var h=tr.getAttribute("data-href");if(h){{e.preventDefault();location.href=h}}}}}});
-if("serviceWorker"in navigator){{navigator.serviceWorker.register("sw.js").then(function(reg){{reg.addEventListener("updatefound",function(){{var w=reg.installing;if(!w)return;w.addEventListener("statechange",function(){{if(w.state==="activated"&&navigator.serviceWorker.controller){{var d=document.createElement("div");d.id="sw-toast";d.innerHTML='New edition available &mdash; <a href="#" onclick="location.reload();return false" style="color:var(--gold,#c9a24a);font-weight:700">Refresh</a>';d.style.cssText="position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink,#0d0f14);color:var(--paper,#ece4d0);padding:.6rem 1.2rem;border-radius:6px;font:600 .85rem/1.4 Oswald,sans-serif;letter-spacing:.03em;text-transform:uppercase;z-index:9999;box-shadow:0 2px 12px rgba(0,0,0,.4);opacity:0;transition:opacity .3s";document.body.appendChild(d);setTimeout(function(){{d.style.opacity="1"}},50);setTimeout(function(){{d.style.opacity="0";setTimeout(function(){{d.remove()}},400)}},12000)}}}})}})}}).catch(function(){{}})}}
+if("serviceWorker"in navigator){{var hadCtrl=!!navigator.serviceWorker.controller;navigator.serviceWorker.register("sw.js").then(function(reg){{reg.addEventListener("updatefound",function(){{var w=reg.installing;if(!w)return;w.addEventListener("statechange",function(){{if(w.state==="activated"&&hadCtrl){{var d=document.createElement("div");d.id="sw-toast";d.innerHTML='New edition available &mdash; <a href="#" onclick="location.reload();return false" style="color:var(--gold,#c9a24a);font-weight:700">Refresh</a>';d.style.cssText="position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink,#0d0f14);color:var(--paper,#ece4d0);padding:.6rem 1.2rem;border-radius:6px;font:600 .85rem/1.4 Oswald,sans-serif;letter-spacing:.03em;text-transform:uppercase;z-index:9999;box-shadow:0 2px 12px rgba(0,0,0,.4);opacity:0;transition:opacity .3s";document.body.appendChild(d);setTimeout(function(){{d.style.opacity="1"}},50);setTimeout(function(){{d.style.opacity="0";setTimeout(function(){{d.remove()}},400)}},12000)}}}})}})}}).catch(function(){{}})}}
 </script>
 
 </body>
@@ -2377,6 +2400,129 @@ def build_sitemap():
     print(f"Wrote sitemap → {out} ({len(urls)} urls)")
 
 
+def build_team():
+    """Render one team page from the currently-bound team globals.
+
+    Call _bind_team(slug) first when looping. Kept as a function so --all
+    can render all 30 teams in ONE process: the module-level memos
+    (_SAVANT_MEM, _MILB_STANDINGS_MEM) are keyed by (season, date) and are
+    shared league-wide, so a single process fetches Savant and MiLB
+    standings once instead of once per team.
+    """
+    fixture_path = _argv_value("--fixture")
+    if fixture_path:
+        print(f"Loading data from fixture {fixture_path} …", flush=True)
+        data = load_data_from_fixture(fixture_path)
+        briefing = TeamBriefing(
+            config=CFG, data=data,
+            team_id=TEAM_ID, team_name=TEAM_NAME,
+            div_id=DIV_ID, div_name=DIV_NAME,
+            affiliates=AFFILIATES,
+        )
+    else:
+        print("Fetching MLB data …", flush=True)
+        briefing = build_briefing(_team_slug)
+        save_data_ledger(briefing.data)
+        # Phase 2: All-teams player-card pipeline (full active roster).
+        try:
+            _d2 = briefing.data
+            print(f"Fetching player cards for {_team_slug} (active roster) …", flush=True)
+            _team_players = load_team_players(TEAM_ID, _d2["season"], _d2["today"])
+            save_players(_team_slug, _team_players, _d2["today"])
+            save_player_index()
+        except Exception as _e2:
+            print(f"  warning: team player-card pipeline failed: {_e2}", flush=True)
+        # Lineup fallback: when MLB hasn't posted tonight's batting
+        # order yet (common for morning builds), pick the top 9
+        # non-pitcher hitters from the active roster so downstream
+        # sections (headline Lineup, Matchup Read) have content to
+        # render. Applied for every team.
+        if True:
+            try:
+                _d = briefing.data
+                _tl = _d.get("today_lineup", {}) or {}
+                _ng = _d.get("next_games") or []
+                _cubs_side_lineup = []
+                _sp_pid = None
+                if _ng:
+                    _tg = _ng[0]
+                    _is_home = _tg["teams"]["home"]["team"]["id"] == TEAM_ID
+                    _side = "home" if _is_home else "away"
+                    _cubs_side_lineup = _tl.get(_side, []) or []
+                    _cubs_pp = _tg["teams"][_side].get("probablePitcher") or {}
+                    _sp_pid = _cubs_pp.get("id")
+                # Fallback: if today's lineup hasn't been posted yet, pick the
+                # top 9 hitters from the hydrated roster by games played so the
+                # card experience always has content to show.
+                if not _cubs_side_lineup:
+                    _roster = _d.get("cubs_hitters", {}) or {}
+                    _candidates = []
+                    for _p in _roster.get("roster", []):
+                        _pos = _p.get("position", {}).get("abbreviation", "")
+                        if _pos == "P":
+                            continue
+                        _person = _p.get("person", {}) or {}
+                        _stats = _person.get("stats", [])
+                        _games = 0
+                        if _stats and _stats[0].get("splits"):
+                            _games = _stats[0]["splits"][0].get("stat", {}).get("gamesPlayed", 0) or 0
+                        _candidates.append({
+                            "id": _person.get("id"),
+                            "name": _person.get("fullName", ""),
+                            "pos": _pos,
+                            "_games": _games,
+                        })
+                    _candidates.sort(key=lambda x: -x.get("_games", 0))
+                    _cubs_side_lineup = _candidates[:9]
+                    print(f"  (using roster fallback — {len(_cubs_side_lineup)} top hitters by games played)", flush=True)
+                    # Feed the fallback lineup back into the briefing so
+                    # the rendered page's "Lineup" section shows it too.
+                    if _ng:
+                        _fallback_side = "home" if _is_home else "away"
+                        _d["today_lineup"] = _d.get("today_lineup") or {"home": [], "away": []}
+                        _d["today_lineup"][_fallback_side] = [
+                            {"id": _c["id"], "name": _c["name"], "pos": _c["pos"]}
+                            for _c in _cubs_side_lineup
+                        ]
+            except Exception as _e:
+                print(f"  warning: lineup fallback failed: {_e}", flush=True)
+    print("Rendering page …", flush=True)
+    html = page(briefing)
+    out_dir_override = _argv_value("--out-dir")
+    if out_dir_override:
+        out_path = Path(out_dir_override) / _team_slug / "index.html"
+    else:
+        out_path = OUT
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(html, encoding="utf-8")
+    print(f"Wrote {out_path} ({len(html):,} bytes)")
+    # Copy player-card.js + reader-state.js + resolution-pass.js into
+    # the team output dir so the relative script tags resolve on every page.
+    try:
+        import shutil
+        for _asset in ("player-card.js", "reader-state.js", "resolution-pass.js", "tz.js", "analytics.js", "share.js"):
+            _src = ROOT / _asset
+            if _src.exists():
+                shutil.copyfile(_src, out_path.parent / _asset)
+        # sw.js: rewrite cache version to BUILD_ID, stamp root + team copy.
+        # Single source of truth — team dirs are regenerated every build so
+        # they can't drift from root.
+        import re as _re
+        _sw_src = ROOT / "sw.js"
+        if _sw_src.exists():
+            _sw_text = _sw_src.read_text(encoding="utf-8")
+            _sw_text = _re.sub(
+                r'lineup-[A-Za-z0-9]+',
+                f'lineup-{BUILD_ID}',
+                _sw_text,
+                count=1,
+            )
+            _sw_src.write_text(_sw_text, encoding="utf-8")
+            (out_path.parent / "sw.js").write_text(_sw_text, encoding="utf-8")
+    except Exception as _e3:
+        print(f"  warning: phase 2 asset copy failed: {_e3}", flush=True)
+
+
 if __name__ == "__main__":
     if "--landing" in sys.argv:
         build_landing()
@@ -2396,116 +2542,24 @@ if __name__ == "__main__":
             encoding="utf-8",
         )
         print(f"Captured fixture → {capture_path} ({Path(capture_path).stat().st_size:,} bytes)")
-    else:
-        fixture_path = _argv_value("--fixture")
-        if fixture_path:
-            print(f"Loading data from fixture {fixture_path} …", flush=True)
-            data = load_data_from_fixture(fixture_path)
-            briefing = TeamBriefing(
-                config=CFG, data=data,
-                team_id=TEAM_ID, team_name=TEAM_NAME,
-                div_id=DIV_ID, div_name=DIV_NAME,
-                affiliates=AFFILIATES,
-            )
-        else:
-            print("Fetching MLB data …", flush=True)
-            briefing = build_briefing(_team_slug)
-            save_data_ledger(briefing.data)
-            # Phase 2: All-teams player-card pipeline (full active roster).
+    elif "--all" in sys.argv:
+        # One process, all 30 teams. The per-team fetches still happen, but
+        # the league-wide ones (Savant leaderboards, MiLB standings) hit the
+        # memos after the first team instead of being refetched 30 times.
+        _slugs = sorted(q.stem for q in (ROOT / "teams").glob("*.json"))
+        print(f"Building {len(_slugs)} teams in one process …", flush=True)
+        _failed = []
+        for _i, _slug in enumerate(_slugs, 1):
+            print(f"\n[{_i}/{len(_slugs)}] {_slug}", flush=True)
             try:
-                _d2 = briefing.data
-                print(f"Fetching player cards for {_team_slug} (active roster) …", flush=True)
-                _team_players = load_team_players(TEAM_ID, _d2["season"], _d2["today"])
-                save_players(_team_slug, _team_players, _d2["today"])
-                save_player_index()
-            except Exception as _e2:
-                print(f"  warning: team player-card pipeline failed: {_e2}", flush=True)
-            # Lineup fallback: when MLB hasn't posted tonight's batting
-            # order yet (common for morning builds), pick the top 9
-            # non-pitcher hitters from the active roster so downstream
-            # sections (headline Lineup, Matchup Read) have content to
-            # render. Applied for every team.
-            if True:
-                try:
-                    _d = briefing.data
-                    _tl = _d.get("today_lineup", {}) or {}
-                    _ng = _d.get("next_games") or []
-                    _cubs_side_lineup = []
-                    _sp_pid = None
-                    if _ng:
-                        _tg = _ng[0]
-                        _is_home = _tg["teams"]["home"]["team"]["id"] == TEAM_ID
-                        _side = "home" if _is_home else "away"
-                        _cubs_side_lineup = _tl.get(_side, []) or []
-                        _cubs_pp = _tg["teams"][_side].get("probablePitcher") or {}
-                        _sp_pid = _cubs_pp.get("id")
-                    # Fallback: if today's lineup hasn't been posted yet, pick the
-                    # top 9 hitters from the hydrated roster by games played so the
-                    # card experience always has content to show.
-                    if not _cubs_side_lineup:
-                        _roster = _d.get("cubs_hitters", {}) or {}
-                        _candidates = []
-                        for _p in _roster.get("roster", []):
-                            _pos = _p.get("position", {}).get("abbreviation", "")
-                            if _pos == "P":
-                                continue
-                            _person = _p.get("person", {}) or {}
-                            _stats = _person.get("stats", [])
-                            _games = 0
-                            if _stats and _stats[0].get("splits"):
-                                _games = _stats[0]["splits"][0].get("stat", {}).get("gamesPlayed", 0) or 0
-                            _candidates.append({
-                                "id": _person.get("id"),
-                                "name": _person.get("fullName", ""),
-                                "pos": _pos,
-                                "_games": _games,
-                            })
-                        _candidates.sort(key=lambda x: -x.get("_games", 0))
-                        _cubs_side_lineup = _candidates[:9]
-                        print(f"  (using roster fallback — {len(_cubs_side_lineup)} top hitters by games played)", flush=True)
-                        # Feed the fallback lineup back into the briefing so
-                        # the rendered page's "Lineup" section shows it too.
-                        if _ng:
-                            _fallback_side = "home" if _is_home else "away"
-                            _d["today_lineup"] = _d.get("today_lineup") or {"home": [], "away": []}
-                            _d["today_lineup"][_fallback_side] = [
-                                {"id": _c["id"], "name": _c["name"], "pos": _c["pos"]}
-                                for _c in _cubs_side_lineup
-                            ]
-                except Exception as _e:
-                    print(f"  warning: lineup fallback failed: {_e}", flush=True)
-        print("Rendering page …", flush=True)
-        html = page(briefing)
-        out_dir_override = _argv_value("--out-dir")
-        if out_dir_override:
-            out_path = Path(out_dir_override) / _team_slug / "index.html"
-        else:
-            out_path = OUT
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-        out_path.write_text(html, encoding="utf-8")
-        print(f"Wrote {out_path} ({len(html):,} bytes)")
-        # Copy player-card.js + reader-state.js + resolution-pass.js into
-        # the team output dir so the relative script tags resolve on every page.
-        try:
-            import shutil
-            for _asset in ("player-card.js", "reader-state.js", "resolution-pass.js", "tz.js", "analytics.js", "share.js"):
-                _src = ROOT / _asset
-                if _src.exists():
-                    shutil.copyfile(_src, out_path.parent / _asset)
-            # sw.js: rewrite cache version to BUILD_ID, stamp root + team copy.
-            # Single source of truth — team dirs are regenerated every build so
-            # they can't drift from root.
-            import re as _re
-            _sw_src = ROOT / "sw.js"
-            if _sw_src.exists():
-                _sw_text = _sw_src.read_text(encoding="utf-8")
-                _sw_text = _re.sub(
-                    r'lineup-[A-Za-z0-9]+',
-                    f'lineup-{BUILD_ID}',
-                    _sw_text,
-                    count=1,
-                )
-                _sw_src.write_text(_sw_text, encoding="utf-8")
-                (out_path.parent / "sw.js").write_text(_sw_text, encoding="utf-8")
-        except Exception as _e3:
-            print(f"  warning: phase 2 asset copy failed: {_e3}", flush=True)
+                _bind_team(_slug)
+                build_team()
+            except Exception as _err:
+                print(f"  ERROR building {_slug}: {_err}", file=sys.stderr, flush=True)
+                _failed.append(_slug)
+        if _failed:
+            print(f"\n{len(_failed)} team(s) FAILED: {', '.join(_failed)}", file=sys.stderr)
+            sys.exit(1)
+        print(f"\nAll {len(_slugs)} teams built.")
+    else:
+        build_team()
