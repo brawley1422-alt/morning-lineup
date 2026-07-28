@@ -195,6 +195,7 @@ def _main():
         "sitemap.xml",
         "analytics.js",
         "share.js",
+        "app-shell.js",
         "install-prompt.js",
         "welcome-overlay.js",
         "landing-cta.js",

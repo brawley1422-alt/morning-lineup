@@ -14,9 +14,15 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--ink);color:var(--paper)}
+/* The document must never scroll sideways -- it was 418px wide in a 390px
+   viewport, which let the fixed mobile header run off the edge. Wide data
+   tables scroll inside .tblwrap, so clipping loses no content.
+   clip, NOT hidden: overflow-x:hidden makes the element a scroll container,
+   which silently kills position:sticky on the mobile section rail. */
+html{overflow-x:clip}
 body{font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   background:radial-gradient(1200px 600px at 10% -10%,rgba(14,51,134,.22),transparent 60%),radial-gradient(900px 500px at 110% 10%,rgba(204,52,51,.12),transparent 55%),linear-gradient(180deg,#0a0c12 0%,#0d0f14 40%,#0b0d12 100%);
-  background-attachment:fixed;position:relative;overflow-x:hidden;}
+  background-attachment:fixed;position:relative;overflow-x:clip;}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.06;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
 a{color:var(--gold);text-decoration:none;border-bottom:1px dotted var(--gold-dim)}
@@ -716,3 +722,204 @@ body.theme-paper .column:not([open]) > summary.column-byline:hover{background:li
 .wc-context .dl-list{display:inline-flex;flex-wrap:wrap;gap:4px 14px;}
 .wc-context .dl{display:inline-flex;align-items:center;gap:5px;color:var(--paper-dim);}
 .wc-context .dl .ab{font-family:var(--cond);letter-spacing:.06em;}
+
+/* ==========================================================================
+   MOBILE APP SHELL — Broadcast Package
+   Score bug, section rail, tab bar, cut-ins. All of it is confined to
+   <=720px; desktop renders exactly as before. The goal is that the phone
+   build reads as an app, not a page that got narrower.
+   ========================================================================== */
+
+.app-bug,.app-rail,.app-tabs,.app-sheet,.app-scrim{display:none}
+
+@media (max-width:720px){
+
+  /* Tap behaviour first — the fastest tell that something is a web page is
+     text selecting and tap flashes on things you meant to press. */
+  .app-bug,.app-rail,.app-tabs,.app-sheet{-webkit-tap-highlight-color:transparent}
+  .app-tabs a,.app-tabs button,.app-rail a,.app-sheet a{touch-action:manipulation;-webkit-user-select:none;user-select:none}
+  body{overscroll-behavior-y:contain}
+
+  /* Clear the fixed tab bar, plus the home indicator on notched phones. */
+  body{padding-bottom:calc(62px + env(safe-area-inset-bottom,0px))}
+
+  /* ---- Score bug: pinned condensed header ---- */
+  .app-bug{
+    display:flex;align-items:center;gap:10px;
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    padding:calc(8px + env(safe-area-inset-top,0px)) 12px 8px;
+    background:linear-gradient(180deg,rgba(13,15,20,.98),rgba(13,15,20,.93));
+    -webkit-backdrop-filter:saturate(140%) blur(12px);backdrop-filter:saturate(140%) blur(12px);
+    border-bottom:1px solid var(--rule);
+    transform:translateY(-102%);
+    transition:transform .18s cubic-bezier(.2,.8,.2,1);
+    will-change:transform;
+  }
+  .app-bug.is-on{transform:translateY(0)}
+  /* Team-colour chevron, the way a broadcast bug is keyed to the home side */
+  .app-bug::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+    background:linear-gradient(180deg,var(--team-accent),var(--team-primary));
+  }
+  .app-bug .bug-logo{width:26px;height:26px;flex-shrink:0}
+  .app-bug .bug-team{
+    font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;
+    font-size:13px;font-weight:600;color:var(--paper);line-height:1;
+  }
+  .app-bug .bug-rec{
+    font-family:var(--mono);font-size:10.5px;color:var(--paper-mute);
+    letter-spacing:.06em;line-height:1;margin-top:3px;
+  }
+  .app-bug .bug-meta{display:flex;flex-direction:column;min-width:0;flex:1}
+  .app-bug .bug-date{
+    font-family:var(--cond);text-transform:uppercase;letter-spacing:.16em;
+    font-size:9.5px;color:var(--gold);white-space:nowrap;flex-shrink:0;
+  }
+  .app-bug .bug-team,.app-bug .bug-rec{
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;
+  }
+
+  /* ---- Section rail: horizontal, scroll-tracking ---- */
+  .app-rail{
+    display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;
+    position:sticky;top:0;z-index:50;
+    padding:8px 12px;margin:0 -16px 4px;
+    background:linear-gradient(180deg,rgba(13,15,20,.97),rgba(13,15,20,.9));
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--rule);
+    scrollbar-width:none;-ms-overflow-style:none;
+    scroll-behavior:smooth;
+  }
+  .app-rail::-webkit-scrollbar{display:none}
+  /* Mask the trailing edge so a cut-off chip reads as "more this way"
+     rather than as a layout bug. */
+  .app-rail{
+    -webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent 100%);
+    mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 28px),transparent 100%);
+  }
+  .app-bug.is-on ~ .wrap .app-rail{top:calc(43px + env(safe-area-inset-top,0px))}
+  .app-rail a{
+    flex:0 0 auto;border:1px solid var(--rule);border-radius:2px;
+    background:var(--ink-2);color:var(--paper-dim);
+    font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;
+    font-size:10px;font-weight:600;padding:7px 12px 6px;white-space:nowrap;
+    transition:color .15s,border-color .15s,background .15s;
+  }
+  .app-rail a:active{transform:scale(.96)}
+  /* Lower-third treatment on the active chip */
+  .app-rail a.is-active{
+    color:var(--ink);background:var(--gold);border-color:var(--gold);
+  }
+
+  /* The stacked TOC is what made this read as a document. The rail replaces
+     it outright on phones. */
+  .wrap > .toc{display:none}
+
+  /* ---- Segment cut-ins ---- */
+  .app-cut{opacity:0;transform:translateY(14px)}
+  .app-cut.is-in{opacity:1;transform:none;transition:opacity .18s ease-out,transform .2s cubic-bezier(.2,.8,.2,1)}
+  @media (prefers-reduced-motion:reduce){
+    .app-cut{opacity:1;transform:none;transition:none}
+  }
+
+  /* ---- Tab bar ---- */
+  .app-tabs{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    position:fixed;left:0;right:0;bottom:0;z-index:70;
+    padding-bottom:max(8px,env(safe-area-inset-bottom,0px));
+    background:linear-gradient(180deg,rgba(20,24,35,.97),rgba(10,12,18,.99));
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+    border-top:1px solid var(--gold-dim);
+  }
+  .app-tabs a,.app-tabs button{
+    all:unset;box-sizing:border-box;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+    min-height:56px;padding:8px 4px 6px;cursor:pointer;position:relative;
+    color:var(--paper-mute);
+    font-family:var(--cond);text-transform:uppercase;letter-spacing:.14em;
+    font-size:9px;font-weight:600;
+    transition:color .15s;
+  }
+  .app-tabs a:active,.app-tabs button:active{color:var(--paper);background:rgba(201,162,74,.08)}
+  .app-tabs svg{width:20px;height:20px;flex-shrink:0}
+  .app-tabs .is-active{color:var(--gold)}
+  /* Lower-third indicator rather than a pill — matches the rail. */
+  .app-tabs .is-active::before{
+    content:"";position:absolute;top:0;left:22%;right:22%;height:2px;background:var(--gold);
+  }
+  .app-tabs a:focus-visible,.app-tabs button:focus-visible{outline:2px solid var(--gold);outline-offset:-3px}
+
+  /* ---- Section sheet ---- */
+  .app-scrim{
+    display:block;position:fixed;inset:0;z-index:80;
+    background:rgba(6,8,12,.62);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+    opacity:0;pointer-events:none;transition:opacity .2s ease;
+  }
+  .app-scrim.is-open{opacity:1;pointer-events:auto}
+  .app-sheet{
+    display:block;position:fixed;left:0;right:0;bottom:0;z-index:90;
+    background:var(--ink-2);border-top:3px solid var(--gold);
+    border-radius:12px 12px 0 0;
+    padding:10px 14px calc(18px + env(safe-area-inset-bottom,0px));
+    max-height:76vh;overflow-y:auto;
+    transform:translateY(101%);
+    transition:transform .24s cubic-bezier(.2,.8,.2,1);
+    box-shadow:0 -20px 50px -12px rgba(0,0,0,.7);
+  }
+  .app-sheet.is-open{transform:translateY(0)}
+  .app-sheet .sheet-grip{
+    width:38px;height:4px;border-radius:2px;background:var(--rule-hi);
+    margin:2px auto 12px;
+  }
+  .app-sheet .sheet-title{
+    font-family:var(--cond);text-transform:uppercase;letter-spacing:.24em;
+    font-size:10px;color:var(--paper-mute);margin:0 0 10px;
+  }
+  .app-sheet ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+  .app-sheet a{
+    display:flex;align-items:center;gap:12px;
+    padding:13px 4px;border-bottom:1px solid var(--rule);
+    color:var(--paper);border-radius:0;
+    font-family:var(--cond);text-transform:uppercase;letter-spacing:.12em;
+    font-size:12.5px;font-weight:500;
+  }
+  .app-sheet li:last-child a{border-bottom:none}
+  .app-sheet a:active{background:rgba(201,162,74,.1)}
+  .app-sheet a .n{
+    font-family:var(--mono);font-size:10px;color:var(--gold);
+    min-width:20px;letter-spacing:.04em;
+  }
+  body.sheet-open{overflow:hidden}
+
+  /* ---- Masthead: compress to an app header ---- */
+  /* Two problems at phone width. .nav-btns was absolutely positioned over
+     the masthead, so it sat on top of the kicker row. And the kicker is a
+     3-up justified row (Vol/No, tagline, Est. 2024) that collapses into
+     collided text below ~430px. On a phone the masthead should hand the
+     screen to the briefing, so the tagline and Est. drop and the wordmark
+     comes down to a size that leaves room for content above the fold. */
+  .masthead{padding:10px 20px 8px}
+  .nav-btns{position:static;justify-content:flex-end;margin:0 0 8px}
+  .masthead .kicker{
+    padding-right:0;justify-content:flex-start;gap:10px;
+    font-size:9.5px;letter-spacing:.18em;padding-bottom:5px;margin-bottom:6px;
+  }
+  .masthead .kicker span:nth-child(2),
+  .masthead .kicker span:nth-child(3){display:none}
+  .masthead h1{font-size:clamp(34px,10.5vw,52px);gap:12px}
+  .masthead h1 .the{font-size:.24em;letter-spacing:.34em;margin-bottom:2px}
+  .masthead .mast-logo{width:40px;height:40px}
+  .masthead .dek{margin-top:7px;padding-top:7px;gap:6px 14px;font-size:11px}
+}
+
+/* Installed PWA: no browser chrome, so the masthead needs the status bar
+   inset itself and the install chip is meaningless. */
+body.is-standalone .foot-install{display:none}
+@media (max-width:720px){
+  body.is-standalone .masthead{padding-top:calc(12px + env(safe-area-inset-top,0px))}
+}
+
+/* Wide data tables scroll inside themselves; the page body never does.
+   See _wrap_wide_tables() in build.py. */
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;max-width:100%}
+.tscroll::-webkit-scrollbar{height:0}

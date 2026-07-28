@@ -1362,6 +1362,21 @@ def _fold(sid):
     )
 
 
+_WIDE_TABLE_RE = __import__("re").compile(r'(<table class="data".*?</table>)', __import__("re").S)
+
+
+def _wrap_wide_tables(html):
+    """Put every wide data table in its own horizontal scroll container.
+
+    table.data carries min-width:480px because tabular data needs the room.
+    On a 390px phone that made the *document* 418px wide, so the whole page
+    scrolled sideways and the fixed header ran off the edge -- the single
+    most page-like defect on the mobile build. Wrapping lets the table keep
+    its width and scroll within itself, so the body never moves.
+    """
+    return _WIDE_TABLE_RE.sub(r'<div class="tscroll">\1</div>', html)
+
+
 def page(briefing):
     data = briefing.data
     t = data["today"]; y = data["yest"]
@@ -1419,6 +1434,31 @@ def page(briefing):
             _num[_sid] = f"{_n:02d}"
             _n += 1
 
+    # Mobile app shell: the section rail and the section sheet are generated
+    # from the same _visible_sections list that drives the numbering, so a
+    # section added or hidden can never desync the three navigations.
+    _sec_labels = {
+        "team": f"The {TEAM_NAME}",
+        "scout": "Scouting Report",
+        "matchup": "Matchup Read",
+        "pulse": "The Stretch",
+        "pressbox": "The Pressbox",
+        "farm": "Down on the Farm",
+        "today": "Today&rsquo;s Slate",
+        "div": DIV_NAME,
+        "wildcard": "Wild Card Race",
+        "league": "Around the League",
+        "history": f"{TEAM_NAME} History",
+    }
+    _shown = [(_sid, _sec_labels.get(_sid, _sid)) for _sid, _h in _visible_sections if _h]
+    _rail_html = "".join(
+        f'<a href="#{_sid}">{_label}</a>' for _sid, _label in _shown
+    )
+    _sheet_html = "".join(
+        f'<li><a href="#{_sid}"><span class="n">{_num.get(_sid, "")}</span>{_label}</a></li>'
+        for _sid, _label in _shown
+    )
+
     vol_no = (t - date(t.year, 1, 1)).days + 1
     if "--fixture" in sys.argv:
         # Deterministic timestamp for golden snapshot tests.
@@ -1436,7 +1476,7 @@ def page(briefing):
         f"leaders, farm system, and the full slate. Updated every morning."
     )
 
-    return f"""<!doctype html>
+    _doc = f"""<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -1468,6 +1508,14 @@ def page(briefing):
 <body data-team="{_team_slug}">
 {TEAM_SPRITE}
 
+<div class="app-bug" aria-hidden="true">
+  <svg class="bug-logo" focusable="false"><use href="#team-{TEAM_ID}"/></svg>
+  <span class="bug-meta">
+    <span class="bug-team">{TEAM_NAME}</span>
+    <span class="bug-rec">{cubs_record_str}</span>
+  </span>
+  <span class="bug-date">{t.strftime("%a %b")} {t.day}</span>
+</div>
 <header class="masthead">
   <div class="nav-btns">
     <a href="../home/" class="home-btn" aria-label="Your Lineup" title="Your Lineup">
@@ -1516,6 +1564,8 @@ def page(briefing):
       <li><a href="#history">{TEAM_NAME} History</a></li>
     </ol>
   </nav>
+
+  <nav class="app-rail" aria-label="Sections">{_rail_html}</nav>
 
   <main>
 
@@ -1677,8 +1727,33 @@ def page(briefing):
   }});
 }})();
 </script>
+<!-- Mobile app shell: section sheet, scrim, tab bar. Hidden above 720px. -->
+<div class="app-scrim"></div>
+<div class="app-sheet" role="dialog" aria-modal="true" aria-label="Sections" aria-hidden="true">
+  <div class="sheet-grip"></div>
+  <p class="sheet-title">Sections</p>
+  <ol>{_sheet_html}</ol>
+</div>
+<nav class="app-tabs" aria-label="Primary">
+  <button type="button" data-app-action="top" class="is-active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+    Briefing
+  </button>
+  <button type="button" data-app-action="sections">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+    Sections
+  </button>
+  <a href="../">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z"/></svg>
+    Teams
+  </a>
+  <button type="button" data-app-action="share">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    Share
+  </button>
+</nav>
 <script>var TEAM_ID={TEAM_ID};var TEAM_IDLE_MSG="{CFG['branding']['idle_msg']}";</script>
-<script src="sections.js" defer></script><script src="tz.js" defer></script><script src="analytics.js" defer></script><script src="share.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script>
+<script src="sections.js" defer></script><script src="tz.js" defer></script><script src="analytics.js" defer></script><script src="share.js" defer></script><script src="live.js"></script><script src="reader-state.js" defer></script><script src="player-card.js" defer></script><script src="resolution-pass.js" defer></script><script src="app-shell.js" defer></script>
 <script>
 window.addEventListener("message",function(e){{if(e.data&&e.data.type==="scorecard-height"){{var f=document.querySelector(".scorecard-frame");if(f)f.style.height=e.data.height+"px"}}}});
 document.addEventListener("click",function(e){{var t=e.target;if(t&&t.ownerSVGElement)t=t.ownerSVGElement;var tr=t&&t.closest&&t.closest("tr.scorecard-link");if(tr){{var h=tr.getAttribute("data-href");if(h){{e.preventDefault();location.href=h}}}}}});
@@ -1687,6 +1762,8 @@ if("serviceWorker"in navigator){{var hadCtrl=!!navigator.serviceWorker.controlle
 
 </body>
 </html>"""
+    return _wrap_wide_tables(_doc)
+
 
 # ─── main ───────────────────────────────────────────────────────────────────
 
@@ -2500,7 +2577,7 @@ def build_team():
     # the team output dir so the relative script tags resolve on every page.
     try:
         import shutil
-        for _asset in ("player-card.js", "reader-state.js", "resolution-pass.js", "tz.js", "analytics.js", "share.js"):
+        for _asset in ("player-card.js", "reader-state.js", "resolution-pass.js", "tz.js", "analytics.js", "share.js", "app-shell.js"):
             _src = ROOT / _asset
             if _src.exists():
                 shutil.copyfile(_src, out_path.parent / _asset)
@@ -2509,7 +2586,13 @@ def build_team():
         # they can't drift from root.
         import re as _re
         _sw_src = ROOT / "sw.js"
-        if _sw_src.exists():
+        # A scratch render (--out-dir, used by the snapshot bless) must not
+        # mutate the real tree. Without this guard a bless run re-stamped
+        # root sw.js with its own BUILD_ID, drifting it from the 30 team
+        # copies a normal build keeps in sync.
+        if out_dir_override:
+            _sw_src = None
+        if _sw_src and _sw_src.exists():
             _sw_text = _sw_src.read_text(encoding="utf-8")
             _sw_text = _re.sub(
                 r'lineup-[A-Za-z0-9]+',
