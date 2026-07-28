@@ -1,8 +1,9 @@
 {
   "name": "The Morning Lineup",
   "short_name": "Lineup",
-  "description": "A daily briefing for every MLB team — last night's game, today's matchup, and every angle that matters.",
+  "description": "A daily briefing for every MLB team \u2014 last night's game, today's matchup, and every angle that matters.",
   "start_url": "/morning-lineup/",
+  "scope": "/morning-lineup/",
   "display": "standalone",
   "theme_color": "#0d0f14",
   "background_color": "#0d0f14",
