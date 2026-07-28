@@ -3,7 +3,15 @@ import { getSession, supabase } from "./auth/session.js";
 (async function hydrate(){
   try {
     const session = await getSession();
+    // Signed out is a first-class state: the page is already fully readable,
+    // so we leave the "Sign In" link alone and stop here. No bounce, no gate.
     if (!session) return;
+
+    const authLink = document.getElementById("mast-auth");
+    if (authLink) {
+      authLink.textContent = "Account";
+      authLink.href = "settings/";
+    }
 
     const { data: profile } = await supabase
       .from("profiles")
