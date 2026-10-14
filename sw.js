@@ -1,4 +1,4 @@
-const CACHE = "lineup-202610130404";
+const CACHE = "lineup-202610140405";
 const SHELL = ["/morning-lineup/", "/morning-lineup/index.html"];
 
 self.addEventListener("install", function (e) {
